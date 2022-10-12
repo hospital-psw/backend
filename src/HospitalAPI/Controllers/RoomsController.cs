@@ -32,6 +32,7 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
 
+
             return Ok(room);
         }
 
