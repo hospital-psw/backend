@@ -57,7 +57,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != room.Id)
+            if (id!=room.Id)
             {
                 return BadRequest();
             }
