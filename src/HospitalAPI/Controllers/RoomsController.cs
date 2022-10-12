@@ -78,8 +78,8 @@ namespace HospitalAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var room = _roomService.GetById(id);
-            if (room == null)
+            var room=_roomService.GetById(id);
+            if (room==null)
             {
                 return NotFound();
             }
@@ -87,5 +87,6 @@ namespace HospitalAPI.Controllers
             _roomService.Delete(room);
             return NoContent();
         }
+
     }
 }
