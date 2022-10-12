@@ -26,8 +26,8 @@ namespace HospitalAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var room = _roomService.GetById(id);
-            if (room == null)
+            var room=_roomService.GetById(id);
+            if (room==null)
             {
                 return NotFound();
             }
