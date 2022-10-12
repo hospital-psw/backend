@@ -1,0 +1,29 @@
+name: Restore, Format and Build
+
+on:
+  push:
+    paths:
+      - "**.cs"
+      - ".editorconfig"
+
+jobs:
+  check-format:
+    runs-on: windows-latest
+
+    steps:
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Check out code
+        uses: actions/checkout@v2
+        
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run dotnet format
+        run: dotnet format --verify-no-changes --no-restore --verbosity diagnostic
+      
+      - name: Build
+        run: dotnet build --no-restore
