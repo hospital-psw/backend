@@ -1,5 +1,7 @@
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

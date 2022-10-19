@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.Core;
+using HospitalLibrary.Core.Service.Core;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service

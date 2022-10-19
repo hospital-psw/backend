@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Repository
+﻿namespace HospitalLibrary.Core.Repository.Core
 {
     using System;
     using System.Collections.Generic;

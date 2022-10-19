@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Repository
+﻿namespace HospitalLibrary.Core.Repository.Core
 {
     using System;
     using System.Collections.Generic;
@@ -10,10 +10,10 @@
     {
         TEntity Get(int id);
 
-        IEnumerable<TEntity> GetAll();  
+        IEnumerable<TEntity> GetAll();
 
         void Add(TEntity entity);
 
-        void Remove(TEntity entity);
+        void Update(TEntity entity);
     }
 }

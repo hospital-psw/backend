@@ -5,9 +5,15 @@ namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
+
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+
+        public HospitalDbContext() 
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -17,6 +23,12 @@ namespace HospitalLibrary.Settings
                 new Room() { Id = 3, Number = "305B", Floor = 3 }
             );
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            //potencijalne promene
+            return base.SaveChanges();
         }
     }
 }

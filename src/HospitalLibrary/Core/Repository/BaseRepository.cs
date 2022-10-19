@@ -1,11 +1,13 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection.Metadata;
     using System.Reflection.Metadata.Ecma335;
     using System.Text;
     using System.Threading.Tasks;
@@ -39,9 +41,9 @@
             _context.Set<TEntity>().Add(entity);
         }
 
-        public virtual void Remove(TEntity entity) 
+        public virtual void Update(TEntity entity)
         {
-            _context.Set<TEntity>().Remove(entity);
+            _context.Entry(entity).State = (entity as Entity).Id == 0 ? EntityState.Added : EntityState.Modified;
         }
     }
 }
