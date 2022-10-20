@@ -22,20 +22,20 @@ namespace HospitalLibrary.Migrations
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
-                migrationBuilder.InsertData(
+            migrationBuilder.InsertData(
+            table: "Users",
+            columns: new[] { "Id", "Name", "LastName" },
+            values: new object[] { 1, "Petar", "Petrovic" });
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Name", "LastName" },
-                values: new object[] { 1, "Petar", "Petrovic" });
+                values: new object[] { 2, "Marko", "Markovic" });
 
-                migrationBuilder.InsertData(
-                    table: "Users",
-                    columns: new[] { "Id", "Name", "LastName" },
-                    values: new object[] { 2, "Marko", "Markovic" });
-
-                migrationBuilder.InsertData(
-                    table: "Users",
-                    columns: new[] { "Id", "Name", "LastName" },
-                    values: new object[] { 3, "Djordje", "Djordjevic" });
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Name", "LastName" },
+                values: new object[] { 3, "Djordje", "Djordjevic" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
