@@ -26,8 +26,8 @@ namespace HospitalAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var room=_roomService.GetById(id);
-            if (room==null)
+            var room = _roomService.GetById(id);
+            if (room == null)
             {
                 return NotFound();
             }
@@ -57,7 +57,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id!=room.Id)
+            if (id != room.Id)
             {
                 return BadRequest();
             }
@@ -78,8 +78,8 @@ namespace HospitalAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var room=_roomService.GetById(id);
-            if (room==null)
+            var room = _roomService.GetById(id);
+            if (room == null)
             {
                 return NotFound();
             }

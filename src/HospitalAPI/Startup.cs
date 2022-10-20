@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
+
 namespace HospitalAPI
 {
     public class Startup
@@ -24,7 +25,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
+            options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
