@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class Room
+    public class Room : Entity
     {
-        public int Id { get; set; }
         [Required]
         [MinLength(3)]
         public string Number { get; set; }
