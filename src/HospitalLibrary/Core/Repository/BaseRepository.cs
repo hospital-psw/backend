@@ -16,7 +16,7 @@
     {
         private readonly DbContext _context;
 
-        public HospitalDbContext HospitalDbContext 
+        public HospitalDbContext HospitalDbContext
         {
             get { return _context as HospitalDbContext; }
         }
@@ -26,17 +26,17 @@
             _context = context;
         }
 
-        public virtual TEntity Get(int id) 
+        public virtual TEntity Get(int id)
         {
             return _context.Set<TEntity>().Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll() 
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return _context.Set<TEntity>().Where(x => !(x as Entity).Deleted).ToList();
         }
 
-        public virtual void Add(TEntity entity) 
+        public virtual void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
         }

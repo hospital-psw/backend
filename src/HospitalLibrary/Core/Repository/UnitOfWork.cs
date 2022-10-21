@@ -25,7 +25,7 @@
         public IUserRepository UserRepository { get; set; }
 
 
-        public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class 
+        public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;
 
@@ -37,9 +37,9 @@
                 return (IBaseRepository<TEntity>)_repositories[type];
 
             }
-            else if (_repositories.ContainsKey(type)) 
+            else if (_repositories.ContainsKey(type))
             {
-                return (IBaseRepository<TEntity>)_repositories[type];   
+                return (IBaseRepository<TEntity>)_repositories[type];
             }
 
             return null;
@@ -47,12 +47,12 @@
 
         public void Dispose()
         {
-           _context.Dispose();  
+            _context.Dispose();
         }
 
-        public int Save() 
+        public int Save()
         {
-           return _context.SaveChanges();
+            return _context.SaveChanges();
         }
     }
 }

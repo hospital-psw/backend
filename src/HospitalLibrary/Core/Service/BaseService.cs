@@ -14,24 +14,24 @@
     public class BaseService<TEntity> where TEntity : class
     {
 
-        public BaseService() 
+        public BaseService()
         {
         }
 
-        public virtual TEntity Get(int id) 
+        public virtual TEntity Get(int id)
         {
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 return unitOfWork.GetRepository<TEntity>().Get(id);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return null;
             }
         }
 
-        public virtual IEnumerable<TEntity> GetAll() 
+        public virtual IEnumerable<TEntity> GetAll()
         {
             try
             {
@@ -39,44 +39,44 @@
                 return unitOfWork.GetRepository<TEntity>().GetAll();
 
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return null;
             }
         }
 
-        public virtual TEntity Add(TEntity entity) 
+        public virtual TEntity Add(TEntity entity)
         {
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 unitOfWork.GetRepository<TEntity>().Add(entity);
                 unitOfWork.Save();
-                
+
                 return entity;
 
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return null;
             }
-            
+
         }
 
-        public virtual bool Delete(int id) 
+        public virtual bool Delete(int id)
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());   
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 TEntity entity = unitOfWork.GetRepository<TEntity>().Get(id);
 
                 (entity as Entity).Deleted = true;
                 unitOfWork.GetRepository<TEntity>().Update(entity);
                 unitOfWork.Save();
-                
+
                 return true;
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return false;
             }
@@ -89,10 +89,10 @@
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 unitOfWork.GetRepository<TEntity>().Update(entity);
                 unitOfWork.Save();
-                
+
                 return entity;
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 return null;
             }

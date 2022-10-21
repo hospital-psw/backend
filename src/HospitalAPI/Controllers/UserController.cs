@@ -11,7 +11,7 @@
     {
         private IUserService _userService;
 
-        public UserController(IUserService userService) 
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }

@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class UserService : BaseService<User>,IUserService
+    public class UserService : BaseService<User>, IUserService
     {
         public UserService() : base() { }
     }
