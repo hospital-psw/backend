@@ -6,11 +6,13 @@ on:
       - "**.cs"
       - ".editorconfig"
 
+permissions: write-all
+
 jobs:
   check-format:
     runs-on: windows-latest
 
-    steps:
+    steps:      
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
