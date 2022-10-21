@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class User
+    public class User : Entity
     {
         public long Id { get; set; }
         public string Name { get; set; }
