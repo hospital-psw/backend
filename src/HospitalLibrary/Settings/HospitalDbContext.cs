@@ -16,7 +16,7 @@ namespace HospitalLibrary.Settings
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
-        public HospitalDbContext()
+        public HospitalDbContext() 
         {
         }
 
