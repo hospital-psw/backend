@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,24 +19,31 @@
             _context = context; 
         }
 
+        public override IEnumerable<Feedback> GetAll()
+        {
+            return _context.Feedback.Include(x => x.Creator)
+                                    .Where(x => !x.Deleted)
+                                    .ToList();
+        }
+
         public IEnumerable<Feedback> GetAllPublic() 
         {
-            return _context.Feedback.Where(x => x.Public && !x.Deleted);
+            return _context.Feedback.Where(x => x.Public && !x.Deleted).ToList();
         }
 
         public IEnumerable<Feedback> GetAllPrivate() 
         {
-            return _context.Feedback.Where(x => !x.Public && !x.Deleted);
+            return _context.Feedback.Where(x => !x.Public && !x.Deleted).ToList();
         }
 
         public IEnumerable<Feedback> GetAllAnonymous() 
         {
-            return _context.Feedback.Where(x => x.Anonymous);
+            return _context.Feedback.Where(x => x.Anonymous).ToList();
         }
 
         public IEnumerable<Feedback> GetAllIdentified() 
         {
-            return _context.Feedback.Where(x => !x.Anonymous);
+            return _context.Feedback.Where(x => !x.Anonymous).ToList();
         }
     }
 }

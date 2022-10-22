@@ -16,7 +16,7 @@
         }
 
         [HttpGet("all")]
-        public IActionResult GetAll()
+        public virtual IActionResult GetAll()
         {
             return Ok(_baseService.GetAll());
         }
@@ -35,7 +35,7 @@
         }
 
         [HttpPost]
-        public IActionResult Add(TEntity entity)
+        public virtual IActionResult Add(TEntity entity)
         {
             if (!ModelState.IsValid)
             {
@@ -53,7 +53,7 @@
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, TEntity entity)
+        public virtual IActionResult Update(int id, TEntity entity)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +71,7 @@
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public virtual IActionResult Delete(int id)
         {
             bool response = _baseService.Delete(id);
             if (!response)

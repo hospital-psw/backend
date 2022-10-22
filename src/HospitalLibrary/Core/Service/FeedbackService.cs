@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.DTO;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
@@ -14,6 +15,37 @@
     {
         public FeedbackService() : base() 
         {
+        }
+
+        public Feedback Create(NewFeedbackDTO dto)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = new Feedback(dto);
+                feedback.Creator = unitOfWork.UserRepository.Get(dto.CreatorId);
+                unitOfWork.FeedbackRepository.Add(feedback);
+                unitOfWork.Save();
+
+                return feedback;
+            }
+            catch (Exception e) 
+            {
+                return null;
+            }
+        }
+
+        public override IEnumerable<Feedback> GetAll()
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.FeedbackRepository.GetAll();
+            }
+            catch (Exception e) 
+            {
+                return null;
+            }
         }
 
         public IEnumerable<Feedback> GetAllPublicFeedback()
