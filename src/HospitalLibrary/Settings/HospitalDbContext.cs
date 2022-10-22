@@ -13,6 +13,8 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Room> Rooms { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet <Floor> Floors { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -22,12 +24,12 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Room>().HasData(
+            /*modelBuilder.Entity<Room>().HasData(
                 new Room() { Id = 1, Number = "101A", Floor = 1 },
                 new Room() { Id = 2, Number = "204", Floor = 2 },
                 new Room() { Id = 3, Number = "305B", Floor = 3 }
             );
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);*/
         }
 
         public override int SaveChanges()

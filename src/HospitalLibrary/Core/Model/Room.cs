@@ -5,10 +5,10 @@ namespace HospitalLibrary.Core.Model
 {
     public class Room : Entity
     {
-        [Required]
-        [MinLength(3)]
         public string Number { get; set; }
-        [Range(1, 10)]
-        public int Floor { get; set; }
+        public Floor Floor { get; set; }
+        public Building Building { get; set; }
+        public string Purpose { get; set; }
+
     }
 }
