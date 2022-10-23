@@ -14,7 +14,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Room> Rooms { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
-        
+        public DbSet<Appointment> Appointments { get; set; }
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         public HospitalDbContext()
