@@ -10,12 +10,14 @@
 
     public interface IFeedbackService
     {
-        Feedback Create(NewFeedbackDTO dto);
+        Feedback Add(NewFeedbackDTO dto);
         IEnumerable<Feedback> GetAll();
+        Feedback Get(int id);
         IEnumerable<Feedback> GetAllPublicFeedback();
         IEnumerable<Feedback> GetAllPrivateFeedback();
         IEnumerable<Feedback> GetAllAnonymousFeedback();
         IEnumerable<Feedback> GetAllIdentifiedFeedback();
-        bool MakeFeedbackPublic(int id);
+        bool MakePublic(int id);
+        bool MakePrivate(int id);
     }
 }

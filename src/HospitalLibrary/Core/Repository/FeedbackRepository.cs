@@ -26,24 +26,31 @@
                                     .ToList();
         }
 
+        public override Feedback Get(int id)
+        {
+            return _context.Feedback.Include(x => x.Creator)
+                                    .Where(x => !x.Deleted && x.Id == id)
+                                    .FirstOrDefault();
+        }
+
         public IEnumerable<Feedback> GetAllPublic() 
         {
-            return _context.Feedback.Where(x => x.Public && !x.Deleted).ToList();
+            return GetAll().Where(x => x.Public && !x.Deleted).ToList();
         }
 
         public IEnumerable<Feedback> GetAllPrivate() 
         {
-            return _context.Feedback.Where(x => !x.Public && !x.Deleted).ToList();
+            return GetAll().Where(x => !x.Public && !x.Deleted).ToList();
         }
 
         public IEnumerable<Feedback> GetAllAnonymous() 
         {
-            return _context.Feedback.Where(x => x.Anonymous).ToList();
+            return GetAll().Where(x => x.Anonymous).ToList();
         }
 
         public IEnumerable<Feedback> GetAllIdentified() 
         {
-            return _context.Feedback.Where(x => !x.Anonymous).ToList();
+            return GetAll().Where(x => !x.Anonymous).ToList();
         }
     }
 }
