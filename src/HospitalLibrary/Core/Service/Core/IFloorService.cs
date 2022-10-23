@@ -9,6 +9,6 @@
 
     public interface IFloorService
     {
-        FloorDetailsDTO GetFloorDetails(int id);
+        FloorDetailsDTO GetDetails(int id);
     }
 }

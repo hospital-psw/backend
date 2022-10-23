@@ -16,9 +16,9 @@
         }
         
         [HttpGet("detail/{id}")]
-        public IActionResult GetBuildingDetails(int id)
+        public IActionResult GetDetails(int id)
         {
-            BuildingDetailsDTO entity = _buildingService.GetBuildingDetails(id);
+            BuildingDetailsDTO entity = _buildingService.GetDetails(id);
             if(entity == null)
             {
                 return NotFound();

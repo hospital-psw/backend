@@ -15,9 +15,9 @@
         }
 
         [HttpGet("detail/{id}")]
-        public IActionResult GetFloorDetails(int id)
+        public IActionResult GetDetails(int id)
         {
-            FloorDetailsDTO entity = _floorService.GetFloorDetails(id);
+            FloorDetailsDTO entity = _floorService.GetDetails(id);
             if (entity == null)
             {
                 return NotFound();

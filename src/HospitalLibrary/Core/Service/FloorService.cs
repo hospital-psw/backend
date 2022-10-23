@@ -15,7 +15,7 @@
     {
         public FloorService() : base() { }
 
-        public FloorDetailsDTO GetFloorDetails(int id)
+        public FloorDetailsDTO GetDetails(int id)
         {
             try
             {

@@ -11,12 +11,12 @@
     {
         public BuildingService() : base() { }
         
-        public BuildingDetailsDTO GetBuildingDetails(int buildingId)
+        public BuildingDetailsDTO GetDetails(int id)
         {
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                BuildingDetailsDTO building = new BuildingDetailsDTO(unitOfWork.BuildingRepository.Get(buildingId));
+                BuildingDetailsDTO building = new BuildingDetailsDTO(unitOfWork.BuildingRepository.Get(id));
                 return building;
             }
             catch(Exception)

@@ -9,6 +9,6 @@
 
     public interface IBuildingService
     {
-        BuildingDetailsDTO GetBuildingDetails(int buildingId);
+        BuildingDetailsDTO GetDetails(int id);
     }
 }
