@@ -11,8 +11,8 @@
     {
         public int Id { get; set; }
         public string Number { get; set; }
-        public int FloorId { get; set; }
-        public int BuildingId { get; set; }
+        public FloorDTO Floor { get; set; }
+        public BuildingDTO Building { get; set; }
         public string Purpose { get; set; }
         public double X { get; set; }
         public double Z { get; set; }
@@ -21,8 +21,8 @@
         {
             Id = room.Id;
             Number = room.Number;
-            FloorId = room.Floor.Id;
-            BuildingId = room.Building.Id;
+            Floor = new FloorDTO(room.Floor);
+            Building = new BuildingDTO(room.Building);
             Purpose = room.Purpose;
             X = room.X;
             Z = room.Z;

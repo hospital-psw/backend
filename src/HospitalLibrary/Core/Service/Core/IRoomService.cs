@@ -7,7 +7,7 @@ namespace HospitalLibrary.Core.Service.Core
 {
     public interface IRoomService
     {
-        List<BuildingDTO> GetAll();
+        List<RoomDTO> GetAll();
         Room Add(RoomDTO dto);
     }
 }
