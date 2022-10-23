@@ -19,5 +19,7 @@
         IEnumerable<Feedback> GetAllIdentifiedFeedback();
         bool MakePublic(int id);
         bool MakePrivate(int id);
+        bool MakeAnonymous(int id);
+        bool MakeIdentified(int id);
     }
 }

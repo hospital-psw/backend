@@ -170,7 +170,57 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in FeedbackService in Private {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in FeedbackService in MakePrivate {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+
+        public bool MakeAnonymous(int id) 
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Anonymous = true;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in MakeAnonymous {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+
+        public bool MakeIdentified(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Anonymous = false;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in MakeIdentified {e.Message} in {e.StackTrace}");
                 return false;
             }
         }

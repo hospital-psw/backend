@@ -54,6 +54,20 @@
             bool status = _feedbackService.MakePrivate(id);
             return status is true ? Ok(status) : BadRequest("Something went wrong...");
         }
+
+        [HttpPut("make/anonymous/{id}")]
+        public IActionResult MakeAnonymous(int id) 
+        {
+            bool status = _feedbackService.MakeAnonymous(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
+        }
         
+        [HttpPut("make/identified/{id}")]
+        public IActionResult MakeIdentified(int id)
+        {
+            bool status = _feedbackService.MakeIdentified(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
+        }
+
     }
 }
