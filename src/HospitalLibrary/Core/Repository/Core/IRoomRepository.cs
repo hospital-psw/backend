@@ -3,12 +3,7 @@ using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Repository.Core
 {
-    public interface IRoomRepository
+    public interface IRoomRepository : IBaseRepository<Room>
     {
-        IEnumerable<Room> GetAll();
-        Room GetById(int id);
-        void Create(Room room);
-        void Update(Room room);
-        void Delete(Room room);
     }
 }
