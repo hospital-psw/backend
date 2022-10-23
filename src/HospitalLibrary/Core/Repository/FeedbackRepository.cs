@@ -35,12 +35,12 @@
 
         public IEnumerable<Feedback> GetAllPublic() 
         {
-            return GetAll().Where(x => x.Public && !x.Deleted).ToList();
+            return GetAll().Where(x => x.Public).ToList();
         }
 
         public IEnumerable<Feedback> GetAllPrivate() 
         {
-            return GetAll().Where(x => !x.Public && !x.Deleted).ToList();
+            return GetAll().Where(x => !x.Public).ToList();
         }
 
         public IEnumerable<Feedback> GetAllAnonymous() 
