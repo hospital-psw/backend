@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.DTO
 {
+    using HospitalLibrary.Core.Model;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,11 +13,11 @@
         public int Number { get; set; }
         public string Purpose { get; set; }
 
-        public FloorDetailsDTO(int id, int number, string purpose)
+        public FloorDetailsDTO(Floor floor)
         {
-            Id = id;
-            Number = number;
-            Purpose = purpose;
+            Id = floor.Id;
+            Number = floor.Number;
+            Purpose = floor.Purpose;
         }
     }
 }

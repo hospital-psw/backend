@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
+    using HospitalLibrary.Core.DTO;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -8,6 +9,6 @@
 
     public interface IFloorService
     {
-
+        FloorDetailsDTO GetFloorDetails(int id);
     }
 }
