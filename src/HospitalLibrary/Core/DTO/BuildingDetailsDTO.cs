@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.DTO
 {
+    using HospitalLibrary.Core.Model;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,11 +13,12 @@
         public string Name { get; set; }
         public string Address { get; set; }
 
-        public BuildingDetailsDTO(int id, string name, string address)
+
+        public BuildingDetailsDTO(Building building)
         {
-            Id = id;
-            Name = name;
-            Address = address;
+            Id = building.Id;
+            Name = building.Name;
+            Address = building.Address;
         }
     }
 }

@@ -25,7 +25,7 @@
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 return unitOfWork.GetRepository<TEntity>().Get(id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
