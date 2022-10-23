@@ -30,7 +30,7 @@
             return feedback is null ? NotFound() : Ok(feedback);
         }
 
-        [HttpPost("create")]
+        [HttpPost("add")]
         public IActionResult Add(NewFeedbackDTO dto)
         {
             if (dto == null)
