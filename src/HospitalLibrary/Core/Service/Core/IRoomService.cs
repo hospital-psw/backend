@@ -9,5 +9,6 @@ namespace HospitalLibrary.Core.Service.Core
     {
         List<BuildingDTO> GetAll();
         Room Add(RoomDTO dto);
+        RoomDetailsDTO GetDetails(int id);
     }
 }

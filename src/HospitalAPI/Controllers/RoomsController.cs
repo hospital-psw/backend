@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.DTO;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,5 +41,16 @@ namespace HospitalAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("detail/{id}")]
+        public IActionResult GetBuildingDetails(int id)
+        {
+            RoomDetailsDTO entity = _roomService.GetDetails(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(entity);
+        }
     }
 }

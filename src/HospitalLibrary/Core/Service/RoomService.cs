@@ -89,5 +89,19 @@ namespace HospitalLibrary.Core.Service
                 return null;
             }
         }
+
+        public RoomDetailsDTO GetDetails(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                RoomDetailsDTO room = new RoomDetailsDTO(unitOfWork.RoomRepository.Get(id));
+                return room;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
