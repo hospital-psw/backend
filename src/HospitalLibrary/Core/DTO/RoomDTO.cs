@@ -14,6 +14,8 @@
         public int FloorId { get; set; }
         public int BuildingId { get; set; }
         public string Purpose { get; set; }
+        public double X { get; set; }
+        public double Z { get; set; }
 
         public RoomDTO(Room room)
         {
@@ -22,6 +24,8 @@
             FloorId = room.Floor.Id;
             BuildingId = room.Building.Id;
             Purpose = room.Purpose;
+            X = room.X;
+            Z = room.Z;
         }
 
     }
