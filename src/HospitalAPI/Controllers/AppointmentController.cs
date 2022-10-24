@@ -10,9 +10,8 @@
     {
         private IAppointmentService _appointmentService;
 
-        public AppointmentController(IAppointmentService appointmentService)
-        {
-            _appointmentService = appointmentService;
+        public AppointmentController(IAppointmentService    appointmentService){
+            _appointmentService   =    appointmentService;
         }
     }
 }
