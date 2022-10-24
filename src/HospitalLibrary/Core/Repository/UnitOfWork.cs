@@ -24,7 +24,7 @@
         }
 
         public IUserRepository UserRepository { get; set; }
-        public IFeedbackRepository FeedbackRepository { get; set; } 
+        public IFeedbackRepository FeedbackRepository { get; set; }
 
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
