@@ -11,7 +11,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BaseService<TEntity> where TEntity : class
+    public class BaseService<TEntity> where TEntity : class 
     {
 
         public BaseService()

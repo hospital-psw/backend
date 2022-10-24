@@ -20,9 +20,11 @@
             _context = context;
 
             UserRepository = new UserRepository(_context);
+            FeedbackRepository = new FeedbackRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
+        public IFeedbackRepository FeedbackRepository { get; set; } 
 
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
