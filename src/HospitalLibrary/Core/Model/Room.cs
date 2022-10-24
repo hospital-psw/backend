@@ -1,7 +1,5 @@
 ﻿using HospitalLibrary.Core.DTO;
-using IdentityServer4.Models;
-using System;
-using System.ComponentModel.DataAnnotations;
+
 
 namespace HospitalLibrary.Core.Model
 {
@@ -11,8 +9,6 @@ namespace HospitalLibrary.Core.Model
         public Floor Floor { get; set; }
         public Building Building { get; set; }
         public string Purpose { get; set; }
-        public double X { get; set; }
-        public double Z { get; set; }
 
         public Room()
         {

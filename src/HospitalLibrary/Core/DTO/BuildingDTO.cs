@@ -9,6 +9,7 @@
         public string Name { get; set; }
         public string Address { get; set; }
 
+        public BuildingDTO() {}
         public BuildingDTO(Building building)
         {
             Id = building.Id;

@@ -13,6 +13,7 @@
         public int Number { get; set; }
         public string Purpose { get; set; }
 
+        public FloorDTO() { }
         public FloorDTO(Floor floor)
         {
             Id = floor.Id;

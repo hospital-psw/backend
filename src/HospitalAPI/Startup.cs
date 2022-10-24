@@ -37,6 +37,7 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IFloorService, FloorService>();
+            services.AddScoped<IMapService, MapService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
 
             services.AddScoped<IUserService, UserService>();
