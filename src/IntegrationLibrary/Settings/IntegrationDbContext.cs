@@ -18,8 +18,8 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1, Name = "Blood bank 1"},
-                new BloodBank() { Id = 2, Name = "Crveni krst "}
+                new BloodBank() { Id = 1, Name = "Blood bank 1" },
+                new BloodBank() { Id = 2, Name = "Crveni krst " }
             );
             base.OnModelCreating(modelBuilder);
         }
