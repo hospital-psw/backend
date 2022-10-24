@@ -24,7 +24,7 @@
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id) 
+        public IActionResult Get(int id)
         {
             Feedback feedback = _feedbackService.Get(id);
             return feedback is null ? NotFound() : Ok(feedback);
@@ -42,26 +42,26 @@
         }
 
         [HttpPut("make/public/{id}")]
-        public IActionResult MakePublic(int id) 
+        public IActionResult MakePublic(int id)
         {
-            bool status  = _feedbackService.MakePublic(id);
+            bool status = _feedbackService.MakePublic(id);
             return status is true ? Ok(status) : BadRequest("Something went wrong...");
         }
 
         [HttpPut("make/private/{id}")]
-        public IActionResult MakePrivate(int id) 
+        public IActionResult MakePrivate(int id)
         {
             bool status = _feedbackService.MakePrivate(id);
             return status is true ? Ok(status) : BadRequest("Something went wrong...");
         }
 
         [HttpPut("make/anonymous/{id}")]
-        public IActionResult MakeAnonymous(int id) 
+        public IActionResult MakeAnonymous(int id)
         {
             bool status = _feedbackService.MakeAnonymous(id);
             return status is true ? Ok(status) : BadRequest("Something went wrong...");
         }
-        
+
         [HttpPut("make/identified/{id}")]
         public IActionResult MakeIdentified(int id)
         {

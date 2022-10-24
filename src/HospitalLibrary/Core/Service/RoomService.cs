@@ -9,7 +9,7 @@ namespace HospitalLibrary.Core.Service
     {
         private readonly IRoomRepository _roomRepository;
 
-                    public RoomService(IRoomRepository        roomRepository)
+        public RoomService(IRoomRepository roomRepository)
         {
             _roomRepository = roomRepository;
 
@@ -32,7 +32,7 @@ namespace HospitalLibrary.Core.Service
 
         public void Create(Room room)
         {
-            _roomRepository.Create(room  );
+            _roomRepository.Create(room);
         }
 
         public void Update(Room room)
