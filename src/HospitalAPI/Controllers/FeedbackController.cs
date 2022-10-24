@@ -35,7 +35,7 @@
         {
             if (dto == null)
             {
-                return BadRequest("Dto is null.");
+                return BadRequest("Dto is null, please check your input.");
             }
 
             return Ok(_feedbackService.Add(dto));
