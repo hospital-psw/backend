@@ -37,10 +37,11 @@
             };
 
             string email_subject = "Hospital Registration Confirmation";
-            string email_body = "<p>Your institution has been successfully registered in our database.</p>" +
+            string email_body = "" +
+                "<p>Your institution has been successfully registered in our database.</p>" +
                 "<p><b>Your API Key is: <b>" + api_key + "</p>" +
-                "<p>To confirm the registration go to the following link <a>dummy_link</a>" +
-                "and use <b>this email</b> as a username" +
+                "<p>To confirm the registration go to the following link <a>dummy_link</a>\n" +
+                "and use <b>this email</b> as a username\n" +
                 "and this <b>password: </b>" + generateRandomPassword() + "\n" +
                 "for the first login.</p>" +
                 "<p>After logging in change your password to a new one.</p>";
