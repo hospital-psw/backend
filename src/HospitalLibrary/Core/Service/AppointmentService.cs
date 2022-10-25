@@ -19,7 +19,8 @@
             {
                 using UnitOfWork unitOfWork = new UnitOfWork(new Settings.HospitalDbContext());
                 return unitOfWork.AppointmentRepository.GetAppointmentIfNotDone(appointmentId);
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return null;
             }

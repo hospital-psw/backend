@@ -26,7 +26,7 @@
         }
 
         public IUserRepository UserRepository { get; set; }
-        public IFeedbackRepository FeedbackRepository { get; set; } 
+        public IFeedbackRepository FeedbackRepository { get; set; }
 
         public IAppointmentRepository AppointmentRepository { get; set; }
 
