@@ -2,6 +2,7 @@
 {
     using IntegrationLibrary.Core.Service;
     using Microsoft.AspNetCore.Http;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,7 +21,6 @@
         private const string APIKEY_PARAM = "x-api-key";
         
         private readonly BloodBankService _bankService;
-        private readonly List<string> _valid_keys;
 
         public APIKeyMiddleware(RequestDelegate next, APIKeyOptions options)
         {
@@ -29,11 +29,13 @@
 
             // extracting valid keys from the database
             _bankService = new BloodBankService();
-            _valid_keys = _bankService.GetAll().Select(bank => bank.ApiKey).ToList();
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
+            List<string> valid_keys = _bankService.GetAll().Select(bank => bank.ApiKey).ToList();
+
+            Console.WriteLine(context.Request.Path);
             // check if middleware should be used based on endpoint
             if (!_options.Endpoints.Contains(context.Request.Path))
                 await _next(context);
@@ -50,7 +52,7 @@
                 }
 
                 // check validity of key
-                if (!_valid_keys.Contains(extractedAPIKey))
+                if (!valid_keys.Contains(extractedAPIKey))
                 {
                     context.Response.StatusCode = 401;
                     await context.Response.WriteAsync("Unauthorized access");

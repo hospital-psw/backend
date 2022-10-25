@@ -53,7 +53,7 @@ namespace IntegrationAPI
 
             app.UseMiddleware<APIKeyMiddleware>(new APIKeyOptions
             {
-                Endpoints = new List<string> { @"/BloodBank" }
+                Endpoints = new List<string> { @"/api/BloodBank/all" }
             });
 
             app.UseRouting();
