@@ -23,6 +23,7 @@
             RoomRepository = new RoomRepository(_context);
             FloorRepository = new FloorRepository(_context);
             BuildingRepository = new BuildingRepository(_context);
+            MapRepository = new MapRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -30,6 +31,7 @@
         public IRoomRepository RoomRepository { get; set; }
         public IFloorRepository FloorRepository { get; set; }
         public IBuildingRepository BuildingRepository { get; set; }
+        public IMapRepository MapRepository { get; set; }
 
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
