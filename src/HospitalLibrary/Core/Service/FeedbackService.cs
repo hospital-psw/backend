@@ -231,23 +231,24 @@
             try
             {
                 List<WelcomePageFeedbackDTO> feedbacks = new List<WelcomePageFeedbackDTO>();
-                using UnitOfWork unitOfWork=new(new HospitalDbContext());
-                foreach(Feedback feedback in unitOfWork.FeedbackRepository.GetAllPublic())
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                foreach (Feedback feedback in unitOfWork.FeedbackRepository.GetAllPublic())
                 {
-                    
-                    if(feedback.Anonymous) 
+
+                    if (feedback.Anonymous)
                     {
                         WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO("Anonymous", feedback.Message);
                         feedbacks.Add(dto);
-                    }else
+                    }
+                    else
                     {
-                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO(feedback.Creator.FirstName+ " " + feedback.Creator.LastName, feedback.Message);
+                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO(feedback.Creator.FirstName + " " + feedback.Creator.LastName, feedback.Message);
                         feedbacks.Add(dto);
                     }
                 }
                 return feedbacks;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return null;
             }
