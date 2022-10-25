@@ -20,10 +20,15 @@
             _context = context;
 
             UserRepository = new UserRepository(_context);
+            AppointmentRepository = new AppointmentRepository(_context);
+            DoctorRepositoy = new DoctorRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
 
+        public IAppointmentRepository AppointmentRepository { get; set; }
+
+        public IDoctorRepositoy DoctorRepositoy { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

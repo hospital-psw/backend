@@ -9,20 +9,15 @@ namespace HospitalLibrary.Core.Service
     {
         private readonly IRoomRepository _roomRepository;
 
-                    public RoomService(IRoomRepository        roomRepository)
+        public RoomService(IRoomRepository roomRepository)
         {
-            _roomRepository = roomRepository;
-
-
+           _roomRepository = roomRepository;
 
         }
 
         public IEnumerable<Room> GetAll()
         {
             return _roomRepository.GetAll();
-
-
-
         }
 
         public Room GetById(int id)
