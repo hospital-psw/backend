@@ -1,14 +1,14 @@
 ﻿namespace IntegrationLibrary.Core.Service
 {
+    using Mailjet.Client;
+    using Mailjet.Client.Resources;
+    using Mailjet.Client.TransactionalEmails;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Mailjet.Client;
-    using Mailjet.Client.Resources;
-    using Newtonsoft.Json.Linq;
-    using Mailjet.Client.TransactionalEmails;
 
     public class MailingService
     {

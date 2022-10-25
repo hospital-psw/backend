@@ -9,11 +9,11 @@
     [Route("api/[controller]")]
     public class BloodBankController : BaseController<BloodBank>
     {
-        private readonly IBloodBankService _bloodBankService; 
+        private readonly IBloodBankService _bloodBankService;
 
         public BloodBankController(IBloodBankService bloodBankService)
         {
-            _bloodBankService = bloodBankService;   
+            _bloodBankService = bloodBankService;
         }
     }
 }
