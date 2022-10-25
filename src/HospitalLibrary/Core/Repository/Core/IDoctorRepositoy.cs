@@ -7,9 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IAppointmentRepository : IBaseRepository<Appointment>
+    public interface IDoctorRepositoy : IBaseRepository<Doctor>
     {
-
-        public Appointment GetAppointmentIfNotDone(int appointmentId);
     }
 }

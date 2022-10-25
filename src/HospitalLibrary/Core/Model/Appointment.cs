@@ -9,7 +9,7 @@
 
     public class Appointment : Entity
     {
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
 
         public int Duration { get; set; }
 
