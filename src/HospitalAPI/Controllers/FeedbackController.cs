@@ -1,6 +1,6 @@
 ﻿namespace HospitalAPI.Controllers
 {
-    using HospitalLibrary.Core.DTO;
+    using HospitalLibrary.Core.DTO.FeedBack;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -67,6 +67,12 @@
         {
             bool status = _feedbackService.MakeIdentified(id);
             return status is true ? Ok(status) : BadRequest("Something went wrong...");
+        }
+
+        [HttpGet("get/welcome/page")]
+        public IActionResult GetWellcomePage()
+        {
+            return Ok(_feedbackService.GetForFrontPage());
         }
 
     }
