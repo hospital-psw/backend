@@ -1,12 +1,19 @@
 name: Restore, Format and Build
 
 on:
+
   push:
+    branches:
+      - develop
     paths:
       - "**.cs"
       - ".editorconfig"
-
-permissions: write-all
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - "**.cs"
+      - ".editorconfig"
 
 jobs:
   check-format:
@@ -25,7 +32,7 @@ jobs:
         run: dotnet restore
 
       - name: Run dotnet format
-        run: dotnet format --no-restore --verbosity diagnostic
+        run: dotnet format --verify-no-changes --no-restore --verbosity diagnostic
       
       - name: Build
         run: dotnet build --no-restore

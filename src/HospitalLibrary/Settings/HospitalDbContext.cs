@@ -13,7 +13,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Room> Rooms { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
@@ -26,12 +26,6 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, Number = "101A", Floor = 1 },
-                new Room() { Id = 2, Number = "204", Floor = 2 },
-                new Room() { Id = 3, Number = "305B", Floor = 3 }
-            );
-            base.OnModelCreating(modelBuilder);
         }
 
         public override int SaveChanges()
