@@ -1,3 +1,4 @@
+using IntegrationAPI.Middleware;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Core;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
 namespace IntegrationAPI
 {
@@ -48,6 +50,11 @@ namespace IntegrationAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
+
+            app.UseMiddleware<APIKeyMiddleware>(new APIKeyOptions
+            {
+                Endpoints = new List<string> { @"/BloodBank" }
+            });
 
             app.UseRouting();
 
