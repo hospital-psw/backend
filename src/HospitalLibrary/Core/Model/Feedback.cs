@@ -17,11 +17,11 @@
 
         public bool Public { get; set; }
 
-        public Feedback() 
+        public Feedback()
         {
         }
 
-        public Feedback(NewFeedbackDTO dto) 
+        public Feedback(NewFeedbackDTO dto)
         {
             Message = dto.Message;
             Anonymous = dto.Anonymous;
