@@ -21,11 +21,13 @@
 
             UserRepository = new UserRepository(_context);
             FeedbackRepository = new FeedbackRepository(_context);
+            AppointmentRepository = new AppointmentRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
         public IFeedbackRepository FeedbackRepository { get; set; } 
 
+        public IAppointmentRepository AppointmentRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
