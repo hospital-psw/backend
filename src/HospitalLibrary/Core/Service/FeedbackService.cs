@@ -241,7 +241,7 @@
                         feedbacks.Add(dto);
                     }else
                     {
-                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO(feedback.Creator.Name+ " " + feedback.Creator.LastName, feedback.Message);
+                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO(feedback.Creator.FirstName+ " " + feedback.Creator.LastName, feedback.Message);
                         feedbacks.Add(dto);
                     }
                 }
