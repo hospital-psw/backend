@@ -33,13 +33,13 @@
 
                 await SendEmailMessage(mailMessage);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError($"Error in EmailService in Send {e.Message} in {e.StackTrace}");
             }
         }
 
-        private MailMessage CreateEmailMessage(string body, string subject="New Message")
+        private MailMessage CreateEmailMessage(string body, string subject = "New Message")
         {
             try
             {
@@ -50,7 +50,7 @@
                 message.IsBodyHtml = true;
 
                 return message;
-            } 
+            }
             catch (Exception e)
             {
                 _logger.LogError($"Error in HospitalAPI EmailService in CreateEmailMessage {e.Message} in {e.StackTrace}");
