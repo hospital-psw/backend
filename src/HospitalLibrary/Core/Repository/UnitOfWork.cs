@@ -20,18 +20,33 @@
             _context = context;
 
             UserRepository = new UserRepository(_context);
+            RoomRepository = new RoomRepository(_context);
+            FloorRepository = new FloorRepository(_context);
+            BuildingRepository = new BuildingRepository(_context);
+            WorkingHoursRepository = new WorkingHoursRepository(_context);
+            MapRepository = new MapRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
             DoctorRepositoy = new DoctorRepository(_context);
             FeedbackRepository = new FeedbackRepository(_context);
+            AppointmentRepository = new AppointmentRepository(_context);
+            PatientRepository = new PatientRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
+
         public IFeedbackRepository FeedbackRepository { get; set; }
+
+        public IRoomRepository RoomRepository { get; set; }
+        public IFloorRepository FloorRepository { get; set; }
+        public IBuildingRepository BuildingRepository { get; set; }
+        public IMapRepository MapRepository { get; set; }
+        public IWorkingHoursRepository WorkingHoursRepository { get; set; }
 
         public IAppointmentRepository AppointmentRepository { get; set; }
 
-        public IDoctorRepositoy DoctorRepositoy { get; set; }
+        public IDoctorRepository DoctorRepositoy { get; set; }
 
+        public IPatientRepository PatientRepository { get; set; }
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

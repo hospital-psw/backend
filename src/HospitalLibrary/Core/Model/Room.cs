@@ -1,14 +1,34 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using HospitalLibrary.Core.DTO;
+using System;
 
 namespace HospitalLibrary.Core.Model
 {
     public class Room : Entity
     {
-        [Required]
-        [MinLength(3)]
         public string Number { get; set; }
-        [Range(1, 10)]
-        public int Floor { get; set; }
+        public Floor Floor { get; set; }
+        public Building Building { get; set; }
+        public string Purpose { get; set; }
+        public WorkingHours? WorkingHours { get; set; }
+
+        public Room()
+        {
+        }
+
+        public Room(RoomDTO dto)
+        {
+            Number = dto.Number;
+            Purpose = dto.Purpose;
+            //WorkingHours = new WorkingHours(dto.WorkigHoursDTO);
+            if (dto.WorkigHoursDTO != null)
+            {
+                WorkingHours = new WorkingHours(dto.WorkigHoursDTO);
+            }
+            else
+            {
+                WorkingHours = null;
+            }
+        }
+
     }
 }

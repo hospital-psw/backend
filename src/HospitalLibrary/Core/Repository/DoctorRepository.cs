@@ -9,7 +9,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DoctorRepository : BaseRepository<Doctor>, IDoctorRepositoy
+    public class DoctorRepository : BaseRepository<Doctor>, IDoctorRepository
     {
         public DoctorRepository(HospitalDbContext context) : base(context)
         {
