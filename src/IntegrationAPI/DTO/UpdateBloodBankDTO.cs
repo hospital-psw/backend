@@ -5,7 +5,7 @@
     public class UpdateBloodBankDTO
     {
         [Required]
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public string Name { get; set; }
         [EmailAddress]
         public string Email { get; set; }

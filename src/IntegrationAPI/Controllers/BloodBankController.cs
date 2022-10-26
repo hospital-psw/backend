@@ -75,7 +75,7 @@
                 return BadRequest();
             }
             var updatedBloodBank = _mapper.Map<BloodBank>(bloodBank);
-            updatedBloodBank.ApiKey = originalBloodBank.ApiKey; 
+            updatedBloodBank.ApiKey = originalBloodBank.ApiKey;
 
             var responseEntity = _bloodBankService.Update(updatedBloodBank);
 
