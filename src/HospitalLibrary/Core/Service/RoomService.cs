@@ -13,16 +13,11 @@ namespace HospitalLibrary.Core.Service
         {
             _roomRepository = roomRepository;
 
-
-
         }
 
         public IEnumerable<Room> GetAll()
         {
             return _roomRepository.GetAll();
-
-
-
         }
 
         public Room GetById(int id)
