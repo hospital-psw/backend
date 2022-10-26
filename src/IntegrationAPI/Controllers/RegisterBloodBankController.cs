@@ -50,8 +50,8 @@
             string api_key = GenerateAPIKey(bloodBank.Email);
             bloodBank.ApiKey = api_key;
 
-            MailingService.SendEmail(bloodBank.Email, bloodBank.ApiKey);
             _bloodBankService.Add(bloodBank);
+            MailingService.SendEmail(bloodBank.Email, bloodBank.ApiKey);
 
             return "Generated key: " + api_key;
         }

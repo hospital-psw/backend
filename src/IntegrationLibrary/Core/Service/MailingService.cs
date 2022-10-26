@@ -12,34 +12,34 @@
 
     public class MailingService
     {
-        private const string _public_mailjet_key = "6cdf2011e792898a6181e4e0d8c93b0d";
-        private const string _private_mailjet_key = "188cd0c4f83511584789aaa4804d6d35";
+        private const string _publicMailjetKey = "6cdf2011e792898a6181e4e0d8c93b0d";
+        private const string _privateMailjetKey = "188cd0c4f83511584789aaa4804d6d35";
 
-        private static string generateRandomPassword(int pw_length = 15)
+        private static string generateRandomPassword(int pwLength = 15)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             Random random = new Random();
 
             return new string(
-                Enumerable.Repeat(chars, pw_length)
+                Enumerable.Repeat(chars, pwLength)
                 .Select(s => s[random.Next(s.Length)])
                 .ToArray()
                 );
         }
 
-        static async Task RunAsync(string destination_email, string api_key)
+        static async Task RunAsync(string destinationEmail, string apiKey)
         {
-            MailjetClient client = new MailjetClient(_public_mailjet_key, _private_mailjet_key);
+            MailjetClient client = new MailjetClient(_publicMailjetKey, _privateMailjetKey);
 
             MailjetRequest request = new MailjetRequest
             {
                 Resource = Send.Resource
             };
 
-            string email_subject = "Hospital Registration Confirmation";
-            string email_body = "" +
+            string emailSubject = "Hospital Registration Confirmation";
+            string emailBody = "" +
                 "<p>Your institution has been successfully registered in our database.</p>" +
-                "<p><b>Your API Key is: <b>" + api_key + "</p>" +
+                "<p><b>Your API Key is: <b>" + apiKey + "</p>" +
                 "<p>To confirm the registration go to the following link <a>dummy_link</a>\n" +
                 "and use <b>this email</b> as a username\n" +
                 "and this <b>password: </b>" + generateRandomPassword() + "\n" +
@@ -48,17 +48,17 @@
 
             var email = new TransactionalEmailBuilder()
                 .WithFrom(new SendContact("psw.hospital.2022@gmail.com"))
-                .WithSubject(email_subject)
-                .WithHtmlPart(email_body)
-                .WithTo(new SendContact(destination_email))
+                .WithSubject(emailSubject)
+                .WithHtmlPart(emailBody)
+                .WithTo(new SendContact(destinationEmail))
                 .Build();
 
             var _ = await client.SendTransactionalEmailAsync(email);
         }
 
-        public static void SendEmail(string destination_mail, string api_key)
+        public static void SendEmail(string destinationEmail, string apiKey)
         {
-            RunAsync(destination_mail, api_key).Wait();
+            RunAsync(destinationEmail, apiKey).Wait();
         }
     }
 }
