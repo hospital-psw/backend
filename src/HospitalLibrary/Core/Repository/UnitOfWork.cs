@@ -20,6 +20,10 @@
             _context = context;
 
             UserRepository = new UserRepository(_context);
+            RoomRepository = new RoomRepository(_context);
+            FloorRepository = new FloorRepository(_context);
+            BuildingRepository = new BuildingRepository(_context);
+            MapRepository = new MapRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
             DoctorRepositoy = new DoctorRepository(_context);
             FeedbackRepository = new FeedbackRepository(_context);
@@ -27,6 +31,11 @@
 
         public IUserRepository UserRepository { get; set; }
         public IFeedbackRepository FeedbackRepository { get; set; }
+
+        public IRoomRepository RoomRepository { get; set; }
+        public IFloorRepository FloorRepository { get; set; }
+        public IBuildingRepository BuildingRepository { get; set; }
+        public IMapRepository MapRepository { get; set; }
 
         public IAppointmentRepository AppointmentRepository { get; set; }
 
