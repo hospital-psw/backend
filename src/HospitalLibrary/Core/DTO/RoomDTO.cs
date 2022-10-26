@@ -25,6 +25,10 @@
             {
                 WorkigHoursDTO = new WorkigHoursDTO(room.WorkingHours);
             }
+            else
+            {
+                WorkigHoursDTO = new WorkigHoursDTO(" ", " ");
+            }
         }
 
     }

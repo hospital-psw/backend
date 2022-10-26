@@ -22,5 +22,11 @@
             Start = workingHours.Start.Hour.ToString() + ":" + workingHours.Start.Minute.ToString();
             End = workingHours.End.Hour.ToString() + ":" + workingHours.End.Minute.ToString();
         }
+
+        public WorkigHoursDTO(string start, string end)
+        {
+            Start = start;
+            End = end;
+        }
     }
 }

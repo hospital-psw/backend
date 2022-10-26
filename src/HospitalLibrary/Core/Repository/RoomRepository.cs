@@ -17,7 +17,7 @@ namespace HospitalLibrary.Core.Repository
 
         public override IEnumerable<Room> GetAll()
         {
-            return _context.Rooms.Include(x => x.Floor).Include(x => x.Building)
+            return _context.Rooms.Include(x => x.Floor).Include(x => x.Building).Include(x=>x.WorkingHours)
                                    .Where(x => !x.Deleted)
                                    .ToList();
         }
