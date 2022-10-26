@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Service.Core
+﻿namespace HospitalLibrary.Core.Model.Enums
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IBuildingService
+    public enum ExaminationType
     {
+        OPERATION, GENERAL, IMAGING
     }
 }

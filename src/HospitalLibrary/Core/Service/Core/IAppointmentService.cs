@@ -6,8 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IFloorService
+    public interface IAppointmentService
     {
-
     }
 }

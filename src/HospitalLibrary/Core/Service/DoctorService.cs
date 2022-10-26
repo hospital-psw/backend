@@ -8,8 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class FloorService : BaseService<Floor>, IFloorService
+    public class DoctorService : BaseService<Doctor>, IDoctorService
     {
-        public FloorService() : base() { }
     }
 }
