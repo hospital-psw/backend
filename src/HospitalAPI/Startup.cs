@@ -1,3 +1,4 @@
+using HospitalAPI.Configuration;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
@@ -28,6 +29,10 @@ namespace HospitalAPI
         {
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+
+            ProjectConfiguration config = new ProjectConfiguration();
+            Configuration.Bind("ProjectConfiguration", config);
+            services.AddSingleton(config);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
