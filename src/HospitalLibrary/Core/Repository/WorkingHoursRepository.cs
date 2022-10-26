@@ -9,7 +9,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class WorkingHoursRepository: BaseRepository<WorkingHours>, IWorkingHoursRepository
+    public class WorkingHoursRepository : BaseRepository<WorkingHours>, IWorkingHoursRepository
     {
         public WorkingHoursRepository(HospitalDbContext context) : base(context) { }
     }

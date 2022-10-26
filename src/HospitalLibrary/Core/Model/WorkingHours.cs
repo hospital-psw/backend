@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class WorkingHours:Entity
+    public class WorkingHours : Entity
     {
         public DateTime Start { get; set; }
         public DateTime End { get; set; }

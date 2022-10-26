@@ -10,7 +10,7 @@
         public BuildingDTO Building { get; set; }
         public string Purpose { get; set; }
         public WorkigHoursDTO? WorkigHoursDTO { get; set; }
-        
+
 
         public RoomDTO() { }
         public RoomDTO(Room room)
@@ -21,7 +21,7 @@
             Building = new BuildingDTO(room.Building);
             Purpose = room.Purpose;
             //WorkigHoursDTO = new WorkigHoursDTO(room.WorkingHours);
-            if(room.WorkingHours != null)
+            if (room.WorkingHours != null)
             {
                 WorkigHoursDTO = new WorkigHoursDTO(room.WorkingHours);
             }
