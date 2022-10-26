@@ -1,10 +1,10 @@
 ﻿namespace HospitalAPI.Configuration
 {
-    public class ProjectConfiguration
+    public class ProjectConfiguration : IProjectConfiguration
     {
         public DatabaseConfiguration DatabaseConfiguration { get; set; } = new DatabaseConfiguration();
 
-        public Jwt Jwt { get; set; } = new Jwt();
+        public EmailSettings EmailSettings { get; set; } = new EmailSettings();
     }
 
     public class DatabaseConfiguration
