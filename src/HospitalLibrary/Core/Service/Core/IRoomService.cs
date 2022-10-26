@@ -1,14 +1,14 @@
-﻿using HospitalLibrary.Core.DTO;
-using HospitalLibrary.Core.Model;
-using IdentityModel;
+﻿using HospitalLibrary.Core.Model;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service.Core
 {
     public interface IRoomService
     {
-        List<RoomDTO> GetAll();
-        Room Add(RoomDTO dto);
-        RoomDetailsDTO GetDetails(int id);
+        IEnumerable<Room> GetAll();
+        Room GetById(int id);
+        void Create(Room room);
+        void Update(Room room);
+        void Delete(Room room);
     }
 }

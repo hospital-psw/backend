@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Service.Core
+﻿namespace HospitalLibrary.Core.Model.Enums
 {
     using HospitalLibrary.Core.DTO;
     using System;
@@ -7,8 +7,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IFloorService
+    public enum ExaminationType
     {
-        FloorDetailsDTO GetDetails(int id);
+        OPERATION, GENERAL, IMAGING
     }
 }
