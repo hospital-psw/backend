@@ -1,7 +1,9 @@
 ﻿namespace IntegrationAPI.Middleware
 {
     using IntegrationLibrary.Core.Service;
+    using IntegrationLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,21 +22,14 @@
         private readonly APIKeyOptions _options;
         private const string APIKEY_PARAM = "x-api-key";
 
-        private readonly BloodBankService _bankService;
-
         public APIKeyMiddleware(RequestDelegate next, APIKeyOptions options)
         {
             _next = next;
             _options = options;
-
-            // extracting valid keys from the database
-            _bankService = new BloodBankService();
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            List<string> valid_keys = _bankService.GetAll().Select(bank => bank.ApiKey).ToList();
-
             Console.WriteLine(context.Request.Path);
             // check if middleware should be used based on endpoint
             if (!_options.Endpoints.Contains(context.Request.Path))
@@ -50,6 +45,10 @@
                     await context.Response.WriteAsync("API Key not provided");
                     return;
                 }
+
+                // get valid keys from injected service
+                var _bankService = (BloodBankService)context.RequestServices.GetRequiredService<IBloodBankService>();
+                List<string> valid_keys = _bankService.GetAll().Select(bank => bank.ApiKey).ToList();
 
                 // check validity of key
                 if (!valid_keys.Contains(extractedAPIKey))
