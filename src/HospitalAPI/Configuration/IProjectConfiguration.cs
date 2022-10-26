@@ -1,4 +1,4 @@
-﻿namespace HospitalAPI.NewFolder
+﻿namespace HospitalAPI.Configuration
 {
     public interface IProjectConfiguration
     {
