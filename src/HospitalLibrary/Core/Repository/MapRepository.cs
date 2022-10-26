@@ -20,7 +20,7 @@
 
         public override IEnumerable<RoomMap> GetAll()
         {
-            return _context.RoomsMap.Include(x => x.Room).Include(x => x.Room.Building).Include(x => x.Room.Floor)
+            return _context.RoomsMap.Include(x => x.Room).Include(x => x.Room.Building).Include(x => x.Room.Floor).Include(x => x.Room.WorkingHours)
                                    .Where(x => !x.Deleted)
                                    .ToList();
         }

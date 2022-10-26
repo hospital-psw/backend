@@ -126,7 +126,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Feedback");
+                    b.ToTable("Rooms");
                 });
 
                
@@ -189,6 +189,9 @@ namespace HospitalLibrary.Migrations
                     .HasColumnType("nvarchar(max)");
 
                 b.HasKey("Id");
+
+
+                b.ToTable("RoomsMap");
 
                 b.HasIndex("BuildingId");
 
@@ -707,6 +710,35 @@ namespace HospitalLibrary.Migrations
 
             });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.WorkingHours", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkingHours");
+                });
+
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
             {
                 b.HasOne("HospitalLibrary.Core.Model.Building", "Building")
@@ -717,10 +749,17 @@ namespace HospitalLibrary.Migrations
                     .WithMany()
                     .HasForeignKey("FloorId");
 
-                b.Navigation("Building");
+                    b.HasOne("HospitalLibrary.Core.Model.WorkingHours", "WorkingHours")
+                        .WithMany()
+                        .HasForeignKey("WorkingHoursId");
 
-                b.Navigation("Floor");
-            });
+                    b.Navigation("Building");
+
+                    b.Navigation("Floor");
+
+                    b.Navigation("WorkingHours");
+                });
+
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.RoomMap", b =>
             {

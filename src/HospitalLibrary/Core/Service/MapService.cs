@@ -24,7 +24,7 @@
                 }
                 return roomsMapDTO;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
