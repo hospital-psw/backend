@@ -25,33 +25,112 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Building", b =>
             {
-                b.Property<int>("Id")
+                    b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
+                        
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+                        
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+                        
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Buildings", (string)null);
+                    
+                 });
+                
+
+
+                modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
+                      
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                      
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+                      
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+                        
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExamType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                b.Property<string>("Address")
-                    .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+                        
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+                        
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
 
-                b.Property<DateTime>("DateCreated")
-                    .HasColumnType("datetime2");
+                    b.Property<bool>("Anonymous")
+                        .HasColumnType("bit");
 
-                b.Property<DateTime>("DateUpdated")
-                    .HasColumnType("datetime2");
+                    b.Property<int?>("CreatorId")
+                        .HasColumnType("int");      
+                        
+                     b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
-                b.Property<bool>("Deleted")
-                    .HasColumnType("bit");
+                    b.Property<bool>("Public")
+                        .HasColumnType("bit");
 
-                b.Property<string>("Name")
-                    .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                b.HasKey("Id");
+                    b.HasIndex("CreatorId");
 
-                b.ToTable("Buildings", (string)null);
-            });
+                    b.ToTable("Feedback");
+                });
 
-
+               
+          
             modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
             {
                 b.Property<int>("Id")
@@ -65,13 +144,13 @@ namespace HospitalLibrary.Migrations
 
                 b.Property<DateTime>("DateUpdated")
                     .HasColumnType("datetime2");
-
+                    
                 b.Property<bool>("Deleted")
                     .HasColumnType("bit");
-
+                    
                 b.Property<int>("Number")
                     .HasColumnType("int");
-
+                    
                 b.Property<string>("Purpose")
                     .HasColumnType("nvarchar(max)");
 
@@ -79,83 +158,7 @@ namespace HospitalLibrary.Migrations
 
                 b.ToTable("Floors", (string)null);
             });
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                b.Property<DateTime>("DateCreated")
-                    .HasColumnType("datetime2");
-
-                b.Property<DateTime>("DateUpdated")
-                    .HasColumnType("datetime2");
-
-                b.Property<bool>("Deleted")
-                    .HasColumnType("bit");
-
-                b.Property<bool>("Anonymous")
-                    .HasColumnType("bit");
-
-                b.Property<int?>("CreatorId")
-                    .HasColumnType("int");
-
-                b.Property<string>("Message")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<bool>("Public")
-                    .HasColumnType("bit");
-
-                b.HasKey("Id");
-
-                b.HasIndex("CreatorId");
-
-                b.ToTable("Feedback");
-
-            });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
-            {
-                b.Property<int>("Id")
-                   .ValueGeneratedOnAdd()
-                   .HasColumnType("int");
-
-                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                b.Property<DateTime>("Date")
-                    .HasColumnType("datetime2");
-
-                b.Property<DateTime>("DateCreated")
-                    .HasColumnType("datetime2");
-
-                b.Property<DateTime>("DateUpdated")
-                    .HasColumnType("datetime2");
-
-                b.Property<bool>("Deleted")
-                    .HasColumnType("bit");
-
-                b.Property<int>("Duration")
-                    .HasColumnType("int");
-
-                b.Property<int>("ExamType")
-                    .HasColumnType("int");
-
-                b.Property<bool>("IsDone")
-                    .HasColumnType("bit");
-
-                b.Property<int?>("RoomId")
-                    .HasColumnType("int");
-
-                b.HasKey("Id");
-
-                b.HasIndex("RoomId");
-
-                b.ToTable("Appointments");
-            });
-
-
+               
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
             {
                 b.Property<int>("Id")
@@ -738,6 +741,16 @@ namespace HospitalLibrary.Migrations
                 b.HasDiscriminator().HasValue("Doctor");
             });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Model.User");
+
+                    b.Property<bool>("Guest")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("Patient");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
             {
                 b.HasOne("HospitalLibrary.Core.Model.User", "Creator")
@@ -748,6 +761,7 @@ namespace HospitalLibrary.Migrations
 
             });
 
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
             {
                 b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
@@ -755,8 +769,9 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("RoomId");
 
                 b.Navigation("Room");
-
             });
+
+            
 #pragma warning restore 612, 618
         }
     }
