@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
-    using HospitalLibrary.Core.DTO;
+    using HospitalLibrary.Core.DTO.Feedback;
+    using HospitalLibrary.Core.DTO.FeedBack;
     using HospitalLibrary.Core.Model;
     using System;
     using System.Collections.Generic;
@@ -21,5 +22,6 @@
         bool MakePrivate(int id);
         bool MakeAnonymous(int id);
         bool MakeIdentified(int id);
+        public List<WelcomePageFeedbackDTO> GetForFrontPage();
     }
 }
