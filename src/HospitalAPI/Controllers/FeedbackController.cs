@@ -1,6 +1,6 @@
 ﻿namespace HospitalAPI.Controllers
 {
-    using HospitalLibrary.Core.DTO.FeedBack;
+    using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.DTO.Feedback;
-    using HospitalLibrary.Core.DTO.FeedBack;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;

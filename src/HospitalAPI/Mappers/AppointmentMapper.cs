@@ -14,6 +14,8 @@
             dto.Duration = appointment.Duration;
             dto.IsDone = appointment.IsDone;
             dto.ExamType = appointment.ExamType;
+            dto.Patient = PatientMapper.EntityToEntityDto(appointment.Patient);
+            dto.Doctor = DoctorMapper.EntityToEntityDto(appointment.Doctor);
 
             //dto.Room.Id = appointment.Room.Id;
             //dto.Room.Number = appointment.Room.Number;

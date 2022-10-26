@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.DTO.FeedBack
+﻿namespace HospitalLibrary.Core.DTO.Feedback
 {
     using System;
     using System.Collections.Generic;

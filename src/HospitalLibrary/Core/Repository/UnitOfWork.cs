@@ -25,7 +25,7 @@
             BuildingRepository = new BuildingRepository(_context);
             MapRepository = new MapRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
-            DoctorRepositoy = new DoctorRepository(_context);
+            DoctorRepository = new DoctorRepository(_context);
             FeedbackRepository = new FeedbackRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
             PatientRepository = new PatientRepository(_context);
@@ -42,7 +42,7 @@
 
         public IAppointmentRepository AppointmentRepository { get; set; }
 
-        public IDoctorRepository DoctorRepositoy { get; set; }
+        public IDoctorRepository DoctorRepository { get; set; }
 
         public IPatientRepository PatientRepository { get; set; }
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
