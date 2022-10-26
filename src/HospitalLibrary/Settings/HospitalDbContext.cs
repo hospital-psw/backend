@@ -16,6 +16,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Building> Buildings { get; set; }
         public DbSet <Floor> Floors { get; set; }
         public DbSet<RoomMap> RoomsMap { get; set; }
+        public DbSet<WorkingHours> WorkingHours{ get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -25,10 +26,16 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           /* modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1 }
-               
-            );
+            /* modelBuilder.Entity<Room>().HasData(
+                 new Room() { Id = 1 }
+
+             );
+             base.OnModelCreating(modelBuilder);*/
+            /*modelBuilder.Entity<WorkingHours>().HasData(
+                new WorkingHours() { Id = 4 },
+                new WorkingHours() { Id = 5 },
+                new WorkingHours() { Id = 6 }
+            ) ; 
             base.OnModelCreating(modelBuilder);*/
         }
 

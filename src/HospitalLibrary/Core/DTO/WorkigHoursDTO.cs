@@ -19,8 +19,8 @@
 
         public WorkigHoursDTO(WorkingHours workingHours)
         {
-            Start = workingHours.Start.ToString();
-            End = workingHours.End.ToString();
+            Start = workingHours.Start.Hour.ToString() + ":" + workingHours.Start.Minute.ToString();
+            End = workingHours.End.Hour.ToString() + ":" + workingHours.End.Minute.ToString();
         }
     }
 }
