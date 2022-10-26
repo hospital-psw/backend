@@ -20,8 +20,13 @@
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            AppointmentDto appointment = AppointmentMapper.EntityToEntityDto(_appointmentService.Get(id));
-            return appointment is null ? NotFound() : Ok(appointment);
+            Appointment appointment = _appointmentService.Get(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+            AppointmentDto dto = AppointmentMapper.EntityToEntityDto(appointment);
+            return Ok(dto);
         }
 
         [HttpPut]

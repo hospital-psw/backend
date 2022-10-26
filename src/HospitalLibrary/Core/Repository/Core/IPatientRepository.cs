@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IDoctorRepositoy : IBaseRepository<Doctor>
+    public interface IPatientRepository : IBaseRepository<Patient>
     {
     }
 }

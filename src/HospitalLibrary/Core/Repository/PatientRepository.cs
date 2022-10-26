@@ -9,9 +9,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DoctorRepository : BaseRepository<Doctor>, IDoctorRepository
+    public class PatientRepository : BaseRepository<Patient>, IPatientRepository
     {
-        public DoctorRepository(HospitalDbContext context) : base(context)
+        public PatientRepository(HospitalDbContext context) : base(context)
         {
         }
     }

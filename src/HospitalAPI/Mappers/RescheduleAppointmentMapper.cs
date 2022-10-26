@@ -12,7 +12,7 @@
             Appointment appointment = new Appointment();
 
             appointment.Id = dto.Id;
-            appointment.date = dto.Date;
+            appointment.Date = dto.Date;
             appointment.Duration = dto.Duration;
             appointment.ExamType = dto.ExamType;
 

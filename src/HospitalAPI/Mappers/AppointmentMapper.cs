@@ -10,7 +10,7 @@
             AppointmentDto dto = new AppointmentDto();
 
             dto.Id = appointment.Id;
-            dto.Date = appointment.date;
+            dto.Date = appointment.Date;
             dto.Duration = appointment.Duration;
             dto.IsDone = appointment.IsDone;
             dto.ExamType = appointment.ExamType;

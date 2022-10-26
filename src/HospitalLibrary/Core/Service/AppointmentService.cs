@@ -3,8 +3,8 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
-    using Microsoft.Extensions.Logging;
     using HospitalLibrary.Settings;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,7 +15,7 @@
     {
         private readonly ILogger<Appointment> _logger;
 
-        public AppointmentService(ILogger<Appointment> logger) : base() 
+        public AppointmentService(ILogger<Appointment> logger) : base()
         {
             _logger = logger;
         }
@@ -26,7 +26,7 @@
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 return unitOfWork.AppointmentRepository.Get(id);
-            } 
+            }
             catch (Exception e)
             {
                 _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
@@ -38,7 +38,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork= new(new HospitalDbContext());
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 unitOfWork.AppointmentRepository.Update(entity);
                 unitOfWork.Save();
 
@@ -50,7 +50,7 @@
                 return null;
             }
         }
-        
+
         public Appointment GetAppointmentIfNotDone(int appointmentId)
         {
             try
@@ -60,9 +60,9 @@
             }
             catch (Exception e)
             {
-              return null;
+                return null;
             }
         }
-        
+
     }
 }
