@@ -1,12 +1,14 @@
 ﻿namespace IntegrationLibrary.Core.Service.Core
 {
-    using System;
+    using IntegrationLibrary.Core.Model;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public interface IBloodBankService
     {
+        IEnumerable<BloodBank> GetAll();
+        BloodBank Get(int id);
+        BloodBank Create(BloodBank bloodBank);
+        BloodBank Update(BloodBank bloodBank);
+        bool Delete(int id);
     }
 }

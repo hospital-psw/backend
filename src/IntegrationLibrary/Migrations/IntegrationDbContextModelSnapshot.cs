@@ -48,6 +48,12 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GetBloodTypeAndAmountAvailability")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GetBloodTypeAvailability")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 

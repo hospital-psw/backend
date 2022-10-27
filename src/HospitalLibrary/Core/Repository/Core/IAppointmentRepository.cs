@@ -9,5 +9,7 @@
 
     public interface IAppointmentRepository : IBaseRepository<Appointment>
     {
+
+        public Appointment GetAppointmentIfNotDone(int appointmentId);
     }
 }

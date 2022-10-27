@@ -1,4 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTO;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
 using Microsoft.AspNetCore.Mvc;
 

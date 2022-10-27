@@ -15,63 +15,8 @@
             _baseService = new BaseService<TEntity>();
         }
 
-        [HttpGet("all")]
-        public IActionResult GetAll()
-        {
-            return Ok(_baseService.GetAll());
-        }
-
-        [HttpGet("{id}")]
-        public virtual IActionResult Get(int id)
-        {
-            TEntity entity = _baseService.Get(id);
-
-            if (entity == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(entity);
-        }
-
-        [HttpPost]
-        public IActionResult Add(TEntity entity)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (entity == null)
-            {
-                return BadRequest();
-            }
-
-            TEntity response = _baseService.Add(entity);
-
-            return Ok(response);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, TEntity entity)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (entity == null)
-            {
-                return BadRequest();
-            }
-
-            TEntity ent = _baseService.Update(entity);
-
-            return Ok(ent);
-        }
-
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public virtual IActionResult Delete(int id)
         {
             bool response = _baseService.Delete(id);
             if (!response)
