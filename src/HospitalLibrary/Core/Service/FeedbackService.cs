@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
-    using HospitalLibrary.Core.DTO;
+    using HospitalLibrary.Core.DTO.Feedback;
+    using HospitalLibrary.Core.DTO.FeedBack;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
@@ -16,9 +17,9 @@
     {
         private readonly ILogger<Feedback> _logger;
 
-        public FeedbackService(ILogger<Feedback> logger) : base() 
+        public FeedbackService(ILogger<Feedback> logger) : base()
         {
-            _logger = logger;   
+            _logger = logger;
         }
 
         public Feedback Add(NewFeedbackDTO dto)
@@ -33,7 +34,7 @@
 
                 return feedback;
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 _logger.LogError($"Error in FeedbackService in Add {e.Message} in {e.StackTrace}");
                 return null;
@@ -47,7 +48,7 @@
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 return unitOfWork.FeedbackRepository.GetAll();
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 _logger.LogError($"Error in FeedbackService in GetAll {e.Message} in {e.StackTrace}");
                 return null;
@@ -61,7 +62,7 @@
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 return unitOfWork.FeedbackRepository.Get(id);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 _logger.LogError($"Error in FeedbackService in Get {e.Message} in {e.StackTrace}");
                 return null;
@@ -125,17 +126,17 @@
             }
         }
 
-        public bool MakePublic(int id) 
+        public bool MakePublic(int id)
         {
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
-                
-                if (feedback == null) 
-                { 
-                    return false; 
-                
+
+                if (feedback == null)
+                {
+                    return false;
+
                 }
 
                 feedback.Public = true;
@@ -143,7 +144,7 @@
                 unitOfWork.Save();
                 return true;
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 _logger.LogError($"Error in FeedbackService in MakePublic {e.Message} in {e.StackTrace}");
                 return false;
@@ -175,7 +176,7 @@
             }
         }
 
-        public bool MakeAnonymous(int id) 
+        public bool MakeAnonymous(int id)
         {
             try
             {
@@ -222,6 +223,34 @@
             {
                 _logger.LogError($"Error in FeedbackService in MakeIdentified {e.Message} in {e.StackTrace}");
                 return false;
+            }
+        }
+
+        public List<WelcomePageFeedbackDTO> GetForFrontPage()
+        {
+            try
+            {
+                List<WelcomePageFeedbackDTO> feedbacks = new List<WelcomePageFeedbackDTO>();
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                foreach (Feedback feedback in unitOfWork.FeedbackRepository.GetAllPublic())
+                {
+
+                    if (feedback.Anonymous)
+                    {
+                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO("Anonymous", feedback.Message);
+                        feedbacks.Add(dto);
+                    }
+                    else
+                    {
+                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO(feedback.Creator.FirstName + " " + feedback.Creator.LastName, feedback.Message);
+                        feedbacks.Add(dto);
+                    }
+                }
+                return feedbacks;
+            }
+            catch (Exception e)
+            {
+                return null;
             }
         }
     }

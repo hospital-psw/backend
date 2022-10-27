@@ -1,3 +1,5 @@
+using HospitalAPI.Configuration;
+using HospitalAPI.EmailServices;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
@@ -36,12 +38,19 @@ namespace HospitalAPI
             });
 
             services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IMapService, MapService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IEmailService, EmailService>();
 
+            ProjectConfiguration config = new ProjectConfiguration();
+            Configuration.Bind("EmailSettings", config.EmailSettings);
+            services.AddSingleton(config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

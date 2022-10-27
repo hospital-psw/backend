@@ -16,7 +16,7 @@
 
         public FeedbackRepository(HospitalDbContext context) : base(context)
         {
-            _context = context; 
+            _context = context;
         }
 
         public override IEnumerable<Feedback> GetAll()
@@ -33,22 +33,22 @@
                                     .FirstOrDefault();
         }
 
-        public IEnumerable<Feedback> GetAllPublic() 
+        public IEnumerable<Feedback> GetAllPublic()
         {
             return GetAll().Where(x => x.Public).ToList();
         }
 
-        public IEnumerable<Feedback> GetAllPrivate() 
+        public IEnumerable<Feedback> GetAllPrivate()
         {
             return GetAll().Where(x => !x.Public).ToList();
         }
 
-        public IEnumerable<Feedback> GetAllAnonymous() 
+        public IEnumerable<Feedback> GetAllAnonymous()
         {
             return GetAll().Where(x => x.Anonymous).ToList();
         }
 
-        public IEnumerable<Feedback> GetAllIdentified() 
+        public IEnumerable<Feedback> GetAllIdentified()
         {
             return GetAll().Where(x => !x.Anonymous).ToList();
         }

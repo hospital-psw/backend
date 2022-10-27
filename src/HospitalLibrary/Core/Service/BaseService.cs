@@ -11,7 +11,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BaseService<TEntity> where TEntity : class 
+    public class BaseService<TEntity> where TEntity : class
     {
 
         public BaseService()
@@ -25,7 +25,7 @@
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 return unitOfWork.GetRepository<TEntity>().Get(id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -39,7 +39,7 @@
                 return unitOfWork.GetRepository<TEntity>().GetAll();
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -56,7 +56,7 @@
                 return entity;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -76,7 +76,7 @@
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -92,7 +92,7 @@
 
                 return entity;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

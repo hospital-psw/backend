@@ -1,7 +1,16 @@
 name: Restore, Format and Build
 
 on:
+
   push:
+    branches:
+      - develop
+    paths:
+      - "**.cs"
+      - ".editorconfig"
+  pull_request:
+    branches:
+      - develop
     paths:
       - "**.cs"
       - ".editorconfig"

@@ -1,6 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
-    using HospitalLibrary.Core.DTO;
+    using HospitalLibrary.Core.DTO.FeedBack;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,11 +17,11 @@
 
         public bool Public { get; set; }
 
-        public Feedback() 
+        public Feedback()
         {
         }
 
-        public Feedback(NewFeedbackDTO dto) 
+        public Feedback(NewFeedbackDTO dto)
         {
             Message = dto.Message;
             Anonymous = dto.Anonymous;

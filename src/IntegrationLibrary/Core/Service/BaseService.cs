@@ -5,13 +5,9 @@
     using IntegrationLibrary.Settings;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class BaseService<TEntity> where TEntity : class
     {
-
         public BaseService()
         {
         }
@@ -25,6 +21,7 @@
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
         }
@@ -39,11 +36,12 @@
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
         }
 
-        public virtual TEntity Add(TEntity entity)
+        public virtual TEntity Create(TEntity entity)
         {
             try
             {
@@ -56,6 +54,7 @@
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
 
@@ -76,6 +75,7 @@
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -92,6 +92,7 @@
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
 
