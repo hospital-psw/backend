@@ -7,20 +7,11 @@
 
     public class RescheduleAppointmentMapper
     {
-        public static Appointment EntityDtoToEntity(RescheduleAppointmentDto dto)
+        public static Appointment EntityDtoToEntity(RescheduleAppointmentDto dto, Appointment oldAppointment)
         {
-            Appointment appointment = new Appointment();
+            oldAppointment.Date = dto.Date;
 
-            appointment.Id = dto.Id;
-            appointment.Date = dto.Date;
-            appointment.Duration = dto.Duration;
-            appointment.ExamType = dto.ExamType;
-
-            //appointment.Room.Id = dto.Room.Id;
-            //appointment.Room.Number = dto.Room.Number;
-            //appointment.Room.Floor = dto.Room.Floor;
-
-            return appointment;
+            return oldAppointment;
         }
     }
 }

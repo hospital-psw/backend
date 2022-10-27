@@ -1,6 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
-    using HospitalLibrary.Core.DTO.FeedBack;
+    using HospitalLibrary.Core.DTO.Feedback;
     using System;
     using System.Collections.Generic;
     using System.Linq;
