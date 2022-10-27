@@ -126,7 +126,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Feedback");
                 });
 
                
@@ -190,12 +190,11 @@ namespace HospitalLibrary.Migrations
 
                 b.HasKey("Id");
 
-
-                b.ToTable("RoomsMap");
-
                 b.HasIndex("BuildingId");
 
                 b.HasIndex("FloorId");
+
+                b.HasIndex("WorkingHoursId");
 
                 b.ToTable("Rooms", (string)null);
             });
