@@ -1,5 +1,5 @@
-using IntegrationAPI.Middleware;
 using AutoMapper;
+using IntegrationAPI.Middleware;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Core;
 using Microsoft.AspNetCore.Builder;
