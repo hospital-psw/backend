@@ -182,6 +182,9 @@ namespace HospitalLibrary.Migrations
                 b.Property<int?>("FloorId")
                     .HasColumnType("int");
 
+                b.Property<int?>("WorkingHoursId")
+                    .HasColumnType("int");
+
                 b.Property<string>("Number")
                     .HasColumnType("nvarchar(max)");
 
