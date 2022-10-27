@@ -1,7 +1,7 @@
 ﻿namespace HospitalAPI.Mappers
 {
-    using HospitalLibrary.Core.Model;
     using HospitalAPI.Dto;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
 
     public class UpdateDoctorMapper

@@ -1,5 +1,5 @@
 ﻿using HospitalLibrary.Core.DTO;
-
+using System;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.Model
         public Floor Floor { get; set; }
         public Building Building { get; set; }
         public string Purpose { get; set; }
+        public WorkingHours? WorkingHours { get; set; }
 
         public Room()
         {
@@ -18,6 +19,15 @@ namespace HospitalLibrary.Core.Model
         {
             Number = dto.Number;
             Purpose = dto.Purpose;
+            //WorkingHours = new WorkingHours(dto.WorkigHoursDTO);
+            if (dto.WorkigHoursDTO != null)
+            {
+                WorkingHours = new WorkingHours(dto.WorkigHoursDTO);
+            }
+            else
+            {
+                WorkingHours = null;
+            }
         }
 
     }

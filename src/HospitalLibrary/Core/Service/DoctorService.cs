@@ -1,17 +1,19 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.DTO;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
-    using HospitalLibrary.Core.Repository;
+    using IdentityModel;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Text;
     using System.Threading.Tasks;
-    using System.Linq.Expressions;
-    using IdentityModel;
 
     public class DoctorService : BaseService<Doctor>, IDoctorService
     {
