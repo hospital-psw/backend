@@ -2,6 +2,7 @@
 
 namespace IntegrationLibrary.Core
 {
+    using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Settings;
     using System;
     using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace IntegrationLibrary.Core
         public IBloodBankRepository BloodBankRepository { get; set; }
 
 
-        public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;
 
@@ -34,12 +35,12 @@ namespace IntegrationLibrary.Core
                 _repositories = new Dictionary<string, dynamic>();
                 Type repositoryType = typeof(BaseRepository<>);
                 _repositories.Add(type, Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context));
-                return (IBaseRepository<TEntity>)_repositories[type];
+                return (IRepository<TEntity>)_repositories[type];
 
             }
             else if (_repositories.ContainsKey(type))
             {
-                return (IBaseRepository<TEntity>)_repositories[type];
+                return (IRepository<TEntity>)_repositories[type];
             }
 
             return null;

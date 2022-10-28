@@ -1,6 +1,7 @@
 using AutoMapper;
 using IntegrationAPI.Middleware;
 using IntegrationLibrary.BloodBank;
+using IntegrationLibrary.BloodBank.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,7 @@ namespace IntegrationAPI
             });
             services.AddAutoMapper(typeof(Startup));
             services.AddLogging();
+            services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
         }
 

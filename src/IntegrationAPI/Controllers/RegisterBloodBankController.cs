@@ -1,6 +1,7 @@
 ﻿namespace IntegrationAPI.Controllers
 {
     using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Util;
     using Microsoft.AspNetCore.Mvc;
     using System;

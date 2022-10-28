@@ -4,16 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.BloodBank
+namespace IntegrationLibrary.Core
 {
-    public interface IBaseRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class
     {
         TEntity Get(int id);
-
         IEnumerable<TEntity> GetAll();
-
         void Add(TEntity entity);
-
         void Update(TEntity entity);
     }
 }

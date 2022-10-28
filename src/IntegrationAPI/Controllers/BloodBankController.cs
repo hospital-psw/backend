@@ -3,6 +3,7 @@
     using AutoMapper;
     using IntegrationAPI.DTO;
     using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.BloodBank.Interfaces;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
@@ -37,8 +38,8 @@
             return Ok(entity);
         }
 
-        [HttpPost]
-        public IActionResult Add(BloodBank bloodBank)
+        [HttpPost("/register")]
+        public IActionResult Register(BloodBank bloodBank)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +51,16 @@
                 return BadRequest();
             }
 
+            // generate API key and add it here
+            // generate dummy password and add it here
+            // set dummy password 
+            // set change dummy password flag
+
+            //bloodBank.ApiKey = 
+
+
             BloodBank response = _bloodBankService.Create(bloodBank);
+
 
             return Ok(response);
         }
