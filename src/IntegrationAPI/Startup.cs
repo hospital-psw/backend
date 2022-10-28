@@ -1,6 +1,8 @@
 using AutoMapper;
 using IntegrationAPI.Middleware;
 using IntegrationLibrary.BloodBank;
+using IntegrationLibrary.Util;
+using IntegrationLibrary.Util.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Mjml.AspNetCore;
 using System.Collections.Generic;
 
 namespace IntegrationAPI
@@ -33,6 +36,11 @@ namespace IntegrationAPI
             services.AddAutoMapper(typeof(Startup));
             services.AddLogging();
             services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IMailSender, MailSender>();
+            services.AddMjmlServices(o => {
+                o.DefaultKeepComments = true;
+                o.DefaultBeautify = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

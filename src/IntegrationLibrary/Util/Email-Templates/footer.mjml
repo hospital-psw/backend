@@ -1,0 +1,8 @@
+<mj-section background-color="#9be5aa" padding-top="0" padding-bottom="0">
+    <mj-column>
+        <mj-text align="center" font-size="12px" padding="0">
+            <p>PSW Hospital 69420 Random Road, Novi Sad, Serbia</p>
+            <p>Phone number: 021 69420</p>
+        </mj-text>
+    </mj-column>
+</mj-section>

@@ -1,0 +1,5 @@
+<mj-section background-color="#9be5aa" padding-top="0" padding-bottom="0">
+    <mj-column>
+        <mj-image align="center" width="150px" src="images/hospital-logo.jpg" />
+    </mj-column>
+</mj-section>

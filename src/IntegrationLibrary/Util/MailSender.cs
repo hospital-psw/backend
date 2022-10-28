@@ -28,7 +28,8 @@
 
         public static string MakeRegisterTemplate(string mail, string apiKey)
         {
-            string basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            basePath = Path.Combine(new string[] {basePath, "IntegrationLibrary", "Util", "Email-Templates", "welcome_mail.mjml"});
             string template = "{% extends \'" + basePath + "\' %}" +
                 "{% block content %}" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
@@ -37,7 +38,9 @@
                 "<p>The username is " + mail + "</p>" +
                 "<p>The password is " + SecretGenerator.generateRandomPassword() + "</p><br/>" +
                 "<p>For further communication between our servers use the following API key: <b>" + apiKey + "</b></p>" +
-                "{% endblock %}"; 
+                "{% endblock %}";
+
+            template = File.ReadAllText(@"C:\Users\vlada\Desktop\Faks\PSW\Project\backend\src\IntegrationLibrary\Util\Email-Templates\base_mail.mjml");
 
             return template;
         }
