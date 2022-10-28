@@ -1,7 +1,6 @@
-﻿namespace IntegrationLibrary.Core.Service
+﻿namespace IntegrationLibrary.BloodBank
 {
-    using IntegrationLibrary.Core.Model;
-    using IntegrationLibrary.Core.Repository;
+    using IntegrationLibrary.Core;
     using IntegrationLibrary.Settings;
     using System;
     using System.Collections.Generic;

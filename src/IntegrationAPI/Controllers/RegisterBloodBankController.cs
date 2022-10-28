@@ -1,8 +1,7 @@
 ﻿namespace IntegrationAPI.Controllers
 {
-    using IntegrationLibrary.Core.Model;
-    using IntegrationLibrary.Core.Service;
-    using IntegrationLibrary.Core.Service.Core;
+    using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.Util;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Security.Cryptography;

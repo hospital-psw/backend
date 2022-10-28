@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using IntegrationAPI.DTO;
-    using IntegrationLibrary.Core.Model;
+    using IntegrationLibrary.BloodBank;
 
     public class MappingProfile : Profile
     {

@@ -1,6 +1,5 @@
-﻿namespace IntegrationLibrary.Core.Service.Core
+﻿namespace IntegrationLibrary.BloodBank
 {
-    using IntegrationLibrary.Core.Model;
     using System.Collections.Generic;
 
     public interface IBloodBankService

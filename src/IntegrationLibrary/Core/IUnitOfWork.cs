@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Repository.Core
+﻿namespace IntegrationLibrary.Core
 {
     using System;
     using System.Collections.Generic;

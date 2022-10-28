@@ -2,8 +2,7 @@
 {
     using AutoMapper;
     using IntegrationAPI.DTO;
-    using IntegrationLibrary.Core.Model;
-    using IntegrationLibrary.Core.Service.Core;
+    using IntegrationLibrary.BloodBank;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]

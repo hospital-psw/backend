@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository.Core
+namespace IntegrationLibrary.BloodBank
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {

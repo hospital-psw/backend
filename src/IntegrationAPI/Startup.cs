@@ -1,7 +1,6 @@
 using AutoMapper;
 using IntegrationAPI.Middleware;
-using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Service.Core;
+using IntegrationLibrary.BloodBank;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

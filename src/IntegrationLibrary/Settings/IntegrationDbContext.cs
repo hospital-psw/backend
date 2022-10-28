@@ -1,6 +1,7 @@
 ﻿namespace IntegrationLibrary.Settings
 {
-    using IntegrationLibrary.Core.Model;
+    using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.Core;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using System;
@@ -29,7 +30,7 @@
 
             IEnumerable<EntityEntry> entries = ChangeTracker
             .Entries()
-            .Where(e => e.Entity is Core.Model.Entity && (
+            .Where(e => e.Entity is Entity && (
                     e.State == EntityState.Added
                     || e.State == EntityState.Modified));
 

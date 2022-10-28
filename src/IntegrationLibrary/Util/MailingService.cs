@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.Core.Service
+﻿namespace IntegrationLibrary.Util
 {
     using Mailjet.Client;
     using Mailjet.Client.Resources;
