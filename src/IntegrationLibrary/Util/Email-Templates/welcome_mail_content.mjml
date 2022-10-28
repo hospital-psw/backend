@@ -1,7 +1,7 @@
 <mj-section background-color="#ffffff" padding-top="0">
     <mj-column width="500px">
         <mj-text font-size="20px" align="center">
-            <p>Your institution has been registered to the our hospital!</p>
+            <p>Your institution has been registered to our hospital!</p>
         </mj-text>
         <mj-text font-size="16px" align="left">
             <p>To confirm this registration fill out the change password form on the following link <a href="google.com">link</a></p>
