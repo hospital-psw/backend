@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Model
         public string Purpose { get; set; }
         public WorkingHours? WorkingHours { get; set; }
 
-        public Room() {}
+        public Room() { }
 
     }
 }

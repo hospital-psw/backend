@@ -12,6 +12,6 @@
         public string Purpose { get; set; }
         public Building Building { get; set; }
 
-        public Floor() {}
+        public Floor() { }
     }
 }

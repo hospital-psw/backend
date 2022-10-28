@@ -1,5 +1,5 @@
 ﻿namespace HospitalAPI.Dto
-{ 
+{
 
     public class RoomDto
     {
