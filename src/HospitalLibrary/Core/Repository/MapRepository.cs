@@ -18,10 +18,17 @@
             _context = context;
         }
 
-        public override IEnumerable<RoomMap> GetAll()
+        public IEnumerable<RoomMap> GetBuilding(string building)
         {
-            return _context.RoomsMap.Include(x => x.Room).Include(x => x.Room.Building).Include(x => x.Room.Floor).Include(x => x.Room.WorkingHours)
-                                   .Where(x => !x.Deleted)
+            return _context.RoomsMap.Include(x => x.Room).Include(x => x.Room.Floor.Building).Include(x => x.Room.Floor).Include(x => x.Room.WorkingHours)
+                                   .Where(x => !x.Deleted).Where(x => x.Room.Floor.Building.Name == building)
+                                   .ToList();
+        }
+
+        public IEnumerable<RoomMap> GetFloor(string building, int floor)
+        {
+            return _context.RoomsMap.Include(x => x.Room).Include(x => x.Room.Floor.Building).Include(x => x.Room.Floor).Include(x => x.Room.WorkingHours)
+                                   .Where(x => !x.Deleted).Where(x => x.Room.Floor.Building.Name == building && x.Room.Floor.Number == floor)
                                    .ToList();
         }
     }

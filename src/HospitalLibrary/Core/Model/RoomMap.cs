@@ -7,16 +7,10 @@
         public Room Room { get; set; }
         public double X { get; set; }
         public double Z { get; set; }
+        public double width { get; set; }
+        public double depth { get; set; }
 
-        public RoomMap()
-        {
-        }
 
-        public RoomMap(RoomMapDTO dto)
-        {
-            Room = new Room(dto.Room);
-            X = dto.X;
-            Z = dto.Z;
-        }
+        public RoomMap() {}
     }
 }

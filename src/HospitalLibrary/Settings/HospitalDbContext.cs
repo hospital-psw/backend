@@ -32,15 +32,11 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /* modelBuilder.Entity<Room>().HasData(
-                 new Room() { Id = 1 }
-
-             );
-             base.OnModelCreating(modelBuilder);*/
-            /*modelBuilder.Entity<WorkingHours>().HasData(
-                new WorkingHours() { Id = 4 },
-                new WorkingHours() { Id = 5 },
-                new WorkingHours() { Id = 6 }
+            /*modelBuilder.Entity<Floor>().HasData(
+                new Floor() { Id = 2 },
+                new Floor() { Id = 3 },
+                new Floor() { Id = 4 },
+                new Floor() { Id = 5 }
             ) ; 
             base.OnModelCreating(modelBuilder);*/
         }
