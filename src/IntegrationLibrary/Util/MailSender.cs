@@ -1,21 +1,21 @@
 ﻿namespace IntegrationLibrary.Util
 {
-    using Microsoft.Extensions.Configuration;
     using IntegrationLibrary.Util.Interfaces;
     using Mailjet.Client;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Mailjet.Client.Resources;
     using Mailjet.Client.TransactionalEmails;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Mjml.AspNetCore;
+    using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
 
-    public class MailSender: IMailSender
+    public class MailSender : IMailSender
     {
         private readonly IConfiguration _config;
         private readonly IMjmlServices _mjmlServices;
@@ -29,11 +29,11 @@
         public static string MakeRegisterTemplate(string mail, string apiKey)
         {
             string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] {basePath, "IntegrationLibrary", "Util", "Email-Templates"});
+            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
 
             string template = "<mjml>" +
                 "<mj-body>" +
-                "<mj-include path=\"" + Path.Combine(new string[] {basePath, "header.mjml"}) + "\" />" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
                 "<mj-include path=\"" + Path.Combine(new string[] { basePath, "welcome_mail_content.mjml" }) + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
