@@ -13,6 +13,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Mjml.AspNetCore;
     using System.IO;
+    using System.Reflection;
 
     public class MailSender: IMailSender
     {
@@ -25,9 +26,20 @@
             _mjmlServices = mjmlServices;
         }
 
-        public string LoadTemplate(string templatePath)
+        public static string MakeRegisterTemplate(string mail, string apiKey)
         {
-            return File.ReadAllText(templatePath);
+            string basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string template = "{% extends \'" + basePath + "\' %}" +
+                "{% block content %}" +
+                "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
+                "<mj-column width=\"500px\">" +
+                "<mj-text font-size=\"16px\" align=\"left\">" +
+                "<p>The username is " + mail + "</p>" +
+                "<p>The password is " + SecretGenerator.generateRandomPassword() + "</p><br/>" +
+                "<p>For further communication between our servers use the following API key: <b>" + apiKey + "</b></p>" +
+                "{% endblock %}"; 
+
+            return template;
         }
 
         public async Task RunAsync(string template, string subject, string destinationEmail)
