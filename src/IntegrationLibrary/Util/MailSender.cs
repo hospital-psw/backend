@@ -29,18 +29,24 @@
         public static string MakeRegisterTemplate(string mail, string apiKey)
         {
             string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] {basePath, "IntegrationLibrary", "Util", "Email-Templates", "welcome_mail.mjml"});
-            string template = "{% extends \'" + basePath + "\' %}" +
-                "{% block content %}" +
+            basePath = Path.Combine(new string[] {basePath, "IntegrationLibrary", "Util", "Email-Templates"});
+
+            string template = "<mjml>" +
+                "<mj-body>" +
+                "<mj-include path=\"" + Path.Combine(new string[] {basePath, "header.mjml"}) + "\" />" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "welcome_mail_content.mjml" }) + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
                 "<p>The username is " + mail + "</p>" +
                 "<p>The password is " + SecretGenerator.generateRandomPassword() + "</p><br/>" +
                 "<p>For further communication between our servers use the following API key: <b>" + apiKey + "</b></p>" +
-                "{% endblock %}";
-
-            template = File.ReadAllText(@"C:\Users\vlada\Desktop\Faks\PSW\Project\backend\src\IntegrationLibrary\Util\Email-Templates\base_mail.mjml");
+                "</mj-text>" +
+                "</mj-column>" +
+                "</mj-section>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "</mj-body>" +
+                "</mjml>";
 
             return template;
         }
