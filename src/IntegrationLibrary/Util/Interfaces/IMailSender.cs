@@ -8,6 +8,8 @@
 
     public interface IMailSender
     {
+        string LoadTemplate(string templatePath);
+
         Task RunAsync(string template, string subject, string destinationEmail);
 
         void SendEmail(string template, string subject, string destinationEmail);

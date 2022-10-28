@@ -12,6 +12,7 @@
     using Mailjet.Client.TransactionalEmails;
     using Microsoft.AspNetCore.Mvc;
     using Mjml.AspNetCore;
+    using System.IO;
 
     public class MailSender: IMailSender
     {
@@ -22,6 +23,11 @@
         {
             _config = config;
             _mjmlServices = mjmlServices;
+        }
+
+        public string LoadTemplate(string templatePath)
+        {
+            return File.ReadAllText(templatePath);
         }
 
         public async Task RunAsync(string template, string subject, string destinationEmail)
