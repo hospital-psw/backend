@@ -20,9 +20,9 @@ namespace HospitalLibrary.Core.Model
             Number = dto.Number;
             Purpose = dto.Purpose;
             //WorkingHours = new WorkingHours(dto.WorkigHoursDTO);
-            if (dto.WorkigHoursDTO != null)
+            if (dto.WorkingHours.Start != dto.WorkingHours.End)
             {
-                WorkingHours = new WorkingHours(dto.WorkigHoursDTO);
+                WorkingHours = dto.WorkingHours;
             }
             else
             {

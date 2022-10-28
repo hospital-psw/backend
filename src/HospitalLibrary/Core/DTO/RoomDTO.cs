@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.DTO
 {
     using HospitalLibrary.Core.Model;
+    using System;
 
     public class RoomDTO
     {
@@ -9,7 +10,7 @@
         public FloorDTO Floor { get; set; }
         public BuildingDTO Building { get; set; }
         public string Purpose { get; set; }
-        public WorkigHoursDTO? WorkigHoursDTO { get; set; }
+        public WorkingHours WorkingHours { get; set; }
 
 
         public RoomDTO() { }
@@ -23,11 +24,11 @@
             //WorkigHoursDTO = new WorkigHoursDTO(room.WorkingHours);
             if (room.WorkingHours != null)
             {
-                WorkigHoursDTO = new WorkigHoursDTO(room.WorkingHours);
+                WorkingHours = new WorkingHours(room.WorkingHours.Start, room.WorkingHours.End);
             }
             else
             {
-                WorkigHoursDTO = new WorkigHoursDTO(" ", " ");
+                WorkingHours = new WorkingHours(new DateTime(), new DateTime());
             }
         }
 
