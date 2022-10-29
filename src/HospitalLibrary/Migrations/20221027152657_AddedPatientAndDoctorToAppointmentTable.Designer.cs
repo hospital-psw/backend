@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221027152657_AddedPatientAndDoctorToAppointmentTable")]
+    partial class AddedPatientAndDoctorToAppointmentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +145,6 @@ namespace HospitalLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BuildingId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -163,43 +162,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuildingId");
-
                     b.ToTable("Floors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -209,6 +172,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("BuildingId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -232,6 +198,8 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuildingId");
 
                     b.HasIndex("FloorId");
 
@@ -264,12 +232,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("float");
 
                     b.Property<double>("Z")
-                        .HasColumnType("float");
-
-                    b.Property<double>("depth")
-                        .HasColumnType("float");
-
-                    b.Property<double>("width")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -400,17 +362,12 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Creator");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Building", "Building")
                         .WithMany()
                         .HasForeignKey("BuildingId");
 
-                    b.Navigation("Building");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
-                {
                     b.HasOne("HospitalLibrary.Core.Model.Floor", "Floor")
                         .WithMany()
                         .HasForeignKey("FloorId");
@@ -418,6 +375,8 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.WorkingHours", "WorkingHours")
                         .WithMany()
                         .HasForeignKey("WorkingHoursId");
+
+                    b.Navigation("Building");
 
                     b.Navigation("Floor");
 

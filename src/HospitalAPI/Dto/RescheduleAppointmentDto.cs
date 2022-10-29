@@ -14,6 +14,10 @@
 
         public ExaminationType ExamType { get; set; }
 
-        public RoomDto Room { get; set; }
+        public int RoomId { get; set; }
+
+        public int PatientId { get; set; }
+
+        public int DoctorId { get; set; }
     }
 }

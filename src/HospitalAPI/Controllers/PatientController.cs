@@ -42,7 +42,7 @@
             return Ok(dto);
         }
 
-        [HttpGet("/all")]
+        [HttpGet("all")]
         public IActionResult GetAll()
         {
             List<PatientDto> patientsDto = new List<PatientDto>();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace HospitalLibrary.Core.Model
     {
         public string Name { get; set; }
         public string Address { get; set; }
+
+        public Building() { }
 
     }
 }

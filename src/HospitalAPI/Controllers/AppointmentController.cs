@@ -39,8 +39,8 @@
                 return NotFound();
             }
 
-            Appointment appointment = RescheduleAppointmentMapper.EntityDtoToEntity(dto);
-            return Ok(_appointmentService.Update(appointment));
+            Appointment appointment = _appointmentService.Get(dto.Id);
+            return Ok(_appointmentService.Update(RescheduleAppointmentMapper.EntityDtoToEntity(dto, appointment)));
         }
 
         [HttpGet]
