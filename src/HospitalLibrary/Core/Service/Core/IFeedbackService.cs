@@ -22,5 +22,8 @@
         bool MakeAnonymous(int id);
         bool MakeIdentified(int id);
         public List<WelcomePageFeedbackDTO> GetForFrontPage();
+        bool ApproveFeedback(int id);
+        bool DenyFeedback(int id);
+        bool MakePending(int id);
     }
 }

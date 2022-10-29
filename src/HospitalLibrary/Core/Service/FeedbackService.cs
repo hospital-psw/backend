@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
@@ -252,5 +253,78 @@
                 return null;
             }
         }
+        public bool ApproveFeedback(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Status = FeedbackStatus.APPROVED;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in MakeAnonymous {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+        public bool DenyFeedback(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Status = FeedbackStatus.DENIED;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in MakeAnonymous {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+        public bool MakePending(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Status = FeedbackStatus.PENDING;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in MakeAnonymous {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+
     }
 }

@@ -2,8 +2,11 @@
 {
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Runtime.InteropServices;
 
     [ApiController]
@@ -73,6 +76,27 @@
         public IActionResult GetWellcomePage()
         {
             return Ok(_feedbackService.GetForFrontPage());
+        }
+
+        [HttpPut("make/approved/{id}")]
+        public IActionResult ApproveFeedback(int id)
+        {
+            bool status = _feedbackService.ApproveFeedback(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
+        }
+
+        [HttpPut("make/denied/{id}")]
+        public IActionResult DenyFeedback(int id)
+        {
+            bool status = _feedbackService.DenyFeedback(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
+        }
+
+        [HttpPut("make/pending/{id}")]
+        public IActionResult MakePending(int id)
+        {
+            bool status = _feedbackService.MakePending(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
         }
 
     }
