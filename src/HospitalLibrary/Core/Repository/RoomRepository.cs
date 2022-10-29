@@ -34,8 +34,10 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(Room room)
         {
-            _context.Entry(room).State = EntityState.Modified;
-
+            Room roomFromBase = _context.Rooms.Find(room.Id);
+            roomFromBase.Purpose = room.Purpose;
+            _context.Entry(roomFromBase).State = EntityState.Modified;
+            
             try
             {
                 _context.SaveChanges();

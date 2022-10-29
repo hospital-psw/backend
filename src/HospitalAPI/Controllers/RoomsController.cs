@@ -3,6 +3,8 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
 using Microsoft.AspNetCore.Mvc;
+using HospitalAPI.Dto;
+using HospitalAPI.Mappers;
 
 namespace HospitalAPI.Controllers
 {
@@ -15,6 +17,22 @@ namespace HospitalAPI.Controllers
         public RoomsController(IRoomService roomService)
         {
             _roomService = roomService;
+        }
+
+        [HttpPut]
+        public IActionResult Update(RoomDto dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest("Bad request, please enter valid data.");
+            }
+            Room room = _roomService.GetById(dto.Id);
+            if (room == null || room.Deleted)
+            {
+                return NotFound();
+            }
+            _roomService.Update(RoomMapper.EntityDtoToEntity(dto));
+            return Ok();
         }
 
     }

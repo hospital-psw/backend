@@ -33,6 +33,7 @@ namespace HospitalLibrary.Core.Service
         public void Update(Room room)
         {
             _roomRepository.Update(room);
+            //pozovi i working hours repo
         }
 
         public void Delete(Room room)
