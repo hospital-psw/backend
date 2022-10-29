@@ -1,6 +1,8 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service.Core;
+using HospitalLibrary.Settings;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
@@ -33,7 +35,8 @@ namespace HospitalLibrary.Core.Service
         public void Update(Room room)
         {
             _roomRepository.Update(room);
-            //pozovi i working hours repo
+            using UnitOfWork unitOfWork = new(new HospitalDbContext());
+            unitOfWork.WorkingHoursRepository.Update(room.WorkingHours);
         }
 
         public void Delete(Room room)

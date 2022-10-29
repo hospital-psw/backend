@@ -12,5 +12,19 @@
     public class WorkingHoursRepository : BaseRepository<WorkingHours>, IWorkingHoursRepository
     {
         public WorkingHoursRepository(HospitalDbContext context) : base(context) { }
+
+        public override void Update(WorkingHours entity)
+        {
+            if(entity == null)
+            {
+                return;
+            }
+
+            WorkingHours workingHoursFromBase = this.Get(entity.Id);
+            workingHoursFromBase.Start = entity.Start;
+            workingHoursFromBase.End = entity.End;
+            base.Update(workingHoursFromBase);
+            HospitalDbContext.SaveChanges();
+        }
     }
 }
