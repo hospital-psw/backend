@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -13,6 +14,7 @@
     {
         private IAppointmentService _appointmentService;
         private IEmailService _emailService;
+
         public AppointmentController(IAppointmentService appointmentService, IEmailService emailService)
         {
             _appointmentService = appointmentService;
@@ -37,6 +39,10 @@
             if (dto == null)
             {
                 return NotFound();
+            } 
+            else if (dto.Id == default(int) || dto.Date == default(DateTime))
+            {
+                return BadRequest("Please enter valid data.");
             }
 
             Appointment appointment = _appointmentService.Get(dto.Id);

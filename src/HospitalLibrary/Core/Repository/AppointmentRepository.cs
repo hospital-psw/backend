@@ -20,5 +20,17 @@
         {
             return HospitalDbContext.Appointments.Where(x => !x.IsDone && x.Id == appointmentId).FirstOrDefault();
         }
+
+        public override IEnumerable<Appointment> GetAll()
+        {
+            return HospitalDbContext.Appointments.Include(x => x.Patient)
+                                                 .Include(x => x.Doctor)
+                                                 .Where(x => !x.Deleted);
+        }
+
+        public override Appointment Get(int id)
+        {
+            return GetAll().FirstOrDefault(x => x.Id == id);
+        }
     }
 }
