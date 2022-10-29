@@ -3,6 +3,7 @@
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Util;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Security.Cryptography;
@@ -13,10 +14,12 @@
     public class RegisterBloodBankController
     {
         private readonly IBloodBankService _bloodBankService;
+        private readonly IMailSender _mailer;
 
-        public RegisterBloodBankController(IBloodBankService bloodBankService)
+        public RegisterBloodBankController(IBloodBankService bloodBankService, IMailSender mailSender)
         {
             _bloodBankService = bloodBankService;
+            _mailer = mailSender;
         }
 
         private string ByteArrToString(byte[] byteArr)
@@ -47,13 +50,15 @@
         [HttpPost]
         public string RegisterBloodBank(BloodBank bloodBank)
         {
-            string api_key = GenerateAPIKey(bloodBank.Email);
-            bloodBank.ApiKey = api_key;
+            string apiKey = SecretGenerator.GenerateAPIKey(bloodBank.Email);
+            bloodBank.ApiKey = apiKey;
 
             _bloodBankService.Create(bloodBank);
-            MailingService.SendEmail(bloodBank.Email, bloodBank.ApiKey);
 
-            return "Generated key: " + api_key;
+            var template = MailSender.MakeRegisterTemplate(bloodBank.Email, bloodBank.ApiKey);
+            _mailer.SendEmail(template, "Successfull Registration", bloodBank.Email);
+
+            return "Generated key: " + apiKey;
         }
     }
 }
