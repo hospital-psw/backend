@@ -12,7 +12,7 @@
 
             if (workingHours != null)
             {
-                dto.Start =  workingHours.Start;
+                dto.Start = workingHours.Start;
                 dto.End = workingHours.End;
             }
             else
