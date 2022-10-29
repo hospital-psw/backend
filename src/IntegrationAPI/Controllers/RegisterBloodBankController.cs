@@ -21,15 +21,15 @@
         [HttpPost]
         public string RegisterBloodBank(BloodBank bloodBank)
         {
-            string api_key = SecretGenerator.GenerateAPIKey(bloodBank.Email);
-            bloodBank.ApiKey = api_key;
+            string apiKey = SecretGenerator.GenerateAPIKey(bloodBank.Email);
+            bloodBank.ApiKey = apiKey;
 
             _bloodBankService.Create(bloodBank);
 
             var template = MailSender.MakeRegisterTemplate(bloodBank.Email, bloodBank.ApiKey);
             _mailer.SendEmail(template, "Successfull Registration", bloodBank.Email);
 
-            return "Generated key: " + api_key;
+            return "Generated key: " + apiKey;
         }
     }
 }

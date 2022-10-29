@@ -34,10 +34,10 @@
 
         public static string GenerateAPIKey(string mail)
         {
-            string current_date = DateTime.Now.ToString();
-            string hash_source = mail + current_date;
+            string currentDate = DateTime.Now.ToString();
+            string hashSource = mail + currentDate;
 
-            byte[] byteSource = ASCIIEncoding.ASCII.GetBytes(hash_source);
+            byte[] byteSource = ASCIIEncoding.ASCII.GetBytes(hashSource);
 
             var md5 = new HMACMD5();
             byte[] byteHash = md5.ComputeHash(byteSource);
