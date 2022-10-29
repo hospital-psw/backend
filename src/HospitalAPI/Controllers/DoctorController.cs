@@ -3,6 +3,7 @@
     using HospitalAPI.Dto;
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -23,6 +24,10 @@
         public IActionResult Add(NewDoctorDto dto)
         {
             if (dto == null)
+            {
+                return BadRequest("Bad request, please enter valid data.");
+            }
+            else if (dto.Email == default(string) || dto.FirstName == default(string) || dto.LastName == default(string) || dto.Password == default(string))
             {
                 return BadRequest("Bad request, please enter valid data.");
             }
@@ -62,6 +67,12 @@
             {
                 return BadRequest("Bad request, please enter valid data.");
             }
+            else if (dto.Email == default(string) || dto.FirstName == default(string) || dto.LastName == default(string) || dto.Id == default(int))
+            {
+                return BadRequest("Bad request, please enter valid data.");
+            }
+
+
             Doctor doctor = _doctorService.Get(dto.Id);
             if (doctor == null || doctor.Deleted)
             {
