@@ -17,7 +17,7 @@
 
         public bool IsDone { get; set; }
 
-        public RoomDTO Room { get; set; }
+        public RoomDto Room { get; set; }
 
         public PatientDto Patient { get; set; }
 
