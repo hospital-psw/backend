@@ -1,17 +1,18 @@
 ﻿namespace IntegrationLibrary.BloodBank
 {
-    using IntegrationLibrary.Settings;
-    using System.Collections.Generic;
-    using System;
+    using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Core;
+    using IntegrationLibrary.Settings;
     using Microsoft.Extensions.Logging;
+    using System;
+    using System.Collections.Generic;
 
     public class BloodBankService : IBloodBankService
     {
-        private readonly ILogger _logger;
-        public BloodBankService(ILogger logger) 
-        { 
-            _logger = logger;   
+        private readonly ILogger<BloodBank> _logger;
+        public BloodBankService(ILogger<BloodBank> logger)
+        {
+            _logger = logger;
         }
 
         public virtual BloodBank Get(int id)
@@ -19,7 +20,7 @@
             try
             {
                 using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                return unitOfWork.GetRepository<BloodBank>().Get(id);
+                return unitOfWork.BloodBankRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -33,8 +34,7 @@
             try
             {
                 using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                return unitOfWork.GetRepository<BloodBank>().GetAll();
-
+                return unitOfWork.BloodBankRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -48,7 +48,7 @@
             try
             {
                 using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                unitOfWork.GetRepository<BloodBank>().Add(entity);
+                unitOfWork.BloodBankRepository.Add(entity);
                 unitOfWork.Save();
 
                 return entity;
@@ -67,10 +67,10 @@
             try
             {
                 using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                BloodBank entity = unitOfWork.GetRepository<BloodBank>().Get(id);
+                var entity = unitOfWork.BloodBankRepository.Get(id);
 
-                (entity as Entity).Deleted = true;
-                unitOfWork.GetRepository<BloodBank>().Update(entity);
+                entity.Deleted = true;
+                unitOfWork.BloodBankRepository.Update(entity);
                 unitOfWork.Save();
 
                 return true;
@@ -87,7 +87,7 @@
             try
             {
                 using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                unitOfWork.GetRepository<BloodBank>().Update(entity);
+                unitOfWork.BloodBankRepository.Update(entity);
                 unitOfWork.Save();
 
                 return entity;

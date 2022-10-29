@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Settings;
+﻿using IntegrationLibrary.BloodBank.Interfaces;
+using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace IntegrationLibrary.BloodBank
 
         public virtual BloodBank Get(int id)
         {
-            return _context.Set<BloodBank>().Find(id);
+            return _context.Set<BloodBank>().Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
         }
 
         public virtual IEnumerable<BloodBank> GetAll()

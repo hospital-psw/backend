@@ -12,11 +12,11 @@
     [Route("api/[controller]")]
     public class RegisterBloodBankController
     {
-        private readonly BloodBankService _bloodBankService;
+        private readonly IBloodBankService _bloodBankService;
 
         public RegisterBloodBankController(IBloodBankService bloodBankService)
         {
-            _bloodBankService = (BloodBankService)bloodBankService;
+            _bloodBankService = bloodBankService;
         }
 
         private string ByteArrToString(byte[] byteArr)
