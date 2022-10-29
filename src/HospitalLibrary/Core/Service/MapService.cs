@@ -11,18 +11,25 @@
 
     public class MapService : IMapService
     {
-        public List<RoomMapDTO> GetAll()
+        public IEnumerable<RoomMap> GetBuilding(string building)
         {
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                List<RoomMap> roomsMap = unitOfWork.MapRepository.GetAll().ToList();
-                List<RoomMapDTO> roomsMapDTO = new List<RoomMapDTO>();
-                foreach (RoomMap roomMap in roomsMap)
-                {
-                    roomsMapDTO.Add(new RoomMapDTO(roomMap));
-                }
-                return roomsMapDTO;
+                return unitOfWork.MapRepository.GetBuilding(building);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<RoomMap> GetFloor(string building, int floor)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.MapRepository.GetFloor(building, floor);
             }
             catch (Exception)
             {

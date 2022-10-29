@@ -1,13 +1,14 @@
-﻿namespace HospitalLibrary.Core.Model
+﻿namespace HospitalAPI.Dto
 {
     using System;
 
-    public class WorkingHours : Entity
+    public class WorkingHoursDto
     {
+
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
 
-        public WorkingHours() { }
+        public WorkingHoursDto() { }
 
     }
 }

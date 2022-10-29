@@ -1,14 +1,11 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
-    using HospitalLibrary.Core.DTO;
-    using System;
+    using HospitalLibrary.Core.Model;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public interface IMapService
     {
-        List<RoomMapDTO> GetAll();
+        IEnumerable<RoomMap> GetBuilding(string building);
+        IEnumerable<RoomMap> GetFloor(string building, int floor);
     }
 }
