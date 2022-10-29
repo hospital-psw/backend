@@ -1,0 +1,5 @@
+<mj-section background-color="#9be5aa" padding-top="0" padding-bottom="0">
+    <mj-column>
+        <mj-image align="center" width="150px" src="https://media.istockphoto.com/vectors/caduceus-medical-symbol-vector-id1215977731?k=20&m=1215977731&s=612x612&w=0&h=EvFkHQ9BNDAiCno7Qm19In-syJPUYe5br61T7GyOTc8=" />
+    </mj-column>
+</mj-section>

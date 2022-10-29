@@ -2,57 +2,34 @@
 {
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Util;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Security.Cryptography;
-    using System.Text;
 
     [ApiController]
     [Route("api/[controller]")]
     public class RegisterBloodBankController
     {
         private readonly BloodBankService _bloodBankService;
+        private readonly MailSender _mailer;
 
-        public RegisterBloodBankController(IBloodBankService bloodBankService)
+        public RegisterBloodBankController(IBloodBankService bloodBankService, IMailSender mailSender)
         {
             _bloodBankService = (BloodBankService)bloodBankService;
-        }
-
-        private string ByteArrToString(byte[] byteArr)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < byteArr.Length; i++)
-            {
-                sb.Append(byteArr[i].ToString("X2"));
-            }
-
-            return sb.ToString();
-        }
-
-        private string GenerateAPIKey(string mail)
-        {
-            string current_date = DateTime.Now.ToString();
-            string hash_source = mail + current_date;
-
-            byte[] byteSource = ASCIIEncoding.ASCII.GetBytes(hash_source);
-
-            var md5 = new HMACMD5();
-            byte[] byteHash = md5.ComputeHash(byteSource);
-            string apiKey = ByteArrToString(byteHash);
-
-            return apiKey;
+            _mailer = (MailSender)mailSender;
         }
 
         [HttpPost]
         public string RegisterBloodBank(BloodBank bloodBank)
         {
-            string api_key = GenerateAPIKey(bloodBank.Email);
-            bloodBank.ApiKey = api_key;
+            string apiKey = SecretGenerator.GenerateAPIKey(bloodBank.Email);
+            bloodBank.ApiKey = apiKey;
 
             _bloodBankService.Create(bloodBank);
-            MailingService.SendEmail(bloodBank.Email, bloodBank.ApiKey);
 
-            return "Generated key: " + api_key;
+            var template = MailSender.MakeRegisterTemplate(bloodBank.Email, bloodBank.ApiKey);
+            _mailer.SendEmail(template, "Successfull Registration", bloodBank.Email);
+
+            return "Generated key: " + apiKey;
         }
     }
 }
