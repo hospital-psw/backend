@@ -5,6 +5,7 @@
     using IntegrationLibrary.Core.Model;
     using IntegrationLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -93,6 +94,20 @@
 
             return NoContent();
         }
+        [HttpGet("checkType/{id}/{type}")]
+        public IActionResult CheckBloodType(int id,string type)
+        {
+            try
+            {
+                return Ok(_bloodBankService.CheckBloodType(id, type));
+            }catch(Exception e)
+            {
+                return BadRequest();
+            }
+
+        }
+
+
 
     }
 }
