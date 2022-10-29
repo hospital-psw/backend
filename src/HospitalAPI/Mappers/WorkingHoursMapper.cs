@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalLibrary.Core.Model;
+    using System;
 
     public class WorkingHoursMapper
     {
@@ -11,13 +12,13 @@
 
             if (workingHours != null)
             {
-                dto.Start = workingHours.Start.Hour.ToString() + ":" + workingHours.Start.Minute.ToString();
-                dto.End = workingHours.End.Hour.ToString() + ":" + workingHours.End.Minute.ToString();
+                dto.Start =  workingHours.Start;
+                dto.End = workingHours.End;
             }
             else
             {
-                dto.Start = "";
-                dto.End = "";
+                dto.Start = new DateTime();
+                dto.End = new DateTime();
             }
             return dto;
         }
