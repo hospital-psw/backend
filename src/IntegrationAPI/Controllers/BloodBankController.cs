@@ -95,12 +95,13 @@
             return NoContent();
         }
         [HttpGet("checkType/{id}/{type}")]
-        public IActionResult CheckBloodType(int id,string type)
+        public IActionResult CheckBloodType(int id, string type)
         {
             try
             {
                 return Ok(_bloodBankService.CheckBloodType(id, type));
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return BadRequest();
             }

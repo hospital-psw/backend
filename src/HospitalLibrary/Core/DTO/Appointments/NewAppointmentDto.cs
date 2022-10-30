@@ -17,5 +17,5 @@
 
         public ExaminationType ExamType { get; set; }
 
-}
+    }
 }

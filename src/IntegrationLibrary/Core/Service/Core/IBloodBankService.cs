@@ -11,6 +11,6 @@
         BloodBank Update(BloodBank bloodBank);
         bool Delete(int id);
 
-        bool CheckBloodType(int id,string type);
+        bool CheckBloodType(int id, string type);
     }
 }

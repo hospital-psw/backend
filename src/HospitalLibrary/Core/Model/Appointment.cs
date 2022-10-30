@@ -40,5 +40,10 @@
             Patient = patient;
             Doctor = doctor;
         }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

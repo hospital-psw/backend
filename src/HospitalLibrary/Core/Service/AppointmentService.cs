@@ -78,7 +78,7 @@
                 Room room = unitOfWork.RoomRepository.GetById(16);
                 DateTime shiftIterator = doctor.WorkHours.Start;
                 DateTime startDate = new DateTime(dto.Date.Year, dto.Date.Month, dto.Date.Day, doctor.WorkHours.Start.Hour, doctor.WorkHours.Start.Minute, doctor.WorkHours.Start.Second);
-                
+
                 while (shiftIterator < doctor.WorkHours.End)
                 {
                     RecommendedAppointmentDto appointment = new RecommendedAppointmentDto(startDate, room.Number, room.Floor.Number, room.Floor.Building.Name); ;

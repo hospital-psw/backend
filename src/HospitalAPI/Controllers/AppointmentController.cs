@@ -40,7 +40,7 @@
             if (dto == null)
             {
                 return NotFound();
-            } 
+            }
             else if (dto.Id == default(int) || dto.Date == default(DateTime))
             {
                 return BadRequest("Please enter valid data.");
