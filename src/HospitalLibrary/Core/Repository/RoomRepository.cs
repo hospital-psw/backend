@@ -41,7 +41,7 @@ namespace HospitalLibrary.Core.Repository
             roomFromBase.Purpose = room.Purpose;
             roomFromBase.Number = room.Number;
             _context.Entry(roomFromBase).State = EntityState.Modified;
-            
+
             try
             {
                 _context.SaveChanges();

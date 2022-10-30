@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.Service
 
         public bool Update(Room room)
         {
-            if(this.NumberStartsWithFloorNumber(room) && this.NumberIsUnique(room) && this.WorkingHoursIsValid(room.WorkingHours))
+            if (this.NumberStartsWithFloorNumber(room) && this.NumberIsUnique(room) && this.WorkingHoursIsValid(room.WorkingHours))
             {
                 _roomRepository.Update(room);
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());

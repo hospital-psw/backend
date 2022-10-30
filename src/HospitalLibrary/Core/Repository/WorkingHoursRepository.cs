@@ -15,7 +15,7 @@
 
         public override void Update(WorkingHours entity)
         {
-            if(entity == null)
+            if (entity == null)
             {
                 return;
             }

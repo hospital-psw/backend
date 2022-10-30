@@ -1,10 +1,10 @@
-﻿using HospitalLibrary.Core.DTO;
+﻿using HospitalAPI.Dto;
+using HospitalAPI.Mappers;
+using HospitalLibrary.Core.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
 using Microsoft.AspNetCore.Mvc;
-using HospitalAPI.Dto;
-using HospitalAPI.Mappers;
 
 namespace HospitalAPI.Controllers
 {

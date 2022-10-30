@@ -9,9 +9,9 @@
 
     public class BloodBankService : BaseService<BloodBank>, IBloodBankService
     {
-        public BloodBankService() : base() {}
+        public BloodBankService() : base() { }
 
-        public bool CheckBloodType(int id,string type)
+        public bool CheckBloodType(int id, string type)
         {
             using UnitOfWork unitOfWork = new(new IntegrationDbContext());
             BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
