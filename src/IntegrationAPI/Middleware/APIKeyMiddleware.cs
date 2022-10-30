@@ -1,6 +1,7 @@
 ﻿namespace IntegrationAPI.Middleware
 {
     using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.BloodBank.Interfaces;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
     using System;

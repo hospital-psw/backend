@@ -7,13 +7,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
 
+        public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         public IntegrationDbContext() { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
