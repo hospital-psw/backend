@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.Extensions.Localization;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -325,6 +326,8 @@
                 return false;
             }
         }
+
+        
 
     }
 }
