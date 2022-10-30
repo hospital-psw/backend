@@ -3,6 +3,7 @@
     using HospitalAPI.Dto;
     using HospitalAPI.EmailServices;
     using HospitalAPI.Mappers;
+    using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,20 @@
         {
             _emailService.Send();
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("/recommend")]
+        public IActionResult RecommendAppointments(RecommendRequestDto dto)
+        {
+            return Ok(_appointmentService.RecommendAppointments(dto));
+        }
+
+        [HttpPost]
+        [Route("/create")]
+        public IActionResult Create(NewAppointmentDto dto)
+        {
+            return Ok(_appointmentService.Create(dto));
         }
     }
 }
