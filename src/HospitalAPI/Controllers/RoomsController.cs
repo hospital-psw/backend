@@ -31,8 +31,12 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
-            _roomService.Update(RoomMapper.EntityDtoToEntity(dto));
-            return Ok();
+            bool status = _roomService.Update(RoomMapper.EntityDtoToEntity(dto));
+            if (status)
+            {
+                return Ok();
+            }
+            return BadRequest("Bad request, please enter valid data.");
         }
 
     }
