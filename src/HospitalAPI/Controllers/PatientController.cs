@@ -26,6 +26,10 @@
             {
                 return BadRequest("Bad request, please enter valid data.");
             }
+            else if (dto.Email == default(string) || dto.FirstName == default(string) || dto.LastName == default(string) || dto.Password == default(string))
+            {
+                return BadRequest("Bad request, please enter valid data.");
+            }
 
             return Ok(_patientService.Add(NewPatientMapper.EntityDtoToEntity(dto)));
         }
@@ -66,6 +70,10 @@
             if (patient == null || patient.Deleted)
             {
                 return NotFound();
+            }
+            else if (dto.Email == default(string) || dto.FirstName == default(string) || dto.LastName == default(string) || dto.Id == default(int))
+            {
+                return BadRequest("Bad request, please enter valid data.");
             }
 
             return Ok(_patientService.Update(UpdatePatientMapper.EntityDtoToEntity(dto)));
