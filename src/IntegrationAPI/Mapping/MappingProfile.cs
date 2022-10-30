@@ -10,6 +10,8 @@
         {
             CreateMap<BloodBank, UpdateBloodBankDTO>();
             CreateMap<UpdateBloodBankDTO, BloodBank>();
+            CreateMap<BloodBank, GetBloodBankDTO>();
+            CreateMap<RegisterBloodBankDTO, BloodBank>();
         }
     }
 }

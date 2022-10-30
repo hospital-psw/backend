@@ -5,6 +5,7 @@
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -22,7 +23,7 @@
         [HttpGet("all")]
         public IActionResult GetAll()
         {
-            return Ok(_bloodBankService.GetAll());
+            return Ok(_mapper.Map<IEnumerable<GetBloodBankDTO>>(_bloodBankService.GetAll()));
         }
 
         [HttpGet("{id}")]
@@ -35,11 +36,11 @@
                 return NotFound();
             }
 
-            return Ok(entity);
+            return Ok(_mapper.Map<GetBloodBankDTO>(entity));
         }
 
         [HttpPost("/register")]
-        public IActionResult Register(BloodBank bloodBank)
+        public IActionResult Register(RegisterBloodBankDTO bloodBank)
         {
             if (!ModelState.IsValid)
             {
@@ -51,18 +52,15 @@
                 return BadRequest();
             }
 
-            // generate API key and add it here
-            // generate dummy password and add it here
-            // set dummy password 
-            // set change dummy password flag
+            BloodBank response = _bloodBankService.Create(_mapper.Map<BloodBank>(bloodBank));
+            // renamme this method to register
+            // generate API key and assign it to blood bank
+            // generate dummy password assign it to blood bank
+            // set dummy password
+            // set IsDummyPassword flag to true
+            // ALL OF THIS NEEDS TO BE HANDLED BY SERVICE
 
-            //bloodBank.ApiKey = 
-
-
-            BloodBank response = _bloodBankService.Create(bloodBank);
-
-
-            return Ok(response);
+            return Ok(_mapper.Map<GetBloodBankDTO>(response));
         }
 
         [HttpPut]
@@ -72,19 +70,16 @@
             {
                 return BadRequest(ModelState);
             }
-
-            if (bloodBank == null)
-            {
-                return BadRequest();
-            }
-
             var originalBloodBank = _bloodBankService.Get(bloodBank.Id);
-            if (originalBloodBank == null)
+            if (bloodBank == null || originalBloodBank == null)
             {
                 return BadRequest();
             }
+
             var updatedBloodBank = _mapper.Map<BloodBank>(bloodBank);
             updatedBloodBank.ApiKey = originalBloodBank.ApiKey;
+            updatedBloodBank.AdminPassword = originalBloodBank.AdminPassword;
+            updatedBloodBank.IsDummyPassword = originalBloodBank.IsDummyPassword;
 
             var responseEntity = _bloodBankService.Update(updatedBloodBank);
 

@@ -4,15 +4,10 @@
     using Mailjet.Client;
     using Mailjet.Client.Resources;
     using Mailjet.Client.TransactionalEmails;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Mjml.AspNetCore;
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
     using System.Threading.Tasks;
 
     public class MailSender : IMailSender
