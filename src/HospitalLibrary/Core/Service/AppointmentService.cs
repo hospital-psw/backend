@@ -61,7 +61,7 @@
                 List<Appointment> scheduledAppointments = unitOfWork.AppointmentRepository.GetScheduledAppointments(dto.DoctorId, dto.PatientId).ToList();
                 return RemoveScheduledAppointments(generatedAppointments, scheduledAppointments);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 _logger.LogError($"Error in Appointment service in GenerateFreeAppointments {e.Message} in {e.StackTrace}");
                 return null;
