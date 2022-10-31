@@ -44,6 +44,32 @@
             return Ok(managerFeedbackDto);
         }
 
+        [HttpGet("get/AnonymousFeedback")]
+        public IActionResult GetAllAnonymousFeedback()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllAnonymousFeedback();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+
+        [HttpGet("get/AllAprovedFeedback")]
+        public IActionResult GetAllAproved()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllAproved();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {

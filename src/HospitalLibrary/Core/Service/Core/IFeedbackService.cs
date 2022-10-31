@@ -17,6 +17,7 @@
         IEnumerable<Feedback> GetAllPrivateFeedback();
         IEnumerable<Feedback> GetAllAnonymousFeedback();
         IEnumerable<Feedback> GetAllIdentifiedFeedback();
+        IEnumerable<Feedback> GetAllAproved();
         bool MakePublic(int id);
         bool MakePrivate(int id);
         bool MakeAnonymous(int id);

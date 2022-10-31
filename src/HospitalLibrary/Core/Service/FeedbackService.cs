@@ -126,6 +126,19 @@
                 return null;
             }
         }
+        public IEnumerable<Feedback> GetAllAproved()
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.FeedbackRepository.GetAllAproved();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in GetAllIdentifiedFeedback {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
 
         public bool MakePublic(int id)
         {
@@ -254,6 +267,9 @@
                 return null;
             }
         }
+      
+        
+
         public bool ApproveFeedback(int id)
         {
             try
