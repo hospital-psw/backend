@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.Net.Http;
 
     public class BloodBankService : IBloodBankService
     {
@@ -128,6 +129,26 @@
             {
                 _logger.LogError($"Error in BloodBankService in Register {e.Message} in {e.StackTrace}");
                 return null;
+            }
+        }
+
+        public bool CheckBloodType(int id, string type)
+        {
+            using UnitOfWork unitOfWork = new(new IntegrationDbContext());
+            BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
+
+            return sendHttpRequestToBank(bloodBank, type);
+        }
+
+        private bool sendHttpRequestToBank(BloodBank bloodBank, string type)
+        {
+            using (var client = new HttpClient())
+            {
+                var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAvailability}/+{type}");
+                client.DefaultRequestHeaders.Add("X-API-KEY", bloodBank.ApiKey);
+                var result = client.GetAsync(endpoint).Result;
+                var json = result.Content.ReadAsStringAsync().Result;
+                return Convert.ToBoolean(json);
             }
         }
     }

@@ -10,5 +10,8 @@
     {
         public int Number { get; set; }
         public string Purpose { get; set; }
+        public Building Building { get; set; }
+
+        public Floor() { }
     }
 }
