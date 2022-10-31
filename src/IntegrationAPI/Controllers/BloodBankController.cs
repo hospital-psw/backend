@@ -7,6 +7,7 @@
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
 
     [ApiController]
@@ -43,7 +44,7 @@
             return Ok(_mapper.Map<GetBloodBankDTO>(entity));
         }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public IActionResult Register(RegisterBloodBankDTO bloodBank)
         {
             if (!ModelState.IsValid)
