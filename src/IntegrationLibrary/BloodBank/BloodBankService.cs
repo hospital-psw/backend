@@ -8,16 +8,17 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
-    using System.Net.Http;
 
     public class BloodBankService : IBloodBankService
     {
         private readonly ILogger<BloodBank> _logger;
         private readonly IMailSender _mailer;
-        public BloodBankService(ILogger<BloodBank> logger, IMailSender mailer)
+        private readonly IBBConnections _connections;
+        public BloodBankService(ILogger<BloodBank> logger, IMailSender mailer, IBBConnections connections)
         {
             _logger = logger;
             _mailer = mailer;
+            _connections = connections;
         }
 
         public virtual BloodBank Get(int id)
@@ -137,19 +138,7 @@
             using UnitOfWork unitOfWork = new(new IntegrationDbContext());
             BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
 
-            return SendHttpRequestToBank(bloodBank, type);
-        }
-
-        private bool SendHttpRequestToBank(BloodBank bloodBank, string type)
-        {
-            using (var client = new HttpClient())
-            {
-                var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAvailability}/+{type}");
-                client.DefaultRequestHeaders.Add("X-API-KEY", bloodBank.ApiKey);
-                var result = client.GetAsync(endpoint).Result;
-                var json = result.Content.ReadAsStringAsync().Result;
-                return Convert.ToBoolean(json);
-            }
+            return _connections.SendHttpRequestToBank(bloodBank, type);
         }
     }
 }
