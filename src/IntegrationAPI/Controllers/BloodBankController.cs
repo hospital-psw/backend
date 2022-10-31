@@ -106,7 +106,7 @@
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
         }
