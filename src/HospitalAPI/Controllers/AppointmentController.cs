@@ -78,7 +78,7 @@
         {
             var appointment = _appointmentService.Get(id);
 
-            if(appointment == null)
+            if (appointment == null)
             {
                 return NotFound();
             }
