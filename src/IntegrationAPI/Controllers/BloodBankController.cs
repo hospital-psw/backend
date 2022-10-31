@@ -2,10 +2,13 @@
 {
     using AutoMapper;
     using IntegrationAPI.DTO;
-    using IntegrationLibrary.Core.Model;
-    using IntegrationLibrary.Core.Service.Core;
+    using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.BloodBank.Interfaces;
+    using IntegrationLibrary.Util;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -13,17 +16,19 @@
     {
         private readonly IBloodBankService _bloodBankService;
         private readonly IMapper _mapper;
+        private readonly IMailSender _mailer;
 
-        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, IMailSender mailer)
         {
             _bloodBankService = bloodBankService;
             _mapper = mapper;
+            _mailer = mailer;
         }
 
         [HttpGet("all")]
         public IActionResult GetAll()
         {
-            return Ok(_bloodBankService.GetAll());
+            return Ok(_mapper.Map<IEnumerable<GetBloodBankDTO>>(_bloodBankService.GetAll()));
         }
 
         [HttpGet("{id}")]
@@ -36,11 +41,11 @@
                 return NotFound();
             }
 
-            return Ok(entity);
+            return Ok(_mapper.Map<GetBloodBankDTO>(entity));
         }
 
-        [HttpPost]
-        public IActionResult Add(BloodBank bloodBank)
+        [HttpPost("register")]
+        public IActionResult Register(RegisterBloodBankDTO bloodBank)
         {
             if (!ModelState.IsValid)
             {
@@ -52,9 +57,9 @@
                 return BadRequest();
             }
 
-            BloodBank response = _bloodBankService.Create(bloodBank);
+            BloodBank response = _bloodBankService.Register(_mapper.Map<BloodBank>(bloodBank));
 
-            return Ok(response);
+            return Ok(_mapper.Map<GetBloodBankDTO>(response));
         }
 
         [HttpPut]
@@ -64,19 +69,16 @@
             {
                 return BadRequest(ModelState);
             }
-
-            if (bloodBank == null)
-            {
-                return BadRequest();
-            }
-
             var originalBloodBank = _bloodBankService.Get(bloodBank.Id);
-            if (originalBloodBank == null)
+            if (bloodBank == null || originalBloodBank == null)
             {
                 return BadRequest();
             }
+
             var updatedBloodBank = _mapper.Map<BloodBank>(bloodBank);
             updatedBloodBank.ApiKey = originalBloodBank.ApiKey;
+            updatedBloodBank.AdminPassword = originalBloodBank.AdminPassword;
+            updatedBloodBank.IsDummyPassword = originalBloodBank.IsDummyPassword;
 
             var responseEntity = _bloodBankService.Update(updatedBloodBank);
 
@@ -94,6 +96,7 @@
 
             return NoContent();
         }
+
         [HttpGet("checkType/{id}/{type}")]
         public IActionResult CheckBloodType(int id, string type)
         {
@@ -107,8 +110,5 @@
             }
 
         }
-
-
-
     }
 }
