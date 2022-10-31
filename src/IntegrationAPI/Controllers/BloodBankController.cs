@@ -58,7 +58,7 @@
             }
 
             BloodBank response = _bloodBankService.Register(_mapper.Map<BloodBank>(bloodBank));
-            
+
             return Ok(_mapper.Map<GetBloodBankDTO>(response));
         }
 
