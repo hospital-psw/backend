@@ -110,5 +110,19 @@
             }
 
         }
+
+        [HttpGet("checkAmount/{id}/{type}/{amount}")]
+        public IActionResult CheckBloodAmount(int id, string type, double amount)
+        {
+            try
+            {
+                return Ok(_bloodBankService.CheckBloodAmount(id, type, amount));
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }
