@@ -13,5 +13,8 @@
         IEnumerable<Feedback> GetAllPrivate();
         IEnumerable<Feedback> GetAllAnonymous();
         IEnumerable<Feedback> GetAllIdentified();
+        IEnumerable<Feedback> GetAllApproved();
+        IEnumerable<Feedback> GetAllDenied();
+        IEnumerable<Feedback> GetAllPending();
     }
 }

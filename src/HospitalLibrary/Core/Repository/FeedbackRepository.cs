@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
+    using HospitalLibrary.Core.Model.Enums;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -51,6 +52,18 @@
         public IEnumerable<Feedback> GetAllIdentified()
         {
             return GetAll().Where(x => !x.Anonymous).ToList();
+        }
+        public IEnumerable<Feedback> GetAllApproved()
+        {
+            return GetAll().Where(x => x.Status == FeedbackStatus.APPROVED).ToList();
+        }
+        public IEnumerable<Feedback> GetAllDenied()
+        {
+            return GetAll().Where(x => x.Status == FeedbackStatus.DENIED).ToList();
+        }
+        public IEnumerable<Feedback> GetAllPending()
+        {
+            return GetAll().Where(x => x.Status == FeedbackStatus.PENDING).ToList();
         }
     }
 }
