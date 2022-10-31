@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Configuration;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Util;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Net;
@@ -19,13 +20,13 @@
             _logger = logger;
         }
 
-        public async Task Send()
+        public async Task Send(Appointment appointment)
         {
             try
             {
-                string body = "<p>Dear, Djomla" +
-                              "</p><p> We inform you that your appointment set at 20.01.2023." +
-                              "has been canceled by doctor Ocokoljic </p>" +
+                string body = "<p>Dear, " + appointment.Patient.FirstName +" " +appointment.Patient.LastName +
+                              "</p><p> We inform you that your appointment set at " + DateHelper.DateToString(appointment.Date, "dd/MM/yyyy") +
+                              "has been canceled by doctor " + appointment.Doctor.FirstName +" "+appointment.Doctor.LastName +" </p>" +
                               "<p>Sorry if we upset your daily plans, you can always contact us, or schedule a new appointment</p>" +
                               "<p>Best Regards, PSW Hospital </p>";
                 MailMessage mailMessage = CreateEmailMessage(body, "Appointment cancelation");

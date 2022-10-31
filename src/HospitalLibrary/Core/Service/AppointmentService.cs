@@ -133,5 +133,17 @@
                 return null;
             }
         }
+
+        public void Delete(Appointment appointment)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                appointment.Deleted = true;
+                unitOfWork.AppointmentRepository.Update(appointment);
+                unitOfWork.Save();
+            }
+            catch(Exception e) { }
+        }
     }
 }
