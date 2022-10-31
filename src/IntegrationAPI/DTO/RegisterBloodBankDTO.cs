@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IntegrationLibrary.Core.Model
+﻿namespace IntegrationAPI.DTO
 {
-    public class BloodBank : Entity
+    public class RegisterBloodBankDTO
     {
         public string Name { get; set; }
         public string Email { get; set; }
         public string ApiUrl { get; set; }
-        public string ApiKey { get; set; }
         public string GetBloodTypeAvailability { get; set; }
         public string GetBloodTypeAndAmountAvailability { get; set; }
     }

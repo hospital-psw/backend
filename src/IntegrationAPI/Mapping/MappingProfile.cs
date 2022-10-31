@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using IntegrationAPI.DTO;
-    using IntegrationLibrary.Core.Model;
+    using IntegrationLibrary.BloodBank;
 
     public class MappingProfile : Profile
     {
@@ -10,6 +10,8 @@
         {
             CreateMap<BloodBank, UpdateBloodBankDTO>();
             CreateMap<UpdateBloodBankDTO, BloodBank>();
+            CreateMap<BloodBank, GetBloodBankDTO>();
+            CreateMap<RegisterBloodBankDTO, BloodBank>();
         }
     }
 }

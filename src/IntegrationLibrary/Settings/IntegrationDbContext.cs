@@ -1,18 +1,18 @@
 ﻿namespace IntegrationLibrary.Settings
 {
-    using IntegrationLibrary.Core.Model;
+    using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.Core;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
 
+        public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         public IntegrationDbContext() { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,7 +29,7 @@
 
             IEnumerable<EntityEntry> entries = ChangeTracker
             .Entries()
-            .Where(e => e.Entity is Core.Model.Entity && (
+            .Where(e => e.Entity is Entity && (
                     e.State == EntityState.Added
                     || e.State == EntityState.Modified));
 

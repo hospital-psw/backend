@@ -16,11 +16,12 @@
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
+	<PackageReference Include="Mjml.AspNetCore" Version="1.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Model\Enums\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Util\Email-Templates\" />
   </ItemGroup>
 
 </Project>
