@@ -1,15 +1,16 @@
-using AutoMapper;
-using IntegrationAPI.Middleware;
-using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Service.Core;
+using IntegrationLibrary.BloodBank;
+using IntegrationLibrary.BloodBank.Interfaces;
+using IntegrationLibrary.Settings;
+using IntegrationLibrary.Util;
+using IntegrationLibrary.Util.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
+using Mjml.AspNetCore;
 
 namespace IntegrationAPI
 {
@@ -25,6 +26,8 @@ namespace IntegrationAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<IntegrationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -33,7 +36,14 @@ namespace IntegrationAPI
             });
             services.AddAutoMapper(typeof(Startup));
             services.AddLogging();
+
             services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IMailSender, MailSender>();
+            services.AddMjmlServices(o =>
+            {
+                o.DefaultKeepComments = true;
+                o.DefaultBeautify = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,10 +65,10 @@ namespace IntegrationAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
 
-            app.UseMiddleware<APIKeyMiddleware>(new APIKeyOptions
+            /*app.UseMiddleware<APIKeyMiddleware>(new APIKeyOptions
             {
                 Endpoints = new List<string> { @"/api/BloodBank/all" }
-            });
+            });*/
 
             app.UseRouting();
 
