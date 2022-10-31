@@ -109,8 +109,6 @@
         {
             try
             {
-                entity = Create(entity);
-
                 string apiKey = SecretGenerator.GenerateAPIKey(entity.Email);
                 entity.ApiKey = apiKey;
 
@@ -118,7 +116,9 @@
                 entity.AdminPassword = password;
                 entity.IsDummyPassword = true;
 
-                entity = Update(entity);
+                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
+                unitOfWork.BloodBankRepository.Add(entity);
+                unitOfWork.Save();
 
                 string template = MailSender.MakeRegisterTemplate(entity.Email, entity.ApiKey, entity.AdminPassword);
                 _mailer.SendEmail(template, "Successfull Registration", entity.Email);
@@ -137,10 +137,10 @@
             using UnitOfWork unitOfWork = new(new IntegrationDbContext());
             BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
 
-            return sendHttpRequestToBank(bloodBank, type);
+            return SendHttpRequestToBank(bloodBank, type);
         }
 
-        private bool sendHttpRequestToBank(BloodBank bloodBank, string type)
+        private bool SendHttpRequestToBank(BloodBank bloodBank, string type)
         {
             using (var client = new HttpClient())
             {
