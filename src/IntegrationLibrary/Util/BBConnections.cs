@@ -5,7 +5,7 @@ namespace IntegrationLibrary.Util
     using System;
     using System.Net.Http;
 
-    public class BBConnections: IBBConnections
+    public class BBConnections : IBBConnections
     {
         public bool SendHttpRequestToBank(BloodBank bloodBank, string type)
         {
