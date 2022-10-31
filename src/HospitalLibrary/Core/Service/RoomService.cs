@@ -62,7 +62,7 @@ namespace HospitalLibrary.Core.Service
         {
             foreach (Room r in _roomRepository.GetAll())
             {
-                if (r.Number == room.Number && room.Floor.Id == r.Floor.Id)
+                if (r.Number == room.Number && room.Floor.Id == r.Floor.Id && r.Id != room.Id)
                 {
                     return false;
                 }
