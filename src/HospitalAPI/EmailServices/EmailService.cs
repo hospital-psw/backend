@@ -30,7 +30,7 @@
                               "<p>Sorry if we upset your daily plans, you can always contact us, or schedule a new appointment</p>" +
                               "<p>Best Regards, PSW Hospital </p>";
                 MailMessage mailMessage = CreateEmailMessage(body, "Appointment cancelation");
-                mailMessage.To.Add("milos.gravara1@gmail.com, vuk.milanovic11@gmail.com");
+                mailMessage.To.Add(appointment.Patient.Email);
 
                 await SendEmailMessage(mailMessage);
             }
