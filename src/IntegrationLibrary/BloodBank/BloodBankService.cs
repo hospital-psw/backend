@@ -3,6 +3,8 @@
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Core;
     using IntegrationLibrary.Settings;
+    using IntegrationLibrary.Util;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -10,9 +12,11 @@
     public class BloodBankService : IBloodBankService
     {
         private readonly ILogger<BloodBank> _logger;
-        public BloodBankService(ILogger<BloodBank> logger)
+        private readonly IMailSender _mailer;
+        public BloodBankService(ILogger<BloodBank> logger, IMailSender mailer)
         {
             _logger = logger;
+            _mailer = mailer;
         }
 
         public virtual BloodBank Get(int id)
@@ -98,6 +102,33 @@
                 return null;
             }
 
+        }
+
+        public virtual BloodBank Register(BloodBank entity)
+        {
+            try
+            {
+                entity = Create(entity);
+
+                string apiKey = SecretGenerator.GenerateAPIKey(entity.Email);
+                entity.ApiKey = apiKey;
+
+                string password = SecretGenerator.generateRandomPassword();
+                entity.AdminPassword = password;
+                entity.IsDummyPassword = true;
+
+                entity = Update(entity);
+
+                string template = MailSender.MakeRegisterTemplate(entity.Email, entity.ApiKey, entity.AdminPassword);
+                _mailer.SendEmail(template, "Successfull Registration", entity.Email);
+
+                return entity;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodBankService in Register {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
     }
 }

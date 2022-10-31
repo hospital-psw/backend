@@ -4,5 +4,6 @@
 
     public interface IBloodBankService : IService<BloodBank>
     {
+        BloodBank Register(BloodBank entity);
     }
 }

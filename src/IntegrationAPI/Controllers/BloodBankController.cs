@@ -57,18 +57,9 @@
                 return BadRequest();
             }
 
-            BloodBank response = _bloodBankService.Create(_mapper.Map<BloodBank>(bloodBank));
-            string apiKey = SecretGenerator.GenerateAPIKey(response.Email);
-            response.ApiKey = apiKey;
-            string password = SecretGenerator.generateRandomPassword();
-            response.AdminPassword = password;
-            response.IsDummyPassword = true;
-            BloodBank registered = _bloodBankService.Update(response);
-
-            string template = MailSender.MakeRegisterTemplate(registered.Email, registered.ApiKey, registered.AdminPassword);
-            _mailer.SendEmail(template, "Successfull Registration", bloodBank.Email);
-
-            return Ok(_mapper.Map<GetBloodBankDTO>(registered));
+            BloodBank response = _bloodBankService.Register(_mapper.Map<BloodBank>(bloodBank));
+            
+            return Ok(_mapper.Map<GetBloodBankDTO>(response));
         }
 
         [HttpPut]
