@@ -51,7 +51,7 @@
         }
 
         [HttpGet]
-        [Route("/send")]
+        [Route("send")]
         public IActionResult SendEmail()
         {
             _emailService.Send();
@@ -59,14 +59,14 @@
         }
 
         [HttpPost]
-        [Route("/recommend")]
+        [Route("recommend")]
         public IActionResult RecommendAppointments(RecommendRequestDto dto)
         {
             return Ok(_appointmentService.RecommendAppointments(dto));
         }
 
         [HttpPost]
-        [Route("/create")]
+        [Route("create")]
         public IActionResult Create(NewAppointmentDto dto)
         {
             return Ok(_appointmentService.Create(dto));
