@@ -26,7 +26,7 @@ namespace HospitalLibrary.Core.Repository
 
         public Room GetById(int id)
         {
-            return _context.Rooms.Find(id);
+            return _context.Rooms.Include(x => x.Floor).ThenInclude(x => x.Building).FirstOrDefault(x => x.Id == id);
         }
 
         public void Create(Room room)

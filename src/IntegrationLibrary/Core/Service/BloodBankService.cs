@@ -23,7 +23,7 @@
         {
             using (var client = new HttpClient())
             {
-                var endpoint = new Uri($"http://{ bloodBank.ApiUrl }/{bloodBank.GetBloodTypeAvailability}/+{type}");
+                var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAvailability}/+{type}");
                 client.DefaultRequestHeaders.Add("X-API-KEY", bloodBank.ApiKey);
                 var result = client.GetAsync(endpoint).Result;
                 var json = result.Content.ReadAsStringAsync().Result;

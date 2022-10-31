@@ -10,6 +10,8 @@
     public interface IAppointmentRepository : IBaseRepository<Appointment>
     {
 
-        public Appointment GetAppointmentIfNotDone(int appointmentId);
+        public IEnumerable<Appointment> GetAppointmentsForPatient(int patientId);
+        public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId);
+        public IEnumerable<Appointment> GetScheduledAppointments(int doctorId, int patientId);
     }
 }

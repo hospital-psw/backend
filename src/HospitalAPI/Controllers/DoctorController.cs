@@ -36,9 +36,9 @@
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int doctorId)
+        public IActionResult Get(int id)
         {
-            Doctor doctor = _doctorService.Get(doctorId);
+            Doctor doctor = _doctorService.Get(id);
             if (doctor == null)
             {
                 return NotFound();

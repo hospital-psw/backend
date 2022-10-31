@@ -101,7 +101,7 @@
             {
                 return Ok(_bloodBankService.CheckBloodType(id, type));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return BadRequest();
             }

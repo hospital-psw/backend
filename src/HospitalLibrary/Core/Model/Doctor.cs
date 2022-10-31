@@ -10,5 +10,9 @@
     public class Doctor : User
     {
         public Specialization Specialization { get; set; }
+
+        public WorkingHours WorkHours { get; set; }
+
+        public Room Office { get; set; }
     }
 }
