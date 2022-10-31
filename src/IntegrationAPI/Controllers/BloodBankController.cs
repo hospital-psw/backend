@@ -4,6 +4,8 @@
     using IntegrationAPI.DTO;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
+    using IntegrationLibrary.Util;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
 
@@ -13,11 +15,13 @@
     {
         private readonly IBloodBankService _bloodBankService;
         private readonly IMapper _mapper;
+        private readonly IMailSender _mailer;
 
-        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, IMailSender mailer)
         {
             _bloodBankService = bloodBankService;
             _mapper = mapper;
+            _mailer = mailer;
         }
 
         [HttpGet("all")]
@@ -53,14 +57,17 @@
             }
 
             BloodBank response = _bloodBankService.Create(_mapper.Map<BloodBank>(bloodBank));
-            // renamme this method to register
-            // generate API key and assign it to blood bank
-            // generate dummy password assign it to blood bank
-            // set dummy password
-            // set IsDummyPassword flag to true
-            // ALL OF THIS NEEDS TO BE HANDLED BY SERVICE
+            string apiKey = SecretGenerator.GenerateAPIKey(response.Email);
+            response.ApiKey = apiKey;
+            string password = SecretGenerator.generateRandomPassword();
+            response.AdminPassword = password;
+            response.IsDummyPassword = true;
+            BloodBank registered = _bloodBankService.Update(response);
 
-            return Ok(_mapper.Map<GetBloodBankDTO>(response));
+            string template = MailSender.MakeRegisterTemplate(registered.Email, registered.ApiKey, registered.AdminPassword);
+            _mailer.SendEmail(template, "Successfull Registration", bloodBank.Email);
+
+            return Ok(_mapper.Map<GetBloodBankDTO>(registered));
         }
 
         [HttpPut]

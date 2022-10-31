@@ -21,7 +21,7 @@
             _mjmlServices = mjmlServices;
         }
 
-        public static string MakeRegisterTemplate(string mail, string apiKey)
+        public static string MakeRegisterTemplate(string mail, string apiKey, string password)
         {
             string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
             basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
@@ -34,7 +34,7 @@
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
                 "<p>The username is " + mail + "</p>" +
-                "<p>The password is " + SecretGenerator.generateRandomPassword() + "</p><br/>" +
+                "<p>The password is " + password + "</p><br/>" +
                 "<p>For further communication between our servers use the following API key: <b>" + apiKey + "</b></p>" +
                 "</mj-text>" +
                 "</mj-column>" +

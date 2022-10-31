@@ -11,6 +11,6 @@ namespace IntegrationLibrary.BloodBank
         public string GetBloodTypeAvailability { get; set; }
         public string GetBloodTypeAndAmountAvailability { get; set; }
         public string AdminPassword { get; set; }
-        public string IsDummyPassword { get; set; }
+        public bool IsDummyPassword { get; set; }
     }
 }
