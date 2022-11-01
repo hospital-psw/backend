@@ -10,34 +10,33 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoomsController : BaseController<Room>
+    public class FloorsController : BaseController<Building>
     {
-        private readonly IRoomService _roomService;
+        private readonly IFloorService _floorService;
 
-        public RoomsController(IRoomService roomService)
+        public FloorsController(IFloorService floorService)
         {
-            _roomService = roomService;
+            _floorService = floorService;
         }
 
         [HttpPut]
-        public IActionResult Update(RoomDto dto)
+        public IActionResult Update(FloorDto dto)
         {
             if (dto == null)
             {
                 return BadRequest("Bad request, please enter valid data.");
             }
-            Room room = _roomService.GetById(dto.Id);
-            if (room == null || room.Deleted)
+            Floor floor = _floorService.Get(dto.Id);
+            if (floor == null || floor.Deleted)
             {
                 return NotFound();
             }
-            bool status = _roomService.Update(RoomMapper.EntityDtoToEntity(dto));
-            if (status)
+            Floor status = _floorService.Update(FloorMapper.EntityDtoToEntity(dto));
+            if (status != null)
             {
-                return Ok(room);
+                return Ok(status);
             }
             return BadRequest("Bad request, please enter valid data.");
         }
-
     }
 }

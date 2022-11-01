@@ -39,6 +39,8 @@ namespace HospitalLibrary.Core.Service
                 _roomRepository.Update(room);
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 unitOfWork.WorkingHoursRepository.Update(room.WorkingHours);
+                //unitOfWork.BuildingRepository.Update(room.Floor.Building);
+                //unitOfWork.FloorRepository.Update(room.Floor);
                 return true;
             }
             return false;

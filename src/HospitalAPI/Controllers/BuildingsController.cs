@@ -8,36 +8,36 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
-    public class RoomsController : BaseController<Room>
+    public class BuildingsController : BaseController<Building>
     {
-        private readonly IRoomService _roomService;
+        private readonly IBuildingService _buildingService;
 
-        public RoomsController(IRoomService roomService)
+        public BuildingsController(IBuildingService buildingService)
         {
-            _roomService = roomService;
+            _buildingService = buildingService;
         }
 
         [HttpPut]
-        public IActionResult Update(RoomDto dto)
+        public IActionResult Update(BuildingDto dto)
         {
             if (dto == null)
             {
                 return BadRequest("Bad request, please enter valid data.");
             }
-            Room room = _roomService.GetById(dto.Id);
-            if (room == null || room.Deleted)
+            Building building = _buildingService.Get(dto.Id);
+            if (building == null || building.Deleted)
             {
                 return NotFound();
             }
-            bool status = _roomService.Update(RoomMapper.EntityDtoToEntity(dto));
-            if (status)
+            Building status = _buildingService.Update(BuildingMapper.EntityDtoToEntity(dto));
+            if (status != null)
             {
-                return Ok(room);
+                return Ok(status);
             }
             return BadRequest("Bad request, please enter valid data.");
         }
-
     }
 }
