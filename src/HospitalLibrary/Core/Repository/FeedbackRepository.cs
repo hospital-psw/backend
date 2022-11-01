@@ -21,7 +21,7 @@
 
         public override IEnumerable<Feedback> GetAll()
         {
-            return _context.Feedback.Include(x => x.Creator)
+            return _context.Feedback
                                     .Where(x => !x.Deleted)
                                     .ToList();
         }

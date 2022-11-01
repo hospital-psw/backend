@@ -51,25 +51,42 @@
         }
 
         [HttpGet]
-        [Route("/send")]
-        public IActionResult SendEmail()
+        [Route("send")]
+        public IActionResult SendEmail(Appointment appointment)
         {
-            _emailService.Send();
+            _emailService.Send(appointment);
             return Ok();
         }
 
         [HttpPost]
-        [Route("/recommend")]
+        [Route("recommend")]
         public IActionResult RecommendAppointments(RecommendRequestDto dto)
         {
             return Ok(_appointmentService.RecommendAppointments(dto));
         }
 
         [HttpPost]
-        [Route("/create")]
+        [Route("create")]
         public IActionResult Create(NewAppointmentDto dto)
         {
             return Ok(_appointmentService.Create(dto));
+        }
+
+        [HttpDelete]
+        [Route("cancel/{id}")]
+        public IActionResult Cancel(int id)
+        {
+            var appointment = _appointmentService.Get(id);
+
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            _emailService.Send(appointment);
+
+            _appointmentService.Delete(appointment);
+            return Ok();
         }
     }
 }

@@ -6,5 +6,6 @@
     {
         BloodBank Register(BloodBank entity);
         bool CheckBloodType(int id, string type);
+        bool CheckBloodAmount(int id, string type, double amount);
     }
 }
