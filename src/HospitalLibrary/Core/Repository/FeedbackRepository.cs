@@ -1,10 +1,10 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
-  
+
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
-    using HospitalLibrary.Core.Model.Enums;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;

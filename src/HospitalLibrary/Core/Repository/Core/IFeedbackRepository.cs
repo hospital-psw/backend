@@ -16,7 +16,7 @@
 
         IEnumerable<Feedback> GetAllApproved();
 
-        
+
         IEnumerable<Feedback> GetAllDenied();
         IEnumerable<Feedback> GetAllPending();
 
