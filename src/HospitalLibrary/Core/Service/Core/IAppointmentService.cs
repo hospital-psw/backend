@@ -17,5 +17,7 @@
         IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto);
 
         Appointment Create(NewAppointmentDto dto);
+
+        void Delete(Appointment appointment);
     }
 }

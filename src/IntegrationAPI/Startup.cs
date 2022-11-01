@@ -39,6 +39,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IMailSender, MailSender>();
+            services.AddScoped<IBBConnections, BBConnections>();
             services.AddMjmlServices(o =>
             {
                 o.DefaultKeepComments = true;
