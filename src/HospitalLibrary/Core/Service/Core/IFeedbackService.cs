@@ -17,10 +17,17 @@
         IEnumerable<Feedback> GetAllPrivateFeedback();
         IEnumerable<Feedback> GetAllAnonymousFeedback();
         IEnumerable<Feedback> GetAllIdentifiedFeedback();
+        IEnumerable<Feedback> GetAllAproved();
         bool MakePublic(int id);
         bool MakePrivate(int id);
         bool MakeAnonymous(int id);
         bool MakeIdentified(int id);
         public List<WelcomePageFeedbackDTO> GetForFrontPage();
+        bool ApproveFeedback(int id);
+        bool DenyFeedback(int id);
+        bool MakePending(int id);
+        IEnumerable<Feedback> GetAllApprovedFeedback();
+        IEnumerable<Feedback> GetAllDeniedFeedback();
+        IEnumerable<Feedback> GetAllPendingFeedback();
     }
 }

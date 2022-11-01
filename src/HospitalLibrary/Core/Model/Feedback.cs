@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
     using HospitalLibrary.Core.DTO.Feedback;
+    using HospitalLibrary.Core.Model.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,6 +17,8 @@
         public bool Anonymous { get; set; }
 
         public bool Public { get; set; }
+
+        public FeedbackStatus Status { get; set; }
 
         public Feedback()
         {

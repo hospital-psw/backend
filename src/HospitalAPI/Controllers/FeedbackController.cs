@@ -1,9 +1,17 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Dto;
+    using HospitalAPI.Mappers;
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Runtime.InteropServices;
 
     [ApiController]
@@ -21,6 +29,45 @@
         public IActionResult GetAll()
         {
             return Ok(_feedbackService.GetAll());
+        }
+
+        [HttpGet("get/managerfeedback")]
+        public IActionResult GetFeedbackForManager()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAll();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+
+        [HttpGet("get/AnonymousFeedback")]
+        public IActionResult GetAllAnonymousFeedback()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllAnonymousFeedback();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+
+        [HttpGet("get/AllAprovedFeedback")]
+        public IActionResult GetAllAproved()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllAproved();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
         }
 
         [HttpGet("{id}")]
@@ -73,6 +120,27 @@
         public IActionResult GetWellcomePage()
         {
             return Ok(_feedbackService.GetForFrontPage());
+        }
+
+        [HttpPut("make/approved/{id}")]
+        public IActionResult ApproveFeedback(int id)
+        {
+            bool status = _feedbackService.ApproveFeedback(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
+        }
+
+        [HttpPut("make/denied/{id}")]
+        public IActionResult DenyFeedback(int id)
+        {
+            bool status = _feedbackService.DenyFeedback(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
+        }
+
+        [HttpPut("make/pending/{id}")]
+        public IActionResult MakePending(int id)
+        {
+            bool status = _feedbackService.MakePending(id);
+            return status is true ? Ok(status) : BadRequest("Something went wrong...");
         }
 
     }

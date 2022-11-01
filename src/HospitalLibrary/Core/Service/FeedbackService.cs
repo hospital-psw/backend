@@ -2,9 +2,11 @@
 {
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.Extensions.Localization;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -117,6 +119,19 @@
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 return unitOfWork.FeedbackRepository.GetAllIdentified();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in GetAllIdentifiedFeedback {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+        public IEnumerable<Feedback> GetAllAproved()
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.FeedbackRepository.GetAllApproved();
             }
             catch (Exception e)
             {
@@ -249,6 +264,120 @@
             }
             catch (Exception)
             {
+                return null;
+            }
+        }
+
+
+
+        public bool ApproveFeedback(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Status = FeedbackStatus.APPROVED;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in ApproveFeedback {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+        public bool DenyFeedback(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Status = FeedbackStatus.DENIED;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in DenyFeedback {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+        public bool MakePending(int id)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+
+                if (feedback == null)
+                {
+                    return false;
+
+                }
+
+                feedback.Status = FeedbackStatus.PENDING;
+                unitOfWork.FeedbackRepository.Update(feedback);
+                unitOfWork.Save();
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in MakePending {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+        public IEnumerable<Feedback> GetAllApprovedFeedback()
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.FeedbackRepository.GetAllApproved();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in GetAllApprovedFeedback {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+        public IEnumerable<Feedback> GetAllDeniedFeedback()
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.FeedbackRepository.GetAllDenied();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in GetAllDeniedFeedback {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+        public IEnumerable<Feedback> GetAllPendingFeedback()
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.FeedbackRepository.GetAllPending();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in FeedbackService in GetAllPendingFeedback {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
