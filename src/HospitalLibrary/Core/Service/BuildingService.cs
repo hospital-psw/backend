@@ -10,6 +10,6 @@
 
     public class BuildingService : BaseService<Building>, IBuildingService
     {
-        
+
     }
 }
