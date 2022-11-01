@@ -5,9 +5,11 @@
     using IntegrationLibrary.Settings;
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
+    using Mailjet.Client.Resources.SMS;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.Net.Http;
 
     public class BloodBankService : IBloodBankService
     {
@@ -140,5 +142,27 @@
 
             return _connections.SendHttpRequestToBank(bloodBank, type);
         }
+
+        public bool CheckBloodAmount(int id, string type, double amount)
+        {
+            using UnitOfWork unitOfWork = new(new IntegrationDbContext());
+            BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
+
+            return SendHttpRequestAmountToBank(bloodBank, type, amount);
+        }
+
+        private bool SendHttpRequestAmountToBank(BloodBank bloodBank, string type, double amount)
+        {
+            using (var client = new HttpClient())
+            {
+                bloodBank.GetBloodTypeAndAmountAvailability.Replace("!BLOOD_TYPE", type).Replace("!AMOUNT", amount.ToString());
+                var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAndAmountAvailability}");
+                client.DefaultRequestHeaders.Add("X-API-KEY", bloodBank.ApiKey);
+                var result = client.GetAsync(endpoint).Result;
+                var json = result.Content.ReadAsStringAsync().Result;
+                return Convert.ToBoolean(json);
+            }
+        }
+
     }
 }

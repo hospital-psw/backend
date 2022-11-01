@@ -4,7 +4,6 @@
     using IntegrationAPI.DTO;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
-    using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -110,5 +109,20 @@
             }
 
         }
+
+        [HttpGet("checkAmount/{id}/{type}/{amount}")]
+        public IActionResult CheckBloodAmount(int id, string type, double amount)
+        {
+            try
+            {
+                return Ok(_bloodBankService.CheckBloodAmount(id, type, amount));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest();
+            }
+        }
+
     }
 }
