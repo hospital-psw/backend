@@ -56,7 +56,7 @@
             {
                 return BadRequest("You can't reschedule this appointment.");
             }
-            if(Math.Abs((dto.Date - appointment.Date).TotalDays) > 4)
+            if (Math.Abs((dto.Date - appointment.Date).TotalDays) > 4)
             {
                 return BadRequest("Appointment can be rescheduled only 4 days before or after of current date.");
             }
