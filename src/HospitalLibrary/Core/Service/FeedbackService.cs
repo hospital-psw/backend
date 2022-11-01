@@ -131,7 +131,7 @@
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllAproved();
+                return unitOfWork.FeedbackRepository.GetAllApproved();
             }
             catch (Exception e)
             {

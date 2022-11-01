@@ -14,7 +14,7 @@
         IEnumerable<Feedback> GetAllAnonymous();
         IEnumerable<Feedback> GetAllIdentified();
 
-        IEnumerable<Feedback> GetAllAproved();
+        IEnumerable<Feedback> GetAllApproved();
 
         
         IEnumerable<Feedback> GetAllDenied();

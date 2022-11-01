@@ -48,12 +48,7 @@
         public IEnumerable<Feedback> GetAllAnonymous()
         {
             return GetAll().Where(x => x.Anonymous).ToList();
-        }   
-        public IEnumerable<Feedback> GetAllAproved()
-        {
-            return GetAll().Where(x =>(int)x.Status==1).ToList();
         }
-
         public IEnumerable<Feedback> GetAllIdentified()
         {
             return GetAll().Where(x => !x.Anonymous).ToList();
