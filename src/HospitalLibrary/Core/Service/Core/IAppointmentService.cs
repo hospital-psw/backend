@@ -19,5 +19,7 @@
         Appointment Create(NewAppointmentDto dto);
 
         void Delete(Appointment appointment);
+
+        IEnumerable<Appointment> GetByDoctorsId(int doctorId);
     }
 }

@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalLibrary.Core.Model;
+    using System.Collections.Generic;
 
     public class AppointmentMapper
     {
@@ -11,17 +12,22 @@
 
             dto.Id = appointment.Id;
             dto.Date = appointment.Date;
+            dto.EndDate = appointment.Date.AddMinutes(appointment.Duration);
             dto.Duration = appointment.Duration;
             dto.IsDone = appointment.IsDone;
             dto.ExamType = appointment.ExamType;
             dto.Patient = PatientMapper.EntityToEntityDto(appointment.Patient);
             dto.Doctor = DoctorMapper.EntityToEntityDto(appointment.Doctor);
-
-            //dto.Room.Id = appointment.Room.Id;
-            //dto.Room.Number = appointment.Room.Number;
-            //dto.Room.Floor = appointment.Room.Floor;
+            dto.Room = RoomMapper.EntityToEntityDto(appointment.Room);
 
             return dto;
+        }
+
+        public static List<AppointmentDto> EntityListToEntityDtoList(List<Appointment> appointments)
+        {
+            List<AppointmentDto> appointmentDtos = new List<AppointmentDto>();
+            appointments.ForEach(x => appointmentDtos.Add(EntityToEntityDto(x)));
+            return appointmentDtos;
         }
     }
 }

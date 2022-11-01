@@ -22,7 +22,10 @@
             return HospitalDbContext.Appointments.Include(x => x.Patient)
                                                  .Include(x => x.Doctor)
                                                  .ThenInclude(x => x.Office)
-                                                 .Where(x => !x.Deleted);
+                                                 .Include(x => x.Room)
+                                                 .ThenInclude(x => x.Floor)
+                                                 .ThenInclude(x => x.Building)
+                                                 .Where(x => !x.Deleted && !x.IsDone);
         }
 
         public override Appointment Get(int id)
@@ -46,7 +49,10 @@
         {
             return HospitalDbContext.Appointments.Include(x => x.Doctor)
                                                  .Include(x => x.Patient)
-                                                 .Where(x => x.Doctor.Id == doctorId && !x.IsDone)
+                                                 .Include(x => x.Room)
+                                                 .ThenInclude(x => x.Floor)
+                                                 .ThenInclude(x => x.Building)
+                                                 .Where(x => x.Doctor.Id == doctorId)
                                                  .ToList();
         }
 
