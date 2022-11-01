@@ -26,7 +26,7 @@
         bool ApproveFeedback(int id);
         bool DenyFeedback(int id);
         bool MakePending(int id);
-        IEnumerable<Feedback> GetAllApprovedFeedback();
+
         IEnumerable<Feedback> GetAllDeniedFeedback();
         IEnumerable<Feedback> GetAllPendingFeedback();
     }

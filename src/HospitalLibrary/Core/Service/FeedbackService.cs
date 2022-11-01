@@ -342,19 +342,8 @@
                 return false;
             }
         }
-        public IEnumerable<Feedback> GetAllApprovedFeedback()
-        {
-            try
-            {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllApproved();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in FeedbackService in GetAllApprovedFeedback {e.Message} in {e.StackTrace}");
-                return null;
-            }
-        }
+
+
         public IEnumerable<Feedback> GetAllDeniedFeedback()
         {
             try

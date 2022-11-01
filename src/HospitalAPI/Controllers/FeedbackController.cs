@@ -70,6 +70,56 @@
             return Ok(managerFeedbackDto);
         }
 
+        [HttpGet("get/AllPendingFeedback")]
+        public IActionResult GetAllPendingFeedback()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllPendingFeedback();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+        [HttpGet("get/AllDeniedFeedback")]
+        public IActionResult GetAllDeniedFeedback()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllDeniedFeedback();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+        [HttpGet("get/AllPublicFeedback")]
+        public IActionResult GetAllPublicFeedback()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllPublicFeedback();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+        [HttpGet("get/AllPrivateFeedback")]
+        public IActionResult GetAllPrivateFeedback()
+        {
+            List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
+            List<Feedback> feedback = (List<Feedback>)_feedbackService.GetAllPrivateFeedback();
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
+            return Ok(managerFeedbackDto);
+        }
+
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
