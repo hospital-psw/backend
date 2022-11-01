@@ -11,6 +11,8 @@
 
         public DateTime Date { get; set; }
 
+        public DateTime EndDate { get; set; }
+
         public int Duration { get; set; }
 
         public ExaminationType ExamType { get; set; }

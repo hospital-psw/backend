@@ -69,6 +69,7 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
+
         [HttpGet("get/AllPendingFeedback")]
         public IActionResult GetAllPendingFeedback()
         {
@@ -117,6 +118,7 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
+
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)

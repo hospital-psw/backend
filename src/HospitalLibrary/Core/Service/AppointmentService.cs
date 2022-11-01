@@ -12,6 +12,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
+
     public class AppointmentService : BaseService<Appointment>, IAppointmentService
     {
         private readonly ILogger<Appointment> _logger;
@@ -144,6 +145,21 @@
                 unitOfWork.Save();
             }
             catch (Exception) { }
+        }
+
+        public IEnumerable<Appointment> GetByDoctorsId(int doctorId)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                List<Appointment> appointments = (List<Appointment>)unitOfWork.AppointmentRepository.GetAppointmentsForDoctor(doctorId);
+
+                return appointments;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }
