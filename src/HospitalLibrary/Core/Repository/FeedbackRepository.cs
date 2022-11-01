@@ -54,7 +54,7 @@
             return GetAll().Where(x => !x.Anonymous).ToList();
         }
 
-       
+
         public IEnumerable<Feedback> GetAllDenied()
         {
             return GetAll().Where(x => x.Status == FeedbackStatus.DENIED).ToList();
