@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPI.Dto
 {
+    using HospitalLibrary.Core.DTO;
     using HospitalLibrary.Core.Model.Enums;
     using System;
 

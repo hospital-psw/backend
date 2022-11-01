@@ -169,40 +169,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("BuildingId");
 
                     b.ToTable("Floors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            Number = 0
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -357,8 +323,18 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.User");
 
+                    b.Property<int?>("OfficeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Specialization")
                         .HasColumnType("int");
+
+                    b.Property<int?>("WorkHoursId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("OfficeId");
+
+                    b.HasIndex("WorkHoursId");
 
                     b.HasDiscriminator().HasValue("Doctor");
                 });
@@ -434,6 +410,21 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("RoomId");
 
                     b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Room", "Office")
+                        .WithMany()
+                        .HasForeignKey("OfficeId");
+
+                    b.HasOne("HospitalLibrary.Core.Model.WorkingHours", "WorkHours")
+                        .WithMany()
+                        .HasForeignKey("WorkHoursId");
+
+                    b.Navigation("Office");
+
+                    b.Navigation("WorkHours");
                 });
 #pragma warning restore 612, 618
         }

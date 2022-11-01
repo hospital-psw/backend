@@ -22,13 +22,16 @@ namespace IntegrationLibrary.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBank", b =>
+            modelBuilder.Entity("IntegrationLibrary.BloodBank.BloodBank", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AdminPassword")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApiKey")
                         .HasColumnType("nvarchar(max)");
@@ -54,6 +57,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("GetBloodTypeAvailability")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDummyPassword")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -68,6 +74,7 @@ namespace IntegrationLibrary.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Deleted = false,
+                            IsDummyPassword = false,
                             Name = "Blood bank 1"
                         },
                         new
@@ -76,6 +83,7 @@ namespace IntegrationLibrary.Migrations
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Deleted = false,
+                            IsDummyPassword = false,
                             Name = "Crveni krst "
                         });
                 });

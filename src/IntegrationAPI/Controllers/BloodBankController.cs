@@ -2,10 +2,12 @@
 {
     using AutoMapper;
     using IntegrationAPI.DTO;
-    using IntegrationLibrary.Core.Model;
-    using IntegrationLibrary.Core.Service.Core;
+    using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.BloodBank.Interfaces;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -13,17 +15,19 @@
     {
         private readonly IBloodBankService _bloodBankService;
         private readonly IMapper _mapper;
+        private readonly IMailSender _mailer;
 
-        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, IMailSender mailer)
         {
             _bloodBankService = bloodBankService;
             _mapper = mapper;
+            _mailer = mailer;
         }
 
         [HttpGet("all")]
         public IActionResult GetAll()
         {
-            return Ok(_bloodBankService.GetAll());
+            return Ok(_mapper.Map<IEnumerable<GetBloodBankDTO>>(_bloodBankService.GetAll()));
         }
 
         [HttpGet("{id}")]
@@ -36,11 +40,11 @@
                 return NotFound();
             }
 
-            return Ok(entity);
+            return Ok(_mapper.Map<GetBloodBankDTO>(entity));
         }
 
-        [HttpPost]
-        public IActionResult Add(BloodBank bloodBank)
+        [HttpPost("register")]
+        public IActionResult Register(RegisterBloodBankDTO bloodBank)
         {
             if (!ModelState.IsValid)
             {
@@ -52,9 +56,50 @@
                 return BadRequest();
             }
 
-            BloodBank response = _bloodBankService.Create(bloodBank);
+            BloodBank response = _bloodBankService.Register(_mapper.Map<BloodBank>(bloodBank));
 
-            return Ok(response);
+            return Ok(_mapper.Map<GetBloodBankDTO>(response));
+        }
+
+        [HttpPost("Login")]
+        public IActionResult Login(BloodBankManagerLoginDTO credentials)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (credentials == null)
+            {
+                return BadRequest();
+            }
+            var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
+            if (bloodBank.AdminPassword.Equals(credentials.Password))
+            {
+                return Ok(bloodBank.IsDummyPassword);
+            }
+            return Unauthorized();
+        }
+
+        [HttpPost("ChangePassword")]
+        public IActionResult ChangePassword(ChangePasswordDTO credentials)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (credentials == null)
+            {
+                return BadRequest();
+            }
+            var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
+            if (!credentials.OldPassword.Equals(bloodBank.AdminPassword))
+            {
+                return Unauthorized();
+            }
+            bloodBank.AdminPassword = credentials.NewPassword;
+            bloodBank.IsDummyPassword = false;
+            _bloodBankService.Update(bloodBank);
+            return Ok(bloodBank);
         }
 
         [HttpPut]
@@ -64,19 +109,16 @@
             {
                 return BadRequest(ModelState);
             }
-
-            if (bloodBank == null)
-            {
-                return BadRequest();
-            }
-
             var originalBloodBank = _bloodBankService.Get(bloodBank.Id);
-            if (originalBloodBank == null)
+            if (bloodBank == null || originalBloodBank == null)
             {
                 return BadRequest();
             }
+
             var updatedBloodBank = _mapper.Map<BloodBank>(bloodBank);
             updatedBloodBank.ApiKey = originalBloodBank.ApiKey;
+            updatedBloodBank.AdminPassword = originalBloodBank.AdminPassword;
+            updatedBloodBank.IsDummyPassword = originalBloodBank.IsDummyPassword;
 
             var responseEntity = _bloodBankService.Update(updatedBloodBank);
 
@@ -94,20 +136,34 @@
 
             return NoContent();
         }
+
         [HttpGet("checkType/{id}/{type}")]
-        public IActionResult CheckBloodType(int id,string type)
+        public IActionResult CheckBloodType(int id, string type)
         {
             try
             {
                 return Ok(_bloodBankService.CheckBloodType(id, type));
-            }catch(Exception e)
+            }
+            catch (Exception)
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
         }
 
-
+        [HttpGet("checkAmount/{id}/{type}/{amount}")]
+        public IActionResult CheckBloodAmount(int id, string type, double amount)
+        {
+            try
+            {
+                return Ok(_bloodBankService.CheckBloodAmount(id, type, amount));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest();
+            }
+        }
 
     }
 }

@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.Core.DTO;
+﻿using HospitalAPI.Dto;
+using HospitalAPI.Mappers;
+using HospitalLibrary.Core.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
@@ -15,6 +17,26 @@ namespace HospitalAPI.Controllers
         public RoomsController(IRoomService roomService)
         {
             _roomService = roomService;
+        }
+
+        [HttpPut]
+        public IActionResult Update(RoomDto dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest("Bad request, please enter valid data.");
+            }
+            Room room = _roomService.GetById(dto.Id);
+            if (room == null || room.Deleted)
+            {
+                return NotFound();
+            }
+            bool status = _roomService.Update(RoomMapper.EntityDtoToEntity(dto));
+            if (status)
+            {
+                return Ok(room);
+            }
+            return BadRequest("Bad request, please enter valid data.");
         }
 
     }

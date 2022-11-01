@@ -10,14 +10,5 @@
 
         public DateTime Date { get; set; }
 
-        public int Duration { get; set; }
-
-        public ExaminationType ExamType { get; set; }
-
-        public int RoomId { get; set; }
-
-        public int PatientId { get; set; }
-
-        public int DoctorId { get; set; }
     }
 }
