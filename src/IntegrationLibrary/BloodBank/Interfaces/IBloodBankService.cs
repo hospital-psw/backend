@@ -6,7 +6,7 @@
     {
         BloodBank Register(BloodBank entity);
         bool CheckBloodType(int id, string type);
-        
+
         BloodBank GetByEmail(string email);
     }
 }

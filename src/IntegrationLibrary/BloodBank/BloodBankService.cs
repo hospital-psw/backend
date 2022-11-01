@@ -55,7 +55,7 @@
                 using UnitOfWork unitOfWork = new(new IntegrationDbContext());
                 return unitOfWork.BloodBankRepository.GetByEmail(email);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError($"Error in BloodBankService in GetByEmail {e.Message} in {e.StackTrace}");
                 return null;

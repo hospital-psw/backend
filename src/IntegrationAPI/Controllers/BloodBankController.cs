@@ -69,12 +69,12 @@
             {
                 return BadRequest(ModelState);
             }
-            if(credentials == null)
+            if (credentials == null)
             {
                 return BadRequest();
             }
             var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
-            if(bloodBank.AdminPassword.Equals(credentials.Password))
+            if (bloodBank.AdminPassword.Equals(credentials.Password))
             {
                 return Ok(bloodBank.IsDummyPassword);
             }
@@ -93,7 +93,7 @@
                 return BadRequest();
             }
             var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
-            if(!credentials.OldPassword.Equals(bloodBank.AdminPassword))
+            if (!credentials.OldPassword.Equals(bloodBank.AdminPassword))
             {
                 return Unauthorized();
             }
