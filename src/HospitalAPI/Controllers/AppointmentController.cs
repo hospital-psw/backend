@@ -6,8 +6,10 @@
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -15,11 +17,13 @@
     {
         private IAppointmentService _appointmentService;
         private IEmailService _emailService;
+        private IDoctorService _doctorService;
 
-        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService)
+        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService, IDoctorService doctorService)
         {
             _appointmentService = appointmentService;
             _emailService = emailService;
+            _doctorService = doctorService;
         }
 
         [HttpGet("{id}")]
@@ -87,6 +91,33 @@
 
             _appointmentService.Delete(appointment);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("doctor/{doctorId}")]
+        public IActionResult GetByDoctorId(int doctorId)
+        {
+            var doctor = _doctorService.Get(doctorId);
+
+            if (doctor == null)
+            {
+                return BadRequest();
+            }
+
+            var appointments = _appointmentService.GetByDoctorsId(doctorId);
+
+            if (appointments.IsNullOrEmpty())
+            {
+                return NoContent();
+            }
+
+            var appointmentsDTO = new List<AppointmentDto>();
+            foreach (Appointment a in appointments)
+            {
+                appointmentsDTO.Add(AppointmentMapper.EntityToEntityDto(a));
+            }
+
+            return Ok(appointmentsDTO);
         }
     }
 }
