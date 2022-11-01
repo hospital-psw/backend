@@ -99,20 +99,20 @@
         {
             var doctor = _doctorService.Get(doctorId);
 
-            if(doctor == null)
+            if (doctor == null)
             {
                 return BadRequest();
             }
 
             var appointments = _appointmentService.GetByDoctorsId(doctorId);
 
-            if (appointments.IsNullOrEmpty()) 
+            if (appointments.IsNullOrEmpty())
             {
                 return NoContent();
             }
 
             var appointmentsDTO = new List<AppointmentDto>();
-            foreach(Appointment a in appointments)
+            foreach (Appointment a in appointments)
             {
                 appointmentsDTO.Add(AppointmentMapper.EntityToEntityDto(a));
             }

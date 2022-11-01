@@ -11,7 +11,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-  
+
 
     public class AppointmentService : BaseService<Appointment>, IAppointmentService
     {
@@ -155,7 +155,8 @@
                 List<Appointment> appointments = (List<Appointment>)unitOfWork.AppointmentRepository.GetAppointmentsForDoctor(doctorId);
 
                 return appointments;
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return null;
             }
