@@ -15,5 +15,16 @@
 
             return dto;
         }
+
+        public static Building EntityDtoToEntity(BuildingDto dto)
+        {
+            Building building = new Building();
+
+            building.Id = dto.Id;
+            building.Name = dto.Name;
+            building.Address = dto.Address;
+
+            return building;
+        }
     }
 }
