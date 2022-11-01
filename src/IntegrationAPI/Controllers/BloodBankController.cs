@@ -144,7 +144,7 @@
             {
                 return Ok(_bloodBankService.CheckBloodType(id, type));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return Unauthorized();
             }
