@@ -22,6 +22,7 @@
             return HospitalDbContext.Appointments.Include(x => x.Patient)
                                                  .Include(x => x.Doctor)
                                                  .ThenInclude(x => x.Office)
+                                                 .Include(x => x.Room)
                                                  .Where(x => !x.Deleted);
         }
 
@@ -46,6 +47,7 @@
         {
             return HospitalDbContext.Appointments.Include(x => x.Doctor)
                                                  .Include(x => x.Patient)
+                                                 .Include(x => x.Room)
                                                  .Where(x => x.Doctor.Id == doctorId && !x.IsDone)
                                                  .ToList();
         }
