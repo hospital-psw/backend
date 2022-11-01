@@ -9,16 +9,17 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
-    using System.Net.Http;
 
     public class BloodBankService : IBloodBankService
     {
         private readonly ILogger<BloodBank> _logger;
         private readonly IMailSender _mailer;
-        public BloodBankService(ILogger<BloodBank> logger, IMailSender mailer)
+        private readonly IBBConnections _connections;
+        public BloodBankService(ILogger<BloodBank> logger, IMailSender mailer, IBBConnections connections)
         {
             _logger = logger;
             _mailer = mailer;
+            _connections = connections;
         }
 
         public virtual BloodBank Get(int id)
@@ -110,8 +111,6 @@
         {
             try
             {
-                entity = Create(entity);
-
                 string apiKey = SecretGenerator.GenerateAPIKey(entity.Email);
                 entity.ApiKey = apiKey;
 
@@ -119,7 +118,9 @@
                 entity.AdminPassword = password;
                 entity.IsDummyPassword = true;
 
-                entity = Update(entity);
+                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
+                unitOfWork.BloodBankRepository.Add(entity);
+                unitOfWork.Save();
 
                 string template = MailSender.MakeRegisterTemplate(entity.Email, entity.ApiKey, entity.AdminPassword);
                 _mailer.SendEmail(template, "Successfull Registration", entity.Email);
@@ -138,19 +139,7 @@
             using UnitOfWork unitOfWork = new(new IntegrationDbContext());
             BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
 
-            return sendHttpRequestToBank(bloodBank, type);
-        }
-
-        private bool sendHttpRequestToBank(BloodBank bloodBank, string type)
-        {
-            using (var client = new HttpClient())
-            {
-                var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAvailability}/+{type}");
-                client.DefaultRequestHeaders.Add("X-API-KEY", bloodBank.ApiKey);
-                var result = client.GetAsync(endpoint).Result;
-                var json = result.Content.ReadAsStringAsync().Result;
-                return Convert.ToBoolean(json);
-            }
+            return _connections.SendHttpRequestToBank(bloodBank, type);
         }
 
         public bool CheckBloodAmount(int id, string type, double amount)
