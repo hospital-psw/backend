@@ -23,7 +23,7 @@
             _connections = connections;
         }
 
-        public virtual BloodBank Get(int id)
+        public BloodBank Get(int id)
         {
             try
             {
@@ -37,7 +37,7 @@
             }
         }
 
-        public virtual IEnumerable<BloodBank> GetAll()
+        public IEnumerable<BloodBank> GetAll()
         {
             try
             {
@@ -51,7 +51,21 @@
             }
         }
 
-        public virtual BloodBank Create(BloodBank entity)
+        public BloodBank GetByEmail(string email)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
+                return unitOfWork.BloodBankRepository.GetByEmail(email);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodBankService in GetByEmail {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public BloodBank Create(BloodBank entity)
         {
             try
             {
@@ -70,7 +84,7 @@
 
         }
 
-        public virtual bool Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
@@ -90,7 +104,7 @@
             }
         }
 
-        public virtual BloodBank Update(BloodBank entity)
+        public BloodBank Update(BloodBank entity)
         {
             try
             {
@@ -108,7 +122,7 @@
 
         }
 
-        public virtual BloodBank Register(BloodBank entity)
+        public BloodBank Register(BloodBank entity)
         {
             try
             {
