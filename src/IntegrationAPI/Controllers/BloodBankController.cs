@@ -62,6 +62,47 @@
             return Ok(_mapper.Map<GetBloodBankDTO>(response));
         }
 
+        [HttpPost("Login")]
+        public IActionResult Login(BloodBankManagerLoginDTO credentials)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if(credentials == null)
+            {
+                return BadRequest();
+            }
+            var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
+            if(bloodBank.AdminPassword.Equals(credentials.Password))
+            {
+                return Ok(bloodBank.IsDummyPassword);
+            }
+            return Unauthorized();
+        }
+
+        [HttpPost("ChangePassword")]
+        public IActionResult ChangePassword(ChangePasswordDTO credentials)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (credentials == null)
+            {
+                return BadRequest();
+            }
+            var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
+            if(!credentials.OldPassword.Equals(bloodBank.AdminPassword))
+            {
+                return Unauthorized();
+            }
+            bloodBank.AdminPassword = credentials.NewPassword;
+            bloodBank.IsDummyPassword = false;
+            _bloodBankService.Update(bloodBank);
+            return Ok(bloodBank);
+        }
+
         [HttpPut]
         public IActionResult Update(UpdateBloodBankDTO bloodBank)
         {
