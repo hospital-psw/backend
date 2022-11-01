@@ -12,5 +12,13 @@
     public class BuildingRepository : BaseRepository<Building>, IBuildingRepository
     {
         public BuildingRepository(HospitalDbContext context) : base(context) { }
+
+        public override void Update(Building building)
+        {
+            Building buildingFromBase = this.Get(building.Id);
+            buildingFromBase.Name = building.Name;
+            base.Update(buildingFromBase);
+            HospitalDbContext.SaveChanges(); // ovo mozda ne mora
+        }
     }
 }
