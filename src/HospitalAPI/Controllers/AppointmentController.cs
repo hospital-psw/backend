@@ -47,6 +47,15 @@
             }
 
             Appointment appointment = _appointmentService.Get(dto.Id);
+
+            if ((DateTime.Now - appointment.Date).TotalDays < 2)
+            {
+                return BadRequest("You can't reschedule this appointment.");
+            }
+            if(Math.Abs((dto.Date - appointment.Date).TotalDays) > 4)
+            {
+                return BadRequest("Appointment can be rescheduled only 4 days before or after of current date.");
+            }
             return Ok(_appointmentService.Update(RescheduleAppointmentMapper.EntityDtoToEntity(dto, appointment)));
         }
 
