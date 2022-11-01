@@ -4,7 +4,6 @@
     using IntegrationAPI.DTO;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
-    using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
