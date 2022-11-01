@@ -12,6 +12,7 @@
 
             dto.Id = appointment.Id;
             dto.Date = appointment.Date;
+            dto.EndDate = appointment.Date.AddMinutes(appointment.Duration);
             dto.Duration = appointment.Duration;
             dto.IsDone = appointment.IsDone;
             dto.ExamType = appointment.ExamType;
