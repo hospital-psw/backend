@@ -29,7 +29,7 @@
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 Feedback feedback = new Feedback(dto);
-                feedback.Creator = unitOfWork.UserRepository.Get(dto.CreatorId);
+                feedback.Creator = unitOfWork.PatientRepository.Get(dto.CreatorId);
                 unitOfWork.FeedbackRepository.Add(feedback);
                 unitOfWork.Save();
 
@@ -126,6 +126,7 @@
                 return null;
             }
         }
+
         public IEnumerable<Feedback> GetAllAproved()
         {
             try
@@ -268,8 +269,6 @@
             }
         }
 
-
-
         public bool ApproveFeedback(int id)
         {
             try
@@ -294,6 +293,7 @@
                 return false;
             }
         }
+
         public bool DenyFeedback(int id)
         {
             try
@@ -318,6 +318,7 @@
                 return false;
             }
         }
+
         public bool MakePending(int id)
         {
             try
@@ -343,7 +344,6 @@
             }
         }
 
-
         public IEnumerable<Feedback> GetAllDeniedFeedback()
         {
             try
@@ -357,6 +357,7 @@
                 return null;
             }
         }
+
         public IEnumerable<Feedback> GetAllPendingFeedback()
         {
             try

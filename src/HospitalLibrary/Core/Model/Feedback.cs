@@ -10,7 +10,7 @@
 
     public class Feedback : Entity
     {
-        public User Creator { get; set; }
+        public Patient Creator { get; set; }
 
         public string Message { get; set; }
 

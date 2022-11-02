@@ -31,7 +31,7 @@
             return Ok(_feedbackService.GetAll());
         }
 
-        [HttpGet("get/managerfeedback")]
+        [HttpGet("get/manager/feedback")]
         public IActionResult GetFeedbackForManager()
         {
             List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
@@ -44,7 +44,7 @@
             return Ok(managerFeedbackDto);
         }
 
-        [HttpGet("get/AnonymousFeedback")]
+        [HttpGet("get/all/anonymous")]
         public IActionResult GetAllAnonymousFeedback()
         {
             List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
@@ -57,7 +57,7 @@
             return Ok(managerFeedbackDto);
         }
 
-        [HttpGet("get/AllAprovedFeedback")]
+        [HttpGet("get/all/approved")]
         public IActionResult GetAllAproved()
         {
             List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
@@ -70,7 +70,7 @@
             return Ok(managerFeedbackDto);
         }
 
-        [HttpGet("get/AllPendingFeedback")]
+        [HttpGet("get/all/pending")]
         public IActionResult GetAllPendingFeedback()
         {
             List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
@@ -82,7 +82,8 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
-        [HttpGet("get/AllDeniedFeedback")]
+        
+        [HttpGet("get/all/denied")]
         public IActionResult GetAllDeniedFeedback()
         {
             List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
@@ -94,7 +95,8 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
-        [HttpGet("get/AllPublicFeedback")]
+        
+        [HttpGet("get/all/public")]
         public IActionResult GetAllPublicFeedback()
         {
             List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
@@ -106,7 +108,8 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
-        [HttpGet("get/AllPrivateFeedback")]
+        
+        [HttpGet("get/all/private")]
         public IActionResult GetAllPrivateFeedback()
         {
             List<ManagerFeedbackDto> managerFeedbackDto = new List<ManagerFeedbackDto>();
@@ -118,7 +121,6 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
-
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
