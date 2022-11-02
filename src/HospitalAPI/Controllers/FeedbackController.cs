@@ -82,7 +82,7 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
-        
+
         [HttpGet("get/all/denied")]
         public IActionResult GetAllDeniedFeedback()
         {
@@ -95,7 +95,7 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
-        
+
         [HttpGet("get/all/public")]
         public IActionResult GetAllPublicFeedback()
         {
@@ -108,7 +108,7 @@
             feedback.ForEach(f => managerFeedbackDto.Add(ManagerFeedbackMapper.EntityToEntityDto(f)));
             return Ok(managerFeedbackDto);
         }
-        
+
         [HttpGet("get/all/private")]
         public IActionResult GetAllPrivateFeedback()
         {
