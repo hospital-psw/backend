@@ -169,8 +169,8 @@
         {
             using (var client = new HttpClient())
             {
-                bloodBank.GetBloodTypeAndAmountAvailability.Replace("!BLOOD_TYPE", type).Replace("!AMOUNT", amount.ToString());
-                var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAndAmountAvailability}");
+                var endpointUrl = bloodBank.GetBloodTypeAndAmountAvailability.Replace("!BLOOD_TYPE", type).Replace("!AMOUNT", amount.ToString());
+                var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{endpointUrl}");
                 client.DefaultRequestHeaders.Add("X-API-KEY", bloodBank.ApiKey);
                 var result = client.GetAsync(endpoint).Result;
                 var json = result.Content.ReadAsStringAsync().Result;
