@@ -4,6 +4,7 @@
     using IntegrationAPI.DTO;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
+    using IntegrationLibrary.Exceptions;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -64,42 +65,58 @@
         [HttpPost("Login")]
         public IActionResult Login(BloodBankManagerLoginDTO credentials)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
-            if (credentials == null)
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (credentials == null)
+                {
+                    return BadRequest();
+                }
+                var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
+                if(bloodBank == null)
+                {
+                    return BadRequest();
+                }
+                if (bloodBank.AdminPassword.Equals(credentials.Password))
+                {
+                    return Ok(bloodBank.IsDummyPassword);
+                }
+                return Unauthorized();
+            }catch (Exception ex)
             {
-                return BadRequest();
+                return new StatusCodeResult(500);
             }
-            var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
-            if (bloodBank.AdminPassword.Equals(credentials.Password))
-            {
-                return Ok(bloodBank.IsDummyPassword);
-            }
-            return Unauthorized();
         }
 
         [HttpPost("ChangePassword")]
         public IActionResult ChangePassword(ChangePasswordDTO credentials)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
-            if (credentials == null)
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (credentials == null)
+                {
+                    return BadRequest();
+                }
+                var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
+                if (!credentials.OldPassword.Equals(bloodBank.AdminPassword))
+                {
+                    return Unauthorized();
+                }
+                bloodBank.AdminPassword = credentials.NewPassword;
+                bloodBank.IsDummyPassword = false;
+                _bloodBankService.Update(bloodBank);
+                return Ok(bloodBank);
+            }catch (Exception ex)
             {
-                return BadRequest();
+                return new StatusCodeResult(500);
             }
-            var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
-            if (!credentials.OldPassword.Equals(bloodBank.AdminPassword))
-            {
-                return Unauthorized();
-            }
-            bloodBank.AdminPassword = credentials.NewPassword;
-            bloodBank.IsDummyPassword = false;
-            _bloodBankService.Update(bloodBank);
-            return Ok(bloodBank);
         }
 
         [HttpPut]
@@ -144,9 +161,9 @@
             {
                 return Ok(_bloodBankService.CheckBloodType(id, type));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Unauthorized();
+                return new StatusCodeResult(500);
             }
 
         }
