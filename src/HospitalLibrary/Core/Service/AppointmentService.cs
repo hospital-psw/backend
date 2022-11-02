@@ -123,7 +123,9 @@
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 Patient patient = unitOfWork.PatientRepository.Get(dto.PatientId);
                 Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                Room room = unitOfWork.RoomRepository.GetById(16);
                 Appointment newAppointment = new Appointment(dto.Date, dto.ExamType, null, patient, doctor);
+                newAppointment.Room = room;
                 unitOfWork.AppointmentRepository.Add(newAppointment);
                 unitOfWork.Save();
                 return newAppointment;
