@@ -68,7 +68,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Building", b =>
@@ -96,7 +96,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buildings");
+                    b.ToTable("Buildings", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -128,14 +128,11 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Public")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Feedback");
+                    b.ToTable("Feedback", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
@@ -168,7 +165,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("BuildingId");
 
-                    b.ToTable("Floors");
+                    b.ToTable("Floors", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -206,7 +203,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("WorkingHoursId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.RoomMap", b =>
@@ -245,7 +242,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomsMap");
+                    b.ToTable("RoomsMap", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.User", b =>
@@ -286,7 +283,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
@@ -316,7 +313,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkingHours");
+                    b.ToTable("WorkingHours", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
