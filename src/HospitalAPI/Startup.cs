@@ -1,5 +1,9 @@
+using HospitalAPI.Configuration;
+using HospitalAPI.EmailServices;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+
 
 namespace HospitalAPI
 {
@@ -24,7 +29,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
+            options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -33,7 +38,21 @@ namespace HospitalAPI
             });
 
             services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IMapService, MapService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IFloorService, FloorService>();
+
+            ProjectConfiguration config = new ProjectConfiguration();
+            Configuration.Bind("EmailSettings", config.EmailSettings);
+            services.AddSingleton(config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -17,12 +18,15 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Room> GetAll()
         {
-            return _context.Rooms.ToList();
+            // return _context.Rooms.ToList();
+            return _context.Rooms.Include(x => x.Floor.Building).Include(x => x.Floor).Include(x => x.WorkingHours)
+                                    .Where(x => !x.Deleted)
+                                    .ToList();
         }
 
         public Room GetById(int id)
         {
-            return _context.Rooms.Find(id);
+            return _context.Rooms.Include(x => x.Floor).ThenInclude(x => x.Building).FirstOrDefault(x => x.Id == id);
         }
 
         public void Create(Room room)
@@ -33,7 +37,10 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(Room room)
         {
-            _context.Entry(room).State = EntityState.Modified;
+            Room roomFromBase = _context.Rooms.Find(room.Id);
+            roomFromBase.Purpose = room.Purpose;
+            roomFromBase.Number = room.Number;
+            _context.Entry(roomFromBase).State = EntityState.Modified;
 
             try
             {

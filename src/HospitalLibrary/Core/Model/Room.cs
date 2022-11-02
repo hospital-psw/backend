@@ -1,15 +1,16 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using HospitalLibrary.Core.DTO;
+using System;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class Room
+    public class Room : Entity
     {
-        public int Id { get; set; }
-        [Required]
-        [MinLength(3)]
         public string Number { get; set; }
-        [Range(1, 10)]
-        public int Floor { get; set; }
+        public Floor Floor { get; set; }
+        public string Purpose { get; set; }
+        public WorkingHours? WorkingHours { get; set; }
+
+        public Room() { }
+
     }
 }
