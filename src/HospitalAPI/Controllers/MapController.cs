@@ -32,7 +32,7 @@
             return Ok(buildingsDto);
         }
 
-        [HttpGet("getBuilding/{buildingId}")]
+        [HttpGet("getRooms/{buildingId}")]
         public IActionResult GetBuildingRooms(int buildingId)
         {
             List<RoomMapDto> roomsMapDto = new List<RoomMapDto>();
@@ -45,7 +45,7 @@
             return Ok(roomsMapDto);
         }
 
-        [HttpGet("getFloor/{buildingId}/{floor}")]
+        [HttpGet("getRooms/{buildingId}/{floor}")]
         public IActionResult GetFloorRooms(int buildingId, int floor)
         {
             List<RoomMapDto> roomsMapDto = new List<RoomMapDto>();
