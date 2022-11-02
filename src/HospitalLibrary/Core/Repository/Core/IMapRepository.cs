@@ -5,7 +5,8 @@
 
     public interface IMapRepository : IBaseRepository<RoomMap>
     {
-        IEnumerable<RoomMap> GetBuilding(string building);
-        IEnumerable<RoomMap> GetFloor(string building, int floor);
+        IEnumerable<Building> GetBuildings();
+        IEnumerable<RoomMap> GetBuildingRooms(int buildingId);
+        IEnumerable<RoomMap> GetFloorRooms(int buildingId, int floor);
     }
 }
