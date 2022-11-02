@@ -247,9 +247,8 @@
             {
                 List<WelcomePageFeedbackDTO> feedbacks = new List<WelcomePageFeedbackDTO>();
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                foreach (Feedback feedback in unitOfWork.FeedbackRepository.GetAllPublic())
+                foreach (Feedback feedback in unitOfWork.FeedbackRepository.GetAllApproved())
                 {
-
                     if (feedback.Anonymous)
                     {
                         WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO("Anonymous", feedback.Message);
