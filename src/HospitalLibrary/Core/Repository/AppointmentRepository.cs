@@ -52,7 +52,7 @@
                                                  .Include(x => x.Room)
                                                  .ThenInclude(x => x.Floor)
                                                  .ThenInclude(x => x.Building)
-                                                 .Where(x => x.Doctor.Id == doctorId)
+                                                 .Where(x => x.Doctor.Id == doctorId && !x.Deleted)
                                                  .ToList();
         }
 
