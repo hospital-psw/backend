@@ -6,11 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BloodBankInternalException:Exception
+    public class BloodBankInternalException : Exception
     {
-        public BloodBankInternalException(String message):base(message)
+        public BloodBankInternalException(String message) : base(message)
         {
-            
+
         }
     }
 }

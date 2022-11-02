@@ -76,7 +76,7 @@
                     return BadRequest();
                 }
                 var bloodBank = _bloodBankService.GetByEmail(credentials.Email);
-                if(bloodBank == null)
+                if (bloodBank == null)
                 {
                     return BadRequest();
                 }
@@ -85,7 +85,8 @@
                     return Ok(bloodBank.IsDummyPassword);
                 }
                 return Unauthorized();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new StatusCodeResult(500);
             }
@@ -113,7 +114,8 @@
                 bloodBank.IsDummyPassword = false;
                 _bloodBankService.Update(bloodBank);
                 return Ok(bloodBank);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return new StatusCodeResult(500);
             }
