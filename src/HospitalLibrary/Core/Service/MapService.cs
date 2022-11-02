@@ -11,12 +11,12 @@
 
     public class MapService : IMapService
     {
-        public IEnumerable<RoomMap> GetBuilding(string building)
+        public IEnumerable<Building> GetBuildings()
         {
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MapRepository.GetBuilding(building);
+                return unitOfWork.MapRepository.GetBuildings();
             }
             catch (Exception)
             {
@@ -24,12 +24,25 @@
             }
         }
 
-        public IEnumerable<RoomMap> GetFloor(string building, int floor)
+        public IEnumerable<RoomMap> GetBuildingRooms(int buildingId)
         {
             try
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MapRepository.GetFloor(building, floor);
+                return unitOfWork.MapRepository.GetBuildingRooms(buildingId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<RoomMap> GetFloorRooms(int buildingId, int floor)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.MapRepository.GetFloorRooms(buildingId, floor);
             }
             catch (Exception)
             {

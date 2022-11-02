@@ -12,6 +12,8 @@
             dto.Room = RoomMapper.EntityToEntityDto(roomMap.Room);
             dto.X = roomMap.X;
             dto.Z = roomMap.Z;
+            dto.Depth = roomMap.depth;
+            dto.Width = roomMap.width;
 
             return dto;
         }
