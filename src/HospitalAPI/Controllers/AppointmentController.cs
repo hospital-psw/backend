@@ -52,7 +52,7 @@
 
             Appointment appointment = _appointmentService.Get(dto.Id);
 
-            if ((DateTime.Now - appointment.Date).TotalDays < 2)
+            if ((appointment.Date - DateTime.Now).TotalDays < 2)
             {
                 return BadRequest("You can't reschedule this appointment.");
             }
