@@ -22,6 +22,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<Equipment> Equipment { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -39,6 +40,7 @@ namespace HospitalLibrary.Settings
                 new Floor() { Id = 5 }
             ) ; 
             base.OnModelCreating(modelBuilder);*/
+            
         }
 
         public override int SaveChanges()
