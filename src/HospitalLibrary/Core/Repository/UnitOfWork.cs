@@ -30,6 +30,10 @@
             FeedbackRepository = new FeedbackRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
             PatientRepository = new PatientRepository(_context);
+            MedicalTreatmentRepository = new MedicalTreatmentRepository(_context);
+            TherapyRepository = new TherapyRepository(_context);
+            MedicamentTherapyRepository = new MedicamentTherapyRepository(_context);
+            BloodUnitTherapyRepository = new BloodUnitTherapyRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -41,12 +45,14 @@
         public IBuildingRepository BuildingRepository { get; set; }
         public IMapRepository MapRepository { get; set; }
         public IWorkingHoursRepository WorkingHoursRepository { get; set; }
-
         public IAppointmentRepository AppointmentRepository { get; set; }
-
         public IDoctorRepository DoctorRepository { get; set; }
-
         public IPatientRepository PatientRepository { get; set; }
+        public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
+        public ITherapyRepository TherapyRepository { get; set; }
+        public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }
+        public IBloodUnitTherapyRepository BloodUnitTherapyRepository { get; set; }
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

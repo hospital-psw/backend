@@ -1,4 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.MedicalTreatment;
+using HospitalLibrary.Core.Model.Medicament;
+using HospitalLibrary.Core.Model.Therapy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -23,6 +26,12 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
+        public DbSet<MedicalTreatment> MedicalTreatments { get; set; }
+        public DbSet<Therapy> Therapies { get; set; }
+        public DbSet<MedicamentTherapy> MedicamentTherapies { get; set; }
+        public DbSet<BloodUnitTherapy> BloodUnitTherapies { get; set; }
+        public DbSet<Medicament> Medicaments { get; set; }
+
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }

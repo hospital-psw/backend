@@ -49,6 +49,10 @@ namespace HospitalAPI
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBuildingService, BuildingService>();
             services.AddScoped<IFloorService, FloorService>();
+            services.AddScoped<IMedicalTreatmentService, MedicalTreatmentService>();
+            services.AddScoped<ITherapyService, TherapyService>();
+            services.AddScoped<IMedicamentTherapyService, MedicamentTherapyService>();
+            services.AddScoped<IBloodUnitTherapyService, BloodUnitTherapyService>();
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
