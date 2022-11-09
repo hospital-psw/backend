@@ -8,6 +8,6 @@
 
     public enum EquipmentType
     {
-        BED, SCISSORS, NEEDLE, BANDAGE
+        FREE_BED, BED, SCISSORS, NEEDLE, BANDAGE
     }
 }
