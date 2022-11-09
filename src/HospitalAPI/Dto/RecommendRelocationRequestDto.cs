@@ -10,7 +10,7 @@
         public RoomDto ToRoom { get; set; }
         public Equipment Equipment { get; set; }
         public int Quantity { get; set; }
-        public DateTime FromTime {get; set; }
+        public DateTime FromTime { get; set; }
         public DateTime ToTime { get; set; }
         public int Duration { get; set; }
 

@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 #nullable disable
 
@@ -9,7 +9,7 @@ namespace HospitalLibrary.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-       
+
             migrationBuilder.CreateTable(
                 name: "RelocationRequests",
                 columns: table => new
