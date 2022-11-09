@@ -158,7 +158,7 @@
 
                 return appointments;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

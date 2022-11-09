@@ -49,7 +49,7 @@ namespace HospitalLibrary.Settings
                 new Floor() { Id = 5 }
             ) ; 
             base.OnModelCreating(modelBuilder);*/
-            
+
         }
 
         public override int SaveChanges()

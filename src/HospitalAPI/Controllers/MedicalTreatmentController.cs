@@ -13,7 +13,7 @@
 
         public MedicalTreatmentController(IMedicalTreatmentService medicalTreatmentService)
         {
-            _medicalTreatmentService = medicalTreatmentService; 
+            _medicalTreatmentService = medicalTreatmentService;
         }
     }
 }

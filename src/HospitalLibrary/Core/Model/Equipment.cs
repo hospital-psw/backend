@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Equipment:Entity
+    public class Equipment : Entity
     {
         public EquipmentType EquipmentType { get; set; }
         public int Quantity { get; set; }
