@@ -86,7 +86,7 @@
                 }
                 return Unauthorized();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new StatusCodeResult(500);
             }
@@ -115,7 +115,7 @@
                 _bloodBankService.Update(bloodBank);
                 return Ok(bloodBank);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new StatusCodeResult(500);
             }
@@ -163,7 +163,7 @@
             {
                 return Ok(_bloodBankService.CheckBloodType(id, type));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new StatusCodeResult(500);
             }
