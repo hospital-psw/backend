@@ -25,13 +25,12 @@ namespace HospitalLibrary.Settings
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        public DbSet<Equipment> Equipment { get; set; }
         public DbSet<MedicalTreatment> MedicalTreatments { get; set; }
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<MedicamentTherapy> MedicamentTherapies { get; set; }
         public DbSet<BloodUnitTherapy> BloodUnitTherapies { get; set; }
         public DbSet<Medicament> Medicaments { get; set; }
-
+        public DbSet<RelocationRequest> RelocationRequests { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -49,7 +48,6 @@ namespace HospitalLibrary.Settings
                 new Floor() { Id = 5 }
             ) ; 
             base.OnModelCreating(modelBuilder);*/
-
         }
 
         public override int SaveChanges()
