@@ -9,8 +9,9 @@
         public static EquipmentDto EntityToEntityDto(EquipmentDto equipment)
         {
             EquipmentDto dto = new EquipmentDto();
-            dto.equipmentType = equipment.equipmentType;
-            dto.quantity = equipment.quantity;
+            dto.EquipmentType = equipment.EquipmentType;
+            dto.Quantity = equipment.Quantity;
+            dto.Id = equipment.Id;
             return dto;
         }
 
@@ -18,9 +19,9 @@
         {
             Equipment equipment = new Equipment();
 
-            equipment.EquipmentType = dto.equipmentType;
-            equipment.Quantity = dto.quantity;
-
+            equipment.EquipmentType = dto.EquipmentType;
+            equipment.Quantity = dto.Quantity;
+            equipment.Id = dto.Id;
             return equipment;
         }
     }

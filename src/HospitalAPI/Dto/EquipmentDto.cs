@@ -4,7 +4,8 @@
 
     public class EquipmentDto
     {
-        public EquipmentType equipmentType;
-        public int quantity;
+        public int Id;
+        public EquipmentType EquipmentType;
+        public int Quantity;
     }
 }
