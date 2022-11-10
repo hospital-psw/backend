@@ -18,5 +18,8 @@ namespace HospitalLibrary.Core.Model
         public string Password { get; set; }
 
         public Role Role { get; set; }
+
+        public bool Active { get; set; }
+        
     }
 }
