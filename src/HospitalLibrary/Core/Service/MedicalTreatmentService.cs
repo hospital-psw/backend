@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.DTO.MedicalTreatment;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.MedicalTreatment;
+    using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
@@ -37,19 +38,35 @@
             }
         }
 
-        public override bool Delete(int id)
-        {
-            return base.Delete(id);
-        }
-
         public override MedicalTreatment Update(MedicalTreatment entity)
         {
-            return base.Update(entity);
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                unitOfWork.MedicalTreatmentRepository.Update(entity);
+                unitOfWork.Save();
+
+                return entity;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public override IEnumerable<MedicalTreatment> GetAll()
         {
-            return base.GetAll();
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.MedicalTreatmentRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public MedicalTreatment Add(NewMedicalTreatmentDto dto)
@@ -61,8 +78,9 @@
                 Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
                 Room room = unitOfWork.RoomRepository.GetById(dto.RoomId);
 
+                MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "");
 
-                return new MedicalTreatment();
+                return medicalTreatment;
             }
             catch (Exception e)
             {
@@ -73,7 +91,17 @@
 
         public void Delete(MedicalTreatment medicalTreatment)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                medicalTreatment.Deleted = true;
+                unitOfWork.MedicalTreatmentRepository.Update(medicalTreatment);
+                unitOfWork.Save();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
+            }
         }
     }
 }

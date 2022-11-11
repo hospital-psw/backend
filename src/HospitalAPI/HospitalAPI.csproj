@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Mappers\MedicalTreatment\" />
-    <Folder Include="Mappers\Therapy\" />
   </ItemGroup>
 
 </Project>
