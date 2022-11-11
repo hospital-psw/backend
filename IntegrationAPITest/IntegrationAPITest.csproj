@@ -26,4 +26,8 @@
     <ProjectReference Include="..\src\IntegrationAPI\IntegrationAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IntegrationTests\" />
+  </ItemGroup>
+
 </Project>

@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Localization;
@@ -18,7 +19,7 @@
     {
         private readonly ILogger<Feedback> _logger;
 
-        public FeedbackService(ILogger<Feedback> logger) : base()
+        public FeedbackService(ILogger<Feedback> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }

@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using IdentityModel;
@@ -20,7 +21,7 @@
 
         private ILogger<Doctor> _logger;
 
-        public DoctorService(ILogger<Doctor> logger)
+        public DoctorService(ILogger<Doctor> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }

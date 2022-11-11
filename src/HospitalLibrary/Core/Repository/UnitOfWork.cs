@@ -37,9 +37,7 @@
         }
 
         public IUserRepository UserRepository { get; set; }
-
         public IFeedbackRepository FeedbackRepository { get; set; }
-
         public IRoomRepository RoomRepository { get; set; }
         public IFloorRepository FloorRepository { get; set; }
         public IBuildingRepository BuildingRepository { get; set; }

@@ -78,8 +78,9 @@
             //    Start = DateTime.Now,
             //    Type = TherapyType.MEDICAMENT
             //});
-
-            context.Patients.Add(new Patient { DateCreated = DateTime.Now,
+            Patient pat = new Patient()
+            {
+                DateCreated = DateTime.Now,
                 DateUpdated = DateTime.Now,
                 Id = 1,
                 Deleted = false,
@@ -89,7 +90,51 @@
                 Password = "mikica",
                 Role = Role.PATIENT,
                 Guest = false
-            });;
+            };
+
+            Doctor doc = new Doctor()
+            {
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                Id = 3,
+                Deleted = false,
+                FirstName = "Djankarlo",
+                LastName = "Rapacoti",
+                Email = "djankarlno@asd.com",
+                Password = "djani",
+                Role = Role.DOCTOR,
+                Specialization = Specialization.CARDIOLOGY,
+                WorkHours = new WorkingHours()
+                {
+                    Start = new DateTime(1, 1, 1, 12, 0, 0),
+                    End = new DateTime(1, 1, 1, 16, 0, 0)
+                }
+            };
+
+            Room room = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+                
+            };
+
+
+            context.Patients.Add(pat);
 
             context.Patients.Add(new Patient
             {
@@ -104,6 +149,21 @@
                 Role = Role.PATIENT,
                 Guest = false
             }); ;
+
+            context.Appointments.Add(new Appointment
+            {
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                Id = 4,
+                Deleted = false,
+                Date = new DateTime(2022, 11, 11, 14, 0, 0),
+                Doctor = doc,
+                Patient = pat,
+                Room = room,
+                IsDone = false,
+                ExamType = ExaminationType.OPERATION,
+                Duration = 30
+            });
 
             context.SaveChanges();
         }
