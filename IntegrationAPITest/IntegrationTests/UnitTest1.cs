@@ -1,4 +1,4 @@
-namespace HospitalAPITest
+namespace IntegrationAPITest.IntegrationTests
 {
     public class UnitTest1
     {
