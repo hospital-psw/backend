@@ -1,6 +1,6 @@
 ﻿namespace HospitalAPI.Dto.Therapy
 {
-    public class BloodUnitTherapyDto
+    public class BloodUnitTherapyDto : TherapyDto
     {
 
         //public BloodUnitDto BloodUnit { get; set; }
