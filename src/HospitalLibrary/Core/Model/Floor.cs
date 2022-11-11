@@ -13,5 +13,16 @@
         public Building Building { get; set; }
 
         public Floor() { }
+
+        public Floor(int id, DateTime dateCreated, DateTime dateUpdated, bool deleted, int number, string purpose, Building building) 
+        { 
+            this.Id = id;
+            this.DateCreated = dateCreated;
+            this.DateUpdated = dateUpdated;
+            this.Deleted = deleted;
+            this.Number = number;
+            this.Purpose = purpose;
+            this.Building = building;
+        }
     }
 }

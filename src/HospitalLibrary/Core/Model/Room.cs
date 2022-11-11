@@ -12,5 +12,17 @@ namespace HospitalLibrary.Core.Model
 
         public Room() { }
 
+        public Room(int id, string number, DateTime dateCreated, DateTime dateUpdated, bool deleted, Floor floor, WorkingHours workingHours) 
+        { 
+            this.Id = id;
+            this.DateCreated = dateCreated;
+            this.DateUpdated = dateUpdated;
+            this.Deleted = deleted;
+            this.Number = number;
+            this.Floor = floor;
+            this.WorkingHours = workingHours;
+
+        }
+
     }
 }

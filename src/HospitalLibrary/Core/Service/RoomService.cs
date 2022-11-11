@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Settings;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
@@ -20,6 +21,11 @@ namespace HospitalLibrary.Core.Service
         public IEnumerable<Room> GetAll()
         {
             return _roomRepository.GetAll();
+        }
+
+        public List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
         }
 
         public Room GetById(int id)
