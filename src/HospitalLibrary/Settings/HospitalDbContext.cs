@@ -31,6 +31,7 @@ namespace HospitalLibrary.Settings
         public DbSet<MedicamentTherapy> MedicamentTherapies { get; set; }
         public DbSet<BloodUnitTherapy> BloodUnitTherapies { get; set; }
         public DbSet<Medicament> Medicaments { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
 
 
 

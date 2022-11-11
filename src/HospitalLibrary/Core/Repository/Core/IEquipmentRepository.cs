@@ -9,5 +9,6 @@
 
     public interface IEquipmentRepository : IBaseRepository<Equipment>
     {
+        IEnumerable<Equipment> GetEquipments();
     }
 }

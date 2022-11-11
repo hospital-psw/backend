@@ -53,6 +53,7 @@ namespace HospitalAPI
             services.AddScoped<ITherapyService, TherapyService>();
             services.AddScoped<IMedicamentTherapyService, MedicamentTherapyService>();
             services.AddScoped<IBloodUnitTherapyService, BloodUnitTherapyService>();
+            services.AddScoped<IEquipmentService, EquipmentService>();
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
