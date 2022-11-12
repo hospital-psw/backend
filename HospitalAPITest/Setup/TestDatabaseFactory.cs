@@ -84,7 +84,7 @@
                 Email = "mika@com",
                 Password = "mikica",
                 Role = Role.PATIENT,
-                Guest = false
+                Hospitalized = true
             };
 
             Doctor doc = new Doctor()
@@ -142,7 +142,7 @@
                 Email = "djura@com",
                 Password = "djurica",
                 Role = Role.PATIENT,
-                Guest = false
+                Hospitalized = true,
             }); ;
 
             context.Appointments.Add(new Appointment
