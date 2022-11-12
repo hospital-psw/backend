@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -22,11 +23,15 @@
         }
 
 
-        public override BloodUnitTherapy Add(BloodUnitTherapy entity)
+        public BloodUnitTherapy Add(BloodUnitTherapy entity, int medicalTreatmentId)
         {
             try
             {
                 //DODATI Umanjenje kolicine bloodunit-a kada ludi iki napravi
+
+                MedicalTreatment medicalTreatment = _unitOfWork.MedicalTreatmentRepository.Get(medicalTreatmentId);
+                medicalTreatment.BloodUnitTherapies.Add(entity);
+                _unitOfWork.MedicalTreatmentRepository.Update(medicalTreatment);
 
                 _unitOfWork.BloodUnitTherapyRepository.Add(entity);
                 _unitOfWork.Save();

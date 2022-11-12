@@ -3,6 +3,9 @@
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.MedicalTreatment;
+    using HospitalLibrary.Core.Model.Medicament;
+    using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -75,10 +78,6 @@
             //});
             Patient pat = new Patient()
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 1,*/
-                Deleted = false,
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
@@ -89,10 +88,6 @@
 
             Doctor doc = new Doctor()
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 3,*/
-                Deleted = false,
                 FirstName = "Djankarlo",
                 LastName = "Rapacoti",
                 Email = "djankarlno@asd.com",
@@ -133,10 +128,6 @@
 
             context.Patients.Add(new Patient
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 2,*/
-                Deleted = false,
                 FirstName = "Djura",
                 LastName = "Djuric",
                 Email = "djura@com",
@@ -147,10 +138,6 @@
 
             context.Appointments.Add(new Appointment
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 4,*/
-                Deleted = false,
                 Date = new DateTime(2022, 11, 11, 14, 0, 0),
                 Doctor = doc,
                 Patient = pat,
@@ -159,6 +146,32 @@
                 ExamType = ExaminationType.OPERATION,
                 Duration = 30
             });
+
+            context.Medicaments.Add(new Medicament {  
+                Name = "Aspirin", 
+                Description = "Nesto protiv bolova",
+                Quantity = 15
+            });
+
+            context.Medicaments.Add(new Medicament
+            {
+                Name = "Panklav",
+                Description = "Antibiotik za decu i odrasle",
+                Quantity = 420
+            });
+
+            context.MedicalTreatments.Add( new MedicalTreatment
+            {
+                Room = room,
+                Doctor = doc,
+                Patient = pat,
+                MedicamentTherapies = new List<MedicamentTherapy>(),
+                BloodUnitTherapies = new List<BloodUnitTherapy>(),
+                Active = true,
+                Report = "izvestaj",
+                End = default(DateTime),
+                Start = DateTime.Now,
+            });;
 
             context.SaveChanges();
         }

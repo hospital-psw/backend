@@ -15,7 +15,7 @@
 
         IEnumerable<MedicamentTherapy> GetAll();
 
-        MedicamentTherapy Add(MedicamentTherapy medicamentTherapy);
+        MedicamentTherapy Add(MedicamentTherapy medicamentTherapy, int medicalTreatmentId);
 
         void Delete(MedicamentTherapy medicamentTherapy);
     }

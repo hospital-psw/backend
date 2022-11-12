@@ -17,9 +17,10 @@
         private readonly IMedicamentTherapyService _medicamentTherapyService;
         private readonly IMedicamentService _medicamentService;
 
-        public MedicamentTherapyController(IMedicamentTherapyService medicamentTherapyService)
+        public MedicamentTherapyController(IMedicamentTherapyService medicamentTherapyService, IMedicamentService medicamentService)
         {
             _medicamentTherapyService = medicamentTherapyService;
+            _medicamentService = medicamentService;
         }
 
         [HttpPost]
@@ -41,7 +42,7 @@
                 return NotFound();
             }
 
-            MedicamentTherapyDto therapyDto = MedicamentTherapyMapper.EntityToEntityDto(_medicamentTherapyService.Add(NewMedicamentTherapyMapper.EntityDtoToEntity(dto, medicament)));
+            MedicamentTherapyDto therapyDto = MedicamentTherapyMapper.EntityToEntityDto(_medicamentTherapyService.Add(NewMedicamentTherapyMapper.EntityDtoToEntity(dto, medicament), dto.MedicalTreatmentId));
             return Ok(therapyDto);
         }
 

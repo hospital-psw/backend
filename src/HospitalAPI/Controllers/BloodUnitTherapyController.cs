@@ -33,7 +33,7 @@
             }
             //fali poziv servisa da se dobavi BloodUnit
 
-            BloodUnitTherapyDto therapyDto = BloodUnitTherapyMapper.EntityToEntityDto(_bloodUnitTherapyService.Add(NewBloodUnitTherapyMapper.EntityDtoToEntity(dto)));
+            BloodUnitTherapyDto therapyDto = BloodUnitTherapyMapper.EntityToEntityDto(_bloodUnitTherapyService.Add(NewBloodUnitTherapyMapper.EntityDtoToEntity(dto), dto.MedicalTreatmentId));
             return Ok(therapyDto);
         }
 

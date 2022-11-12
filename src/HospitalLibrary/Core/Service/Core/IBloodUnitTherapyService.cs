@@ -15,7 +15,7 @@
 
         IEnumerable<BloodUnitTherapy> GetAll();
 
-        BloodUnitTherapy Add(BloodUnitTherapy bloodUnitTherapy);
+        BloodUnitTherapy Add(BloodUnitTherapy bloodUnitTherapy, int medicalTreatmentId);
 
         void Delete(BloodUnitTherapy bloodUnitTherapy);
     }

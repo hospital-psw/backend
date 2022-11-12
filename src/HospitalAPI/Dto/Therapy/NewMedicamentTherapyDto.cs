@@ -8,6 +8,8 @@
         public int Amount { get; set; }
 
         public string About { get; set; }
+
+        public int MedicalTreatmentId { get; set; }
     
     }
 }

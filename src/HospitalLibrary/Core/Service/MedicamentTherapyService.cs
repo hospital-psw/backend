@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
@@ -23,13 +24,17 @@
             _logger = logger;
         }
 
-        public override MedicamentTherapy Add(MedicamentTherapy entity)
+        public MedicamentTherapy Add(MedicamentTherapy entity, int medicalTreatmentId)
         {
             try
             {
                 Medicament medicament = _unitOfWork.MedicamentRepository.Get(entity.Medicament.Id);
                 medicament.Quantity = medicament.Quantity - entity.AmountOfMedicament;
                 _unitOfWork.MedicamentRepository.Update(medicament);
+
+                MedicalTreatment medicalTreatment = _unitOfWork.MedicalTreatmentRepository.Get(medicalTreatmentId);
+                medicalTreatment.MedicamentTherapies.Add(entity);
+                _unitOfWork.MedicalTreatmentRepository.Update(medicalTreatment);
 
                 _unitOfWork.MedicamentTherapyRepository.Add(entity);
                 _unitOfWork.Save();
