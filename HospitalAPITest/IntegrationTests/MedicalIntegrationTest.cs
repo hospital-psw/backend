@@ -19,7 +19,7 @@ namespace HospitalAPITest.IntegrationTests
         }
 
         [Fact]
-        public void CreateMedicalTreatment()
+        public void Create_medical_treatment()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
