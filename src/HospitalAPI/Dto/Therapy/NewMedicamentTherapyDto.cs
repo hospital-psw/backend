@@ -10,6 +10,6 @@
         public string About { get; set; }
 
         public int MedicalTreatmentId { get; set; }
-    
+
     }
 }

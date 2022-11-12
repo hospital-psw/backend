@@ -48,7 +48,7 @@ namespace HospitalAPI.Controllers
             List<Room> availableRooms = _roomService.GetAvailable().ToList();
             List<RoomDto> dtoList = new List<RoomDto>();
 
-            if(availableRooms.IsNullOrEmpty())
+            if (availableRooms.IsNullOrEmpty())
             {
                 return NotFound();
             }

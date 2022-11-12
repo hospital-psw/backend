@@ -147,8 +147,9 @@
                 Duration = 30
             });
 
-            context.Medicaments.Add(new Medicament {  
-                Name = "Aspirin", 
+            context.Medicaments.Add(new Medicament
+            {
+                Name = "Aspirin",
                 Description = "Nesto protiv bolova",
                 Quantity = 15
             });
@@ -160,7 +161,7 @@
                 Quantity = 420
             });
 
-            context.MedicalTreatments.Add( new MedicalTreatment
+            context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
                 Doctor = doc,
@@ -171,7 +172,7 @@
                 Report = "izvestaj",
                 End = default(DateTime),
                 Start = DateTime.Now,
-            });;
+            }); ;
 
             context.SaveChanges();
         }
