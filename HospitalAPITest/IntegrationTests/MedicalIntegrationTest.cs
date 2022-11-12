@@ -27,7 +27,7 @@ namespace HospitalAPITest.IntegrationTests
 
             NewMedicalTreatmentDto newMedicalTreatmentDto = new NewMedicalTreatmentDto
             {
-                DoctorId = 3,
+                DoctorId = 1,
                 PatientId = 2,
                 RoomId = 1
             };
@@ -37,7 +37,7 @@ namespace HospitalAPITest.IntegrationTests
             Assert.NotNull(result);
             Assert.Equal("Djankarlo", result.Doctor.FirstName);
             Assert.Equal("6904", result.Room.Number);
-            Assert.Equal("Djuric", result.Patient.LastName);
+            Assert.Equal("Mikic", result.Patient.LastName);
         }
 
         [Theory]
