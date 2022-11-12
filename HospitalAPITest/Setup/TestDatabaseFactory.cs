@@ -181,7 +181,7 @@
                 End = default(DateTime),
                 Start = new DateTime(),
             }); ;
-            
+
             context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
@@ -194,7 +194,7 @@
                 End = default(DateTime),
                 Start = new DateTime(),
             });
-            
+
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
