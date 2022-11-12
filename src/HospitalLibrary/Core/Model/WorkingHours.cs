@@ -9,5 +9,10 @@
 
         public WorkingHours() { }
 
+        public WorkingHours(DateTime start, DateTime end)
+        {
+            Start = start;
+            End = end;
+        }
     }
 }

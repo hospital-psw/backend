@@ -65,5 +65,18 @@
                                                  .ToList();
 
         }
+
+        public IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId, DateTime from, DateTime to)
+        {
+            return HospitalDbContext.Appointments.Include(x => x.Patient)
+                                                .Include(x => x.Doctor)
+                                                .ThenInclude(x => x.WorkHours)
+                                                .Include(x => x.Doctor)
+                                                .ThenInclude(x => x.Office)
+                                                .Where(x => !x.Deleted && !x.IsDone && (x.Room.Id == roomId) && (x.Date >= from && x.Date <= to))
+                                                .OrderBy(x => x.Date)
+                                                .Distinct()
+                                                .ToList();
+        }
     }
 }

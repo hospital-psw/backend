@@ -14,5 +14,12 @@
         public WorkingHours WorkHours { get; set; }
 
         public Room Office { get; set; }
+
+        public Doctor(string firstName, string lastName, string password, string email, Specialization specialization, WorkingHours workHours, Room office) : base(firstName, lastName, email, password, Role.DOCTOR)
+        {
+            Specialization = specialization;
+            WorkHours = workHours;
+            Office = office;
+        }
     }
 }
