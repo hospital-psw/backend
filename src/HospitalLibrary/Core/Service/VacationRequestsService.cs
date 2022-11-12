@@ -1,7 +1,11 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Settings;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,5 +14,25 @@
 
     public class VacationRequestsService : BaseService<VacationRequest>, IVacationRequestsService
     {
+        private readonly ILogger<VacationRequest> _logger;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public VacationRequestsService(ILogger<VacationRequest> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+            _logger = logger;
+            _unitOfWork = unitOfWork;
+        }
+
+        public IEnumerable<VacationRequest> GetAllPending()
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllPending();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

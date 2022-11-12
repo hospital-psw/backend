@@ -1,12 +1,17 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Dto;
+    using HospitalAPI.Mappers;
+    using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
-    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [ApiController]
     [Route("api/[controller]")]
-    public class VacationRequestsController
+    public class VacationRequestsController : BaseController<VacationRequest>
     {
         private IVacationRequestsService _vacationRequestsService;
 
@@ -15,9 +20,17 @@
             _vacationRequestsService = vacationRequestsService;
         }
 
-        public ObjectResult GetAllPending()
+        [HttpGet("getAllPending")]
+        public IActionResult GetAllPending()
         {
-            throw new NotImplementedException();
+            List<VacationRequestDto> vacationRequestsDto = new List<VacationRequestDto>();
+            List<VacationRequest> vacationRequests = _vacationRequestsService.GetAllPending().ToList();
+            if (vacationRequests == null)
+            {
+                return NotFound();
+            }
+            vacationRequests.ForEach(r => vacationRequestsDto.Add(VacationRequestsMapper.EntityToEntityDto(r)));
+            return Ok(vacationRequestsDto);
         }
     }
 }

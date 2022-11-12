@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
+    using HospitalLibrary.Core.Model.VacationRequest;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -8,5 +9,6 @@
 
     public interface IVacationRequestsService
     {
+        IEnumerable<VacationRequest> GetAllPending();
     }
 }

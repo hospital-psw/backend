@@ -32,7 +32,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((ObjectResult)controller.GetAll()).Value as List<VacationRequestDto>;
+            var result = ((ObjectResult)controller.GetAllPending()).Value as List<VacationRequestDto>;
 
             Assert.NotNull(result);
         }

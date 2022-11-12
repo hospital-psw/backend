@@ -9,5 +9,6 @@
 
     public interface IVacationRequestsRepository : IBaseRepository<VacationRequest>
     {
+        IEnumerable<VacationRequest> GetAllPending();
     }
 }
