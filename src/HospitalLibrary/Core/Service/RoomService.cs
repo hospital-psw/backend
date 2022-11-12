@@ -25,7 +25,30 @@ namespace HospitalLibrary.Core.Service
 
         public List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end)
         {
-            throw new NotImplementedException();
+            List<Room> allRooms = (List<Room>) _roomRepository.GetAll();
+            List<Room> suitableRooms = new List<Room>();
+
+            foreach(Room room in allRooms)
+            {
+                if(room.Floor.Building.Id == buildingId)
+                {
+                    if(floorNumber == -1 || room.Floor.Number == floorNumber)
+                    {
+                        if (room.Number.Contains(roomNumber))
+                        {
+                            if (room.Purpose.Contains(purpose))
+                            {
+                                if (room.WorkingHours.Start <= start && room.WorkingHours.End >= end)
+                                {
+                                    suitableRooms.Add(room);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return suitableRooms;
         }
 
         public Room GetById(int id)
