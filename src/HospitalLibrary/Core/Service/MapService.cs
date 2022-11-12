@@ -16,7 +16,7 @@
 
         public MapService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;   
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Building> GetBuildings()

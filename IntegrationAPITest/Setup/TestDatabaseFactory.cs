@@ -1,13 +1,13 @@
 ﻿namespace IntegrationAPITest.Setup
 {
     using IntegrationAPI;
+    using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using System.Linq;
-    using IntegrationLibrary.BloodBank;
 
     public class TestDatabaseFactory : WebApplicationFactory<Startup>
     {
@@ -42,8 +42,8 @@
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            context.BloodBanks.Add(new BloodBank() 
-            { 
+            context.BloodBanks.Add(new BloodBank()
+            {
                 /*Id = 7, 
                 DateCreated = DateTime.Now,
                 DateUpdated = DateTime.Now,
@@ -59,6 +59,6 @@
             });
 
             context.SaveChanges();
-        }  
+        }
     }
 }
