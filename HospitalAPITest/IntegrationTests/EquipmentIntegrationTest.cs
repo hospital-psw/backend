@@ -31,10 +31,11 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 14;
+            int roomId = 2;
 
             var result = ((OkObjectResult)controller.GetForRoom(roomId));
             Assert.NotNull(result);
+            Assert.NotEmpty((System.Collections.IEnumerable)result.Value);
         }
 
         [Fact]
@@ -46,6 +47,7 @@
 
             var result = ((OkObjectResult)controller.GetForRoom(roomId));
             Assert.NotNull(result);
+            Assert.Empty((System.Collections.IEnumerable)result.Value);
         }
     }
 }
