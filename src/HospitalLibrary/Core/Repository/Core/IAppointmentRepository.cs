@@ -13,5 +13,6 @@
         public IEnumerable<Appointment> GetAppointmentsForPatient(int patientId);
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId);
         public IEnumerable<Appointment> GetScheduledAppointments(int doctorId, int patientId);
+        IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId, DateTime from, DateTime to);
     }
 }

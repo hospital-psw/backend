@@ -15,5 +15,12 @@ namespace HospitalLibrary.Core.Model
 
         public Room() { }
 
+        public Room(int id, string number, Floor floor, string purpose, WorkingHours workingHours) : base(id)
+        {
+            Number = number;
+            Floor = floor;
+            Purpose = purpose;
+            WorkingHours = workingHours;
+        }
     }
 }
