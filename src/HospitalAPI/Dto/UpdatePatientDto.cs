@@ -2,6 +2,6 @@
 {
     public class UpdatePatientDto : UpdateUserDto
     {
-        public bool Guest { get; set; }
+        public bool Hospitalized { get; set; }
     }
 }

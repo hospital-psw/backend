@@ -67,6 +67,11 @@
             }
         }
 
+        public IEnumerable<Patient> GetNonHospitalized()
+        {
+            throw new NotImplementedException();
+        }
+
         public override Patient Update(Patient patient)
         {
             try
@@ -83,5 +88,7 @@
                 return null;
             }
         }
+
+        
     }
 }

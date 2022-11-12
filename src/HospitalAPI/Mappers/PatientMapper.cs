@@ -13,7 +13,7 @@
             dto.LastName = patient.LastName;
             dto.Email = patient.Email;
             dto.Id = patient.Id;
-            dto.Guest = patient.Guest;
+            dto.Hospitalized = patient.Hospitalized;
             dto.Role = patient.Role;
 
             return dto;

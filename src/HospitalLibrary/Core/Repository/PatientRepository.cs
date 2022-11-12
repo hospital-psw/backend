@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,6 +14,12 @@
     {
         public PatientRepository(HospitalDbContext context) : base(context)
         {
+        }
+
+        public IEnumerable<Patient> GetNonHospitalized()
+        {
+            return HospitalDbContext.Patients.Where(x => !x.Hospitalized)
+                                             .ToList();
         }
     }
 }

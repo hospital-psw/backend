@@ -75,11 +75,15 @@
             {
                 using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 Patient patient = unitOfWork.PatientRepository.Get(dto.PatientId);
+                patient.Hospitalized = true;
                 Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
                 Room room = unitOfWork.RoomRepository.GetById(dto.RoomId);
 
                 MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "");
 
+                unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
+                unitOfWork.Save();
+                
                 return medicalTreatment;
             }
             catch (Exception e)

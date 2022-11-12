@@ -84,5 +84,10 @@ namespace HospitalLibrary.Core.Service
             }
             return true;
         }
+
+        public IEnumerable<Room> GetAvailable()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
