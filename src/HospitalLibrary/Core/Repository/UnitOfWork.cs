@@ -34,6 +34,7 @@
             TherapyRepository = new TherapyRepository(_context);
             MedicamentTherapyRepository = new MedicamentTherapyRepository(_context);
             BloodUnitTherapyRepository = new BloodUnitTherapyRepository(_context);
+            VacationRequestsRepository = new VacationRequestsRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -50,6 +51,7 @@
         public ITherapyRepository TherapyRepository { get; set; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }
         public IBloodUnitTherapyRepository BloodUnitTherapyRepository { get; set; }
+        public IVacationRequestsRepository VacationRequestsRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
