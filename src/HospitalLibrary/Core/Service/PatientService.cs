@@ -67,7 +67,15 @@
 
         public IEnumerable<Patient> GetNonHospitalized()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _unitOfWork.PatientRepository.GetNonHospitalized();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in PatientService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public override Patient Update(Patient patient)

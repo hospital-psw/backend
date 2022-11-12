@@ -26,6 +26,8 @@
         {
             try
             {
+                //DODATI Umanjenje kolicine bloodunit-a kada ludi iki napravi
+
                 _unitOfWork.BloodUnitTherapyRepository.Add(entity);
                 _unitOfWork.Save();
 

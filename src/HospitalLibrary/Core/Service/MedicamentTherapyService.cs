@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -26,6 +27,10 @@
         {
             try
             {
+                Medicament medicament = _unitOfWork.MedicamentRepository.Get(entity.Medicament.Id);
+                medicament.Quantity = medicament.Quantity - entity.AmountOfMedicament;
+                _unitOfWork.MedicamentRepository.Update(medicament);
+
                 _unitOfWork.MedicamentTherapyRepository.Add(entity);
                 _unitOfWork.Save();
                 return entity;
