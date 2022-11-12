@@ -14,7 +14,7 @@
     {
         private readonly HospitalDbContext _context;
         public VacationRequestsRepository(HospitalDbContext context) : base(context)
-        { 
+        {
             _context = context;
         }
 
@@ -24,6 +24,6 @@
                                             Where(x => x.Status == 0).Where(x => !x.Deleted).
                                             ToList();
         }
-        
+
     }
 }

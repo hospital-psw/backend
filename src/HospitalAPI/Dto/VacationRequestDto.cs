@@ -1,7 +1,7 @@
 ﻿namespace HospitalAPI.Dto
 {
-    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using System;
 
     public class VacationRequestDto
