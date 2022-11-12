@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
@@ -18,7 +19,7 @@
 
         private readonly ILogger<MedicalTreatment> _logger;
 
-        public MedicalTreatmentService(ILogger<MedicalTreatment> logger) : base()
+        public MedicalTreatmentService(ILogger<MedicalTreatment> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -27,8 +28,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MedicalTreatmentRepository.Get(id);
+                return _unitOfWork.MedicalTreatmentRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -56,10 +56,9 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Patient patient = unitOfWork.PatientRepository.Get(dto.PatientId);
-                Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
-                Room room = unitOfWork.RoomRepository.GetById(dto.RoomId);
+                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
+                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
 
                 return new MedicalTreatment();

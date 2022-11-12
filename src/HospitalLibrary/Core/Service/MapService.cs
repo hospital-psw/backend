@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.DTO;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using System;
@@ -11,12 +12,18 @@
 
     public class MapService : IMapService
     {
+        private IUnitOfWork _unitOfWork;
+
+        public MapService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public IEnumerable<Building> GetBuildings()
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MapRepository.GetBuildings();
+                return _unitOfWork.MapRepository.GetBuildings();
             }
             catch (Exception)
             {
@@ -28,8 +35,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MapRepository.GetBuildingRooms(buildingId);
+                return _unitOfWork.MapRepository.GetBuildingRooms(buildingId);
             }
             catch (Exception)
             {
@@ -41,8 +47,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MapRepository.GetFloorRooms(buildingId, floor);
+                return _unitOfWork.MapRepository.GetFloorRooms(buildingId, floor);
             }
             catch (Exception)
             {

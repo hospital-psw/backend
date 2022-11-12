@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model.Therapy;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using System;
     using System.Collections.Generic;
@@ -10,7 +11,8 @@
 
     public class BloodUnitTherapyService : BaseService<BloodUnitTherapy>, IBloodUnitTherapyService
     {
-
-        public BloodUnitTherapyService() : base() { }
+        public BloodUnitTherapyService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+        }
     }
 }

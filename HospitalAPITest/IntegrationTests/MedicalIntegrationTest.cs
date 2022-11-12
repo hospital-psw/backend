@@ -9,7 +9,7 @@ namespace HospitalAPITest.IntegrationTests
     public class MedicalIntegrationTest : BaseIntegrationTest
     {
 
-        public MedicalIntegrationTest(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        public MedicalIntegrationTest(TestDatabaseFactory factory) : base(factory) { }
         private static MedicalTreatmentController SetupController(IServiceScope scope)
         {
             return new MedicalTreatmentController(scope.ServiceProvider.GetRequiredService<IMedicalTreatmentService>());
@@ -21,7 +21,7 @@ namespace HospitalAPITest.IntegrationTests
             //using var scope = Factory.Services.CreateScope();
             //var controller = SetupController(scope);
 
-            
+
 
         }
     }

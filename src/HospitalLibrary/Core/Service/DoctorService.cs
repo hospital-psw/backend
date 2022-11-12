@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using IdentityModel;
@@ -20,7 +21,7 @@
 
         private ILogger<Doctor> _logger;
 
-        public DoctorService(ILogger<Doctor> logger)
+        public DoctorService(ILogger<Doctor> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -29,9 +30,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.DoctorRepository.Add(entity);
-                unitOfWork.Save();
+                _unitOfWork.DoctorRepository.Add(entity);
+                _unitOfWork.Save();
 
                 return entity;
 
@@ -48,9 +48,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.DoctorRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.DoctorRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -65,8 +64,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.DoctorRepository.Get(id);
+                return _unitOfWork.DoctorRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -79,8 +77,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.DoctorRepository.GetAll();
+                return _unitOfWork.DoctorRepository.GetAll();
             }
             catch (Exception e)
             {
