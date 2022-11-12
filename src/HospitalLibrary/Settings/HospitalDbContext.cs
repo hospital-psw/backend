@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
+using HospitalLibrary.Core.Model.VacationRequest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -30,7 +31,8 @@ namespace HospitalLibrary.Settings
         public DbSet<MedicamentTherapy> MedicamentTherapies { get; set; }
         public DbSet<BloodUnitTherapy> BloodUnitTherapies { get; set; }
         public DbSet<Medicament> Medicaments { get; set; }
-
+        public DbSet<RelocationRequest> RelocationRequests { get; set; }
+        public DbSet<VacationRequest> VacationRequests { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
