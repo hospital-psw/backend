@@ -68,7 +68,7 @@
         [HttpPatch]
         public IActionResult ReleasePatient(PatientReleaseDto dto)
         {
-            if(dto == null)
+            if (dto == null)
             {
                 return BadRequest("Invalid request");
             }

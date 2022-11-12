@@ -104,7 +104,7 @@
             List<Patient> nonHospitalizedPatients = _patientService.GetNonHospitalized().ToList();
             List<PatientDto> dtoList = new List<PatientDto>();
 
-            if(nonHospitalizedPatients.IsNullOrEmpty())
+            if (nonHospitalizedPatients.IsNullOrEmpty())
             {
                 return NotFound();
             }
