@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@
     {
         private readonly ILogger<Equipment> _logger;
 
-        public EquipmentService( ILogger<Equipment> logger)
+        public EquipmentService( ILogger<Equipment> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -24,8 +25,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                IEnumerable<Equipment> all =  unitOfWork.EquipmentRepository.GetEquipments();
+                IEnumerable<Equipment> all =  _unitOfWork.EquipmentRepository.GetEquipments();
                 List<Equipment> equipment = new List<Equipment>();
                 foreach(Equipment eq in all)
                 {

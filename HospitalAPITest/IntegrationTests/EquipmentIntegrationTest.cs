@@ -17,7 +17,7 @@
 
     public class EquipmentIntegrationTest:BaseIntegrationTest
     {
-        public EquipmentIntegrationTest(TestDatabaseFactory<Startup> factory) : base(factory)
+        public EquipmentIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
 
         }

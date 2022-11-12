@@ -1,22 +1,15 @@
 ﻿namespace IntegrationAPITest.Setup
 {
     using IntegrationAPI;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    using IntegrationLibrary.Core;
-    using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
-    
-    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using System.Linq;
+    using IntegrationLibrary.BloodBank;
 
-    public class TestDatabaseFactory<TStartup> : WebApplicationFactory<Startup>
+    public class TestDatabaseFactory : WebApplicationFactory<Startup>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -35,26 +28,37 @@
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<IntegrationDbContext>));
             services.Remove(descriptor);
 
-            services.AddDbContext<IntegrationDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
+            services.AddDbContext<IntegrationDbContext>(opt => opt.UseSqlServer(CreateConnectionStringForTest()));
             return services.BuildServiceProvider();
         }
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=super;";
+            return "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=IntegrationTestBase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         }
 
         private static void InitializeDatabase(IntegrationDbContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
-            //context.Rooms.Add(new Room { Id = 1, Floor = 1, Number = "11" });
-            //context.Rooms.Add(new Room { Id = 2, Floor = 1, Number = "12" });
-            //context.Rooms.Add(new Room { Id = 3, Floor = 2, Number = "21" });
-            //context.Rooms.Add(new Room { Id = 4, Floor = 3, Number = "31" });
+            context.BloodBanks.Add(new BloodBank() 
+            { 
+                /*Id = 7, 
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                Deleted = false,*/
+                Name = "Bank 1",
+                ApiUrl = "localhost:8081",
+                ApiKey = "blah",
+                AdminPassword = "4321",
+                Email = "zika@hotmail.com",
+                IsDummyPassword = true,
+                GetBloodTypeAvailability = "api/checkblood/!BLOOD_TYPE",
+                GetBloodTypeAndAmountAvailability = "api/checkbloodamount/!BLOOD_TYPE/!AMOUNT"
+            });
 
             context.SaveChanges();
-        }
+        }  
     }
 }

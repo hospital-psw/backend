@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using IdentityModel;
@@ -16,7 +17,7 @@
     {
         private readonly ILogger<Patient> _logger;
 
-        public PatientService(ILogger<Patient> logger)
+        public PatientService(ILogger<Patient> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -43,8 +44,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.PatientRepository.Get(patientId);
+                return _unitOfWork.GetRepository<Patient>().Get(patientId);
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221111174123_DeletedVacationRequestsTable")]
+    partial class DeletedVacationRequestsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,45 +132,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Equipment");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        });
-
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -241,7 +204,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("BuildingId");
 
                     b.ToTable("Floors");
-
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
@@ -445,7 +407,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("RoomsMap");
-
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.Therapy", b =>
@@ -529,51 +490,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Users");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequest.VacationRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ManagerComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Urgent")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("VacationRequests");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkingHours", b =>
@@ -782,15 +698,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("RoomId");
 
                     b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequest.VacationRequest", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>

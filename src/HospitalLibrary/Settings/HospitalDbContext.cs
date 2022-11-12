@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
+using HospitalLibrary.Core.Model.VacationRequest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -33,7 +34,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Medicament> Medicaments { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
 
-
+        public DbSet<RelocationRequest> RelocationRequests { get; set; }
+        public DbSet<VacationRequest> VacationRequests { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -76,14 +78,5 @@ namespace HospitalLibrary.Settings
             return base.SaveChanges();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (optionsBuilder.IsConfigured)
-            {
-                return;
-            }
-
-            optionsBuilder.UseSqlServer("Server=tcp:pswhospital.database.windows.net,1433;Initial Catalog=pswhospital;Persist Security Info=False;User ID=pswadmin;Password=zmajOdSipova1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-        }
     }
 }

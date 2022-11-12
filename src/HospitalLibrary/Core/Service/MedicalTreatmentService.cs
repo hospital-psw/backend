@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
@@ -18,7 +19,7 @@
 
         private readonly ILogger<MedicalTreatment> _logger;
 
-        public MedicalTreatmentService(ILogger<MedicalTreatment> logger) : base()
+        public MedicalTreatmentService(ILogger<MedicalTreatment> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }

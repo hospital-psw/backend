@@ -83,7 +83,7 @@
         }
 
         [HttpDelete("{id}")]
-        public override IActionResult Delete(int doctorId)
+        public IActionResult Delete(int doctorId)
         {
             Doctor doctor = _doctorService.Get(doctorId);
             if (doctor == null || doctor.Deleted)

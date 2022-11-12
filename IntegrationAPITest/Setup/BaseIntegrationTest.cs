@@ -1,11 +1,6 @@
-﻿namespace HospitalAPITest.Setup
+﻿namespace IntegrationAPITest.Setup
 {
-    using HospitalAPI;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using IntegrationAPI;
 
     public class BaseIntegrationTest : IClassFixture<TestDatabaseFactory>
     {
