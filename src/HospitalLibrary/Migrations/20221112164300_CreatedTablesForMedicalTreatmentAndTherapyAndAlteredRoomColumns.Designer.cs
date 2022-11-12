@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112164300_CreatedTablesForMedicalTreatmentAndTherapyAndAlteredRoomColumns")]
+    partial class CreatedTablesForMedicalTreatmentAndTherapyAndAlteredRoomColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,45 +132,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Equipment");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            EquipmentType = 0,
-                            Quantity = 0
-                        });
-
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -241,7 +204,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("BuildingId");
 
                     b.ToTable("Floors");
-
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
@@ -448,7 +410,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("RoomsMap");
-
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.Therapy", b =>

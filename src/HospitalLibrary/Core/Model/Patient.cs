@@ -8,13 +8,13 @@
 
     public class Patient : User
     {
-        public bool Guest { get; set; }
+        public bool Hospitalized { get; set; }
 
         public Patient() { }
 
-        public Patient(bool guest)
+        public Patient(bool hospitalized)
         {
-            Guest = guest;
+            Hospitalized = hospitalized;
         }
     }
 }

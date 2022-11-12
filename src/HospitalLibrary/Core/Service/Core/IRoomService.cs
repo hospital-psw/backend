@@ -10,5 +10,6 @@ namespace HospitalLibrary.Core.Service.Core
         void Create(Room room);
         bool Update(Room room);
         void Delete(Room room);
+        IEnumerable<Room> GetAvailable();
     }
 }

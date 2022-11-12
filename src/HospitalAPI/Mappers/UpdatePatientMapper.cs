@@ -14,7 +14,7 @@
             patient.FirstName = dto.FirstName;
             patient.LastName = dto.LastName;
             patient.Email = dto.Email;
-            patient.Guest = dto.Guest;
+            patient.Hospitalized = dto.Hospitalized;
             patient.Role = Role.PATIENT;
 
             return patient;
