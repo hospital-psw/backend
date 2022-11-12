@@ -16,7 +16,7 @@
     {
         private readonly ILogger<Equipment> _logger;
 
-        public EquipmentService( ILogger<Equipment> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public EquipmentService(ILogger<Equipment> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -25,11 +25,11 @@
         {
             try
             {
-                IEnumerable<Equipment> all =  _unitOfWork.EquipmentRepository.GetEquipments();
+                IEnumerable<Equipment> all = _unitOfWork.EquipmentRepository.GetEquipments();
                 List<Equipment> equipment = new List<Equipment>();
-                foreach(Equipment eq in all)
+                foreach (Equipment eq in all)
                 {
-                    if(eq.Room.Id == roomId)  equipment.Add(eq);
+                    if (eq.Room.Id == roomId) equipment.Add(eq);
                 }
                 return equipment;
             }

@@ -185,7 +185,7 @@
             {
                 EquipmentType = EquipmentType.BED,
                 Quantity = 8,
-                Room  = equipmentRoom
+                Room = equipmentRoom
             });
             context.Equipments.Add(new Equipment
             {

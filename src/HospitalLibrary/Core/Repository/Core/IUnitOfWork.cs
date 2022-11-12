@@ -28,6 +28,6 @@
         public ITherapyRepository TherapyRepository { get; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; }
         public IBloodUnitTherapyRepository BloodUnitTherapyRepository { get; }
-        public IEquipmentRepository EquipmentRepository { get;  }
+        public IEquipmentRepository EquipmentRepository { get; }
     }
 }

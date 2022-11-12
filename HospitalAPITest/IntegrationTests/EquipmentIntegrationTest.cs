@@ -15,7 +15,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class EquipmentIntegrationTest:BaseIntegrationTest
+    public class EquipmentIntegrationTest : BaseIntegrationTest
     {
         public EquipmentIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
