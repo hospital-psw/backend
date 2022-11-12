@@ -4,6 +4,7 @@
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Linq;
@@ -96,5 +97,21 @@
 
             return NoContent();
         }
+
+        [HttpGet("non-hospitalized")]
+        public IActionResult GetNonHospitalized()
+        {
+            List<Patient> nonHospitalizedPatients = _patientService.GetNonHospitalized().ToList();
+            List<PatientDto> dtoList = new List<PatientDto>();
+
+            if (nonHospitalizedPatients.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            nonHospitalizedPatients.ForEach(p => dtoList.Add(PatientMapper.EntityToEntityDto(p)));
+            return Ok(dtoList);
+        }
+
     }
 }

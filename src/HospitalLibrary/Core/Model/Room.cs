@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.DTO;
 using System;
+using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -9,6 +10,8 @@ namespace HospitalLibrary.Core.Model
         public Floor Floor { get; set; }
         public string Purpose { get; set; }
         public WorkingHours? WorkingHours { get; set; }
+        public int Capacity { get; set; }
+        public List<Patient> Patients { get; set; }
 
         public Room() { }
 

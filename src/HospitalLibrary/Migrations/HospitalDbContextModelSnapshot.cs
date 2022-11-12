@@ -130,6 +130,45 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Equipment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            EquipmentType = 0,
+                            Quantity = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            EquipmentType = 0,
+                            Quantity = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            EquipmentType = 0,
+                            Quantity = 0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            EquipmentType = 0,
+                            Quantity = 0
+                        });
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -202,6 +241,7 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("BuildingId");
 
                     b.ToTable("Floors");
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
@@ -338,6 +378,9 @@ namespace HospitalLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -405,6 +448,7 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("RoomsMap");
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.Therapy", b =>
@@ -587,8 +631,13 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.User");
 
-                    b.Property<bool>("Guest")
+                    b.Property<bool>("Hospitalized")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("RoomId");
 
                     b.HasDiscriminator().HasValue("Patient");
                 });
@@ -767,6 +816,13 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("WorkHours");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
+                        .WithMany("Patients")
+                        .HasForeignKey("RoomId");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.BloodUnitTherapy", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", null)
@@ -792,6 +848,11 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("BloodUnitTherapies");
 
                     b.Navigation("MedicamentTherapies");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
+                {
+                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }

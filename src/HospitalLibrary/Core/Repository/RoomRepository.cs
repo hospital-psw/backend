@@ -29,6 +29,16 @@ namespace HospitalLibrary.Core.Repository
             return _context.Rooms.Include(x => x.Floor).ThenInclude(x => x.Building).FirstOrDefault(x => x.Id == id);
         }
 
+        public IEnumerable<Room> GetAvailableRooms()
+        {
+            return _context.Rooms.Include(x => x.Floor)
+                                 .ThenInclude(x => x.Building)
+                                 .Include(x => x.WorkingHours)
+                                 .Include(x => x.Patients)
+                                 .Where(x => x.Capacity > x.Patients.Count)
+                                 .ToList();
+        }
+
         public void Create(Room room)
         {
             _context.Rooms.Add(room);
