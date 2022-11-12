@@ -41,7 +41,8 @@
                 return NotFound();
             }
 
-            return Ok(_medicamentTherapyService.Add(NewMedicamentTherapyMapper.EntityDtoToEntity(dto, medicament)));
+            MedicamentTherapyDto therapyDto = MedicamentTherapyMapper.EntityToEntityDto(_medicamentTherapyService.Add(NewMedicamentTherapyMapper.EntityDtoToEntity(dto, medicament)));
+            return Ok(therapyDto);
         }
 
         [HttpGet("{id}")]

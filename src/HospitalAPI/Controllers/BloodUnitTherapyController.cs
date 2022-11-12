@@ -32,7 +32,9 @@
                 return BadRequest("Bad request, please enter valid data.");
             }
             //fali poziv servisa da se dobavi BloodUnit
-            return Ok(_bloodUnitTherapyService.Add(NewBloodUnitTherapyMapper.EntityDtoToEntity(dto)));
+
+            BloodUnitTherapyDto therapyDto = BloodUnitTherapyMapper.EntityToEntityDto(_bloodUnitTherapyService.Add(NewBloodUnitTherapyMapper.EntityDtoToEntity(dto)));
+            return Ok(therapyDto);
         }
 
         [HttpGet("{id}")]

@@ -33,7 +33,7 @@
                 BadRequest("Bad request, please enter valid data.");
             }
 
-            return Ok(_medicalTreatmentService.Add(dto));
+            return Ok(MedicalTreatmentMapper.EntityToEntityDto(_medicalTreatmentService.Add(dto)));
         }
 
         [HttpGet("{id}")]
