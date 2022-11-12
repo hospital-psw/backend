@@ -3,6 +3,7 @@
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -158,6 +159,18 @@
                 IsDone = false,
                 ExamType = ExaminationType.OPERATION,
                 Duration = 30
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 11, 25, 0, 0, 0),
+                To = new DateTime(2022, 12, 11, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
             });
 
             context.SaveChanges();

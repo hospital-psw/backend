@@ -15,7 +15,7 @@
 
     public class VacationRequestsIntegrationTest : BaseIntegrationTest
     {
-        public VacationRequestsIntegrationTest(TestDatabaseFactory<Startup> factory) : base(factory)
+        public VacationRequestsIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
 
         }
