@@ -28,8 +28,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MedicalTreatmentRepository.Get(id);
+                return _unitOfWork.MedicalTreatmentRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -57,10 +56,9 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Patient patient = unitOfWork.PatientRepository.Get(dto.PatientId);
-                Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
-                Room room = unitOfWork.RoomRepository.GetById(dto.RoomId);
+                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
+                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
 
                 return new MedicalTreatment();

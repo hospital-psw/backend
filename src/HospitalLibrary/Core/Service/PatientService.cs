@@ -26,9 +26,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.PatientRepository.Add(patient);
-                unitOfWork.Save();
+                _unitOfWork.PatientRepository.Add(patient);
+                _unitOfWork.Save();
 
                 return patient;
 
@@ -57,8 +56,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.PatientRepository.GetAll();
+                return _unitOfWork.PatientRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -71,9 +69,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.PatientRepository.Update(patient);
-                unitOfWork.Save();
+                _unitOfWork.PatientRepository.Update(patient);
+                _unitOfWork.Save();
 
                 return patient;
             }
