@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using IntegrationAPI.Controllers;
-    using IntegrationAPI.DTO;
+    using IntegrationAPI.DTO.BloodBank;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Util.Interfaces;

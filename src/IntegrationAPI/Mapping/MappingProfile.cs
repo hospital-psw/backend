@@ -1,7 +1,7 @@
 ﻿namespace IntegrationAPI.Mapping
 {
     using AutoMapper;
-    using IntegrationAPI.DTO;
+    using IntegrationAPI.DTO.BloodBank;
     using IntegrationLibrary.BloodBank;
 
     public class MappingProfile : Profile

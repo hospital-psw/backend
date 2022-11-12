@@ -1,7 +1,7 @@
 ﻿namespace IntegrationAPI.Controllers
 {
     using AutoMapper;
-    using IntegrationAPI.DTO;
+    using IntegrationAPI.DTO.BloodBank;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Exceptions;
