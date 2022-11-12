@@ -41,14 +41,14 @@
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId, DateTime from, DateTime to)
+        public IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId)
         {
             List<Appointment> appointments = new List<Appointment>();
             Patient patient = new Patient("ana", "vulin", "vulinana@gmail.com", "123", false);
             Room room = new Room(1, "001", null, null, null);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));
             Doctor doctor = new Doctor("nikolina", "nikolic", "nina@gmail.com", "123", Specialization.GENERAL, doctorWorkingHours, room);
-            appointments.Add(new Appointment(new DateTime(2022, 12, 11, 15, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
+            appointments.Add(new Appointment(new DateTime(2022, 12, 12, 13, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
 
             return appointments;
         }

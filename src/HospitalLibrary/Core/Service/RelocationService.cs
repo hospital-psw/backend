@@ -13,42 +13,37 @@
 
     public class RelocationService : BaseService<RelocationRequest>, IRelocationService
     {
-        private readonly ILogger<RelocationRequest> _logger;
-
-        public RelocationService(ILogger<RelocationRequest> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
-            _logger = logger;
-        }
 
         public RelocationService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
-        public List<DateTime> GetAvailableAppointmentsForRoom(int roomId, DateTime from, DateTime to, int duration)
+        public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime from, DateTime to, int duration)
         {
             try
             {
                 List<DateTime> dateTimes = new List<DateTime>();
-                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetScheduledAppointmentsForRoom(roomId, from, to).ToList();
-
                 DateTime startTime = from;
+
                 while (startTime < to)
                 {
-                    bool catchedAppointment = false;
                     DateTime endTime = startTime.AddHours(duration);
-                    foreach (Appointment appointment in scheduledAppointments)
+                    DateTime? newStartTime = IsRoomAvailable(roomId1, startTime, endTime);
+                    if(newStartTime != null)
                     {
-                        if (appointment.Date >= startTime && appointment.Date.AddMinutes(30) <= endTime)
-                        {
-                            catchedAppointment = true;
-                            startTime = appointment.Date.AddMinutes(30);
-                            endTime = startTime.AddHours(duration);
-                            break;
-                        }
+                        startTime = (DateTime)newStartTime;
+                        endTime = startTime.AddHours(duration);
                     }
-                    
-                    if (!catchedAppointment)
+                    else
                     {
-                        dateTimes.Add(startTime);
-                        startTime = endTime;
+                        newStartTime = IsRoomAvailable(roomId2, startTime, endTime);
+                        if (newStartTime != null)
+                        {
+                            startTime = (DateTime)newStartTime;
+                        }
+                        else
+                        {
+                            dateTimes.Add(startTime);
+                            startTime = endTime;
+                        }
                     }
                 }
 
@@ -60,6 +55,23 @@
             }
         }
 
+        public DateTime? IsRoomAvailable(int roomId, DateTime startTime, DateTime endTime)
+        {
+            try
+            {
+                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetScheduledAppointmentsForRoom(roomId).ToList();
+                foreach (Appointment appointment in scheduledAppointments)
+                {
+                    if (appointment.Date >= startTime && appointment.Date.AddMinutes(30) <= endTime) return appointment.Date.AddMinutes(30);
+                }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
 
      
     }
