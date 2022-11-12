@@ -27,7 +27,7 @@
         }
 
         [Fact]
-        public void CreateMedicamentTherapy()
+        public void Create_medicament_therapy()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);

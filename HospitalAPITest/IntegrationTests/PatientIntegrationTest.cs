@@ -21,7 +21,7 @@
         }
 
         [Fact]
-        public void Test()
+        public void Get_patient()
         {
 
             using var scope = Factory.Services.CreateScope();
