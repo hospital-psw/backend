@@ -29,6 +29,7 @@
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; }
         public IBloodUnitTherapyRepository BloodUnitTherapyRepository { get; }
         public IMedicamentRepository MedicamentRepository { get; }
+        public IVacationRequestsRepository VacationRequestsRepository { get; }
         public IEquipmentRepository EquipmentRepository { get; }
 
     }

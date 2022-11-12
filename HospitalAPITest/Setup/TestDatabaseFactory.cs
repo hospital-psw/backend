@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
+    using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -173,6 +174,18 @@
                 End = default(DateTime),
                 Start = DateTime.Now,
             }); ;
+            
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 11, 25, 0, 0, 0),
+                To = new DateTime(2022, 12, 11, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
 
             //for equipment controller
             Room equipmentRoom = new Room()
