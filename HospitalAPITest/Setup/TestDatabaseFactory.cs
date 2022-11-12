@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
+    using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -154,8 +155,9 @@
                 Duration = 30
             });
 
-            context.Medicaments.Add(new Medicament {  
-                Name = "Aspirin", 
+            context.Medicaments.Add(new Medicament
+            {
+                Name = "Aspirin",
                 Description = "Nesto protiv bolova",
                 Quantity = 15
             });
@@ -167,7 +169,7 @@
                 Quantity = 420
             });
 
-            context.MedicalTreatments.Add( new MedicalTreatment
+            context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
                 Doctor = doc,
@@ -178,8 +180,8 @@
                 Report = null,
                 End = default(DateTime),
                 Start = new DateTime(),
-            });;
-
+            }); ;
+            
             context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
@@ -192,6 +194,66 @@
                 End = default(DateTime),
                 Start = new DateTime(),
             });
+            
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 11, 25, 0, 0, 0),
+                To = new DateTime(2022, 12, 11, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+            //for equipment controller
+            Room equipmentRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.BED,
+                Quantity = 8,
+                Room = equipmentRoom
+            });
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.SCISSORS,
+                Quantity = 10,
+                Room = equipmentRoom
+            });
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.NEEDLE,
+                Quantity = 20,
+                Room = equipmentRoom
+            });
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.BANDAGE,
+                Quantity = 5,
+                Room = equipmentRoom
+            });
+
+
 
             context.SaveChanges();
         }

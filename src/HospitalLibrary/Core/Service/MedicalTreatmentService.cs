@@ -80,7 +80,7 @@
 
                 _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
                 _unitOfWork.Save();
-                
+
                 return medicalTreatment;
             }
             catch (Exception e)
