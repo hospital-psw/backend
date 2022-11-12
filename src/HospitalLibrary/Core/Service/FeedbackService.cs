@@ -28,11 +28,10 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 Feedback feedback = new Feedback(dto);
-                feedback.Creator = unitOfWork.PatientRepository.Get(dto.CreatorId);
-                unitOfWork.FeedbackRepository.Add(feedback);
-                unitOfWork.Save();
+                feedback.Creator = _unitOfWork.PatientRepository.Get(dto.CreatorId);
+                _unitOfWork.FeedbackRepository.Add(feedback);
+                _unitOfWork.Save();
 
                 return feedback;
             }
@@ -47,8 +46,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAll();
+                return _unitOfWork.FeedbackRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -61,8 +59,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.Get(id);
+                return _unitOfWork.FeedbackRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -76,8 +73,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllPublic();
+                return _unitOfWork.FeedbackRepository.GetAllPublic();
             }
             catch (Exception e)
             {
@@ -90,8 +86,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllPrivate();
+                return _unitOfWork.FeedbackRepository.GetAllPrivate();
             }
             catch (Exception e)
             {
@@ -104,8 +99,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllAnonymous();
+                return _unitOfWork.FeedbackRepository.GetAllAnonymous();
             }
             catch (Exception e)
             {
@@ -118,8 +112,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllIdentified();
+                return _unitOfWork.FeedbackRepository.GetAllIdentified();
             }
             catch (Exception e)
             {
@@ -132,8 +125,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllApproved();
+                return _unitOfWork.FeedbackRepository.GetAllApproved();
             }
             catch (Exception e)
             {
@@ -146,8 +138,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+                Feedback feedback = _unitOfWork.FeedbackRepository.Get(id);
 
                 if (feedback == null)
                 {
@@ -156,8 +147,8 @@
                 }
 
                 feedback.Public = true;
-                unitOfWork.FeedbackRepository.Update(feedback);
-                unitOfWork.Save();
+                _unitOfWork.FeedbackRepository.Update(feedback);
+                _unitOfWork.Save();
                 return true;
             }
             catch (Exception e)
@@ -171,8 +162,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+                Feedback feedback = _unitOfWork.FeedbackRepository.Get(id);
 
                 if (feedback == null)
                 {
@@ -181,8 +171,8 @@
                 }
 
                 feedback.Public = false;
-                unitOfWork.FeedbackRepository.Update(feedback);
-                unitOfWork.Save();
+                _unitOfWork.FeedbackRepository.Update(feedback);
+                _unitOfWork.Save();
                 return true;
             }
             catch (Exception e)
@@ -196,8 +186,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+                Feedback feedback = _unitOfWork.FeedbackRepository.Get(id);
 
                 if (feedback == null)
                 {
@@ -206,8 +195,8 @@
                 }
 
                 feedback.Anonymous = true;
-                unitOfWork.FeedbackRepository.Update(feedback);
-                unitOfWork.Save();
+                _unitOfWork.FeedbackRepository.Update(feedback);
+                _unitOfWork.Save();
                 return true;
             }
             catch (Exception e)
@@ -221,8 +210,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+                Feedback feedback = _unitOfWork.FeedbackRepository.Get(id);
 
                 if (feedback == null)
                 {
@@ -231,8 +219,8 @@
                 }
 
                 feedback.Anonymous = false;
-                unitOfWork.FeedbackRepository.Update(feedback);
-                unitOfWork.Save();
+                _unitOfWork.FeedbackRepository.Update(feedback);
+                _unitOfWork.Save();
                 return true;
             }
             catch (Exception e)
@@ -247,8 +235,7 @@
             try
             {
                 List<WelcomePageFeedbackDTO> feedbacks = new List<WelcomePageFeedbackDTO>();
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                foreach (Feedback feedback in unitOfWork.FeedbackRepository.GetAllApproved())
+                foreach (Feedback feedback in _unitOfWork.FeedbackRepository.GetAllApproved())
                 {
                     if (feedback.Anonymous)
                     {
@@ -273,8 +260,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+                Feedback feedback = _unitOfWork.FeedbackRepository.Get(id);
 
                 if (feedback == null)
                 {
@@ -283,8 +269,8 @@
                 }
 
                 feedback.Status = FeedbackStatus.APPROVED;
-                unitOfWork.FeedbackRepository.Update(feedback);
-                unitOfWork.Save();
+                _unitOfWork.FeedbackRepository.Update(feedback);
+                _unitOfWork.Save();
                 return true;
             }
             catch (Exception e)
@@ -298,8 +284,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+                Feedback feedback = _unitOfWork.FeedbackRepository.Get(id);
 
                 if (feedback == null)
                 {
@@ -308,8 +293,8 @@
                 }
 
                 feedback.Status = FeedbackStatus.DENIED;
-                unitOfWork.FeedbackRepository.Update(feedback);
-                unitOfWork.Save();
+                _unitOfWork.FeedbackRepository.Update(feedback);
+                _unitOfWork.Save();
                 return true;
             }
             catch (Exception e)
@@ -323,8 +308,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Feedback feedback = unitOfWork.FeedbackRepository.Get(id);
+                Feedback feedback = _unitOfWork.FeedbackRepository.Get(id);
 
                 if (feedback == null)
                 {
@@ -333,8 +317,8 @@
                 }
 
                 feedback.Status = FeedbackStatus.PENDING;
-                unitOfWork.FeedbackRepository.Update(feedback);
-                unitOfWork.Save();
+                _unitOfWork.FeedbackRepository.Update(feedback);
+                _unitOfWork.Save();
                 return true;
             }
             catch (Exception e)
@@ -348,8 +332,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllDenied();
+                return _unitOfWork.FeedbackRepository.GetAllDenied();
             }
             catch (Exception e)
             {
@@ -362,8 +345,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.FeedbackRepository.GetAllPending();
+                return _unitOfWork.FeedbackRepository.GetAllPending();
             }
             catch (Exception e)
             {
