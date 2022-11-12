@@ -38,17 +38,6 @@ namespace HospitalLibrary.Settings
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            /*modelBuilder.Entity<Floor>().HasData(
-                new Floor() { Id = 2 },
-                new Floor() { Id = 3 },
-                new Floor() { Id = 4 },
-                new Floor() { Id = 5 }
-            ) ; 
-            base.OnModelCreating(modelBuilder);*/
-        }
-
         public override int SaveChanges()
         {
 
@@ -72,14 +61,5 @@ namespace HospitalLibrary.Settings
             return base.SaveChanges();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (optionsBuilder.IsConfigured)
-            {
-                return;
-            }
-
-            optionsBuilder.UseSqlServer("Server=tcp:pswhospital.database.windows.net,1433;Initial Catalog=pswhospital;Persist Security Info=False;User ID=pswadmin;Password=zmajOdSipova1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-        }
     }
 }

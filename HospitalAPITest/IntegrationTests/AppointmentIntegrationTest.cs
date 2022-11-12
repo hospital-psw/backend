@@ -17,7 +17,7 @@
 
     public class AppointmentIntegrationTest : BaseIntegrationTest
     {
-        public AppointmentIntegrationTest(TestDatabaseFactory<Startup> factory) : base(factory)
+        public AppointmentIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
         }
 
@@ -40,7 +40,7 @@
             };
 
 
-            var result = ((OkObjectResult)controller.Get(4)).Value as AppointmentDto;
+            var result = ((OkObjectResult)controller.Get(1)).Value as AppointmentDto;
 
             Assert.NotNull(result);
             Assert.Equal("Djankarlo", result.Doctor.FirstName);

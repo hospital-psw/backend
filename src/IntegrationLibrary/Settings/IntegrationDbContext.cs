@@ -15,15 +15,6 @@
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         public IntegrationDbContext() { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1, Name = "Blood bank 1" },
-                new BloodBank() { Id = 2, Name = "Crveni krst " }
-            );
-            base.OnModelCreating(modelBuilder);
-        }
-
         public override int SaveChanges()
         {
 
@@ -45,16 +36,6 @@
             }
 
             return base.SaveChanges();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (optionsBuilder.IsConfigured)
-            {
-                return;
-            }
-
-            optionsBuilder.UseSqlServer("Server=tcp:pswhospital.database.windows.net,1433;Initial Catalog=pswhospital;Persist Security Info=False;User ID=pswintegration;Password=zmajOdSipova1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
     }
 }
