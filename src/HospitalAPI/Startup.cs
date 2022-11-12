@@ -37,6 +37,8 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IMapService, MapService>();
             services.AddScoped<IRoomRepository, RoomRepository>();

@@ -40,9 +40,6 @@
                                                  .Where(x => x.Patient.Id == patientId && !x.IsDone)
                                                  .ToList();
 
-            HospitalDbContext.Appointments.Where(x => x.Patient.Id == patientId);
-
-
         }
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)

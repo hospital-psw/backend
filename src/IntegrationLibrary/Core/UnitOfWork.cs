@@ -9,7 +9,8 @@ namespace IntegrationLibrary.Core
     {
 
         private readonly IntegrationDbContext _context;
-        public IBloodBankRepository BloodBankRepository { get; set; }
+
+        public IBloodBankRepository BloodBankRepository { get; }
 
         public UnitOfWork(IntegrationDbContext context)
         {

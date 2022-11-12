@@ -12,10 +12,10 @@
 
         public BaseController()
         {
-            _baseService = new BaseService<TEntity>();
+            //_baseService = new BaseService<TEntity>();
         }
 
-        [HttpDelete("{id}")]
+        /*[HttpDelete("{id}")]
         public virtual IActionResult Delete(int id)
         {
             bool response = _baseService.Delete(id);
@@ -25,6 +25,6 @@
             }
 
             return NoContent();
-        }
+        }*/
     }
 }

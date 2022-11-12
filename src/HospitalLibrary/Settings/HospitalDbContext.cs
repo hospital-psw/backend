@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
+using HospitalLibrary.Core.Model.VacationRequest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -31,23 +32,12 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnitTherapy> BloodUnitTherapies { get; set; }
         public DbSet<Medicament> Medicaments { get; set; }
         public DbSet<RelocationRequest> RelocationRequests { get; set; }
-
+        public DbSet<VacationRequest> VacationRequests { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         public HospitalDbContext()
         {
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            /*modelBuilder.Entity<Floor>().HasData(
-                new Floor() { Id = 2 },
-                new Floor() { Id = 3 },
-                new Floor() { Id = 4 },
-                new Floor() { Id = 5 }
-            ) ; 
-            base.OnModelCreating(modelBuilder);*/
         }
 
         public override int SaveChanges()
@@ -73,14 +63,5 @@ namespace HospitalLibrary.Settings
             return base.SaveChanges();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (optionsBuilder.IsConfigured)
-            {
-                return;
-            }
-
-            optionsBuilder.UseSqlServer("Server=tcp:pswhospital.database.windows.net,1433;Initial Catalog=pswhospital;Persist Security Info=False;User ID=pswadmin;Password=zmajOdSipova1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
-        }
     }
 }

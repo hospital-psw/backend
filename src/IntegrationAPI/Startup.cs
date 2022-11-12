@@ -1,5 +1,6 @@
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodBank.Interfaces;
+using IntegrationLibrary.Core;
 using IntegrationLibrary.Settings;
 using IntegrationLibrary.Util;
 using IntegrationLibrary.Util.Interfaces;
@@ -36,6 +37,8 @@ namespace IntegrationAPI
             });
             services.AddAutoMapper(typeof(Startup));
             services.AddLogging();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IMailSender, MailSender>();
