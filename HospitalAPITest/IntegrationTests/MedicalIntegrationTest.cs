@@ -18,18 +18,12 @@ namespace HospitalAPITest.IntegrationTests
             return new MedicalTreatmentController(scope.ServiceProvider.GetRequiredService<IMedicalTreatmentService>());
         }
 
-        private MedicalTreatmentController ArrangeController()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-            return controller;
-        }
-
         [Fact]
         public void CreateMedicalTreatment()
         {
 
-            var controller = ArrangeController();
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
 
             NewMedicalTreatmentDto newMedicalTreatmentDto = new NewMedicalTreatmentDto
             {
@@ -50,7 +44,8 @@ namespace HospitalAPITest.IntegrationTests
         [ClassData(typeof(PatientReleaseData))]
         public void Release_patient_from_treatment(PatientReleaseDto dto, IActionResult expectedResult)
         {
-            var controller = ArrangeController();
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
 
             var result = controller.ReleasePatient(dto);
 
