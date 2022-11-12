@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@
 
         private readonly ILogger<MedicamentTherapy> _logger;
 
-        public MedicamentTherapyService(ILogger<MedicamentTherapy> logger) : base()
+        public MedicamentTherapyService(ILogger<MedicamentTherapy> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -25,9 +26,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.MedicamentTherapyRepository.Add(entity);
-                unitOfWork.Save();
+                _unitOfWork.MedicamentTherapyRepository.Add(entity);
+                _unitOfWork.Save();
                 return entity;
             }
             catch (Exception e)
@@ -41,9 +41,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.MedicamentTherapyRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.MedicamentTherapyRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -58,8 +57,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MedicamentTherapyRepository.Get(id);
+                return _unitOfWork.MedicamentTherapyRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -72,8 +70,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MedicamentTherapyRepository.GetAll();
+                return _unitOfWork.MedicamentTherapyRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -86,10 +83,9 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 medicamentTherapy.Deleted = true;
-                unitOfWork.MedicamentTherapyRepository.Update(medicamentTherapy);
-                unitOfWork.Save();
+                _unitOfWork.MedicamentTherapyRepository.Update(medicamentTherapy);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {

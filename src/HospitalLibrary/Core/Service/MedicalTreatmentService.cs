@@ -42,9 +42,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.MedicalTreatmentRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.MedicalTreatmentRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -59,8 +58,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MedicalTreatmentRepository.GetAll();
+                return _unitOfWork.MedicalTreatmentRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -73,16 +71,15 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Patient patient = unitOfWork.PatientRepository.Get(dto.PatientId);
+                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
                 patient.Hospitalized = true;
-                Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
-                Room room = unitOfWork.RoomRepository.GetById(dto.RoomId);
+                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
                 MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "");
 
-                unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
-                unitOfWork.Save();
+                _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
+                _unitOfWork.Save();
                 
                 return medicalTreatment;
             }
@@ -97,10 +94,9 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 medicalTreatment.Deleted = true;
-                unitOfWork.MedicalTreatmentRepository.Update(medicalTreatment);
-                unitOfWork.Save();
+                _unitOfWork.MedicalTreatmentRepository.Update(medicalTreatment);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {

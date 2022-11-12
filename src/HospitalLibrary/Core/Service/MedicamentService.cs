@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@
     {
         private readonly ILogger<Medicament> _logger;
 
-        public MedicamentService(ILogger<Medicament> logger) : base()
+        public MedicamentService(ILogger<Medicament> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -24,9 +25,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.MedicamentRepository.Add(entity);
-                unitOfWork.Save();
+                _unitOfWork.MedicamentRepository.Add(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -41,8 +41,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MedicamentRepository.Get(id);
+                return _unitOfWork.MedicamentRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -55,8 +54,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.MedicamentRepository.GetAll();
+                return _unitOfWork.MedicamentRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -69,9 +67,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.MedicamentRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.MedicamentRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -86,10 +83,9 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 medicament.Deleted = true;
-                unitOfWork.MedicamentRepository.Update(medicament);
-                unitOfWork.Save();
+                _unitOfWork.MedicamentRepository.Update(medicament);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {

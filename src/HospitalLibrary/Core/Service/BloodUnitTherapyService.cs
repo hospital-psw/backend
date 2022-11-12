@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@
     {
         private readonly ILogger<BloodUnitTherapy> _logger;
 
-        public BloodUnitTherapyService(ILogger<BloodUnitTherapy> logger) : base()
+        public BloodUnitTherapyService(ILogger<BloodUnitTherapy> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -25,9 +26,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.BloodUnitTherapyRepository.Add(entity);
-                unitOfWork.Save();
+                _unitOfWork.BloodUnitTherapyRepository.Add(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -42,8 +42,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.BloodUnitTherapyRepository.Get(id);
+                return _unitOfWork.BloodUnitTherapyRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -56,8 +55,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.BloodUnitTherapyRepository.GetAll();
+                return _unitOfWork.BloodUnitTherapyRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -70,9 +68,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.BloodUnitTherapyRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.BloodUnitTherapyRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -87,10 +84,9 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 bloodUnitTherapy.Deleted = true;
-                unitOfWork.BloodUnitTherapyRepository.Update(bloodUnitTherapy);
-                unitOfWork.Save();
+                _unitOfWork.BloodUnitTherapyRepository.Update(bloodUnitTherapy);
+                _unitOfWork.Save();
             }
             catch (Exception e)
             {
