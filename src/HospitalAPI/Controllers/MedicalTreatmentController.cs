@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -62,6 +63,36 @@
 
             medicalTreatments.ForEach(mt => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(mt)));
             return Ok(dtoList);
+        }
+
+        [HttpPatch]
+        public IActionResult ReleasePatient(PatientReleaseDto dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest("Invalid request");
+            }
+
+            if (string.IsNullOrEmpty(dto.Description))
+            {
+                return BadRequest("Please specify reason for release");
+            }
+
+            MedicalTreatment treatment = _medicalTreatmentService.Get(dto.TreatmentId);
+
+            if (treatment == null)
+            {
+                return NotFound("Treatment not found");
+            }
+
+            if (!treatment.Active)
+            {
+                return BadRequest("Treatment is already finished");
+            }
+
+            MedicalTreatment finishedTreatment = _medicalTreatmentService.ReleasePatient(treatment, dto.Description);
+
+            return Ok(MedicalTreatmentMapper.EntityToEntityDto(finishedTreatment));
         }
     }
 
