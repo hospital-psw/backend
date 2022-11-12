@@ -42,7 +42,7 @@ namespace HospitalAPI.Controllers
             return BadRequest("Bad request, please enter valid data.");
         }
 
-        [HttpGet]
+        [HttpGet("available")]
         public IActionResult GetAvailable()
         {
             List<Room> availableRooms = _roomService.GetAvailable().ToList();

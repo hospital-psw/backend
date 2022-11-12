@@ -98,7 +98,7 @@
             return NoContent();
         }
 
-        [HttpGet("available")]
+        [HttpGet("non-hospitalized")]
         public IActionResult GetNonHospitalized()
         {
             List<Patient> nonHospitalizedPatients = _patientService.GetNonHospitalized().ToList();
