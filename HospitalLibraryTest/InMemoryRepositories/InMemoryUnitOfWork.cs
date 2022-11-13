@@ -35,6 +35,13 @@
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }
         public IBloodUnitTherapyRepository BloodUnitTherapyRepository { get; set; }
 
+        public IMedicamentRepository MedicamentRepository => throw new NotImplementedException();
+
+        public IVacationRequestsRepository VacationRequestsRepository => throw new NotImplementedException();
+
+        public IEquipmentRepository EquipmentRepository => throw new NotImplementedException();
+
+        public IRelocationRepository RelocationRepository => throw new NotImplementedException();
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

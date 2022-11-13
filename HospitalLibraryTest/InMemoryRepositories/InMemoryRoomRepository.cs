@@ -26,6 +26,11 @@
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Room> GetAvailableRooms()
+        {
+            throw new NotImplementedException();
+        }
+
         public Room GetById(int id)
         {
             throw new NotImplementedException();
