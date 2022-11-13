@@ -3,7 +3,11 @@
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Blood.Core;
+    using HospitalLibrary.Settings;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -24,18 +28,68 @@
 
         public override BloodExpenditure Get(int id)
         {
-            return base.Get(id);
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.BloodExpenditureRepository.Get(id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public override IEnumerable<BloodExpenditure> GetAll()
         {
-            return base.GetAll();
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.BloodExpenditureRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
 
         public void Create(CreateExpenditureDTO expendituredto)
         {
-            throw new NotImplementedException();
+            try 
+            { 
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Doctor doctor = unitOfWork.DoctorRepository.Get(expendituredto.DoctorId);
+                BloodType bloodType = expendituredto.BloodType;
+                int amount = expendituredto.Amount;
+                string reason = expendituredto.Reason;
+                DateTime date = expendituredto.Date;
+                BloodExpenditure bloodExpenditure = new BloodExpenditure(doctor,bloodType,amount,reason,date);
+                unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
+                unitOfWork.Save();
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+            }
+
+        }
+
+        public BloodExpenditure Update(BloodExpenditure bloodExpenditure)
+        {
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                 unitOfWork.BloodExpenditureRepository.Update(bloodExpenditure);
+                return bloodExpenditure;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public void Update(CreateExpenditureDTO expendituredto)
@@ -43,7 +97,7 @@
             throw new NotImplementedException();
         }
 
-        void IBloodExpenditureService.Delete(int id)
+        BloodExpenditure IBloodExpenditureService.Delete(int id)
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,7 @@
 
     public interface IBloodAcquisitionRepository:IBaseRepository<BloodAcquisition>
     {
-
+        IEnumerable<BloodAcquisition> GetPendingAcquisitions();
 
     }
 }

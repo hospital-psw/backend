@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,13 +18,20 @@
 
         public override IEnumerable<BloodAcquisition> GetAll()
         {
-            return base.GetAll();
+            return HospitalDbContext.BloodAcquisitions.Include(x => x.Doctor);
         }
 
 
         public override BloodAcquisition Get(int id)
         {
-            return base.Get(id);
+            return HospitalDbContext.BloodAcquisitions.Include(x => x.Doctor)
+                                                      .FirstOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<BloodAcquisition> GetPendingAcquisitions()
+        {
+            return HospitalDbContext.BloodAcquisitions.Include(x => x.Doctor)
+                                                       .Where(x => x.Status == Model.Blood.Enums.BloodRequestStatus.PENDING);
         }
 
     }

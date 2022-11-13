@@ -15,7 +15,7 @@
         public BloodType BloodType { get; set; }    
         public int Amount { get; set; }
         public string Reason { get; set; }
-        public BloodRequestStatus Status { get; set; }
+       
 
 
 
@@ -28,7 +28,6 @@
             BloodType = bloodType;
             Amount = amount;
             Reason = reason;
-            Status = status;
         }
     }
 }
