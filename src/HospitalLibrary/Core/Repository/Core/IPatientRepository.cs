@@ -9,5 +9,7 @@
 
     public interface IPatientRepository : IBaseRepository<Patient>
     {
+
+        IEnumerable<Patient> GetNonHospitalized();
     }
 }

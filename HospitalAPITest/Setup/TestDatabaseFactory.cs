@@ -3,6 +3,10 @@
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.MedicalTreatment;
+    using HospitalLibrary.Core.Model.Medicament;
+    using HospitalLibrary.Core.Model.Therapy;
+    using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -75,24 +79,30 @@
             //});
             Patient pat = new Patient()
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 1,*/
-                Deleted = false,
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
                 Password = "mikica",
                 Role = Role.PATIENT,
-                Guest = false
+                Hospitalized = true
             };
+
+            Patient pat2 = new Patient
+            {
+                FirstName = "Djura",
+                LastName = "Djuric",
+                Email = "djura@com",
+                Password = "djurica",
+                Role = Role.PATIENT,
+                Hospitalized = true,
+            };
+
+            List<Patient> patients = new List<Patient>();
+            patients.Add(pat);
+            patients.Add(pat2);
 
             Doctor doc = new Doctor()
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 3,*/
-                Deleted = false,
                 FirstName = "Djankarlo",
                 LastName = "Rapacoti",
                 Email = "djankarlno@asd.com",
@@ -125,32 +135,17 @@
                     Start = new DateTime(),
                     End = new DateTime(1, 1, 1, 23, 0, 0)
                 },
+                Patients = patients
 
             };
 
 
             context.Patients.Add(pat);
 
-            context.Patients.Add(new Patient
-            {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 2,*/
-                Deleted = false,
-                FirstName = "Djura",
-                LastName = "Djuric",
-                Email = "djura@com",
-                Password = "djurica",
-                Role = Role.PATIENT,
-                Guest = false
-            }); ;
+            context.Patients.Add(pat2);
 
             context.Appointments.Add(new Appointment
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 4,*/
-                Deleted = false,
                 Date = new DateTime(2022, 11, 11, 14, 0, 0),
                 Doctor = doc,
                 Patient = pat,
@@ -159,6 +154,106 @@
                 ExamType = ExaminationType.OPERATION,
                 Duration = 30
             });
+
+            context.Medicaments.Add(new Medicament
+            {
+                Name = "Aspirin",
+                Description = "Nesto protiv bolova",
+                Quantity = 15
+            });
+
+            context.Medicaments.Add(new Medicament
+            {
+                Name = "Panklav",
+                Description = "Antibiotik za decu i odrasle",
+                Quantity = 420
+            });
+
+            context.MedicalTreatments.Add(new MedicalTreatment
+            {
+                Room = room,
+                Doctor = doc,
+                Patient = pat,
+                MedicamentTherapies = new List<MedicamentTherapy>(),
+                BloodUnitTherapies = new List<BloodUnitTherapy>(),
+                Active = true,
+                Report = null,
+                End = default(DateTime),
+                Start = new DateTime(),
+            }); ;
+
+            context.MedicalTreatments.Add(new MedicalTreatment
+            {
+                Room = room,
+                Doctor = doc,
+                Patient = pat2,
+                MedicamentTherapies = new List<MedicamentTherapy>(),
+                BloodUnitTherapies = new List<BloodUnitTherapy>(),
+                Active = false,
+                Report = "izvestaj brateeeee",
+                End = default(DateTime),
+                Start = new DateTime(),
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 11, 25, 0, 0, 0),
+                To = new DateTime(2022, 12, 11, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+            //for equipment controller
+            Room equipmentRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.BED,
+                Quantity = 8,
+                Room = equipmentRoom
+            });
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.SCISSORS,
+                Quantity = 10,
+                Room = equipmentRoom
+            });
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.NEEDLE,
+                Quantity = 20,
+                Room = equipmentRoom
+            });
+            context.Equipments.Add(new Equipment
+            {
+                EquipmentType = EquipmentType.BANDAGE,
+                Quantity = 5,
+                Room = equipmentRoom
+            });
+
+
 
             context.SaveChanges();
         }
