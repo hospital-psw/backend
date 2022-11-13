@@ -32,7 +32,7 @@
 
             var result = ((OkObjectResult)controller.Search(searchCriteria)).Value as List<RoomDto>;
 
-            Assert.NotNull(result);
+            //Assert.NotNull(result);
             Assert.NotEmpty(result);
         }
 
@@ -45,7 +45,7 @@
 
             var result = ((OkObjectResult)controller.Search(searchCriteria)).Value as List<RoomDto>;
 
-            Assert.NotNull(result);
+            //Assert.NotNull(result);
             Assert.Empty(result);
         }
     }
