@@ -39,10 +39,7 @@ namespace HospitalLibrary.Core.Service
                         {
                             if (room.Purpose.Contains(purpose))
                             {
-                                if (room.WorkingHours.Start <= start && room.WorkingHours.End >= end)
-                                {
-                                    suitableRooms.Add(room);
-                                }
+                                suitableRooms.Add(room);
                             }
                         }
                     }

@@ -43,6 +43,7 @@ namespace HospitalAPI.Controllers
             return BadRequest("Bad request, please enter valid data.");
         }
 
+        [HttpPost]
         public IActionResult Search(SearchCriteriaDto dto)
         {
             if (dto == null)
@@ -50,8 +51,16 @@ namespace HospitalAPI.Controllers
                 return BadRequest("Bad request, please enter valid data.");
             }
             List<Room> searchedRooms = _roomService.Search(dto.RoomNumber, dto.FloorNumber, dto.BuildingId, dto.RoomPurpose, dto.WorkingHoursStart, dto.WorkingHoursEnd);
+            List<RoomDto> searchedRoomsDto = new List<RoomDto>();
 
-            return Ok(searchedRooms);
+            if(searchedRooms == null)
+            {
+                return NotFound();
+            }
+
+            searchedRooms.ForEach(r => searchedRoomsDto.Add(RoomMapper.EntityToEntityDto(r)));
+
+            return Ok(searchedRoomsDto);
             
         }
 
