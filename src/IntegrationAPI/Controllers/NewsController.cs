@@ -1,5 +1,6 @@
 ﻿namespace IntegrationAPI.Controllers
 {
+    using IntegrationLibrary.News.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
 
@@ -7,6 +8,13 @@
     [Route("api/[controller]")]
     public class NewsController : ControllerBase
     {
+        private INewsService _newsService;
+
+        public NewsController(INewsService newsService)
+        {
+            _newsService = newsService;
+        }
+
         [HttpGet("all")]
         public IActionResult GetAll()
         {
