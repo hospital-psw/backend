@@ -35,7 +35,7 @@
                 List<DateTime> dateTimes = new List<DateTime>();
                 DateTime startTime = from;
 
-                while (startTime < to)
+                while (startTime.AddHours(duration) <= to)
                 {
                     DateTime endTime = startTime.AddHours(duration);
                     DateTime? newStartTime = IsRoomAvailable(roomId1, startTime, endTime);

@@ -27,10 +27,10 @@
             return Ok(_relocationService.Create(RelocationRequestMapper.EntityDtoToEntity(dto, _roomService.GetById(dto.FromRoomId), _roomService.GetById(dto.ToRoomId), _equipmentService.Get(dto.EquipmentId))));
         }
 
-        [HttpGet("getRecommendedAppointments")]
-        public IActionResult GetRecommendedRelocationAppointments(RecommendRelocationRequestDto dto)
+        [HttpPut("recommend")]
+        public IActionResult GetRecommendedRelocationAppointments([FromBody] RecommendRelocationRequestDto dto)
         {
-            return Ok(_relocationService.GetAvailableAppointments(dto.FromRoom.Id, dto.ToRoom.Id, dto.FromTime, dto.ToTime, dto.Duration));
+            return Ok(_relocationService.GetAvailableAppointments(dto.FromRoomId, dto.ToRoomId, dto.FromTime, dto.ToTime, dto.Duration));
         }
     }
 }
