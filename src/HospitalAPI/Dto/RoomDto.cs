@@ -12,5 +12,13 @@
         public int Capacity { get; set; }
         public List<PatientDto> Patients { get; set; }
 
+        public RoomDto(int id, string number, string purpose, WorkingHoursDto workingHours, FloorDto floor)
+        {
+            Id = id;
+            Number = number;
+            Purpose = purpose;
+            WorkingHours = workingHours;
+            Floor = floor;
+        }
     }
 }
