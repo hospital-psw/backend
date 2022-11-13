@@ -43,9 +43,16 @@ namespace HospitalAPI.Controllers
             return BadRequest("Bad request, please enter valid data.");
         }
 
-        public IActionResult Search(SearchCriteriaDto searchCriteria)
+        public IActionResult Search(SearchCriteriaDto dto)
         {
-            throw new NotImplementedException();
+            if (dto == null)
+            {
+                return BadRequest("Bad request, please enter valid data.");
+            }
+            List<Room> searchedRooms = _roomService.Search(dto.RoomNumber, dto.FloorNumber, dto.BuildingId, dto.RoomPurpose, dto.WorkingHoursStart, dto.WorkingHoursEnd);
+
+            return Ok(searchedRooms);
+            
         }
 
         [HttpGet("available")]
