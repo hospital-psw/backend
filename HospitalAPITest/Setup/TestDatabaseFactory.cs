@@ -44,6 +44,7 @@
         private static void InitializeDatabase(HospitalDbContext context)
         {
             context.Database.EnsureDeleted();
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE VacationRequests");
             context.Database.EnsureCreated();
 
             //context.Database.ExecuteSqlRaw("DELETE FROM ");
@@ -167,6 +168,18 @@
                 Doctor = doc,
                 From = new DateTime(2022, 11, 25, 0, 0, 0),
                 To = new DateTime(2022, 12, 11, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 12, 12, 0, 0, 0),
+                To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
                 Comment = "",
                 Urgent = true,
