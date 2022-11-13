@@ -31,6 +31,7 @@
         public IMedicamentRepository MedicamentRepository { get; }
         public IVacationRequestsRepository VacationRequestsRepository { get; }
         public IEquipmentRepository EquipmentRepository { get; }
+        public IRelocationRepository RelocationRepository { get; }
 
     }
 }

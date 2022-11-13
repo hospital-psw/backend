@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Service.Core
+﻿namespace HospitalLibrary.Core.Repository.Core
 {
     using HospitalLibrary.Core.Model;
     using System;
@@ -7,9 +7,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IEquipmentService
+    public interface IRelocationRepository : IBaseRepository<RelocationRequest>
     {
-        List<Equipment> GetForRoom(int roomId);
-        Equipment Get(int id);
+        RelocationRequest Create(RelocationRequest request);
     }
 }

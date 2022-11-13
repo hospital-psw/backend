@@ -19,5 +19,10 @@
             this.End = end;
         }
 
+        public WorkingHours(DateTime start, DateTime end)
+        {
+            Start = start;
+            End = end;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using HospitalAPI.Configuration;
 using HospitalAPI.EmailServices;
+using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
@@ -58,8 +59,8 @@ namespace HospitalAPI
             services.AddScoped<IMedicamentService, MedicamentService>();
             services.AddScoped<IVacationRequestsService, VacationRequestsService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
-
-
+            services.AddScoped<IRelocationService, RelocationService>();
+            
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
             services.AddSingleton(config);
