@@ -14,7 +14,7 @@ namespace HospitalLibrary.Core.Service
 
         private readonly ILogger<Room> _logger;
 
-        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork) 
+        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -26,14 +26,14 @@ namespace HospitalLibrary.Core.Service
 
         public List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end)
         {
-            List<Room> allRooms = (List<Room>) _unitOfWork.RoomRepository.GetAll();
+            List<Room> allRooms = (List<Room>)_unitOfWork.RoomRepository.GetAll();
             List<Room> suitableRooms = new List<Room>();
 
-            foreach(Room room in allRooms)
+            foreach (Room room in allRooms)
             {
-                if(room.Floor.Building.Id == buildingId)
+                if (room.Floor.Building.Id == buildingId)
                 {
-                    if(floorNumber == -1 || room.Floor.Number == floorNumber)
+                    if (floorNumber == -1 || room.Floor.Number == floorNumber)
                     {
                         if (room.Number.Contains(roomNumber))
                         {

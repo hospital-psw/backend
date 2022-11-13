@@ -4,10 +4,10 @@
     using HospitalAPI.Dto;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.Service.Core;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
-    using Microsoft.AspNetCore.Http;
 
     public class RelocationIntegrationTest : BaseIntegrationTest
     {
@@ -32,7 +32,7 @@
             var result = (OkObjectResult)controller.Create(dto);
 
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
-           
+
         }
     }
 }

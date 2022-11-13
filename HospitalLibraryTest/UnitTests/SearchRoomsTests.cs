@@ -19,7 +19,7 @@
         {
             RoomService roomService = new RoomService(null, new InMemoryUnitOfWork());
 
-            List<Room> rooms =roomService.Search("003", 0, 4  , "ordinacija", new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0));
+            List<Room> rooms = roomService.Search("003", 0, 4, "ordinacija", new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0));
 
             rooms.ShouldNotBeEmpty();
         }

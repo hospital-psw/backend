@@ -20,9 +20,9 @@
         {
             try
             {
-               return _unitOfWork.RelocationRepository.Create(entity);
+                return _unitOfWork.RelocationRepository.Create(entity);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -39,7 +39,7 @@
                 {
                     DateTime endTime = startTime.AddHours(duration);
                     DateTime? newStartTime = IsRoomAvailable(roomId1, startTime, endTime);
-                    if(newStartTime != null)
+                    if (newStartTime != null)
                     {
                         startTime = (DateTime)newStartTime;
                         endTime = startTime.AddHours(duration);
@@ -61,7 +61,7 @@
 
                 return dateTimes;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -79,12 +79,12 @@
 
                 return null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
         }
 
-     
+
     }
 }

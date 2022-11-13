@@ -53,7 +53,7 @@ namespace HospitalAPI.Controllers
             List<Room> searchedRooms = _roomService.Search(dto.RoomNumber, dto.FloorNumber, dto.BuildingId, dto.RoomPurpose, dto.WorkingHoursStart, dto.WorkingHoursEnd);
             List<RoomDto> searchedRoomsDto = new List<RoomDto>();
 
-            if(searchedRooms == null)
+            if (searchedRooms == null)
             {
                 return NotFound();
             }
@@ -61,7 +61,7 @@ namespace HospitalAPI.Controllers
             searchedRooms.ForEach(r => searchedRoomsDto.Add(RoomMapper.EntityToEntityDto(r)));
 
             return Ok(searchedRoomsDto);
-            
+
         }
 
         [HttpGet("available")]

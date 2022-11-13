@@ -60,7 +60,7 @@ namespace HospitalAPI
             services.AddScoped<IVacationRequestsService, VacationRequestsService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
             services.AddScoped<IRelocationService, RelocationService>();
-            
+
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
             services.AddSingleton(config);

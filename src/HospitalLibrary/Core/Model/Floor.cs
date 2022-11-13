@@ -14,8 +14,8 @@
 
         public Floor() { }
 
-        public Floor(int id, DateTime dateCreated, DateTime dateUpdated, bool deleted, int number, string purpose, Building building) 
-        { 
+        public Floor(int id, DateTime dateCreated, DateTime dateUpdated, bool deleted, int number, string purpose, Building building)
+        {
             this.Id = id;
             this.DateCreated = dateCreated;
             this.DateUpdated = dateUpdated;

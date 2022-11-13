@@ -22,6 +22,6 @@
             _context.RelocationRequests.Add(relocationRequest);
             HospitalDbContext.SaveChanges();
             return relocationRequest;
-        } 
+        }
     }
 }

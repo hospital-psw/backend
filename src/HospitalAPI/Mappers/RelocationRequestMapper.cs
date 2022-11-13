@@ -18,7 +18,7 @@
             relocationRequest.Quantity = dto.Quantity;
             relocationRequest.StartTime = dto.StartTime;
             relocationRequest.Duration = dto.Duration;
-            
+
             return relocationRequest;
         }
     }

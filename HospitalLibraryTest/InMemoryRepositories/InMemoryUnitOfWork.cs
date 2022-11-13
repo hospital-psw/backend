@@ -1,7 +1,7 @@
 ﻿namespace HospitalLibraryTest.InMemoryRepositories
 {
-    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
