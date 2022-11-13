@@ -1,61 +1,82 @@
 ﻿namespace IntegrationAPI.Controllers
 {
-    using IntegrationLibrary.News;
+    using AutoMapper;
+    using IntegrationAPI.DTO.BloodBank;
+    using IntegrationAPI.DTO.News;
+    using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.News.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
     public class NewsController : ControllerBase
     {
-        private INewsService _newsService;
+        private readonly INewsService _newsService;
+        private readonly IMapper _mapper;
 
-        public NewsController(INewsService newsService)
+        public NewsController(INewsService newsService, IMapper mapper)
         {
             _newsService = newsService;
+            _mapper = mapper;
         }
 
         [HttpGet("all")]
         public IActionResult GetAll()
         {
-            throw new NotImplementedException();
+            return Ok(_mapper.Map<IEnumerable<ManagerNewsDTO>>(_newsService.GetAll()));
         }
 
         [HttpGet("published")]
         public virtual IActionResult GetPublished()
         {
-            throw new NotImplementedException();
+            return Ok(_mapper.Map<IEnumerable<ManagerNewsDTO>>(_newsService.GetPublished()));
         }
 
         [HttpGet("archived")]
         public virtual IActionResult GetArchived()
         {
-            throw new NotImplementedException();
+            return Ok(_mapper.Map<IEnumerable<ManagerNewsDTO>>(_newsService.GetArchived()));
         }
 
         [HttpGet("pending")]
         public virtual IActionResult GetPending()
         {
-            throw new NotImplementedException();
+            return Ok(_mapper.Map<IEnumerable<ManagerNewsDTO>>(_newsService.GetPending()));
         }
 
         [HttpGet("{id}")]
         public virtual IActionResult Get(int id)
         {
-            throw new NotImplementedException();
+            var entity = _newsService.Get(id);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<ManagerNewsDTO>(entity));
         }
 
         [HttpPost("archive/{id}")]
         public virtual IActionResult Archive(int id)
         {
-            throw new NotImplementedException();
+            if (_newsService.Archive(id))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpPost("publish/{id}")]
         public virtual IActionResult Publish(int id)
         {
-            throw new NotImplementedException();
+            if (_newsService.Publish(id))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpPost]

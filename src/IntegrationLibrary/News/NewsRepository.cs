@@ -2,8 +2,9 @@
 {
     using IntegrationLibrary.News.Interfaces;
     using IntegrationLibrary.Settings;
-    using System;
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class NewsRepository : INewsRepository
     {
@@ -14,22 +15,22 @@
         }
         public void Add(News entity)
         {
-            throw new NotImplementedException();
+            _context.Set<News>().Add(entity);
         }
 
         public News Get(int id)
         {
-            throw new NotImplementedException();
+            return _context.Set<News>().Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
         }
 
         public IEnumerable<News> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Set<News>().Where(x => !x.Deleted).ToList();
         }
 
         public void Update(News entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = entity.Id == 0 ? EntityState.Added : EntityState.Modified;
         }
     }
 }
