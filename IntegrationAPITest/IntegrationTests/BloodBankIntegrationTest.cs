@@ -17,8 +17,7 @@
         private static BloodBankController SetupController(IServiceScope serviceScope)
         {
             return new BloodBankController(serviceScope.ServiceProvider.GetRequiredService<IBloodBankService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IMailSender>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]

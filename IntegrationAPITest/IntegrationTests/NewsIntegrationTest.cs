@@ -1,5 +1,6 @@
 ﻿namespace IntegrationAPITest.IntegrationTests
 {
+    using AutoMapper;
     using IntegrationAPI.Controllers;
     using IntegrationAPI.DTO.News;
     using IntegrationAPITest.Setup;
@@ -15,7 +16,7 @@
 
         private static NewsController SetupController(IServiceScope serviceScope)
         {
-            return new NewsController(serviceScope.ServiceProvider.GetRequiredService<INewsService>());
+            return new NewsController(serviceScope.ServiceProvider.GetRequiredService<INewsService>(), serviceScope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]
@@ -63,7 +64,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Get(1)).Value as List<ManagerNewsDTO>;
+            var result = ((OkObjectResult)controller.GetAll()).Value as List<ManagerNewsDTO>;
 
             result.ShouldNotBeNull();
             result.Count.ShouldBe(3);
@@ -75,7 +76,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((NotFoundObjectResult)controller.Get(10));
+            var result = ((NotFoundResult)controller.Get(10));
         }
 
         [Fact]
@@ -120,9 +121,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Publish(1)).Value as ManagerNewsDTO;
-
-            result.ShouldNotBeNull();
+            var result = ((OkResult)controller.Publish(1));
         }
 
         [Fact]
@@ -131,9 +130,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Publish(2)).Value as ManagerNewsDTO;
-
-            result.ShouldNotBeNull();
+            var result = ((OkResult)controller.Publish(2));
         }
 
         [Fact]
@@ -142,7 +139,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((BadRequestObjectResult)controller.Publish(3));
+            var result = ((BadRequestResult)controller.Publish(3));
         }
 
         [Fact]
@@ -151,7 +148,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Publish(3));
+            var result = ((OkResult)controller.Archive(3));
         }
 
 
