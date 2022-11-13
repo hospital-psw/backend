@@ -138,7 +138,7 @@
             try
             {
                 var news = Get(id);
-                if(news == null || news.Status == NewsStatus.PUBLISHED)
+                if (news == null || news.Status == NewsStatus.PUBLISHED)
                 {
                     return false;
                 }
