@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using IdentityModel;
@@ -16,7 +17,7 @@
     {
         private readonly ILogger<Patient> _logger;
 
-        public PatientService(ILogger<Patient> logger)
+        public PatientService(ILogger<Patient> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -25,9 +26,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.PatientRepository.Add(patient);
-                unitOfWork.Save();
+                _unitOfWork.PatientRepository.Add(patient);
+                _unitOfWork.Save();
 
                 return patient;
 
@@ -43,8 +43,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.PatientRepository.Get(patientId);
+                return _unitOfWork.GetRepository<Patient>().Get(patientId);
             }
             catch (Exception e)
             {
@@ -57,8 +56,20 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.PatientRepository.GetAll();
+                return _unitOfWork.PatientRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in PatientService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<Patient> GetNonHospitalized()
+        {
+            try
+            {
+                return _unitOfWork.PatientRepository.GetNonHospitalized();
             }
             catch (Exception e)
             {
@@ -71,9 +82,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.PatientRepository.Update(patient);
-                unitOfWork.Save();
+                _unitOfWork.PatientRepository.Update(patient);
+                _unitOfWork.Save();
 
                 return patient;
             }
@@ -83,5 +93,7 @@
                 return null;
             }
         }
+
+
     }
 }

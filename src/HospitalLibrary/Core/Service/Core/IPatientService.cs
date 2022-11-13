@@ -15,5 +15,6 @@
         Patient Get(int patientId);
         IEnumerable<Patient> GetAll();
         bool Delete(int patientId);
+        IEnumerable<Patient> GetNonHospitalized();
     }
 }

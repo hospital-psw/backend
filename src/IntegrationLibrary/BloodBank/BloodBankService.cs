@@ -2,10 +2,8 @@
 {
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Core;
-    using IntegrationLibrary.Settings;
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
-    using Mailjet.Client.Resources.SMS;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -14,21 +12,22 @@
     public class BloodBankService : IBloodBankService
     {
         private readonly ILogger<BloodBank> _logger;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMailSender _mailer;
         private readonly IBBConnections _connections;
-        public BloodBankService(ILogger<BloodBank> logger, IMailSender mailer, IBBConnections connections)
+        public BloodBankService(ILogger<BloodBank> logger, IUnitOfWork unitOfWork, IMailSender mailer, IBBConnections connections)
         {
             _logger = logger;
             _mailer = mailer;
             _connections = connections;
+            _unitOfWork = unitOfWork;
         }
 
         public BloodBank Get(int id)
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                return unitOfWork.BloodBankRepository.Get(id);
+                return _unitOfWork.BloodBankRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -41,8 +40,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                return unitOfWork.BloodBankRepository.GetAll();
+                return _unitOfWork.BloodBankRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -55,8 +53,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                return unitOfWork.BloodBankRepository.GetByEmail(email);
+                return _unitOfWork.BloodBankRepository.GetByEmail(email);
             }
             catch (Exception e)
             {
@@ -69,9 +66,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                unitOfWork.BloodBankRepository.Add(entity);
-                unitOfWork.Save();
+                _unitOfWork.BloodBankRepository.Add(entity);
+                _unitOfWork.Save();
 
                 return entity;
 
@@ -88,12 +84,10 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                var entity = unitOfWork.BloodBankRepository.Get(id);
-
+                var entity = _unitOfWork.BloodBankRepository.Get(id);
                 entity.Deleted = true;
-                unitOfWork.BloodBankRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.BloodBankRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return true;
             }
@@ -108,9 +102,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                unitOfWork.BloodBankRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.BloodBankRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -133,9 +126,8 @@
                 entity.AdminPassword = password;
                 entity.IsDummyPassword = true;
 
-                using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-                unitOfWork.BloodBankRepository.Add(entity);
-                unitOfWork.Save();
+                _unitOfWork.BloodBankRepository.Add(entity);
+                _unitOfWork.Save();
 
                 string template = MailSender.MakeRegisterTemplate(entity.Email, entity.ApiKey, entity.AdminPassword);
                 _mailer.SendEmail(template, "Successfull Registration", entity.Email);
@@ -151,16 +143,14 @@
 
         public bool CheckBloodType(int id, string type)
         {
-            using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-            BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
+            BloodBank bloodBank = _unitOfWork.BloodBankRepository.Get(id);
 
             return _connections.SendHttpRequestToBank(bloodBank, type);
         }
 
         public bool CheckBloodAmount(int id, string type, double amount)
         {
-            using UnitOfWork unitOfWork = new(new IntegrationDbContext());
-            BloodBank bloodBank = unitOfWork.BloodBankRepository.Get(id);
+            BloodBank bloodBank = _unitOfWork.BloodBankRepository.Get(id);
 
             return SendHttpRequestAmountToBank(bloodBank, type, amount);
         }

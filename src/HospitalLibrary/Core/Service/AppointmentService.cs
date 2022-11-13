@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
@@ -17,7 +18,7 @@
     {
         private readonly ILogger<Appointment> _logger;
 
-        public AppointmentService(ILogger<Appointment> logger) : base()
+        public AppointmentService(ILogger<Appointment> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -26,8 +27,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.AppointmentRepository.Get(id);
+                return _unitOfWork.AppointmentRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -40,9 +40,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.AppointmentRepository.Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.AppointmentRepository.Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -57,9 +56,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                List<RecommendedAppointmentDto> generatedAppointments = GenerateAppointments(dto, unitOfWork);
-                List<Appointment> scheduledAppointments = unitOfWork.AppointmentRepository.GetScheduledAppointments(dto.DoctorId, dto.PatientId).ToList();
+                List<RecommendedAppointmentDto> generatedAppointments = GenerateAppointments(dto);
+                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetScheduledAppointments(dto.DoctorId, dto.PatientId).ToList();
                 return RemoveScheduledAppointments(generatedAppointments, scheduledAppointments);
             }
             catch (Exception e)
@@ -69,14 +67,14 @@
             }
         }
 
-        private List<RecommendedAppointmentDto> GenerateAppointments(RecommendRequestDto dto, UnitOfWork unitOfWork)
+        private List<RecommendedAppointmentDto> GenerateAppointments(RecommendRequestDto dto)
         {
             try
             {
                 List<RecommendedAppointmentDto> generatedAppointments = new List<RecommendedAppointmentDto>();
-                Patient patient = unitOfWork.PatientRepository.Get(dto.PatientId);
-                Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
-                Room room = unitOfWork.RoomRepository.GetById(16);
+                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
+                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                Room room = _unitOfWork.RoomRepository.GetById(16);
                 DateTime shiftIterator = doctor.WorkHours.Start;
                 DateTime startDate = new DateTime(dto.Date.Year, dto.Date.Month, dto.Date.Day, doctor.WorkHours.Start.Hour, doctor.WorkHours.Start.Minute, doctor.WorkHours.Start.Second);
 
@@ -120,14 +118,13 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Patient patient = unitOfWork.PatientRepository.Get(dto.PatientId);
-                Doctor doctor = unitOfWork.DoctorRepository.Get(dto.DoctorId);
-                Room room = unitOfWork.RoomRepository.GetById(16);
+                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
+                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                Room room = _unitOfWork.RoomRepository.GetById(16);
                 Appointment newAppointment = new Appointment(dto.Date, dto.ExamType, null, patient, doctor);
                 newAppointment.Room = room;
-                unitOfWork.AppointmentRepository.Add(newAppointment);
-                unitOfWork.Save();
+                _unitOfWork.AppointmentRepository.Add(newAppointment);
+                _unitOfWork.Save();
                 return newAppointment;
             }
             catch (Exception e)
@@ -141,10 +138,9 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
                 appointment.Deleted = true;
-                unitOfWork.AppointmentRepository.Update(appointment);
-                unitOfWork.Save();
+                _unitOfWork.AppointmentRepository.Update(appointment);
+                _unitOfWork.Save();
             }
             catch (Exception) { }
         }
@@ -153,8 +149,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                List<Appointment> appointments = (List<Appointment>)unitOfWork.AppointmentRepository.GetAppointmentsForDoctor(doctorId);
+                List<Appointment> appointments = (List<Appointment>)_unitOfWork.AppointmentRepository.GetAppointmentsForDoctor(doctorId);
 
                 return appointments;
             }

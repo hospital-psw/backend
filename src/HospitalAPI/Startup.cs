@@ -37,6 +37,8 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IMapService, MapService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
@@ -53,6 +55,10 @@ namespace HospitalAPI
             services.AddScoped<ITherapyService, TherapyService>();
             services.AddScoped<IMedicamentTherapyService, MedicamentTherapyService>();
             services.AddScoped<IBloodUnitTherapyService, BloodUnitTherapyService>();
+            services.AddScoped<IMedicamentService, MedicamentService>();
+            services.AddScoped<IVacationRequestsService, VacationRequestsService>();
+            services.AddScoped<IEquipmentService, EquipmentService>();
+
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
