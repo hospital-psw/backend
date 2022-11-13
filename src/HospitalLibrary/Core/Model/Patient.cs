@@ -18,9 +18,9 @@
             Hospitalized = hospitalized;
         }
 
-        public Patient(string firstName, string lastName, string email, string password, bool guest) : base(firstName, lastName, email, password, Role.PATIENT)
+        public Patient(string firstName, string lastName, string email, string password, bool hospitalized) : base(firstName, lastName, email, password, Role.PATIENT)
         {
-            Guest = guest;
+            Hospitalized = hospitalized;
         }
     }
 }
