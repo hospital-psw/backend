@@ -6,6 +6,7 @@ using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,6 +41,11 @@ namespace HospitalAPI.Controllers
                 return Ok(room);
             }
             return BadRequest("Bad request, please enter valid data.");
+        }
+
+        public IActionResult Search(SearchCriteriaDto searchCriteria)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpGet("available")]
