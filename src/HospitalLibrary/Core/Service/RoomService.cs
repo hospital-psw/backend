@@ -14,7 +14,7 @@ namespace HospitalLibrary.Core.Service
 
         private readonly ILogger<Room> _logger;
 
-        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork) 
         {
             _logger = logger;
         }
