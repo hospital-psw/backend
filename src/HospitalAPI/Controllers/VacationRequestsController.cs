@@ -25,6 +25,7 @@
         [HttpPatch("handle")]
         public IActionResult HandleVacationRequest([FromBody] VacationRequestDto request)
         {
+            Console.WriteLine("udario ", request);
             _vacationRequestsService.HandleVacationRequest(request.Status, request.Id, request.ManagerComment);
             return Ok();
         }

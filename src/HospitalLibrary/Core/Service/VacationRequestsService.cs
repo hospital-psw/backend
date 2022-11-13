@@ -36,10 +36,11 @@
             }
         }
 
-        public void HandleVacationRequest(VacationRequestStatus status, int id) 
+        public void HandleVacationRequest(VacationRequestStatus status, int id, string managerComment) 
         {
             VacationRequest request = _unitOfWork.VacationRequestsRepository.Get(id);
             request.Status = status;
+            request.ManagerComment = managerComment;
             _unitOfWork.VacationRequestsRepository.Update(request);
             _unitOfWork.VacationRequestsRepository.Save();
         }
