@@ -19,7 +19,7 @@
             CreateMap<UserNewsDTO, News>();
             CreateMap<News, ManagerNewsDTO>();
             CreateMap<News, UserNewsDTO>();
-            
+
         }
     }
 }
