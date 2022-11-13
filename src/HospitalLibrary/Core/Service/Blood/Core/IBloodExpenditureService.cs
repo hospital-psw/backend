@@ -19,6 +19,6 @@
 
         public void Update(CreateExpenditureDTO expendituredto);
 
-        public void Delete(int id);
+        public BloodExpenditure Delete(int id);
     }
 }

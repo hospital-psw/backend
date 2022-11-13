@@ -1,8 +1,13 @@
 ﻿namespace HospitalLibrary.Core.Service.Blood
 {
     using HospitalLibrary.Core.DTO.BloodManagment;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Service.Blood.Core;
+    using HospitalLibrary.Settings;
+    using IdentityModel;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -24,27 +29,95 @@
 
         public override IEnumerable<BloodAcquisition> GetAll()
         {
-            return base.GetAll();
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.BloodAcquisitionRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public override BloodAcquisition Get(int id)
         {
-            return base.Get(id);
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                return unitOfWork.BloodAcquisitionRepository.Get(id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public void Create(CreateAcquisitionDTO acquisitionDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                Doctor doctor = unitOfWork.DoctorRepository.Get(acquisitionDTO.DoctorId);
+                DateTime date = acquisitionDTO.Date;
+                BloodType bloodType = acquisitionDTO.BloodType;
+                int amount = acquisitionDTO.Amount;
+                string reason = acquisitionDTO.Reason;
+                BloodRequestStatus status = BloodRequestStatus.PENDING;
+                BloodAcquisition bloodAcquisition = new BloodAcquisition(doctor, bloodType, amount, reason, date, status);
+                unitOfWork.BloodAcquisitionRepository.Add(bloodAcquisition);
+                unitOfWork.Save();
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+            }
         }
 
-        void IBloodAcquisitionService.Delete(int id)
+        public void Delete(BloodAcquisition bloodAcquisition)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                bloodAcquisition.Deleted = true;
+                unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+                unitOfWork.Save();
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
-        void IBloodAcquisitionService.Update(BloodAcquisition bloodAcquisition)
+        public override BloodAcquisition Update(BloodAcquisition bloodAcquisition)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+
+                unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+                unitOfWork.Save();
+                return bloodAcquisition;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                return null;
+
+            }
         }
+
+        public IEnumerable<BloodAcquisition> GetPendingAcquisitions()
+        {
+            using UnitOfWork unitOfWork = new(new HospitalDbContext());
+            return unitOfWork.BloodAcquisitionRepository.GetPendingAcquisitions();
+        }
+
+
+
+
     }
 }
