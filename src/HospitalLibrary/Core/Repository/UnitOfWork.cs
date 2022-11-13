@@ -37,6 +37,7 @@
             MedicamentRepository = new MedicamentRepository(_context);
             VacationRequestsRepository = new VacationRequestsRepository(_context);
             EquipmentRepository = new EquipmentRepository(_context);
+            RelocationRepository = new RelocationRepository(_context);
 
         }
 
@@ -57,7 +58,7 @@
         public IMedicamentRepository MedicamentRepository { get; set; }
         public IVacationRequestsRepository VacationRequestsRepository { get; set; }
         public IEquipmentRepository EquipmentRepository { get; set; }
-
+        public IRelocationRepository RelocationRepository { get; set; }
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

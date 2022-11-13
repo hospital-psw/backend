@@ -5,18 +5,18 @@
 
     public class RelocationRequestDto
     {
-        public RoomDto FromRoom { get; set; }
-        public RoomDto ToRoom { get; set; }
-        public Equipment Equipment { get; set; }
+        public int FromRoomId { get; set; }
+        public int ToRoomId { get; set; }
+        public int EquipmentId { get; set; }
         public int Quantity { get; set; }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }
 
-        public RelocationRequestDto(RoomDto fromRoom, RoomDto toRoom, Equipment equipment, int quantity, DateTime startTime, int duration)
+        public RelocationRequestDto(int fromRoomId, int toRoomId, int equipmentId, int quantity, DateTime startTime, int duration)
         {
-            FromRoom = fromRoom;
-            ToRoom = toRoom;
-            Equipment = equipment;
+            FromRoomId = fromRoomId;
+            ToRoomId = toRoomId;
+            EquipmentId = equipmentId;
             Quantity = quantity;
             StartTime = startTime;
             Duration = duration;

@@ -16,6 +16,18 @@
 
         public RelocationService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
 
+        public RelocationRequest Create(RelocationRequest entity)
+        {
+            try
+            {
+               return _unitOfWork.RelocationRepository.Create(entity);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime from, DateTime to, int duration)
         {
             try

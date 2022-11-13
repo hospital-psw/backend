@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPI.Controllers
 {
     using HospitalAPI.Dto;
+    using HospitalAPI.Mappers;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -10,15 +11,20 @@
     public class RelocationController : ControllerBase
     {
         private IRelocationService _relocationService;
+        private IRoomService _roomService;
+        private IEquipmentService _equipmentService;
 
-        public RelocationController(IRelocationService relocationService)
+        public RelocationController(IRelocationService relocationService, IRoomService roomService, IEquipmentService equipmentService)
         {
             _relocationService = relocationService;
+            _roomService = roomService;
+            _equipmentService = equipmentService;
         }
 
-        public IActionResult Create()
+        [HttpPost("createRelocationRequest")]
+        public IActionResult Create([FromBody] RelocationRequestDto dto)
         {
-            throw new NotImplementedException();
+            return Ok(_relocationService.Create(RelocationRequestMapper.EntityDtoToEntity(dto, _roomService.GetById(dto.FromRoomId), _roomService.GetById(dto.ToRoomId), _equipmentService.Get(dto.EquipmentId))));
         }
 
         [HttpGet("getRecommendedAppointments")]

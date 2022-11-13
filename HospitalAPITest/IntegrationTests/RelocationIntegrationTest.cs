@@ -7,10 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
 
     public class RelocationIntegrationTest : BaseIntegrationTest
     {
@@ -22,16 +19,19 @@
 
         private static RelocationController SetupController(IServiceScope serviceScope)
         {
-            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>());
+            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>());
         }
 
         [Fact]
-        public void Test_Create_Relocation()
+        public void Test_Create_Relocation_Request()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            
-            var result = controller.Create() as StatusCodeResult;
+
+            RelocationRequestDto dto = new RelocationRequestDto(1, 1, 4, 1, new DateTime(2022, 12, 12, 15, 0, 0), 2);
+            var result = (OkObjectResult)controller.Create(dto);
+
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
            
         }
     }

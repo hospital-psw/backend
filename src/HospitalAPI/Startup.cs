@@ -1,5 +1,6 @@
 using HospitalAPI.Configuration;
 using HospitalAPI.EmailServices;
+using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
