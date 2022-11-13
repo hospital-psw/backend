@@ -38,8 +38,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            VacationRequestDto request = new VacationRequestDto(1, null, null, null, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.APPROVED, null, null, null);
-            var result = controller.HandleVacationRequest(HospitalLibrary.Core.Model.Enums.VacationRequestStatus.APPROVED, 1) as StatusCodeResult;
+            var result = controller.HandleVacationRequest(new VacationRequestDto(1, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.APPROVED, null)) as StatusCodeResult;
             //OkObjectResult okObject = result as OkObjectResult;
 
 
@@ -51,7 +50,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = controller.HandleVacationRequest(HospitalLibrary.Core.Model.Enums.VacationRequestStatus.REJECTED, 2) as StatusCodeResult;
+            var result = controller.HandleVacationRequest(new VacationRequestDto(2, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.REJECTED, "ne moze")) as StatusCodeResult;
 
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }

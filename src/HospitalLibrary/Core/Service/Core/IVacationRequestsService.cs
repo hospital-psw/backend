@@ -12,6 +12,6 @@
     {
         IEnumerable<VacationRequest> GetAllPending();
 
-        void HandleVacationRequest(VacationRequestStatus status, int id);
+        void HandleVacationRequest(VacationRequestStatus status, int id, string managerComment);
     }
 }
