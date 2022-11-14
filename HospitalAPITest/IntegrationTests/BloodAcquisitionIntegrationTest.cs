@@ -60,7 +60,7 @@
 
         [Theory]
         [ClassData(typeof(BloodAcquisitionData))]
-        public void Release_patient_from_treatment(CreateAcquisitionDTO dto, IActionResult expectedResult)
+        public void Acquisition_validation_test(CreateAcquisitionDTO dto, IActionResult expectedResult)
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
