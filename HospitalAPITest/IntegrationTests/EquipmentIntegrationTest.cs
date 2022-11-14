@@ -35,7 +35,7 @@
             int roomId = 2;
 
             var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<EquipmentDto>;
-            
+
             Assert.NotNull(result);
             Assert.NotEmpty(result);
         }
