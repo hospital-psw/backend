@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPI.Mappers.Therapy
 {
     using HospitalAPI.Dto.Therapy;
+    using HospitalAPI.Mappers.BloodUnit;
     using HospitalLibrary.Core.Model.Therapy;
 
     public class BloodUnitTherapyMapper
@@ -15,7 +16,7 @@
             dto.About = bloodUnitTherapy.About;
             dto.Type = bloodUnitTherapy.Type;
 
-            //dto.BloodUnitDto = bloodUnitTherapy.BloodUnit;
+            dto.BloodUnit = BloodUnitMapper.EntityToEntityDto(bloodUnitTherapy.BloodUnit);
             dto.Amount = bloodUnitTherapy.AmountOfBloodUnit;
 
             return dto;

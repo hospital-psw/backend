@@ -2,7 +2,9 @@
 {
     using HospitalAPI.Dto.Therapy;
     using HospitalAPI.Mappers.Therapy;
+    using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Therapy;
+    using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -14,10 +16,12 @@
     {
 
         private readonly IBloodUnitTherapyService _bloodUnitTherapyService;
+        private readonly IBloodUnitService _bloodUnitService;
 
-        public BloodUnitTherapyController(IBloodUnitTherapyService bloodUnitTherapyService)
+        public BloodUnitTherapyController(IBloodUnitTherapyService bloodUnitTherapyService, IBloodUnitService bloodUnitService)
         {
             _bloodUnitTherapyService = bloodUnitTherapyService;
+            _bloodUnitService = bloodUnitService;
         }
 
         [HttpPost]
@@ -33,7 +37,14 @@
             }
             //fali poziv servisa da se dobavi BloodUnit
 
-            BloodUnitTherapyDto therapyDto = BloodUnitTherapyMapper.EntityToEntityDto(_bloodUnitTherapyService.Add(NewBloodUnitTherapyMapper.EntityDtoToEntity(dto), dto.MedicalTreatmentId));
+            BloodUnit bloodUnit = _bloodUnitService.Get(dto.BloodUnitId);
+
+            if(bloodUnit == null)
+            {
+                return NotFound();
+            }
+
+            BloodUnitTherapyDto therapyDto = BloodUnitTherapyMapper.EntityToEntityDto(_bloodUnitTherapyService.Add(NewBloodUnitTherapyMapper.EntityDtoToEntity(dto, bloodUnit), dto.MedicalTreatmentId));
             return Ok(therapyDto);
         }
 

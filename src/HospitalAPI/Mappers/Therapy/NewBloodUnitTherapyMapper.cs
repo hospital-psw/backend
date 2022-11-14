@@ -1,17 +1,18 @@
 ﻿namespace HospitalAPI.Mappers.Therapy
 {
     using HospitalAPI.Dto.Therapy;
+    using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.Therapy;
     using System;
 
     public class NewBloodUnitTherapyMapper
     {
-        public static BloodUnitTherapy EntityDtoToEntity(NewBloodUnitTherapyDto dto)
+        public static BloodUnitTherapy EntityDtoToEntity(NewBloodUnitTherapyDto dto, BloodUnit bloodUnit)
         {
             return new BloodUnitTherapy
             {
-                //BloodUnit = dto.BloodUnit
+                BloodUnit = bloodUnit,
                 About = dto.About,
                 AmountOfBloodUnit = dto.Amount,
                 Type = TherapyType.BLOOD_UNIT,
