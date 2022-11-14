@@ -2,9 +2,11 @@
 {
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Settings;
     using IdentityModel;
@@ -21,7 +23,7 @@
 
         private readonly ILogger<BloodAcquisition> _logger;
 
-        public BloodAcquisitionService(ILogger<BloodAcquisition> logger) : base()
+        public BloodAcquisitionService(ILogger<BloodAcquisition> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -31,8 +33,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.BloodAcquisitionRepository.GetAll();
+                
+                return _unitOfWork.BloodAcquisitionRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -45,8 +47,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.BloodAcquisitionRepository.Get(id);
+                
+                return _unitOfWork.BloodAcquisitionRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -59,16 +61,16 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Doctor doctor = unitOfWork.DoctorRepository.Get(acquisitionDTO.DoctorId);
+                
+                Doctor doctor = _unitOfWork.DoctorRepository.Get(acquisitionDTO.DoctorId);
                 DateTime date = acquisitionDTO.Date;
                 BloodType bloodType = acquisitionDTO.BloodType;
                 int amount = acquisitionDTO.Amount;
                 string reason = acquisitionDTO.Reason;
                 BloodRequestStatus status = BloodRequestStatus.PENDING;
                 BloodAcquisition bloodAcquisition = new BloodAcquisition(doctor, bloodType, amount, reason, date, status);
-                unitOfWork.BloodAcquisitionRepository.Add(bloodAcquisition);
-                unitOfWork.Save();
+                _unitOfWork.BloodAcquisitionRepository.Add(bloodAcquisition);
+                _unitOfWork.Save();
 
             }
             catch (Exception e)
@@ -81,10 +83,10 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
+                
                 bloodAcquisition.Deleted = true;
-                unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
-                unitOfWork.Save();
+                _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+                _unitOfWork.Save();
             }
             catch (Exception)
             {
@@ -96,10 +98,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-
-                unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
-                unitOfWork.Save();
+                _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+                _unitOfWork.Save();
                 return bloodAcquisition;
             }
             catch (Exception e)
@@ -112,10 +112,30 @@
 
         public IEnumerable<BloodAcquisition> GetPendingAcquisitions()
         {
-            using UnitOfWork unitOfWork = new(new HospitalDbContext());
-            return unitOfWork.BloodAcquisitionRepository.GetPendingAcquisitions();
+            
+            return _unitOfWork.BloodAcquisitionRepository.GetPendingAcquisitions();
         }
 
+
+        public BloodAcquisition DeclineAcquisition(int id)
+        {
+            BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
+            bloodAcquisition.Status = BloodRequestStatus.DECLINED;
+            _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+            return bloodAcquisition;
+        }
+
+
+        public BloodAcquisition AcceptAcquisition(int id)
+        {
+            BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
+            bloodAcquisition.Status = BloodRequestStatus.ACCEPTED;
+            BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(bloodAcquisition.BloodType);
+
+            bloodUnit.Amount += bloodAcquisition.Amount;
+            _unitOfWork.BloodUnitRepository.Update(bloodUnit);
+            return bloodAcquisition;
+        }
 
 
 

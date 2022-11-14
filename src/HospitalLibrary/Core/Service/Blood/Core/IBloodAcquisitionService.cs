@@ -21,5 +21,11 @@
 
         void Delete(BloodAcquisition bloodAcquisition);
 
+        IEnumerable<BloodAcquisition> GetPendingAcquisitions();
+
+        BloodAcquisition DeclineAcquisition(int id);
+
+        BloodAcquisition AcceptAcquisition(int id)
+
     }
 }

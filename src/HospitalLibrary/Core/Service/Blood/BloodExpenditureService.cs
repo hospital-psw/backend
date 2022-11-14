@@ -5,6 +5,7 @@
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -20,7 +21,7 @@
 
         private readonly ILogger<BloodExpenditure> _logger;
 
-        public BloodExpenditureService(ILogger<BloodExpenditure> logger) : base()
+        public BloodExpenditureService(ILogger<BloodExpenditure> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
         }
@@ -30,8 +31,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.BloodExpenditureRepository.Get(id);
+                
+                return _unitOfWork.BloodExpenditureRepository.Get(id);
             }
             catch (Exception e)
             {
@@ -44,8 +45,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.BloodExpenditureRepository.GetAll();
+                
+                return  _unitOfWork.BloodExpenditureRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -59,15 +60,15 @@
         {
             try 
             { 
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                Doctor doctor = unitOfWork.DoctorRepository.Get(expendituredto.DoctorId);
+                
+                Doctor doctor = _unitOfWork.DoctorRepository.Get(expendituredto.DoctorId);
                 BloodType bloodType = expendituredto.BloodType;
                 int amount = expendituredto.Amount;
                 string reason = expendituredto.Reason;
                 DateTime date = expendituredto.Date;
                 BloodExpenditure bloodExpenditure = new BloodExpenditure(doctor,bloodType,amount,reason,date);
-                unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
-                unitOfWork.Save();
+                _unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
+                _unitOfWork.Save();
 
             }
             catch (Exception e)
@@ -81,8 +82,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                 unitOfWork.BloodExpenditureRepository.Update(bloodExpenditure);
+                
+                _unitOfWork.BloodExpenditureRepository.Update(bloodExpenditure);
                 return bloodExpenditure;
             }
             catch (Exception e)

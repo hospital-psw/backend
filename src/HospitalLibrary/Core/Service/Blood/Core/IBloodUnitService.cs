@@ -3,6 +3,7 @@
  
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -19,5 +20,7 @@
 
         BloodUnit Get(int id);
         BloodUnit Update(BloodUnit bloodUnit);
+
+        int GetAmountForSpecificBloodType(BloodType bloodType);
     }
 }
