@@ -24,7 +24,7 @@ namespace HospitalLibrary.Core.Service
             return _unitOfWork.RoomRepository.GetAll();
         }
 
-        public List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end)
+        public List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end, int equipmentType, int quantity)
         {
             List<Room> allRooms = (List<Room>)_unitOfWork.RoomRepository.GetAll();
             List<Room> suitableRooms = new List<Room>();
