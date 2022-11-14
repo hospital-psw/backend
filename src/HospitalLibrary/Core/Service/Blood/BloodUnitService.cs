@@ -23,6 +23,18 @@
             _logger = logger;
         }
 
+        public override BloodUnit Get(int id)
+        {
+            try
+            {
+                return _unitOfWork.BloodUnitRepository.Get(id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodUnitService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
 
         public int GetAmountForSpecificBloodType(BloodType bloodType)
         {
