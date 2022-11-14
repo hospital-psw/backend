@@ -17,6 +17,7 @@ namespace HospitalAPI.Controllers
     public class RoomsController : BaseController<Room>
     {
         private readonly IRoomService _roomService;
+        private readonly IEquipmentService _equipmentService;
 
         public RoomsController(IRoomService roomService)
         {
@@ -50,9 +51,8 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest("Bad request, please enter valid data.");
             }
-            List<Room> searchedRooms = _roomService.Search(dto.RoomNumber, dto.FloorNumber, dto.BuildingId, dto.RoomPurpose, dto.WorkingHoursStart, dto.WorkingHoursEnd, dto.EquipmentType, dto.Quantity);
+            List<Room> searchedRooms = _equipmentService.SearchRooms(_roomService.Search(dto.RoomNumber, dto.FloorNumber, dto.BuildingId, dto.RoomPurpose, dto.WorkingHoursStart, dto.WorkingHoursEnd, dto.EquipmentType, dto.Quantity), dto.EquipmentType, dto.Quantity); ;
             List<RoomDto> searchedRoomsDto = new List<RoomDto>();
-
             if (searchedRooms == null)
             {
                 return NotFound();

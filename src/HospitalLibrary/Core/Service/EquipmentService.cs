@@ -40,5 +40,9 @@
             }
         }
 
+        public List<Room> SearchRooms(List<Room> rooms, int equipmentType, int quantity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

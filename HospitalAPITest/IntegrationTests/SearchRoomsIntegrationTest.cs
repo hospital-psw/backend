@@ -28,7 +28,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            var searchCriteria = new SearchCriteriaDto(3, 0, "003", "ordinacija", new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0));
+            var searchCriteria = new SearchCriteriaDto(3, 0, "003", "ordinacija", new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0), -1, 0);
 
             var result = ((OkObjectResult)controller.Search(searchCriteria)).Value as List<RoomDto>;
 
@@ -41,7 +41,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            var searchCriteria = new SearchCriteriaDto(3, 1, "101", "operaciona sala", new DateTime(2022, 11, 10, 12, 0, 0), new DateTime(2022, 11, 10, 12, 12, 0));
+            var searchCriteria = new SearchCriteriaDto(3, 1, "101", "operaciona sala", new DateTime(2022, 11, 10, 12, 0, 0), new DateTime(2022, 11, 10, 12, 12, 0), -1, 0);
 
             var result = ((OkObjectResult)controller.Search(searchCriteria)).Value as List<RoomDto>;
 
