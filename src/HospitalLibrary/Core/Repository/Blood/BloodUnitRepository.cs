@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
@@ -17,6 +18,15 @@
         {
         }
 
+        public int GetAmountForSpecificBloodType(BloodType bloodType)
+        {
+            BloodUnit bloodUnit = HospitalDbContext.BloodUnits.FirstOrDefault(u => u.BloodType == bloodType);
+            return bloodUnit.Amount;
+        }
 
+        public BloodUnit GetByBloodType(BloodType bloodType)
+        {
+            return HospitalDbContext.BloodUnits.FirstOrDefault(u => u.BloodType.Equals(bloodType));
+        }
     }
 }
