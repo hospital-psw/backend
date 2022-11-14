@@ -11,7 +11,7 @@
     using System.Threading.Tasks;
 
     public class BloodAcquisitionRepository : BaseRepository<BloodAcquisition>, IBloodAcquisitionRepository
-    {  
+    {
         public BloodAcquisitionRepository(HospitalDbContext context) : base(context)
         {
         }

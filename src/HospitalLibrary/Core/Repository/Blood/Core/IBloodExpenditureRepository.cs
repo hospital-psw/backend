@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IBloodExpenditureRepository:IBaseRepository<BloodExpenditure>
+    public interface IBloodExpenditureRepository : IBaseRepository<BloodExpenditure>
     {
 
 
