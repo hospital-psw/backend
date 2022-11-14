@@ -19,7 +19,7 @@
         public override BloodUnitTherapy Get(int id)
         {
             return HospitalDbContext.BloodUnitTherapies.Include(x => x.BloodUnit)
-                                                       .FirstOrDefault(x => x.Id == id && !x.Deleted);       
+                                                       .FirstOrDefault(x => x.Id == id && !x.Deleted);
         }
 
         public override IEnumerable<BloodUnitTherapy> GetAll()

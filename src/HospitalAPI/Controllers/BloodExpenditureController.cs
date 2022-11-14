@@ -13,13 +13,13 @@
     [Route("api/[controller]")]
     public class BloodExpenditureController : BaseController<BloodExpenditure>
     {
-        
-        
+
+
         private IBloodExpenditureService bloodExpenditureService;
 
         public BloodExpenditureController(IBloodExpenditureService _bloodExpenditureService)
         {
-           
+
             bloodExpenditureService = _bloodExpenditureService;
         }
 
@@ -42,6 +42,6 @@
             return Ok();
         }
 
-        
-    }   
+
+    }
 }
