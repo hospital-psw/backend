@@ -256,7 +256,7 @@
             });
 
             context.BloodUnits.Add(new BloodUnit
-            { 
+            {
                 BloodType = BloodType.A_PLUS,
                 Amount = 23
             });

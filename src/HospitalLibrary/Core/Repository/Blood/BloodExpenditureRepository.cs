@@ -28,7 +28,7 @@
         {
 
             return HospitalDbContext.BloodExpenditures.Include(x => x.Doctor);
-                                                       
+
 
         }
 

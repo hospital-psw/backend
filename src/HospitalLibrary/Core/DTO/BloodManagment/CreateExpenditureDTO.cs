@@ -17,7 +17,7 @@
 
         CreateExpenditureDTO() { }
 
-        CreateExpenditureDTO(int doctorId, BloodType bloodType,int amount, string reason, DateTime date)
+        CreateExpenditureDTO(int doctorId, BloodType bloodType, int amount, string reason, DateTime date)
         {
             DoctorId = doctorId;
             BloodType = bloodType;
