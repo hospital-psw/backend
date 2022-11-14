@@ -39,7 +39,7 @@
 
             BloodUnit bloodUnit = _bloodUnitService.Get(dto.BloodUnitId);
 
-            if(bloodUnit == null)
+            if (bloodUnit == null)
             {
                 return NotFound();
             }

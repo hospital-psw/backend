@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IBloodAcquisitionRepository:IBaseRepository<BloodAcquisition>
+    public interface IBloodAcquisitionRepository : IBaseRepository<BloodAcquisition>
     {
         IEnumerable<BloodAcquisition> GetPendingAcquisitions();
 

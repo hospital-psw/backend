@@ -61,8 +61,8 @@ namespace HospitalAPI
             services.AddScoped<IVacationRequestsService, VacationRequestsService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
             services.AddScoped<IBloodUnitService, BloodUnitService>();
-            services.AddScoped<IBloodAcquisitionService,BloodAcquisitionService>();
-            services.AddScoped<IBloodExpenditureService,BloodExpenditureService>();
+            services.AddScoped<IBloodAcquisitionService, BloodAcquisitionService>();
+            services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();
 
 
 
