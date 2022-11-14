@@ -1,4 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Blood;
+using HospitalLibrary.Core.Model.Blood.BloodManagment;
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
@@ -33,6 +35,10 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnitTherapy> BloodUnitTherapies { get; set; }
         public DbSet<Medicament> Medicaments { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<BloodUnit> BloodUnits { get; set; }
+        public DbSet<BloodAcquisition> BloodAcquisitions { get; set; }
+        public DbSet<BloodExpenditure> BloodExpenditures { get; set; }
+
 
         public DbSet<RelocationRequest> RelocationRequests { get; set; }
         public DbSet<VacationRequest> VacationRequests { get; set; }

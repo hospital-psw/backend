@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221113131133_CreatedBloodTables")]
+    partial class CreatedBloodTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -717,14 +719,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("AmountOfBloodUnit")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BloodUnitId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("MedicalTreatmentId")
                         .HasColumnType("int")
                         .HasColumnName("BloodUnitTherapy_MedicalTreatmentId");
-
-                    b.HasIndex("BloodUnitId");
 
                     b.HasIndex("MedicalTreatmentId");
 
@@ -916,15 +913,9 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.BloodUnitTherapy", b =>
                 {
-                    b.HasOne("HospitalLibrary.Core.Model.Blood.BloodUnit", "BloodUnit")
-                        .WithMany()
-                        .HasForeignKey("BloodUnitId");
-
                     b.HasOne("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", null)
                         .WithMany("BloodUnitTherapies")
                         .HasForeignKey("MedicalTreatmentId");
-
-                    b.Navigation("BloodUnit");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.MedicamentTherapy", b =>
