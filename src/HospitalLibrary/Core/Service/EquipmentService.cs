@@ -48,9 +48,13 @@
             List<Room> searchedRooms = new List<Room>();
             foreach(Room room in rooms)
             {
+                if(equipmentType == -1)
+                {
+                    searchedRooms.Add(room);
+                }
                 foreach(Equipment eq in all)
                 {
-                    if(equipmentType != -1 && eq.EquipmentType==(EquipmentType)equipmentType && eq.Quantity >= quantity)
+                    if(eq.Room.Id == room.Id && eq.EquipmentType==(EquipmentType)equipmentType && eq.Quantity >= quantity)
                     {
                         searchedRooms.Add(room);
                     }
