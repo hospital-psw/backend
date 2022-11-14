@@ -17,7 +17,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BloodAcquisitionIntegrationTest:BaseIntegrationTest
+    public class BloodAcquisitionIntegrationTest : BaseIntegrationTest
     {
 
         public BloodAcquisitionIntegrationTest(TestDatabaseFactory factory) : base(factory)
@@ -29,7 +29,7 @@
             return new BloodAcquisitionController(
                 serviceScope.ServiceProvider.GetRequiredService<IBloodAcquisitionService>(),
                 serviceScope.ServiceProvider.GetRequiredService<IDoctorService>()
-            ); 
+            );
         }
 
         [Fact]
@@ -54,8 +54,8 @@
             Assert.Equal(5, result.Amount);
             Assert.Equal("Bol u uvetu", result.Reason);
             Assert.Equal(BloodType.A_PLUS, result.BloodType);
-            
-            
+
+
         }
 
         [Theory]
@@ -74,7 +74,7 @@
         {
             public BloodAcquisitionData()
             {
-                Add(new CreateAcquisitionDTO(1, DateTime.Now, BloodType.A_MINUS, 6, "Bol u peti",BloodRequestStatus.PENDING), new OkObjectResult(1));
+                Add(new CreateAcquisitionDTO(1, DateTime.Now, BloodType.A_MINUS, 6, "Bol u peti", BloodRequestStatus.PENDING), new OkObjectResult(1));
                 Add(new CreateAcquisitionDTO(2, DateTime.Now, BloodType.O_PLUS, 4, "Bol u peti", BloodRequestStatus.PENDING), new BadRequestObjectResult("Doctor not found"));
                 Add(null, new BadRequestObjectResult("Incorrect data, please enter valid data"));
                 Add(new CreateAcquisitionDTO(1, DateTime.Now, BloodType.O_MINUS, -9, "Bol u glavenom predelu", BloodRequestStatus.PENDING), new BadRequestObjectResult("Incorrect data, please enter valid data"));
