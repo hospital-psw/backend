@@ -25,7 +25,7 @@
 
         BloodAcquisition DeclineAcquisition(int id);
 
-        BloodAcquisition AcceptAcquisition(int id)
+        BloodAcquisition AcceptAcquisition(int id);
 
     }
 }
