@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core;
+using System;
 
 namespace IntegrationLibrary.BloodBank
 {
@@ -12,5 +13,8 @@ namespace IntegrationLibrary.BloodBank
         public string GetBloodTypeAndAmountAvailability { get; set; }
         public string AdminPassword { get; set; }
         public bool IsDummyPassword { get; set; }
+        public DateTime ReportTo { get; set; }
+        public DateTime ReportFrom { get; set; }
+        public int Frequently { get; set; }
     }
 }

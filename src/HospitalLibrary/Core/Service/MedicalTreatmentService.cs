@@ -103,5 +103,47 @@
                 _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
             }
         }
+
+        public MedicalTreatment ReleasePatient(MedicalTreatment medicalTreatment, string description)
+        {
+            try
+            {
+                SetTherapiesFinished(medicalTreatment);
+                ReleasePatientFromRoom(medicalTreatment);
+                SetTreatmentFinished(medicalTreatment, description);
+                _unitOfWork.Save();
+                return medicalTreatment;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        private void SetTherapiesFinished(MedicalTreatment treatment)
+        {
+            treatment.BloodUnitTherapies.ForEach(SetFinishTime);
+            treatment.MedicamentTherapies.ForEach(SetFinishTime);
+        }
+
+        private void SetFinishTime(Therapy therapy)
+        {
+            therapy.End = therapy.End > DateTime.Now ? DateTime.Now : therapy.End;
+        }
+
+        private void SetTreatmentFinished(MedicalTreatment treatment, string description)
+        {
+            treatment.Report = description;
+            treatment.Active = false;
+            treatment.End = DateTime.Now;
+            _unitOfWork.MedicalTreatmentRepository.Update(treatment);
+        }
+
+        private void ReleasePatientFromRoom(MedicalTreatment treatment)
+        {
+            treatment.Room.Patients.Remove(treatment.Patient);
+            _unitOfWork.RoomRepository.Update(treatment.Room);
+        }
     }
 }

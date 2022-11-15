@@ -19,7 +19,7 @@
         }
         public IEnumerable<Equipment> GetEquipments()
         {
-            return _context.Equipments.Include(x => x.Room).ToList();
+            return _context.Equipments.Include(x => x.Room).ThenInclude(x => x.Floor).ThenInclude(x => x.Building).ToList();
         }
     }
 }

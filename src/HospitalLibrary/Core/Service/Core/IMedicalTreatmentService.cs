@@ -20,6 +20,6 @@
         MedicalTreatment Add(NewMedicalTreatmentDto dto);
 
         void Delete(MedicalTreatment medicalTreatment);
-
+        MedicalTreatment ReleasePatient(MedicalTreatment medicalTreatment, string description);
     }
 }

@@ -2,6 +2,8 @@
 {
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
@@ -87,6 +89,20 @@
                 Hospitalized = true
             };
 
+            Patient pat2 = new Patient
+            {
+                FirstName = "Djura",
+                LastName = "Djuric",
+                Email = "djura@com",
+                Password = "djurica",
+                Role = Role.PATIENT,
+                Hospitalized = true,
+            };
+
+            List<Patient> patients = new List<Patient>();
+            patients.Add(pat);
+            patients.Add(pat2);
+
             Doctor doc = new Doctor()
             {
                 FirstName = "Djankarlo",
@@ -121,21 +137,14 @@
                     Start = new DateTime(),
                     End = new DateTime(1, 1, 1, 23, 0, 0)
                 },
+                Patients = patients
 
             };
 
 
             context.Patients.Add(pat);
 
-            context.Patients.Add(new Patient
-            {
-                FirstName = "Djura",
-                LastName = "Djuric",
-                Email = "djura@com",
-                Password = "djurica",
-                Role = Role.PATIENT,
-                Hospitalized = true,
-            }); ;
+            context.Patients.Add(pat2);
 
             context.Appointments.Add(new Appointment
             {
@@ -170,11 +179,24 @@
                 MedicamentTherapies = new List<MedicamentTherapy>(),
                 BloodUnitTherapies = new List<BloodUnitTherapy>(),
                 Active = true,
-                Report = "izvestaj",
+                Report = null,
                 End = default(DateTime),
-                Start = DateTime.Now,
+                Start = new DateTime(),
             }); ;
 
+            context.MedicalTreatments.Add(new MedicalTreatment
+            {
+                Room = room,
+                Doctor = doc,
+                Patient = pat2,
+                MedicamentTherapies = new List<MedicamentTherapy>(),
+                BloodUnitTherapies = new List<BloodUnitTherapy>(),
+                Active = false,
+                Report = "izvestaj brateeeee",
+                End = default(DateTime),
+                Start = new DateTime(),
+            });
+            
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
@@ -231,6 +253,12 @@
                 EquipmentType = EquipmentType.BANDAGE,
                 Quantity = 5,
                 Room = equipmentRoom
+            });
+
+            context.BloodUnits.Add(new BloodUnit
+            {
+                BloodType = BloodType.A_PLUS,
+                Amount = 23
             });
 
             context.SaveChanges();
