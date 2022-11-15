@@ -76,7 +76,7 @@
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
-                MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "");
+                MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "", dto.AdmittanceReason);
 
                 _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
                 _unitOfWork.Save();
