@@ -6,9 +6,11 @@
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.News;
     using IntegrationLibrary.News.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Shouldly;
+    using System.Net;
 
     public class NewsIntegrationTest : BaseIntegrationTest
     {
@@ -76,7 +78,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((NotFoundResult)controller.Get(10));
+            var result = ((StatusCodeResult)controller.Get(10));
+
+            result.StatusCode.ShouldBe(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -121,7 +125,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkResult)controller.Publish(1));
+            var result = ((StatusCodeResult)controller.Publish(1));
+
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
 
         [Fact]
@@ -130,7 +136,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkResult)controller.Publish(2));
+            var result = ((StatusCodeResult)controller.Publish(2));
+
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
 
         [Fact]
@@ -139,7 +147,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((BadRequestResult)controller.Publish(3));
+            var result = ((StatusCodeResult)controller.Publish(3));
+
+            result.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -148,9 +158,10 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkResult)controller.Archive(3));
-        }
+            var result = ((StatusCodeResult)controller.Archive(3));
 
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
+        }
 
     }
 }
