@@ -20,7 +20,7 @@
         {
             try
             {
-               return _unitOfWork.RelocationRepository.Create(entity);
+                return _unitOfWork.RelocationRepository.Create(entity);
             }
             catch (Exception e)
             {
@@ -49,7 +49,7 @@
                     {
                         startTime = newStartTime;
                     }
-                    
+
                 }
 
                 return dateTimes;
@@ -116,6 +116,6 @@
         }
 
 
-     
+
     }
 }

@@ -9,7 +9,7 @@
         public int Quantity { get; set; }
         public RoomDto Room { get; set; }
 
-        public EquipmentDto() {}
+        public EquipmentDto() { }
 
         public EquipmentDto(int id, EquipmentType equipmentType, int quantity)
         {

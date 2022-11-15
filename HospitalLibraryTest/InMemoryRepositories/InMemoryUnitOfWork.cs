@@ -1,14 +1,14 @@
 ﻿namespace HospitalLibraryTest.InMemoryRepositories
 {
-    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Blood.Core;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using HospitalLibrary.Core.Repository.Blood.Core;
 
     public class InMemoryUnitOfWork : IUnitOfWork
     {

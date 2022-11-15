@@ -23,7 +23,7 @@
             _context.RelocationRequests.Add(relocationRequest);
             HospitalDbContext.SaveChanges();
             return relocationRequest;
-        } 
+        }
 
         public List<RelocationRequest> GetScheduledRelocationsForRoom(int roomId)
         {
