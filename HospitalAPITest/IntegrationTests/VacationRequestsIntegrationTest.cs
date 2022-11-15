@@ -81,5 +81,25 @@
 
             Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
         }
+        [Fact]
+        public void Doctor_has_appointments_in_requested_daterange()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            NewVacationRequestDto dto = new NewVacationRequestDto()
+            {
+                DoctorId = 3,
+                From = new DateTime(2022, 11, 10),
+                To = new DateTime(2022, 11, 20),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = false,
+            };
+
+            var result = controller.Create(dto) as StatusCodeResult;
+
+            Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
+        }
     }
 }
