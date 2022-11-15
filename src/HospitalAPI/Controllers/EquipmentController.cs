@@ -22,12 +22,14 @@
         [HttpGet("{roomId}")]
         public IActionResult GetForRoom(int roomId)
         {
+            List<EquipmentDto> equipmentDto = new List<EquipmentDto>();
             List<Equipment> equipment = _equipmentService.GetForRoom(roomId);
             if (equipment == null)
             {
                 return NotFound();
             }
-            return Ok(equipment);
+            equipment.ForEach(e => equipmentDto.Add(EquipmentMapper.EntityToEntityDto(e)));
+            return Ok(equipmentDto);
         }
     }
 }
