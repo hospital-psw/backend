@@ -196,7 +196,7 @@
                 End = default(DateTime),
                 Start = new DateTime(),
             });
-            
+
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
