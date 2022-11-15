@@ -1,6 +1,8 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Repository.Blood;
+    using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using System;
@@ -39,6 +41,10 @@
             EquipmentRepository = new EquipmentRepository(_context);
             RelocationRepository = new RelocationRepository(_context);
 
+            BloodUnitRepository = new BloodUnitRepository(_context);
+            BloodExpenditureRepository = new BloodExpenditureRepository(_context);
+            BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
+
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -59,6 +65,10 @@
         public IVacationRequestsRepository VacationRequestsRepository { get; set; }
         public IEquipmentRepository EquipmentRepository { get; set; }
         public IRelocationRepository RelocationRepository { get; set; }
+        public IBloodUnitRepository BloodUnitRepository { get; set; }
+        public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
+        public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

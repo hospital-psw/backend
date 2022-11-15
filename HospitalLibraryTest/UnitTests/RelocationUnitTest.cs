@@ -1,4 +1,4 @@
-﻿namespace HospitalLibraryTest
+﻿namespace HospitalLibraryTest.UnitTests
 {
     using HospitalLibrary.Core.Service;
     using HospitalLibraryTest.InMemoryRepositories;

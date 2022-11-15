@@ -8,6 +8,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using HospitalLibrary.Core.Repository.Blood.Core;
 
     public class InMemoryUnitOfWork : IUnitOfWork
     {
@@ -42,6 +43,12 @@
         public IEquipmentRepository EquipmentRepository => throw new NotImplementedException();
 
         public IRelocationRepository RelocationRepository { get; set; }
+
+        public IBloodUnitRepository BloodUnitRepository => throw new NotImplementedException();
+
+        public IBloodExpenditureRepository BloodExpenditureRepository => throw new NotImplementedException();
+
+        public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

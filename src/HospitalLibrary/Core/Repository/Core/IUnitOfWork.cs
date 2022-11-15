@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Repository.Core
 {
+    using HospitalLibrary.Core.Repository.Blood.Core;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -32,6 +33,9 @@
         public IVacationRequestsRepository VacationRequestsRepository { get; }
         public IEquipmentRepository EquipmentRepository { get; }
         public IRelocationRepository RelocationRepository { get; }
+        public IBloodUnitRepository BloodUnitRepository { get; }
+        public IBloodExpenditureRepository BloodExpenditureRepository { get; }
+        public IBloodAcquisitionRepository BloodAcquisitionRepository { get; }
 
     }
 }
