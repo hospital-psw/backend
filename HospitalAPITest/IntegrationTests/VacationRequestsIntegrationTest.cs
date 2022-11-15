@@ -25,7 +25,8 @@
 
         private static VacationRequestsController SetupController(IServiceScope serviceScope)
         {
-            return new VacationRequestsController(serviceScope.ServiceProvider.GetRequiredService<IVacationRequestsService>());
+            return new VacationRequestsController(serviceScope.ServiceProvider.GetRequiredService<IVacationRequestsService>(), 
+                serviceScope.ServiceProvider.GetRequiredService<IAppointmentService>());
         }
 
         [Fact]
@@ -59,6 +60,8 @@
             var result = ((OkObjectResult)controller.Create(dto)).Value as VacationRequestDto;
 
             Assert.NotNull(result);
+            Assert.Equal("Djankarlo", result.Doctor.FirstName);
+            Assert.Equal("Rapacoti", result.Doctor.LastName);
         }
 
         [Fact]

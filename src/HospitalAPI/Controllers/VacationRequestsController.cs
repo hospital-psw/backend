@@ -19,9 +19,10 @@
         private IVacationRequestsService _vacationRequestsService;
         private IAppointmentService _appointmentService;
 
-        public VacationRequestsController(IVacationRequestsService vacationRequestsService)
+        public VacationRequestsController(IVacationRequestsService vacationRequestsService, IAppointmentService appointmentService)
         {
             _vacationRequestsService = vacationRequestsService;
+            _appointmentService = appointmentService;
         }
 
         [HttpGet("getAllPending")]
@@ -47,12 +48,12 @@
                 return BadRequest();
             }
 
-            //List<Appointment> appointments = (List<Appointment>)_appointmentService.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To);
+            List<Appointment> appointments = (List<Appointment>)_appointmentService.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To);
 
-            //if(!appointments.IsNullOrEmpty())
-            //{
-            //    return BadRequest();
-            //}
+            if(!appointments.IsNullOrEmpty())
+            {
+                return BadRequest();
+            }
 
             return Ok(VacationRequestsMapper.EntityToEntityDto(_vacationRequestsService.Create(dto)));
         }
