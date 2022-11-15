@@ -174,7 +174,7 @@
                 End = default(DateTime),
                 Start = DateTime.Now,
             }); ;
-            
+
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,

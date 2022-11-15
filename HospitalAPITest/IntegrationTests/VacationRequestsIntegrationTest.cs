@@ -25,7 +25,7 @@
 
         private static VacationRequestsController SetupController(IServiceScope serviceScope)
         {
-            return new VacationRequestsController(serviceScope.ServiceProvider.GetRequiredService<IVacationRequestsService>(), 
+            return new VacationRequestsController(serviceScope.ServiceProvider.GetRequiredService<IVacationRequestsService>(),
                 serviceScope.ServiceProvider.GetRequiredService<IAppointmentService>());
         }
 
@@ -42,7 +42,7 @@
         }
 
         [Fact]
-        public void Create_vacation_request() 
+        public void Create_vacation_request()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -73,7 +73,7 @@
             NewVacationRequestDto dto = new NewVacationRequestDto()
             {
                 DoctorId = 3,
-                From = new DateTime(2022, 12, 20) ,
+                From = new DateTime(2022, 12, 20),
                 To = new DateTime(2022, 11, 19),
                 Status = VacationRequestStatus.WAITING,
                 Comment = "",

@@ -43,14 +43,14 @@
         {
             int wrongDates = DateTime.Compare(dto.From, dto.To);
 
-            if(wrongDates > 0)
+            if (wrongDates > 0)
             {
                 return BadRequest();
             }
 
             List<Appointment> appointments = (List<Appointment>)_appointmentService.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To);
 
-            if(!appointments.IsNullOrEmpty())
+            if (!appointments.IsNullOrEmpty())
             {
                 return BadRequest();
             }

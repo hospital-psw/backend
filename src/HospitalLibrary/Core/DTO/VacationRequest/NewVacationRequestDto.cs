@@ -13,7 +13,7 @@
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public VacationRequestStatus Status { get; set; }
-        public string Comment  { get; set; }
+        public string Comment { get; set; }
         public bool Urgent { get; set; }
 
     }
