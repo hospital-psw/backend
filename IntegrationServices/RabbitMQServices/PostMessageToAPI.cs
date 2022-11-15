@@ -11,7 +11,7 @@
     {
         private static readonly HttpClient client = new HttpClient();
 
-        public static async void PostMessage(Dictionary<String, object> message)
+        public static async void PostMessage(Dictionary<String, String> message)
         {
             var body = new FormUrlEncodedContent(message);
             var response = await client.PostAsync("http://localhost:45488/news", body);
