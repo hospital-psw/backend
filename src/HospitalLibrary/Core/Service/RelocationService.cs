@@ -28,13 +28,22 @@
             }
         }
 
-        public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime startTime, DateTime to, int duration)
+        public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime startDate, DateTime toDate, int duration)
         {
             try
             {
+                DateTime startTime = new DateTime(startDate.Year, startDate.Month, startDate.Day, 7, 0, 0);
+                DateTime toTime = new DateTime(toDate.Year, toDate.Month, toDate.Day, 22, 0, 0);
+                DateTime buildingEndTime = new DateTime(2022, 1, 1, 22, 0, 0);
+
                 List<DateTime> dateTimes = new List<DateTime>();
-                while (startTime.AddHours(duration) <= to)
+                while (startTime.AddHours(duration) <= toTime)
                 {
+                    if (startTime.AddHours(duration).TimeOfDay > buildingEndTime.TimeOfDay)
+                    {
+                        if (startTime.Day < toTime.Day) startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day + 1, 7, 0, 0);
+                        else break;
+                    }
                     DateTime endTime = startTime.AddHours(duration);
                     DateTime newStartTime = CheckRoom(roomId1, startTime, endTime);
                     endTime = newStartTime.AddHours(duration);
