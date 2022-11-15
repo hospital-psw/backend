@@ -184,6 +184,7 @@
                 Start = new DateTime(),
             }); ;
 
+<<<<<<< HEAD
             context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
@@ -197,6 +198,8 @@
                 Start = new DateTime(),
             });
 
+=======
+>>>>>>> 3923603 (Done dotnet format)
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
