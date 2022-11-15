@@ -191,9 +191,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MQSubscriberService.cs" />
+    <Compile Include="RabbitMQServices\MessageDecoder.cs" />
+    <Compile Include="RabbitMQServices\MQSubscriberService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RabbitMQServices\PostMessageToAPI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
