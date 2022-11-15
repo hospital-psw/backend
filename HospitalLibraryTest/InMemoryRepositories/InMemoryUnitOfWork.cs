@@ -41,7 +41,7 @@
 
         public IEquipmentRepository EquipmentRepository => throw new NotImplementedException();
 
-        public IRelocationRepository RelocationRepository => throw new NotImplementedException();
+        public IRelocationRepository RelocationRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

@@ -10,5 +10,6 @@
     public interface IRelocationRepository : IBaseRepository<RelocationRequest>
     {
         RelocationRequest Create(RelocationRequest request);
+        List<RelocationRequest> GetScheduledRelocationsForRoom(int roomId);
     }
 }

@@ -28,35 +28,28 @@
             }
         }
 
-        public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime from, DateTime to, int duration)
+        public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime startTime, DateTime to, int duration)
         {
             try
             {
                 List<DateTime> dateTimes = new List<DateTime>();
-                DateTime startTime = from;
-
                 while (startTime.AddHours(duration) <= to)
                 {
                     DateTime endTime = startTime.AddHours(duration);
-                    DateTime? newStartTime = IsRoomAvailable(roomId1, startTime, endTime);
-                    if(newStartTime != null)
+                    DateTime newStartTime = CheckRoom(roomId1, startTime, endTime);
+                    endTime = newStartTime.AddHours(duration);
+                    newStartTime = CheckRoom(roomId2, newStartTime, endTime);
+                    endTime = startTime.AddHours(duration);
+                    if (newStartTime == startTime)
                     {
-                        startTime = (DateTime)newStartTime;
-                        endTime = startTime.AddHours(duration);
+                        dateTimes.Add(startTime);
+                        startTime = endTime;
                     }
                     else
                     {
-                        newStartTime = IsRoomAvailable(roomId2, startTime, endTime);
-                        if (newStartTime != null)
-                        {
-                            startTime = (DateTime)newStartTime;
-                        }
-                        else
-                        {
-                            dateTimes.Add(startTime);
-                            startTime = endTime;
-                        }
+                        startTime = newStartTime;
                     }
+                    
                 }
 
                 return dateTimes;
@@ -67,23 +60,61 @@
             }
         }
 
+        public DateTime CheckRoom(int roomId, DateTime startTime, DateTime endTime)
+        {
+            DateTime? newStartTime = IsRoomAvailable(roomId, startTime, endTime);
+            if (newStartTime != null) startTime = (DateTime)newStartTime;
+            return startTime;
+        }
+
         public DateTime? IsRoomAvailable(int roomId, DateTime startTime, DateTime endTime)
         {
             try
             {
-                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetScheduledAppointmentsForRoom(roomId).ToList();
-                foreach (Appointment appointment in scheduledAppointments)
-                {
-                    if (appointment.Date >= startTime && appointment.Date.AddMinutes(30) <= endTime) return appointment.Date.AddMinutes(30);
-                }
-
-                return null;
+                if (CheckAppointments(roomId, startTime, endTime) != null) return CheckAppointments(roomId, startTime, endTime);
+                else if (CheckRelocationRequests(roomId, startTime, endTime) != null) return CheckRelocationRequests(roomId, startTime, endTime);
+                else return null;
             }
             catch (Exception e)
             {
                 return null;
             }
         }
+
+        private DateTime? CheckAppointments(int roomId, DateTime startTime, DateTime endTime)
+        {
+            foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetScheduledAppointmentsForRoom(roomId).ToList())
+            {
+                if (StartsBeforeEndsDuringScheduled(startTime, endTime, appointment.Date) || StartsAndEndsDuringScheduled(startTime, endTime, appointment.Date, appointment.Date.AddMinutes(30)) || StartsDuringAndEndsAfterScheduled(startTime, endTime, appointment.Date.AddMinutes(30))) return appointment.Date.AddMinutes(30);
+            }
+            return null;
+        }
+
+
+        private DateTime? CheckRelocationRequests(int roomId, DateTime startTime, DateTime endTime)
+        {
+            foreach (RelocationRequest request in _unitOfWork.RelocationRepository.GetScheduledRelocationsForRoom(roomId).ToList())
+            {
+                if (StartsBeforeEndsDuringScheduled(startTime, endTime, request.StartTime) || StartsAndEndsDuringScheduled(startTime, endTime, request.StartTime, request.StartTime.AddHours(request.Duration)) || StartsDuringAndEndsAfterScheduled(startTime, endTime, request.StartTime.AddHours(request.Duration))) return request.StartTime.AddHours(request.Duration);
+            }
+            return null;
+        }
+
+        private bool StartsBeforeEndsDuringScheduled(DateTime startTime, DateTime endTime, DateTime scheduledStartTime)
+        {
+            return startTime <= scheduledStartTime && endTime > scheduledStartTime;
+        }
+
+        private bool StartsAndEndsDuringScheduled(DateTime startTime, DateTime endTime, DateTime scheduledStartTime, DateTime scheduledEndTime)
+        {
+            return startTime >= scheduledStartTime && endTime <= scheduledEndTime;
+        }
+
+        private bool StartsDuringAndEndsAfterScheduled(DateTime startTime, DateTime endTime, DateTime scheduledEndTime)
+        {
+            return startTime < scheduledEndTime && endTime >= scheduledEndTime;
+        }
+
 
      
     }
