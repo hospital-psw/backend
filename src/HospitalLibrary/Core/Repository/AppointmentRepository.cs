@@ -69,7 +69,7 @@
         public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to)
         {
             return HospitalDbContext.Appointments.Include(x => x.Doctor)
-                                                 .Where(x => !x.Deleted && x.Doctor.Id == doctorId && (from >= x.Date.Date && to <= x.Date.Date))
+                                                 .Where(x => !x.Deleted && x.Doctor.Id == doctorId && (from <= x.Date && to >= x.Date))
                                                  .ToList();
             //(from >= x.Date && to <= x.Date)
             //DateTime.Compare(x.Date, from) > 0 && DateTime.Compare(x.Date, to) < 0
