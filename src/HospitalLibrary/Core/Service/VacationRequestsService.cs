@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
@@ -34,5 +35,14 @@
                 return null;
             }
         }
+
+        public void HandleVacationRequest(VacationRequestStatus status, int id) 
+        {
+            VacationRequest request = _unitOfWork.VacationRequestsRepository.Get(id);
+            request.Status = status;
+            _unitOfWork.VacationRequestsRepository.Update(request);
+            _unitOfWork.VacationRequestsRepository.Save();
+        }
     }
+
 }

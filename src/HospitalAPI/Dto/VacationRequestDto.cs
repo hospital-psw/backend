@@ -17,5 +17,16 @@
 
         public VacationRequestDto() { }
 
+        public VacationRequestDto(int id, DoctorDto doctor, DateTime from, DateTime to, VacationRequestStatus status, string comment, bool urgent, string managerComment)
+        {
+            Id = id;
+            Doctor = doctor;
+            From = from;
+            To = to;
+            Status = status;
+            Comment = comment;
+            Urgent = urgent;
+            ManagerComment = managerComment;
+        }
     }
 }
