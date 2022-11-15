@@ -39,7 +39,7 @@ namespace HospitalLibrary.Core.Service
                         {
                             if (room.Purpose.Contains(purpose))
                             {
-                                if(this.CheckWorkingHours(room, start, end))
+                                if (this.CheckWorkingHours(room, start, end))
                                 {
                                     if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
                                     {
@@ -139,10 +139,10 @@ namespace HospitalLibrary.Core.Service
 
         private bool CheckWorkingHours(Room room, DateTime start, DateTime end)
         {
-            if(room.WorkingHours == null || TimeSpan.Compare(start.TimeOfDay, end.TimeOfDay) == 0)
+            if (room.WorkingHours == null || TimeSpan.Compare(start.TimeOfDay, end.TimeOfDay) == 0)
             {
                 return false;
-            } 
+            }
             return true;
         }
     }
