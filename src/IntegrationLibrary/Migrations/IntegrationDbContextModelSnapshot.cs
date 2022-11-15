@@ -51,6 +51,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Frequently")
+                        .HasColumnType("int");
+
                     b.Property<string>("GetBloodTypeAndAmountAvailability")
                         .HasColumnType("nvarchar(max)");
 
@@ -63,29 +66,15 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("ReportFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReportTo")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("BloodBanks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            IsDummyPassword = false,
-                            Name = "Blood bank 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deleted = false,
-                            IsDummyPassword = false,
-                            Name = "Crveni krst "
-                        });
                 });
 #pragma warning restore 612, 618
         }

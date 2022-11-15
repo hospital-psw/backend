@@ -2,6 +2,8 @@
 {
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
@@ -284,6 +286,12 @@
                 Number = "003",
                 Purpose = "ordinacija",
                 WorkingHours = workingHours
+            });
+
+            context.BloodUnits.Add(new BloodUnit
+            {
+                BloodType = BloodType.A_PLUS,
+                Amount = 23
             });
 
             context.SaveChanges();

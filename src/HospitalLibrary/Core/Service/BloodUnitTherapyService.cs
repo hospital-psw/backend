@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
@@ -27,7 +28,9 @@
         {
             try
             {
-                //DODATI Umanjenje kolicine bloodunit-a kada ludi iki napravi
+                BloodUnit bloodUnit = entity.BloodUnit;
+                bloodUnit.Amount = bloodUnit.Amount - entity.AmountOfBloodUnit;
+                _unitOfWork.BloodUnitRepository.Update(bloodUnit);
 
                 MedicalTreatment medicalTreatment = _unitOfWork.MedicalTreatmentRepository.Get(medicalTreatmentId);
                 medicalTreatment.BloodUnitTherapies.Add(entity);
