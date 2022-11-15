@@ -39,7 +39,14 @@ namespace HospitalLibrary.Core.Service
                         {
                             if (room.Purpose.Contains(purpose))
                             {
-                                if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
+                                if(this.CheckWorkingHours(room, start, end))
+                                {
+                                    if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
+                                    {
+                                        suitableRooms.Add(room);
+                                    }
+                                }
+                                else
                                 {
                                     suitableRooms.Add(room);
                                 }
@@ -128,6 +135,15 @@ namespace HospitalLibrary.Core.Service
                 _logger.LogError($"Error in RoomService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        private bool CheckWorkingHours(Room room, DateTime start, DateTime end)
+        {
+            if(room.WorkingHours == null || TimeSpan.Compare(start.TimeOfDay, end.TimeOfDay) == 0)
+            {
+                return false;
+            } 
+            return true;
         }
     }
 }
