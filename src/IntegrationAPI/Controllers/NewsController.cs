@@ -1,5 +1,6 @@
 ﻿namespace IntegrationAPI.Controllers
 {
+    using IntegrationLibrary.News;
     using IntegrationLibrary.News.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -53,6 +54,12 @@
 
         [HttpPost("publish/{id}")]
         public virtual IActionResult Publish(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public virtual IActionResult AddNews(News news)
         {
             throw new NotImplementedException();
         }
