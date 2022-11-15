@@ -9,6 +9,7 @@
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
     using IntegrationServices.RabbitMQServices;
+    using System.Collections.Generic;
 
     internal class MQSubscriberService: BackgroundService
     {
@@ -26,20 +27,27 @@
                                     autoDelete: false,
                                     arguments: null);
 
-            // message catching
-            var consumer = new EventingBasicConsumer(channel);  // consumer just consumes basic events
-            consumer.Received += (model, ea) => // init what to do when event hits
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += (model, ea) =>
             {
-                var body = ea.Body.ToArray();   // body is byte[]
-                var message = Encoding.UTF8.GetString(body);    // unpack body into string
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
 
                 var messageParts = MessageDecoder.MessageParts(message);
-                MessageDecoder.MessageImage(messageParts);
+
+                var reqBody = new Dictionary<String, String>
+                {
+                    {"Title", MessageDecoder.MessageTitle(messageParts) },
+                    {"Text", MessageDecoder.MessageText(messageParts) },
+                    {"Image", MessageDecoder.MessageImageExtension(messageParts) + ";" + MessageDecoder.MessageImageData(messageParts) },
+                    {"Status", "2" }
+                };
+                PostMessageToAPI.PostMessage(reqBody);
             };
 
-            channel.BasicConsume(queue: "hello",    // consume from where
-                                 autoAck: true,     // autoacknowledge
-                                 consumer: consumer);   // who is consuming
+            channel.BasicConsume(queue: "hello",
+                                 autoAck: true,
+                                 consumer: consumer);
 
 
             return base.StartAsync(cancellationToken);
