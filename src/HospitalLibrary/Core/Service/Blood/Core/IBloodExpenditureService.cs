@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public  interface IBloodExpenditureService
+    public interface IBloodExpenditureService
     {
 
         public BloodExpenditure Get(int id);

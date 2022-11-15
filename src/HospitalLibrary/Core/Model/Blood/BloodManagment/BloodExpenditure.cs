@@ -7,12 +7,12 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BloodExpenditure:Entity
+    public class BloodExpenditure : Entity
     {
         public Doctor Doctor { get; set; }
         public BloodType BloodType { get; set; }
-        public int Amount  { get; set; }
-        public string Reason  { get; set; }
+        public int Amount { get; set; }
+        public string Reason { get; set; }
         public DateTime Date { get; set; }
 
 

@@ -1,6 +1,9 @@
 ﻿namespace HospitalLibrary.Core.Repository.Blood
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Settings;
     using Microsoft.EntityFrameworkCore;
@@ -11,7 +14,7 @@
     using System.Threading.Tasks;
 
     public class BloodAcquisitionRepository : BaseRepository<BloodAcquisition>, IBloodAcquisitionRepository
-    {  
+    {
         public BloodAcquisitionRepository(HospitalDbContext context) : base(context)
         {
         }
@@ -34,5 +37,19 @@
                                                        .Where(x => x.Status == Model.Blood.Enums.BloodRequestStatus.PENDING);
         }
 
+        public IEnumerable<BloodAcquisition> GetAllAccepted()
+        {
+            return GetAll().Where(x => x.Status == BloodRequestStatus.ACCEPTED).ToList();
+        }
+
+        public IEnumerable<BloodAcquisition> GetAllDeclined()
+        {
+            return GetAll().Where(x => x.Status == BloodRequestStatus.DECLINED).ToList();
+        }
+
+        public IEnumerable<BloodAcquisition> GetAllPending()
+        {
+            return GetAll().Where(x => x.Status == BloodRequestStatus.PENDING).ToList();
+        }
     }
 }
