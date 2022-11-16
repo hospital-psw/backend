@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using IntegrationAPI.Controllers;
-    using IntegrationAPI.DTO;
+    using IntegrationAPI.DTO.BloodBank;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Util.Interfaces;
@@ -17,8 +17,7 @@
         private static BloodBankController SetupController(IServiceScope serviceScope)
         {
             return new BloodBankController(serviceScope.ServiceProvider.GetRequiredService<IBloodBankService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IMailSender>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]
