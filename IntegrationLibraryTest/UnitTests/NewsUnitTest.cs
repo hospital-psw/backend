@@ -9,6 +9,8 @@
     using Shouldly;
     using Moq;
     using IntegrationLibrary.News.Interfaces;
+    using Microsoft.Extensions.Logging;
+    using IntegrationLibrary.Core;
 
     public class NewsUnitTest
     {
@@ -22,7 +24,9 @@
                 Image = "png;IMAGE_DATA",
                 Status = NewsStatus.PENDING
             };
-            var service = new NewsService();
+            var logger = new Mock<ILogger<News>>();
+            var unitOfWork = new Mock<IUnitOfWork>();
+            var service = new NewsService(logger.Object, unitOfWork.Object);
 
             var result = service.GetImageExtension(news);
 
@@ -39,7 +43,9 @@
                 Image = "png;IMAGE_DATA",
                 Status = NewsStatus.PENDING
             };
-            var service = new NewsService();
+            var logger = new Mock<ILogger<News>>();
+            var unitOfWork = new Mock<IUnitOfWork>();
+            var service = new NewsService(logger.Object, unitOfWork.Object);
 
             var result = service.GetImageData(news);
 
