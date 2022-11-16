@@ -2,7 +2,6 @@
 {
     using IntegrationLibrary.News.Interfaces;
     using System.Collections.Generic;
-    using System;
 
     public class NewsService : INewsService
     {
@@ -31,19 +30,19 @@
             throw new System.NotImplementedException();
         }
 
-        string INewsService.GetImageExtension(News entity)
+        public string GetImageExtension(News entity)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
-        string INewsService.GetImageData(News entity)
+        public string GetImageData(News entity)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
-        void INewsService.SaveImageToDisk(News entity)
+        public void SaveImageToDisk(News entity)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
     }
 }
