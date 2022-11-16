@@ -61,7 +61,13 @@
         [HttpPost]
         public virtual IActionResult Create(News news)
         {
-            throw new NotImplementedException();
+            var entity = _newsService.Create(news);
+
+            if (entity is null)
+            {
+                return NotFound();
+            }
+            return Ok(entity);
         }
     }
 }
