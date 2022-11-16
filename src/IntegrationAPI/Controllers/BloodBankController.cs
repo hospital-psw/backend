@@ -92,6 +92,27 @@
             }
         }
 
+        [HttpPatch("saveConfiguration")]
+        public IActionResult SaveConfiguration(SaveConfigurationDTO configDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (configDTO == null)
+                {
+                    return BadRequest();
+                }
+                var retVal = _bloodBankService.SaveConfiguration(configDTO.Id,configDTO.Frequently,configDTO.ReportFrom,configDTO.ReportTo);
+                return Ok(_mapper.Map<GetBloodBankDTO>(retVal));
+            }catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("ChangePassword")]
         public IActionResult ChangePassword(ChangePasswordDTO credentials)
         {

@@ -168,5 +168,14 @@
             }
         }
 
+        public BloodBank SaveConfiguration(int id,int frequntly,DateTime reportFrom,DateTime reportTo)
+        {
+            var bloodBank = _unitOfWork.BloodBankRepository.Get(id);
+            bloodBank.Frequently = frequntly;
+            bloodBank.ReportFrom = reportFrom;
+            bloodBank.ReportTo = reportTo;
+            _unitOfWork.Save();
+            return bloodBank;
+        }
     }
 }
