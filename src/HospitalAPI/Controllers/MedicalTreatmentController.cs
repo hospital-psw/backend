@@ -102,7 +102,7 @@
             List<MedicalTreatment> activeTreatments = _medicalTreatmentService.GetActive().ToList();
             List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
 
-            if(activeTreatments.IsNullOrEmpty())
+            if (activeTreatments.IsNullOrEmpty())
             {
                 return NotFound();
             }
