@@ -145,5 +145,31 @@
             treatment.Room.Patients.Remove(treatment.Patient);
             _unitOfWork.RoomRepository.Update(treatment.Room);
         }
+
+        public IEnumerable<MedicalTreatment> GetActive()
+        {
+            try
+            {
+                return _unitOfWork.MedicalTreatmentRepository.GetActive();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<MedicalTreatment> GetInactive()
+        {
+            try
+            {
+                return _unitOfWork.MedicalTreatmentRepository.GetInactive();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
     }
 }

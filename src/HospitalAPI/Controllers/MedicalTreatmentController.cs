@@ -5,6 +5,7 @@
     using HospitalLibrary.Core.DTO.MedicalTreatment;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -93,6 +94,36 @@
             MedicalTreatment finishedTreatment = _medicalTreatmentService.ReleasePatient(treatment, dto.Description);
 
             return Ok(MedicalTreatmentMapper.EntityToEntityDto(finishedTreatment));
+        }
+
+        [HttpGet("active")]
+        public IActionResult GetActive()
+        {
+            List<MedicalTreatment> activeTreatments = _medicalTreatmentService.GetActive().ToList();
+            List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
+
+            if(activeTreatments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            activeTreatments.ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
+            return Ok(dtoList);
+        }
+
+        [HttpGet("inactive")]
+        public IActionResult GetInactive()
+        {
+            List<MedicalTreatment> inactiveTreatments = _medicalTreatmentService.GetInactive().ToList();
+            List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
+
+            if (inactiveTreatments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            inactiveTreatments.ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
+            return Ok(dtoList);
         }
     }
 
