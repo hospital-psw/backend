@@ -9,5 +9,7 @@
 
     public interface IMedicalTreatmentRepository : IBaseRepository<MedicalTreatment>
     {
+        IEnumerable<MedicalTreatment> GetActive();
+        IEnumerable<MedicalTreatment> GetInactive();
     }
 }

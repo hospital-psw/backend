@@ -324,6 +324,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<string>("AdmittanceReason")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -717,9 +720,14 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("AmountOfBloodUnit")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BloodUnitId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MedicalTreatmentId")
                         .HasColumnType("int")
                         .HasColumnName("BloodUnitTherapy_MedicalTreatmentId");
+
+                    b.HasIndex("BloodUnitId");
 
                     b.HasIndex("MedicalTreatmentId");
 
@@ -911,9 +919,15 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.BloodUnitTherapy", b =>
                 {
+                    b.HasOne("HospitalLibrary.Core.Model.Blood.BloodUnit", "BloodUnit")
+                        .WithMany()
+                        .HasForeignKey("BloodUnitId");
+
                     b.HasOne("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", null)
                         .WithMany("BloodUnitTherapies")
                         .HasForeignKey("MedicalTreatmentId");
+
+                    b.Navigation("BloodUnit");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.MedicamentTherapy", b =>

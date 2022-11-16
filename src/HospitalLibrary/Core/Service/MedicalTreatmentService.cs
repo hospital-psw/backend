@@ -76,7 +76,7 @@
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
-                MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "");
+                MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "", dto.AdmittanceReason);
 
                 _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
                 _unitOfWork.Save();
@@ -144,6 +144,32 @@
         {
             treatment.Room.Patients.Remove(treatment.Patient);
             _unitOfWork.RoomRepository.Update(treatment.Room);
+        }
+
+        public IEnumerable<MedicalTreatment> GetActive()
+        {
+            try
+            {
+                return _unitOfWork.MedicalTreatmentRepository.GetActive();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<MedicalTreatment> GetInactive()
+        {
+            try
+            {
+                return _unitOfWork.MedicalTreatmentRepository.GetInactive();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
     }
 }

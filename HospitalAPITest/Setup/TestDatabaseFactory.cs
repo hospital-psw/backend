@@ -3,6 +3,7 @@
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.MedicalTreatment;
@@ -283,6 +284,11 @@
             context.BloodAcquisitions.Add(aquisition2);
             context.BloodAcquisitions.Add(aquisition3);
 
+            context.BloodUnits.Add(new BloodUnit
+            {
+                BloodType = BloodType.A_PLUS,
+                Amount = 23
+            });
 
             context.SaveChanges();
         }
