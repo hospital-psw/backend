@@ -14,7 +14,7 @@
         public static async void PostMessage(string json)
         {
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:45488/news", content);
+            var response = await client.PostAsync("http://localhost:45488/api/News", content);
 
             Console.WriteLine(response.Content.ReadAsStringAsync());
         }
