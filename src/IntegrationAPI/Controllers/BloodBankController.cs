@@ -101,9 +101,10 @@
                 {
                     return BadRequest();
                 }
-                var retVal = _bloodBankService.SaveConfiguration(configDTO.Id,configDTO.Frequently,configDTO.ReportFrom,configDTO.ReportTo);
+                var retVal = _bloodBankService.SaveConfiguration(configDTO.Id, configDTO.Frequently, configDTO.ReportFrom, configDTO.ReportTo);
                 return Ok(_mapper.Map<GetBloodBankDTO>(retVal));
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return BadRequest();
             }
