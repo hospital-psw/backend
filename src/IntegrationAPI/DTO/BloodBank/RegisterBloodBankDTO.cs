@@ -1,4 +1,4 @@
-﻿namespace IntegrationAPI.DTO
+﻿namespace IntegrationAPI.DTO.BloodBank
 {
     public class RegisterBloodBankDTO
     {
