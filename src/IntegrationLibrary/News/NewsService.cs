@@ -210,9 +210,9 @@
             {
                 string extension = GetImageExtension(entity);
                 string imageData = GetImageData(entity);
-                
+
                 string path = Directory.GetParent(Environment.CurrentDirectory).FullName;
-                path = Path.Combine(new string[] { path, "MQImages", $"RecievedImage{entity.Id}.{extension}"});
+                path = Path.Combine(new string[] { path, "MQImages", $"RecievedImage{entity.Id}.{extension}" });
 
                 byte[] imageBytes = Convert.FromBase64String(imageData);
 

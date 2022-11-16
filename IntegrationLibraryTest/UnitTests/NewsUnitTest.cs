@@ -1,16 +1,16 @@
 ﻿namespace IntegrationLibraryTest.UnitTests
 {
+    using IntegrationLibrary.Core;
+    using IntegrationLibrary.News;
+    using IntegrationLibrary.News.Interfaces;
+    using Microsoft.Extensions.Logging;
+    using Moq;
+    using Shouldly;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using IntegrationLibrary.News;
-    using Shouldly;
-    using Moq;
-    using IntegrationLibrary.News.Interfaces;
-    using Microsoft.Extensions.Logging;
-    using IntegrationLibrary.Core;
 
     public class NewsUnitTest
     {
