@@ -122,19 +122,30 @@
             BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
             bloodAcquisition.Status = BloodRequestStatus.DECLINED;
             _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+            _unitOfWork.Save();
             return bloodAcquisition;
         }
 
 
         public BloodAcquisition AcceptAcquisition(int id)
         {
-            BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
-            bloodAcquisition.Status = BloodRequestStatus.ACCEPTED;
-            BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(bloodAcquisition.BloodType);
+            try
+            {
+                BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
+                bloodAcquisition.Status = BloodRequestStatus.ACCEPTED;
+                BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(bloodAcquisition.BloodType);
 
-            bloodUnit.Amount += bloodAcquisition.Amount;
-            _unitOfWork.BloodUnitRepository.Update(bloodUnit);
-            return bloodAcquisition;
+                bloodUnit.Amount += bloodAcquisition.Amount;
+                _unitOfWork.BloodUnitRepository.Update(bloodUnit);
+                _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+                _unitOfWork.Save();
+                return bloodAcquisition;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodAcquisitionService in AcceptedAcquisition {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public IEnumerable<BloodAcquisition> GetAllAcceptedAcquisition()

@@ -77,27 +77,13 @@
         [HttpGet("get/all/accepted")]
         public IActionResult GetAllAccepted()
         {
-            List<CreateAcquisitionDTO> createAcquisitionDTOs = new List<CreateAcquisitionDTO>();
-            List<BloodAcquisition> bloodAcquisitions = (List<BloodAcquisition>)bloodAcquisitionService.GetAllAcceptedAcquisition();
-            if (bloodAcquisitions == null)
-            {
-                return NotFound();
-            }
-            bloodAcquisitions.ForEach(f => createAcquisitionDTOs.Add(BloodAcquisitionMapper.EntityToEntityDto(f)));
-            return Ok(createAcquisitionDTOs);
+            return Ok(bloodAcquisitionService.GetAllAcceptedAcquisition());
         }
 
         [HttpGet("get/all/declined")]
         public IActionResult GetAllDeclined()
         {
-            List<CreateAcquisitionDTO> createAcquisitionDTOs = new List<CreateAcquisitionDTO>();
-            List<BloodAcquisition> bloodAcquisitions = (List<BloodAcquisition>)bloodAcquisitionService.GetAllDeclinedAcquisition();
-            if (bloodAcquisitions == null)
-            {
-                return NotFound();
-            }
-            bloodAcquisitions.ForEach(f => createAcquisitionDTOs.Add(BloodAcquisitionMapper.EntityToEntityDto(f)));
-            return Ok(createAcquisitionDTOs);
+            return Ok(bloodAcquisitionService.GetAllDeclinedAcquisition());
         }
 
         [HttpPut("/accept/{id}")]
