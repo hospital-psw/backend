@@ -28,7 +28,7 @@
         }
 
         [Fact]
-        public void Test()
+        public void Get_single_appointment()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
