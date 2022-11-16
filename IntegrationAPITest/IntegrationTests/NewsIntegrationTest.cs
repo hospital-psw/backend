@@ -1,13 +1,16 @@
 ﻿namespace IntegrationAPITest.IntegrationTests
 {
+    using AutoMapper;
     using IntegrationAPI.Controllers;
     using IntegrationAPI.DTO.News;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.News;
     using IntegrationLibrary.News.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Shouldly;
+    using System.Net;
 
     public class NewsIntegrationTest : BaseIntegrationTest
     {
@@ -15,7 +18,7 @@
 
         private static NewsController SetupController(IServiceScope serviceScope)
         {
-            return new NewsController(serviceScope.ServiceProvider.GetRequiredService<INewsService>());
+            return new NewsController(serviceScope.ServiceProvider.GetRequiredService<INewsService>(), serviceScope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]
@@ -63,7 +66,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Get(1)).Value as List<ManagerNewsDTO>;
+            var result = ((OkObjectResult)controller.GetAll()).Value as List<ManagerNewsDTO>;
 
             result.ShouldNotBeNull();
             result.Count.ShouldBe(3);
@@ -75,7 +78,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((NotFoundObjectResult)controller.Get(10));
+            var result = ((StatusCodeResult)controller.Get(10));
+
+            result.StatusCode.ShouldBe(StatusCodes.Status404NotFound);
         }
 
         [Fact]
@@ -120,9 +125,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Publish(1)).Value as ManagerNewsDTO;
+            var result = ((StatusCodeResult)controller.Publish(1));
 
-            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
 
         [Fact]
@@ -131,9 +136,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Publish(2)).Value as ManagerNewsDTO;
+            var result = ((StatusCodeResult)controller.Publish(2));
 
-            result.ShouldNotBeNull();
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
 
         [Fact]
@@ -142,7 +147,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((BadRequestObjectResult)controller.Publish(3));
+            var result = ((StatusCodeResult)controller.Publish(3));
+
+            result.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
 
         [Fact]
@@ -151,7 +158,9 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Publish(3));
+            var result = ((StatusCodeResult)controller.Archive(3));
+
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
 
         [Fact]
@@ -166,11 +175,10 @@
                 Image = "Test image",
                 Status = NewsStatus.PENDING
             };
-
-            var result = controller.Create(news);
+            var result = (StatusCodeResult)controller.Create(news);
 
             // not completely sure that this would work
-            result.ShouldBeOfType<OkObjectResult>();
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
     }
 }

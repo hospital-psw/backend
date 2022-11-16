@@ -4,8 +4,6 @@
     using IntegrationAPI.DTO.BloodBank;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
-    using IntegrationLibrary.Exceptions;
-    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -16,13 +14,11 @@
     {
         private readonly IBloodBankService _bloodBankService;
         private readonly IMapper _mapper;
-        private readonly IMailSender _mailer;
 
-        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, IMailSender mailer)
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
         {
             _bloodBankService = bloodBankService;
             _mapper = mapper;
-            _mailer = mailer;
         }
 
         [HttpGet("all")]

@@ -28,7 +28,7 @@
         {
             try
             {
-                Medicament medicament = _unitOfWork.MedicamentRepository.Get(entity.Medicament.Id);
+                Medicament medicament = entity.Medicament;
                 medicament.Quantity = medicament.Quantity - entity.AmountOfMedicament;
                 _unitOfWork.MedicamentRepository.Update(medicament);
 

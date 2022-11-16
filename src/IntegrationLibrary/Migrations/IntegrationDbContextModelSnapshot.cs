@@ -51,6 +51,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Frequently")
+                        .HasColumnType("int");
+
                     b.Property<string>("GetBloodTypeAndAmountAvailability")
                         .HasColumnType("nvarchar(max)");
 
@@ -62,6 +65,12 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReportFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReportTo")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

@@ -1,5 +1,7 @@
 ﻿namespace IntegrationAPI.DTO.BloodBank
 {
+    using System;
+
     public class GetBloodBankDTO
     {
         public int Id { get; set; }
@@ -11,5 +13,8 @@
         public string GetBloodTypeAndAmountAvailability { get; set; }
         public string AdminPassword { get; set; }
         public string IsDummyPassword { get; set; }
+        public DateTime ReportTo { get; set; }
+        public DateTime ReportFrom { get; set; }
+        public int Frequently { get; set; }
     }
 }

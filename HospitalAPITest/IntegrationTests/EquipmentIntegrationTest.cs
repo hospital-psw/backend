@@ -2,6 +2,7 @@
 {
     using HospitalAPI;
     using HospitalAPI.Controllers;
+    using HospitalAPI.Dto;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
@@ -33,9 +34,10 @@
             var controller = SetupController(scope);
             int roomId = 2;
 
-            var result = ((OkObjectResult)controller.GetForRoom(roomId));
+            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<EquipmentDto>;
+
             Assert.NotNull(result);
-            Assert.NotEmpty((System.Collections.IEnumerable)result.Value);
+            Assert.NotEmpty(result);
         }
 
         [Fact]
@@ -45,9 +47,9 @@
             var controller = SetupController(scope);
             int roomId = 15;
 
-            var result = ((OkObjectResult)controller.GetForRoom(roomId));
+            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<EquipmentDto>; //((OkObjectResult)controller.GetForRoom(roomId));
             Assert.NotNull(result);
-            Assert.Empty((System.Collections.IEnumerable)result.Value);
+            Assert.Empty(result);
         }
     }
 }
