@@ -89,7 +89,7 @@
             {
                 return BadRequest();
             }
-            return Ok(entity);
+            return Ok();
         }
     }
 }
