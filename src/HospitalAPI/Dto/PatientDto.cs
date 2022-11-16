@@ -2,6 +2,6 @@
 {
     public class PatientDto : UserDto
     {
-        public bool Guest { get; set; }
+        public bool Hospitalized { get; set; }
     }
 }

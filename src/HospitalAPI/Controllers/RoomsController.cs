@@ -4,7 +4,10 @@ using HospitalLibrary.Core.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HospitalAPI.Controllers
 {
@@ -37,6 +40,21 @@ namespace HospitalAPI.Controllers
                 return Ok(room);
             }
             return BadRequest("Bad request, please enter valid data.");
+        }
+
+        [HttpGet("available")]
+        public IActionResult GetAvailable()
+        {
+            List<Room> availableRooms = _roomService.GetAvailable().ToList();
+            List<RoomDto> dtoList = new List<RoomDto>();
+
+            if (availableRooms.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            availableRooms.ForEach(r => dtoList.Add(RoomMapper.EntityToEntityDto(r)));
+            return Ok(dtoList);
         }
 
     }

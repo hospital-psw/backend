@@ -1,6 +1,5 @@
 ﻿namespace HospitalLibrary.Core.DTO.MedicalTreatment
 {
-    using HospitalLibrary.Core.DTO.Therapy;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,9 +15,7 @@
 
         public int DoctorId { get; set; }
 
-        public NewMedicamentTherapyDto MedicamentTherapy { get; set; }
-
-        public NewBloodUnitTherapyDto BloodUnitTherapy { get; set; }
+        public string AdmittanceReason { get; set; }
 
     }
 }

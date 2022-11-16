@@ -1,6 +1,8 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Repository.Blood;
+    using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using System;
@@ -34,8 +36,14 @@
             TherapyRepository = new TherapyRepository(_context);
             MedicamentTherapyRepository = new MedicamentTherapyRepository(_context);
             BloodUnitTherapyRepository = new BloodUnitTherapyRepository(_context);
+            MedicamentRepository = new MedicamentRepository(_context);
             VacationRequestsRepository = new VacationRequestsRepository(_context);
             EquipmentRepository = new EquipmentRepository(_context);
+
+            BloodUnitRepository = new BloodUnitRepository(_context);
+            BloodExpenditureRepository = new BloodExpenditureRepository(_context);
+            BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
+
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -52,9 +60,12 @@
         public ITherapyRepository TherapyRepository { get; set; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }
         public IBloodUnitTherapyRepository BloodUnitTherapyRepository { get; set; }
+        public IMedicamentRepository MedicamentRepository { get; set; }
         public IVacationRequestsRepository VacationRequestsRepository { get; set; }
-
         public IEquipmentRepository EquipmentRepository { get; set; }
+        public IBloodUnitRepository BloodUnitRepository { get; set; }
+        public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
+        public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

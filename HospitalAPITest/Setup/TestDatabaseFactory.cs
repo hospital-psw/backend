@@ -2,7 +2,12 @@
 {
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.MedicalTreatment;
+    using HospitalLibrary.Core.Model.Medicament;
+    using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
@@ -77,24 +82,30 @@
             //});
             Patient pat = new Patient()
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 1,*/
-                Deleted = false,
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
                 Password = "mikica",
                 Role = Role.PATIENT,
-                Guest = false
+                Hospitalized = true
             };
+
+            Patient pat2 = new Patient
+            {
+                FirstName = "Djura",
+                LastName = "Djuric",
+                Email = "djura@com",
+                Password = "djurica",
+                Role = Role.PATIENT,
+                Hospitalized = true,
+            };
+
+            List<Patient> patients = new List<Patient>();
+            patients.Add(pat);
+            patients.Add(pat2);
 
             Doctor doc = new Doctor()
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 3,*/
-                Deleted = false,
                 FirstName = "Djankarlo",
                 LastName = "Rapacoti",
                 Email = "djankarlno@asd.com",
@@ -127,32 +138,17 @@
                     Start = new DateTime(),
                     End = new DateTime(1, 1, 1, 23, 0, 0)
                 },
+                Patients = patients
 
             };
 
 
             context.Patients.Add(pat);
 
-            context.Patients.Add(new Patient
-            {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 2,*/
-                Deleted = false,
-                FirstName = "Djura",
-                LastName = "Djuric",
-                Email = "djura@com",
-                Password = "djurica",
-                Role = Role.PATIENT,
-                Guest = false
-            }); ;
+            context.Patients.Add(pat2);
 
             context.Appointments.Add(new Appointment
             {
-                /*DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Id = 4,*/
-                Deleted = false,
                 Date = new DateTime(2022, 11, 11, 14, 0, 0),
                 Doctor = doc,
                 Patient = pat,
@@ -160,6 +156,46 @@
                 IsDone = false,
                 ExamType = ExaminationType.OPERATION,
                 Duration = 30
+            });
+
+            context.Medicaments.Add(new Medicament
+            {
+                Name = "Aspirin",
+                Description = "Nesto protiv bolova",
+                Quantity = 15
+            });
+
+            context.Medicaments.Add(new Medicament
+            {
+                Name = "Panklav",
+                Description = "Antibiotik za decu i odrasle",
+                Quantity = 420
+            });
+
+            context.MedicalTreatments.Add(new MedicalTreatment
+            {
+                Room = room,
+                Doctor = doc,
+                Patient = pat,
+                MedicamentTherapies = new List<MedicamentTherapy>(),
+                BloodUnitTherapies = new List<BloodUnitTherapy>(),
+                Active = true,
+                Report = null,
+                End = default(DateTime),
+                Start = new DateTime(),
+            }); ;
+
+            context.MedicalTreatments.Add(new MedicalTreatment
+            {
+                Room = room,
+                Doctor = doc,
+                Patient = pat2,
+                MedicamentTherapies = new List<MedicamentTherapy>(),
+                BloodUnitTherapies = new List<BloodUnitTherapy>(),
+                Active = false,
+                Report = "izvestaj brateeeee",
+                End = default(DateTime),
+                Start = new DateTime(),
             });
 
             context.VacationRequests.Add(new VacationRequest
@@ -233,6 +269,13 @@
                 Quantity = 5,
                 Room = equipmentRoom
             });
+
+            context.BloodUnits.Add(new BloodUnit
+            {
+                BloodType = BloodType.A_PLUS,
+                Amount = 23
+            });
+
             context.SaveChanges();
         }
     }

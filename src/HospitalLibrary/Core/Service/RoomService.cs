@@ -3,42 +3,45 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Settings;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
 {
-    public class RoomService : IRoomService
+    public class RoomService : BaseService<Room>, IRoomService
     {
-        private readonly IRoomRepository _roomRepository;
 
-        public RoomService(IRoomRepository roomRepository)
+        private readonly ILogger<Room> _logger;
+
+        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _roomRepository = roomRepository;
-
+            _logger = logger;
         }
 
         public IEnumerable<Room> GetAll()
         {
-            return _roomRepository.GetAll();
+            return _unitOfWork.RoomRepository.GetAll();
         }
 
         public Room GetById(int id)
         {
-            return _roomRepository.GetById(id);
+            return _unitOfWork.RoomRepository.GetById(id);
         }
 
         public void Create(Room room)
         {
-            _roomRepository.Create(room);
+            _unitOfWork.RoomRepository.Create(room);
+            _unitOfWork.Save();
         }
 
         public bool Update(Room room)
         {
             if (this.NumberStartsWithFloorNumber(room) && this.NumberIsUnique(room) && this.WorkingHoursIsValid(room.WorkingHours))
             {
-                _roomRepository.Update(room);
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.WorkingHoursRepository.Update(room.WorkingHours);
+                _unitOfWork.RoomRepository.Update(room);
+                _unitOfWork.WorkingHoursRepository.Update(room.WorkingHours);
+                _unitOfWork.Save();
                 //unitOfWork.BuildingRepository.Update(room.Floor.Building);
                 //unitOfWork.FloorRepository.Update(room.Floor);
                 return true;
@@ -48,7 +51,8 @@ namespace HospitalLibrary.Core.Service
 
         public void Delete(Room room)
         {
-            _roomRepository.Delete(room);
+            _unitOfWork.RoomRepository.Delete(room);
+            _unitOfWork.Save();
         }
 
         private bool NumberStartsWithFloorNumber(Room room)
@@ -62,7 +66,7 @@ namespace HospitalLibrary.Core.Service
 
         private bool NumberIsUnique(Room room)
         {
-            foreach (Room r in _roomRepository.GetAll())
+            foreach (Room r in _unitOfWork.RoomRepository.GetAll())
             {
                 if (r.Number == room.Number && room.Floor.Id == r.Floor.Id && r.Id != room.Id)
                 {
@@ -83,6 +87,19 @@ namespace HospitalLibrary.Core.Service
 
             }
             return true;
+        }
+
+        public IEnumerable<Room> GetAvailable()
+        {
+            try
+            {
+                return _unitOfWork.RoomRepository.GetAvailableRooms();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in RoomService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
     }
 }
