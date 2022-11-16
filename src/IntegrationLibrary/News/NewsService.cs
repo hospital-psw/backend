@@ -6,6 +6,7 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     public class NewsService : INewsService
@@ -179,17 +180,54 @@
 
         public string GetImageExtension(News entity)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return entity.Image.Split(new String[] { ";" }, StringSplitOptions.None)[0];
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in NewsService in GetImageExtension {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public string GetImageData(News entity)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return entity.Image.Split(new String[] { ";" }, StringSplitOptions.None)[1];
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in NewsService in GetImageData {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public void SaveImageToDisk(News entity)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                string extension = GetImageExtension(entity);
+                string imageData = GetImageData(entity);
+                
+                string path = Directory.GetParent(Environment.CurrentDirectory).FullName;
+                path = Path.Combine(new string[] { path, "MQImages", $"RecievedImage{entity.Id}.{extension}"});
+
+                byte[] imageBytes = Convert.FromBase64String(imageData);
+
+                using var writer = new BinaryWriter(File.OpenWrite(path));
+                writer.Write(imageBytes);
+
+                writer.Flush();
+                writer.Dispose();
+                writer.Close();
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in NewsService in SaveImageToDisk {e.Message} in {e.StackTrace}");
+            }
         }
     }
 }

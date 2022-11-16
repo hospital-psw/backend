@@ -81,7 +81,7 @@
         }
 
         [HttpPost]
-        public virtual IActionResult Create(News news)
+        public virtual IActionResult Create([FromBody]News news)
         {
             var entity = _newsService.Create(news);
 
