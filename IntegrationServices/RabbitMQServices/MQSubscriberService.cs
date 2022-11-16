@@ -1,22 +1,22 @@
 ﻿namespace IntegrationServices
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
+    using IntegrationServices.RabbitMQServices;
     using Microsoft.Extensions.Hosting;
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
-    using IntegrationServices.RabbitMQServices;
+    using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     using System.Text.Json;
+    using System.Threading;
+    using System.Threading.Tasks;
 
-    internal class MQSubscriberService: BackgroundService
+    internal class MQSubscriberService : BackgroundService
     {
         IConnection connection;
         IModel channel;
-        
+
         public override Task StartAsync(CancellationToken cancellationToken)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
