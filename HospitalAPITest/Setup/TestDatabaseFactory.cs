@@ -210,6 +210,20 @@
                 ManagerComment = ""
             });
 
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 12, 12, 0, 0, 0),
+                To = new DateTime(2022, 12, 15, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+
+            //for equipment controller
             Room equipmentRoom = new Room()
             {
                 Floor = new Floor()

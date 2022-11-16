@@ -1,5 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
+
+    using HospitalLibrary.Core.DTO.VacationRequest;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequest;
     using System;
@@ -13,5 +15,6 @@
         IEnumerable<VacationRequest> GetAllPending();
 
         void HandleVacationRequest(VacationRequestStatus status, int id, string managerComment);
+        VacationRequest Create(NewVacationRequestDto dto);
     }
 }
