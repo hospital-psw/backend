@@ -29,7 +29,8 @@
             ManagerComment = managerComment;
         }
 
-        public VacationRequestDto(int id, VacationRequestStatus status, string managerComment) {
+        public VacationRequestDto(int id, VacationRequestStatus status, string managerComment)
+        {
             Id = id;
             Status = status;
             ManagerComment = managerComment;

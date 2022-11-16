@@ -25,7 +25,7 @@
         }
 
         [Fact]
-        public void Test_get_all_pending ()
+        public void Test_get_all_pending()
         {
 
             using var scope = Factory.Services.CreateScope();
@@ -37,7 +37,8 @@
         }
 
         [Fact]
-        public void Test_accept_vacation_request() { 
+        public void Test_accept_vacation_request()
+        {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
@@ -49,7 +50,8 @@
         }
 
         [Fact]
-        public void Test_decline_vacation_request() {
+        public void Test_decline_vacation_request()
+        {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
