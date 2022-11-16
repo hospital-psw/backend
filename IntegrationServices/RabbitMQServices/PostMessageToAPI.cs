@@ -11,10 +11,10 @@
     {
         private static readonly HttpClient client = new HttpClient();
 
-        public static async void PostMessage(Dictionary<String, String> message)
+        public static async void PostMessage(string json)
         {
-            var body = new FormUrlEncodedContent(message);
-            var response = await client.PostAsync("http://localhost:45488/news", body);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("http://localhost:45488/news", content);
 
             Console.WriteLine(response.Content.ReadAsStringAsync());
         }
