@@ -59,7 +59,7 @@
         }
 
         [HttpPost]
-        public virtual IActionResult AddNews(News news)
+        public virtual IActionResult Create(News news)
         {
             throw new NotImplementedException();
         }
