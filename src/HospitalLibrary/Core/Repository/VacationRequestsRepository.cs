@@ -27,7 +27,8 @@
                                             ToList();
         }
 
-        public int Save() {
+        public int Save()
+        {
             return _context.SaveChanges();
         }
 
