@@ -25,11 +25,7 @@
         }
 
         [Fact]
-<<<<<<< HEAD
-        public void Test_get_all_pending ()
-=======
         public void Test_get_all_pending()
->>>>>>> a59a3101953b88c416896354b628221a4cf66f4e
         {
 
             using var scope = Factory.Services.CreateScope();
@@ -41,12 +37,8 @@
         }
 
         [Fact]
-<<<<<<< HEAD
-        public void Test_accept_vacation_request() { 
-=======
         public void Test_accept_vacation_request()
         {
->>>>>>> a59a3101953b88c416896354b628221a4cf66f4e
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
@@ -58,20 +50,14 @@
         }
 
         [Fact]
-<<<<<<< HEAD
-        public void Test_decline_vacation_request() {
-=======
         public void Test_decline_vacation_request()
         {
->>>>>>> a59a3101953b88c416896354b628221a4cf66f4e
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
             var result = controller.HandleVacationRequest(new VacationRequestDto(2, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.REJECTED, "ne moze")) as StatusCodeResult;
 
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
-<<<<<<< HEAD
-=======
         }
 
         [Fact]
@@ -136,7 +122,6 @@
             var result = controller.Create(dto) as StatusCodeResult;
 
             Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
->>>>>>> a59a3101953b88c416896354b628221a4cf66f4e
         }
     }
 }
