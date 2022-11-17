@@ -46,15 +46,15 @@
         {
             IEnumerable<Equipment> all = _unitOfWork.EquipmentRepository.GetEquipments();
             List<Room> searchedRooms = new List<Room>();
-            foreach(Room room in rooms)
+            foreach (Room room in rooms)
             {
-                if(equipmentType == -1)
+                if (equipmentType == -1)
                 {
                     searchedRooms.Add(room);
                 }
-                foreach(Equipment eq in all)
+                foreach (Equipment eq in all)
                 {
-                    if(eq.Room.Id == room.Id && eq.EquipmentType==(EquipmentType)equipmentType && eq.Quantity >= quantity)
+                    if (eq.Room.Id == room.Id && eq.EquipmentType == (EquipmentType)equipmentType && eq.Quantity >= quantity)
                     {
                         searchedRooms.Add(room);
                     }

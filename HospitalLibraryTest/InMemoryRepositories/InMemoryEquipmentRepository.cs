@@ -9,7 +9,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class InMemoryEquipmentRepository:IEquipmentRepository
+    public class InMemoryEquipmentRepository : IEquipmentRepository
     {
         public void Add(Equipment entity)
         {
