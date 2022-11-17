@@ -175,8 +175,7 @@
                 Text = "Test body",
                 Image = "Test image",
             };
-
-            var result = controller.Create(news);
+            var result = (StatusCodeResult)controller.Create(news);
 
             result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }

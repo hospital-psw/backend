@@ -43,6 +43,10 @@
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
 
+            BloodUnitRepository = new BloodUnitRepository(_context);
+            BloodExpenditureRepository = new BloodExpenditureRepository(_context);
+            BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
+
         }
 
         public IUserRepository UserRepository { get; set; }
