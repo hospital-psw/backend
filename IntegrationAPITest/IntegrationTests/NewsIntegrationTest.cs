@@ -159,7 +159,7 @@
             var controller = SetupController(scope);
 
             var result = ((StatusCodeResult)controller.Archive(3));
-        
+
             result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
 
