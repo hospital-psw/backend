@@ -130,7 +130,9 @@
             {
                 SetTherapiesFinished(medicalTreatment);
                 ReleasePatientFromRoom(medicalTreatment);
+                SetPatientToNonHospitalized(medicalTreatment);
                 SetTreatmentFinished(medicalTreatment, description);
+
                 _unitOfWork.Save();
                 return medicalTreatment;
             }
@@ -164,6 +166,12 @@
         {
             treatment.Room.Patients.Remove(treatment.Patient);
             _unitOfWork.RoomRepository.Update(treatment.Room);
+        }
+
+        public void SetPatientToNonHospitalized(MedicalTreatment medicalTreatment)
+        {
+            medicalTreatment.Patient.Hospitalized = false;
+            _unitOfWork.PatientRepository.Update(medicalTreatment.Patient);
         }
 
         public IEnumerable<MedicalTreatment> GetActive()
