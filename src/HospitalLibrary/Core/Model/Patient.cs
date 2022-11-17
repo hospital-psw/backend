@@ -10,11 +10,13 @@
     {
         public bool Hospitalized { get; set; }
 
+        public List<Allergies> Allergies { get; set; }
         public Patient() { }
 
-        public Patient(bool hospitalized)
+        public Patient(bool hospitalized, List<Allergies> allergies)
         {
             Hospitalized = hospitalized;
+            Allergies = allergies;
         }
     }
 }
