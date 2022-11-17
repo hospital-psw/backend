@@ -168,18 +168,17 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            var news = new News
+            var news = new UserNewsDTO
             {
+                DateCreated = DateTime.Now,
                 Title = "Test title",
                 Text = "Test body",
                 Image = "Test image",
-                Status = NewsStatus.PENDING
             };
 
             var result = controller.Create(news);
 
-            // not completely sure that this would work
-            result.ShouldBeOfType<OkObjectResult>();
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
     }
 }

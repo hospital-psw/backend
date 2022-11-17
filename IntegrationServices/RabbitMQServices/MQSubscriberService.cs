@@ -10,6 +10,7 @@
     using RabbitMQ.Client.Events;
     using IntegrationServices.RabbitMQServices;
     using System.Collections.Generic;
+    using System.Text.Json;
 
     internal class MQSubscriberService: BackgroundService
     {
@@ -35,14 +36,16 @@
 
                 var messageParts = MessageDecoder.MessageParts(message);
 
-                var reqBody = new Dictionary<String, String>
+                var reqBody = new NewsDTO
                 {
-                    {"Title", MessageDecoder.MessageTitle(messageParts) },
-                    {"Text", MessageDecoder.MessageText(messageParts) },
-                    {"Image", MessageDecoder.MessageImageExtension(messageParts) + ";" + MessageDecoder.MessageImageData(messageParts) },
-                    {"Status", "2" }
+                    DateCreated = DateTime.Now,
+                    Title = MessageDecoder.MessageTitle(messageParts),
+                    Text = MessageDecoder.MessageText(messageParts),
+                    Image = MessageDecoder.MessageImageExtension(messageParts) + ";" + MessageDecoder.MessageImageData(messageParts),
                 };
-                PostMessageToAPI.PostMessage(reqBody);
+                var json = JsonSerializer.Serialize(reqBody);
+
+                PostMessageToAPI.PostMessage(json);
             };
 
             channel.BasicConsume(queue: "hello",

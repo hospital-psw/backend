@@ -80,13 +80,13 @@
         }
 
         [HttpPost]
-        public virtual IActionResult Create([FromBody]News news)
+        public virtual IActionResult Create([FromBody]UserNewsDTO news)
         {
-            var entity = _newsService.Create(news);
+            var entity = _newsService.Create(_mapper.Map<News>(news));
 
             if (entity is null)
             {
-                return NotFound();
+                return BadRequest();
             }
             return Ok(entity);
         }
