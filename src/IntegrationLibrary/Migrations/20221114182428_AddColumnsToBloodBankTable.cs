@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 #nullable disable
 
@@ -43,7 +43,7 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.DropColumn(
                 name: "ReportTo",
-                table: "BloodBanks"); 
+                table: "BloodBanks");
         }
     }
 }
