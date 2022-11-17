@@ -260,6 +260,12 @@
                 BloodType = BloodType.A_PLUS,
                 Amount = 23
             });
+            context.Allergies.Add(new Allergies
+            {
+                Name = "kupus"
+               
+            });
+
 
             context.SaveChanges();
         }

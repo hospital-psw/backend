@@ -30,6 +30,9 @@
             }
 
             return Ok(_allergiesService.Add(AllergiesMapper.EntityDtoToEntity(dto)));
+
+            
+
         }
 
         [HttpGet("all")]
