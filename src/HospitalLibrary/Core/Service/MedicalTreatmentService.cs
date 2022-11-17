@@ -72,15 +72,18 @@
             try
             {
                 Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
-                patient.Hospitalized = true;
+                HospitalizePatietnt(patient);
+
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
+                AddPatientToRoom(room, patient);
+
                 MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "", dto.AdmittanceReason);
 
-                _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
-                _unitOfWork.Save();
+                SetupTreatment(medicalTreatment);
 
+                _unitOfWork.Save();
                 return medicalTreatment;
             }
             catch (Exception e)
@@ -88,6 +91,23 @@
                 _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        private void SetupTreatment(MedicalTreatment medicalTreatment)
+        {
+            _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
+        }
+
+        private void HospitalizePatietnt(Patient patient)
+        {
+            patient.Hospitalized = true;
+            _unitOfWork.PatientRepository.Update(patient);
+        }
+
+        private void AddPatientToRoom(Room room, Patient patient)
+        {
+            room.Patients.Add(patient);
+            _unitOfWork.RoomRepository.Update(room);
         }
 
         public void Delete(MedicalTreatment medicalTreatment)
