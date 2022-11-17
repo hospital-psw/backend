@@ -11,7 +11,7 @@ namespace HospitalLibrary.Core.Model
         public string Purpose { get; set; }
         public WorkingHours? WorkingHours { get; set; }
         public int Capacity { get; set; }
-        public List<Patient> Patients { get; set; }
+        public List<Patient> Patients { get; set; } = new List<Patient>();
 
         public Room() { }
 
