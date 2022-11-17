@@ -25,6 +25,8 @@
 
         public bool Active { get; set; }
 
+        public string AdmittanceReason { get; set; }
+
         public string Report { get; set; }
     }
 }

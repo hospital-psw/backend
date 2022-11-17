@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
+    using HospitalLibrary.Core.DTO.VacationRequest;
     using HospitalLibrary.Core.Model.VacationRequest;
     using System;
     using System.Collections.Generic;
@@ -10,5 +11,7 @@
     public interface IVacationRequestsService
     {
         IEnumerable<VacationRequest> GetAllPending();
+
+        VacationRequest Create(NewVacationRequestDto dto);
     }
 }

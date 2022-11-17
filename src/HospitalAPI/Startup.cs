@@ -68,7 +68,6 @@ namespace HospitalAPI
 
 
 
-
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
             services.AddSingleton(config);

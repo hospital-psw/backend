@@ -36,6 +36,11 @@
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Appointment> GetScheduledAppointments(int doctorId, int patientId)
         {
             throw new NotImplementedException();

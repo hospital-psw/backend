@@ -255,7 +255,6 @@
                 Room = equipmentRoom
             });
 
-
             Building building = new Building()
             {
                 Address = "Janka Cmelika 1",
