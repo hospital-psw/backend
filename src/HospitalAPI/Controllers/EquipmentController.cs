@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
 
     [Route("api/[controller]")]
@@ -24,6 +25,7 @@
         {
             List<EquipmentDto> equipmentDto = new List<EquipmentDto>();
             List<Equipment> equipment = _equipmentService.GetForRoom(roomId);
+
             if (equipment == null)
             {
                 return NotFound();

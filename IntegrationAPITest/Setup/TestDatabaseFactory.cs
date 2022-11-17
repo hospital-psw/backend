@@ -1,7 +1,7 @@
 ﻿namespace IntegrationAPITest.Setup
 {
     using IntegrationAPI;
-    using IntegrationLibrary.BloodBank;
+    using IntegrationAPITest.MockData;
     using IntegrationLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -42,21 +42,11 @@
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            context.BloodBanks.Add(new BloodBank()
-            {
-                /*Id = 7, 
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Deleted = false,*/
-                Name = "Bank 1",
-                ApiUrl = "localhost:8081",
-                ApiKey = "blah",
-                AdminPassword = "4321",
-                Email = "zika@hotmail.com",
-                IsDummyPassword = true,
-                GetBloodTypeAvailability = "api/checkblood/!BLOOD_TYPE",
-                GetBloodTypeAndAmountAvailability = "api/checkbloodamount/!BLOOD_TYPE/!AMOUNT"
-            });
+            context.BloodBanks.Add(BloodBankMockData.BloodBank1);
+
+            context.News.Add(NewsMockData.PendingNews);
+            context.News.Add(NewsMockData.ArchivedNews);
+            context.News.Add(NewsMockData.PublishedNews);
 
             context.SaveChanges();
         }

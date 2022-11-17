@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Repository.Core
 {
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequest;
     using System;
     using System.Collections.Generic;
@@ -10,5 +11,6 @@
     public interface IVacationRequestsRepository : IBaseRepository<VacationRequest>
     {
         IEnumerable<VacationRequest> GetAllPending();
+        int Save();
     }
 }
