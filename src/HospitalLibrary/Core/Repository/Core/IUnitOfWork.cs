@@ -10,8 +10,7 @@
     public interface IUnitOfWork : IDisposable
     {
         int Save();
-
-        void Dispose();
+        new void Dispose();
 
         IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
 
@@ -32,6 +31,7 @@
         public IMedicamentRepository MedicamentRepository { get; }
         public IVacationRequestsRepository VacationRequestsRepository { get; }
         public IEquipmentRepository EquipmentRepository { get; }
+        public IRelocationRepository RelocationRepository { get; }
         public IBloodUnitRepository BloodUnitRepository { get; }
         public IBloodExpenditureRepository BloodExpenditureRepository { get; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; }
