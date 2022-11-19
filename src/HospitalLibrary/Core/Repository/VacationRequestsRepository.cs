@@ -27,6 +27,13 @@
                                             ToList();
         }
 
+        public IEnumerable<VacationRequest> GetAllRequestsByDoctorsId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                            .Where(x => !x.Deleted && x.Doctor.Id == doctorId)
+                                            .ToList();
+        }
+
         public int Save()
         {
             return _context.SaveChanges();

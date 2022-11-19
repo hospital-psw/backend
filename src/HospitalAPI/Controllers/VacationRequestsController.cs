@@ -9,6 +9,7 @@
     using HospitalLibrary.Core.Service.Core;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore.Metadata.Conventions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -64,6 +65,25 @@
             }
 
             return Ok(VacationRequestsMapper.EntityToEntityDto(_vacationRequestsService.Create(dto)));
+        }
+        [HttpGet]
+        public IActionResult GetAllRequestsByDoctorId(int doctorId)
+        {
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRequestsByDoctorId(doctorId);
+
+            if(vacationRequests.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            List<VacationRequestDto> dtos = new List<VacationRequestDto>();
+
+            foreach(VacationRequest vr in vacationRequests)
+            {
+                dtos.Add(VacationRequestsMapper.EntityToEntityDto(vr));
+            }
+
+            return Ok(dtos);   
         }
     }
 }

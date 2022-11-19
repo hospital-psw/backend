@@ -11,6 +11,7 @@
     public interface IVacationRequestsRepository : IBaseRepository<VacationRequest>
     {
         IEnumerable<VacationRequest> GetAllPending();
+        IEnumerable<VacationRequest> GetAllRequestsByDoctorsId(int doctorId);
         int Save();
     }
 }

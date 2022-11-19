@@ -123,5 +123,17 @@
 
             Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
         }
+        [Fact]
+        public void Test_get_all_requests_for_docotor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllRequestsByDoctorId(doctorId)).Value as List<VacationRequestDto>;
+
+            Assert.NotEmpty(result);
+        }
     }
 }

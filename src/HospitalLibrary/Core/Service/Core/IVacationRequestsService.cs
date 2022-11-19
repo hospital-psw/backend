@@ -10,11 +10,13 @@
     using System.Text;
     using System.Threading.Tasks;
 
+
     public interface IVacationRequestsService
     {
         IEnumerable<VacationRequest> GetAllPending();
 
         void HandleVacationRequest(VacationRequestStatus status, int id, string managerComment);
         VacationRequest Create(NewVacationRequestDto dto);
+        IEnumerable<VacationRequest> GetAllRequestsByDoctorId(int doctorId);
     }
 }
