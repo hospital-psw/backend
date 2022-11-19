@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Repository.Core
 {
     using HospitalLibrary.Core.Model;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,5 +12,10 @@
     {
         RelocationRequest Create(RelocationRequest request);
         List<RelocationRequest> GetScheduledRelocationsForRoom(int roomId);
+
+        List<RelocationRequest> GetFinishedRelocations();
+
+        int Save();
+       
     }
 }

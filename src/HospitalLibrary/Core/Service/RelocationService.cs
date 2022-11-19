@@ -9,12 +9,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class RelocationService : BaseService<RelocationRequest>, IRelocationService
     {
 
-        public RelocationService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public RelocationService(IUnitOfWork unitOfWork) : base(unitOfWork) {
+      
+        }
 
         public RelocationRequest Create(RelocationRequest entity)
         {
@@ -124,7 +127,29 @@
             return startTime < scheduledEndTime && endTime >= scheduledEndTime;
         }
 
+        public void FinishRelocation() {
+            List<RelocationRequest> finished = _unitOfWork.RelocationRepository.GetFinishedRelocations();
+            foreach (RelocationRequest request in finished) {
+                RelocateEquipment(request);
+            }
+        }
 
+        private void RelocateEquipment(RelocationRequest request) {
+            Equipment equipment = _unitOfWork.EquipmentRepository.GetEquipment(request.Equipment.EquipmentType, request.ToRoom);
+            if (equipment == null)
+            {
+                _unitOfWork.EquipmentRepository.Create(new Equipment(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
+                return;
+            }
+            else {
+                equipment.Quantity += request.Quantity;
+                _unitOfWork.EquipmentRepository.Update(equipment);
+                _unitOfWork.EquipmentRepository.Save();
+            }
+            request.Deleted = true;
+            _unitOfWork.RelocationRepository.Update(request);
+            _unitOfWork.RelocationRepository.Save();
+        }
 
     }
 }

@@ -29,10 +29,24 @@
         {
             return HospitalDbContext.RelocationRequests.Include(x => x.FromRoom)
                                                .Include(x => x.ToRoom)
+                                               .Include(x => x.Equipment)
                                                .Where(x => !x.Deleted && (x.FromRoom.Id == roomId || x.ToRoom.Id == roomId))
                                                .OrderBy(x => x.StartTime)
                                                .Distinct()
                                                .ToList();
         }
+
+        public List<RelocationRequest> GetFinishedRelocations() {
+            return HospitalDbContext.RelocationRequests.Include(x => x.FromRoom)
+                                                        .Include(x => x.ToRoom)
+                                                        .Include(x => x.Equipment)
+                                                        .Where(x => !x.Deleted && x.StartTime.AddHours(x.Duration) <= DateTime.Now)
+                                                        .ToList();
+        }
+        public int Save()
+        {
+            return _context.SaveChanges();
+        }
+
     }
 }
