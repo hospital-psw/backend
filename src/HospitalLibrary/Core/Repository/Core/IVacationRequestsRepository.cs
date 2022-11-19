@@ -12,6 +12,7 @@
     {
         IEnumerable<VacationRequest> GetAllPending();
         IEnumerable<VacationRequest> GetAllRequestsByDoctorsId(int doctorId);
+        IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId);
         int Save();
     }
 }

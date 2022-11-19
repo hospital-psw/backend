@@ -33,6 +33,12 @@
                                             .Where(x => !x.Deleted && x.Doctor.Id == doctorId)
                                             .ToList();
         }
+        public IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => !x.Deleted && x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.WAITING)
+                                           .ToList();
+        }
 
         public int Save()
         {

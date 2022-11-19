@@ -135,5 +135,18 @@
 
             Assert.NotEmpty(result);
         }
+
+        [Fact]
+        public void Test_get_all_waiting_requests_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllWaitingByDoctorId(doctorId)).Value as List<VacationRequestDto>;
+
+            Assert.NotEmpty(result);
+        }
     }
 }

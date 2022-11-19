@@ -77,6 +77,18 @@
                 return null;
             }
         }
+
+        public IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllWaitingByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 
 }
