@@ -5,6 +5,7 @@
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -30,7 +31,9 @@
         [HttpPut("recommend")]
         public IActionResult GetRecommendedRelocationAppointments([FromBody] RecommendRelocationRequestDto dto)
         {
-            return Ok(_relocationService.GetAvailableAppointments(dto.FromRoomId, dto.ToRoomId, dto.FromTime, dto.ToTime, dto.Duration));
+            DateTime startTime = new DateTime(dto.FromTime.Year, dto.FromTime.Month, dto.FromTime.Day, 7, 0, 0);
+            DateTime toTime = new DateTime(dto.ToTime.Year, dto.FromTime.Month, dto.FromTime.Day, 22, 0, 0);
+            return Ok(_relocationService.GetAvailableAppointments(dto.FromRoomId, dto.ToRoomId, startTime, toTime, dto.Duration));
         }
     }
 }

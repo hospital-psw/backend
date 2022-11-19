@@ -1,15 +1,11 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
-    using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
-    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class RelocationService : BaseService<RelocationRequest>, IRelocationService
     {
@@ -28,37 +24,21 @@
             }
         }
 
-        public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime startDate, DateTime toDate, int duration)
+        public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime startTime, DateTime toTime, int duration)
         {
             try
             {
-                DateTime startTime = new DateTime(startDate.Year, startDate.Month, startDate.Day, 7, 0, 0);
-                DateTime toTime = new DateTime(toDate.Year, toDate.Month, toDate.Day, 22, 0, 0);
-                DateTime buildingEndTime = new DateTime(2022, 1, 1, 22, 0, 0);
-
                 List<DateTime> dateTimes = new List<DateTime>();
                 while (startTime.AddHours(duration) <= toTime)
                 {
-                    if (startTime.AddHours(duration).TimeOfDay > buildingEndTime.TimeOfDay)
+                    if (startTime.AddHours(duration).TimeOfDay > (new DateTime(2022, 1, 1, 22, 0, 0)).TimeOfDay) //building end time
                     {
                         if (startTime.Day < toTime.Day) startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day + 1, 7, 0, 0);
                         else break;
                     }
-                    DateTime endTime = startTime.AddHours(duration);
-                    DateTime newStartTime = CheckRoom(roomId1, startTime, endTime);
-                    endTime = newStartTime.AddHours(duration);
-                    newStartTime = CheckRoom(roomId2, newStartTime, endTime);
-                    endTime = startTime.AddHours(duration);
-                    if (newStartTime == startTime)
-                    {
-                        dateTimes.Add(startTime);
-                        startTime = endTime;
-                    }
-                    else
-                    {
-                        startTime = newStartTime;
-                    }
-
+                    DateTime newStartTime = CheckBothRooms(roomId1, roomId2, startTime, duration);
+                    if (newStartTime.AddHours(duration * -1) == startTime) dateTimes.Add(startTime);
+                    startTime = newStartTime;
                 }
 
                 return dateTimes;
@@ -67,6 +47,14 @@
             {
                 return null;
             }
+        }
+
+        public DateTime CheckBothRooms(int roomId1, int roomId2, DateTime startTime, int duration)
+        {
+            DateTime newStartTime = CheckRoom(roomId1, startTime, startTime.AddHours(duration));
+            newStartTime = CheckRoom(roomId2, newStartTime, newStartTime.AddHours(duration));
+            if (newStartTime == startTime) return startTime.AddHours(duration);
+            else return newStartTime;
         }
 
         public DateTime CheckRoom(int roomId, DateTime startTime, DateTime endTime)
