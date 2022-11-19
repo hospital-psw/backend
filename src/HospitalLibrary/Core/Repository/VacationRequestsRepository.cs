@@ -40,6 +40,13 @@
                                            .ToList();
         }
 
+        public IEnumerable<VacationRequest> GetAllApprovedByDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => !x.Deleted && x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.APPROVED)
+                                           .ToList();
+        }
+
         public int Save()
         {
             return _context.SaveChanges();

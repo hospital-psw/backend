@@ -89,6 +89,18 @@
                 return null;
             }
         }
+
+        public IEnumerable<VacationRequest> getAllApprovedByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllApprovedByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 
 }

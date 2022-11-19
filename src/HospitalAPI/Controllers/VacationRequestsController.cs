@@ -85,10 +85,28 @@
 
             return Ok(dtos);   
         }
-
+        [HttpGet("waiting")]
         public IActionResult GetAllWaitingByDoctorId(int doctorId)
         {
             List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllWaitingByDoctorId(doctorId);
+            if (vacationRequests.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            List<VacationRequestDto> dtos = new List<VacationRequestDto>();
+
+            foreach (VacationRequest vr in vacationRequests)
+            {
+                dtos.Add(VacationRequestsMapper.EntityToEntityDto(vr));
+            }
+
+            return Ok(dtos);
+        }
+        [HttpGet("approved")]
+        public IActionResult GetAllApprovedByDoctorId(int doctorId)
+        {
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.getAllApprovedByDoctorId(doctorId);
             if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();

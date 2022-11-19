@@ -319,6 +319,30 @@
                 ManagerComment = ""
             });
 
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2023, 1, 12, 0, 0, 0),
+                To = new DateTime(2023, 1, 22, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2023, 2, 12, 0, 0, 0),
+                To = new DateTime(2023, 2, 22, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = ""
+            });
+
             context.SaveChanges();
 
         }
