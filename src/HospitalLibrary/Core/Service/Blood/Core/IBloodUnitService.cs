@@ -22,5 +22,6 @@
         BloodUnit Update(BloodUnit bloodUnit);
 
         int GetAmountForSpecificBloodType(BloodType bloodType);
+        BloodUnit GetByBloodType(BloodType bloodType);
     }
 }
