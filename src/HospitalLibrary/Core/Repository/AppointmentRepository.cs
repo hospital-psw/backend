@@ -65,5 +65,12 @@
                                                  .ToList();
 
         }
+
+        public IEnumerable<Appointment> GetThisYearsAppointments()  //TODO: write unit test
+        {
+            return HospitalDbContext.Appointments.Where(x => x.Date.Year.Equals(DateTime.Today.Year))
+                                                 .Distinct()
+                                                 .ToList();
+        }
     }
 }

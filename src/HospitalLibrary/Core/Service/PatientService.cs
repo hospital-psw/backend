@@ -93,6 +93,16 @@
                 return null;
             }
         }
+        public int getAge(Patient patient)  //TODO: jebeni pacijent nema ni rodjendan ni pol
+        {
+            //int age = DateTime.Now.Year - birthDate.Year;
+
+            //if (DateTime.Now.Month < birthDate.Month || (DateTime.Now.Month == birthDate.Month && DateTime.Now.Day < birthDate.Day))
+            //    age--;
+
+            //return age;
+            throw new NotImplementedException();
+        }
 
 
     }
