@@ -14,5 +14,15 @@ namespace HospitalLibrary.Core.Model
 
         public Building() { }
 
+        public Building(int id, DateTime dateCreated, DateTime dateUpdated, bool deleted, string name, string address)
+        {
+            this.Id = id;
+            this.DateCreated = dateCreated;
+            this.DateUpdated = dateUpdated;
+            this.Deleted = deleted;
+            this.Name = name;
+            this.Address = address;
+        }
+
     }
 }

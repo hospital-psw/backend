@@ -49,6 +49,7 @@
         private static void InitializeDatabase(HospitalDbContext context)
         {
             context.Database.EnsureDeleted();
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE VacationRequests");
             context.Database.EnsureCreated();
 
             //context.Database.ExecuteSqlRaw("DELETE FROM ");
@@ -209,6 +210,19 @@
                 ManagerComment = ""
             });
 
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 12, 12, 0, 0, 0),
+                To = new DateTime(2022, 12, 15, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+
             //for equipment controller
             Room equipmentRoom = new Room()
             {
@@ -255,19 +269,66 @@
                 Room = equipmentRoom
             });
 
+            Building building = new Building()
+            {
+                Address = "Janka Cmelika 1",
+                Name = "Hospital2"
+            };
+
+            context.Buildings.Add(building);
+
+            Floor floor = new Floor()
+            {
+                Building = building,
+                Number = 0,
+                Purpose = "ortopedija"
+            };
+
+            context.Floors.Add(floor);
+
+            WorkingHours workingHours = new WorkingHours()
+            {
+                Start = new DateTime(2022, 11, 10, 4, 0, 0),
+                End = new DateTime(2022, 11, 10, 7, 0, 0)
+            };
+
+            context.WorkingHours.Add(workingHours);
+
+            context.Rooms.Add(new Room
+            {
+                Floor = floor,
+                Number = "003",
+                Purpose = "ordinacija",
+                WorkingHours = workingHours
+            });
+
             context.BloodUnits.Add(new BloodUnit
             {
                 BloodType = BloodType.A_PLUS,
                 Amount = 23
             });
+
             context.Allergies.Add(new Allergies
             {
                 Name = "kupus"
                
             });
 
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 12, 12, 0, 0, 0),
+                To = new DateTime(2022, 12, 15, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
 
             context.SaveChanges();
+
         }
     }
 }

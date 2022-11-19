@@ -35,7 +35,7 @@ namespace HospitalLibrary.Core.Repository
                                  .ThenInclude(x => x.Building)
                                  .Include(x => x.WorkingHours)
                                  .Include(x => x.Patients)
-                                 .Where(x => x.Capacity > x.Patients.Count)
+                                 .Where(x => x.Capacity > x.Patients.Count && !x.Number.Equals("Hallway"))
                                  .ToList();
         }
 
