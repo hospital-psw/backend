@@ -30,10 +30,20 @@
             throw new NotImplementedException();
         }
 
+        public List<RelocationRequest> GetFinishedRelocations()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<RelocationRequest> GetScheduledRelocationsForRoom(int roomId)
         {
             List<RelocationRequest> relocations = new List<RelocationRequest>();
             return relocations;
+        }
+
+        public int Save()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(RelocationRequest entity)
