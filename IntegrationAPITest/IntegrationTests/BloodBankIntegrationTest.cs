@@ -3,8 +3,10 @@
     using AutoMapper;
     using IntegrationAPI.Controllers;
     using IntegrationAPI.DTO.BloodBank;
+    using IntegrationAPITest.MockData;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.BloodBank.Interfaces;
+    using IntegrationLibrary.Settings;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -20,11 +22,22 @@
                                              serviceScope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
+        private IntegrationDbContext SetupContext(IServiceScope scope)
+        {
+            var context = scope.ServiceProvider.GetService<IntegrationDbContext>();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            context.BloodBanks.Add(BloodBankMockData.BloodBank1);
+            context.SaveChanges();
+            return context;
+        }
+
         [Fact]
         public void Get_1_ShouldReturnOne()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((OkObjectResult)controller.Get(1)).Value as GetBloodBankDTO;
 
@@ -38,6 +51,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
             var testTime = DateTime.Now;
             var dto = new SaveConfigurationDTO()
             {
