@@ -14,5 +14,8 @@
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId);
         public IEnumerable<Appointment> GetScheduledAppointments(int doctorId, int patientId);
         public IEnumerable<Appointment> GetThisYearsAppointments();
+        IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId);
+
+        public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to);
     }
 }
