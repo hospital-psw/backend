@@ -16,6 +16,9 @@
         {
             try
             {
+                Equipment equipment = _unitOfWork.EquipmentRepository.Get(entity.Equipment.Id);
+                equipment.ReservedQuantity += entity.Quantity;
+                _unitOfWork.EquipmentRepository.Update(equipment);
                 return _unitOfWork.RelocationRepository.Create(entity);
             }
             catch (Exception)
