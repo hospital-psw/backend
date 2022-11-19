@@ -73,6 +73,10 @@
                 Capacity = 1,
             };
 
+            var fromRoom = new Room() {
+                Id = 5,
+            };
+
             var toRoom = new Room()
             {
                 Id = 2
@@ -89,14 +93,25 @@
                 Room = room
             };
 
+            var equipment2 = new Equipment()
+            {
+                Id = 1,
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                Deleted = false,
+                EquipmentType = EquipmentType.BED,
+                Quantity = 15,
+                Room = room
+            };
+
 
             RelocationRequest request = new RelocationRequest()
             {
                 Id = 1,
                 Quantity = 2,
-                Equipment = equipment,
-                ToRoom = toRoom
-
+                Equipment = equipment2,
+                ToRoom = toRoom,
+                FromRoom = fromRoom
             };
 
 
@@ -127,6 +142,7 @@
             Assert.NotNull(reqUpdate);
             Assert.True(reqUpdate.Deleted);
             Assert.Equal(12, eqUpdate.Quantity);
+            Assert.Equal(13, reqUpdate.Equipment.Quantity);
         }
 
         [Fact]
@@ -144,6 +160,11 @@
             var toRoom = new Room()
             {
                 Id = 2
+            };
+
+            var fromRoom = new Room()
+            {
+                Id = 5,
             };
 
             var equipment = new Equipment()
@@ -165,15 +186,24 @@
                 Room = toRoom
             };
 
-          
+            var equipment2 = new Equipment() {
+                Id = 1,
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+                Deleted = false,
+                EquipmentType = EquipmentType.BED,
+                Quantity = 15,
+                Room = room
+            };
 
             RelocationRequest request = new RelocationRequest()
             {
                 Id = 1,
                 Quantity = 2,
-                Equipment = equipment,
-                ToRoom = toRoom
-
+                Equipment = equipment2,
+                ToRoom = toRoom,
+                FromRoom = fromRoom
+                
             };
 
             Equipment retEq = null;
@@ -199,6 +229,7 @@
             Assert.NotNull(reqUpdate);
             Assert.True(reqUpdate.Deleted);
             Assert.Equal(2, createdEquipment.Quantity);
+            Assert.Equal(13, reqUpdate.Equipment.Quantity);
         }
     }
 }

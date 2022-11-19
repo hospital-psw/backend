@@ -138,9 +138,18 @@
                 _unitOfWork.EquipmentRepository.Update(equipment);
                 _unitOfWork.EquipmentRepository.Save();
             }
+            SubtractEquipmentFromSourceRoom(request);
+
             request.Deleted = true;
             _unitOfWork.RelocationRepository.Update(request);
             _unitOfWork.RelocationRepository.Save();
+        }
+
+        private void SubtractEquipmentFromSourceRoom(RelocationRequest request) {
+            request.Equipment.Quantity -= request.Quantity;
+            if (request.Equipment.Quantity <= 0)
+                request.Equipment.Deleted = true;
+            request.Equipment.ReservedQuantity -= request.Quantity;
         }
 
     }
