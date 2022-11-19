@@ -38,4 +38,4 @@ jobs:
         run: dotnet format --verify-no-changes --no-restore --verbosity diagnostic
       
       - name: Build
-        run: dotnet build --no-restore
+        run: msbuild Hospital.sln
