@@ -35,4 +35,4 @@ jobs:
         run: dotnet format --verify-no-changes --no-restore --verbosity diagnostic
       
       - name: Build
-        run: dotnet build !**/IntegrationServices.csproj --no-restore
+        run: dotnet build --no-restore
