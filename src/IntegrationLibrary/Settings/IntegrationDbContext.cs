@@ -2,6 +2,7 @@
 {
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Core;
+    using IntegrationLibrary.News;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using System;
@@ -11,7 +12,7 @@
     public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
-
+        public DbSet<News> News { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         public IntegrationDbContext() { }
 
