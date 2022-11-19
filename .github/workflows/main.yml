@@ -24,9 +24,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
-      
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
 
       - name: Check out code
         uses: actions/checkout@v2
@@ -38,4 +35,4 @@ jobs:
         run: dotnet format --verify-no-changes --no-restore --verbosity diagnostic
       
       - name: Build
-        run: msbuild Hospital.sln
+        run: dotnet build !**/IntegrationServices.csproj --no-restore
