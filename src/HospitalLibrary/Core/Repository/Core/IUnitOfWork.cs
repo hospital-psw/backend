@@ -10,8 +10,7 @@
     public interface IUnitOfWork : IDisposable
     {
         int Save();
-
-        void Dispose();
+        new void Dispose();
 
         IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
 

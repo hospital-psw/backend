@@ -67,7 +67,6 @@ namespace HospitalAPI
             services.AddScoped<IBloodAcquisitionService, BloodAcquisitionService>();
             services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();
 
-
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
             services.AddSingleton(config);

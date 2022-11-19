@@ -231,6 +231,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("ReservedQuantity")
+                        .HasColumnType("int");
+
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
@@ -323,6 +326,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
+
+                    b.Property<string>("AdmittanceReason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -698,6 +704,9 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.User");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Hospitalized")
                         .HasColumnType("bit");

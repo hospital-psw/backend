@@ -15,15 +15,17 @@
 
         public DoctorDto Doctor { get; set; }
 
-        public List<MedicamentTherapyDto> MedicamentTherapies { get; set; }
+        public List<MedicamentTherapyDto> MedicamentTherapies { get; set; } = new List<MedicamentTherapyDto>();
 
-        public List<BloodUnitTherapyDto> BloodUnitTherapies { get; set; }
+        public List<BloodUnitTherapyDto> BloodUnitTherapies { get; set; } = new List<BloodUnitTherapyDto>();
 
         public DateTime Start { get; set; }
 
         public DateTime End { get; set; }
 
         public bool Active { get; set; }
+
+        public string AdmittanceReason { get; set; }
 
         public string Report { get; set; }
     }

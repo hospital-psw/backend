@@ -158,5 +158,18 @@
                 return null;
             }
         }
+
+        public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to)
+        {
+            try
+            {
+                List<Appointment> appointments = (List<Appointment>)_unitOfWork.AppointmentRepository.GetAppointmentsInDateRangeDoctor(doctorId, from, to);
+                return appointments;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

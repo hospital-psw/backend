@@ -19,6 +19,7 @@
         {
             RoomRepository = new InMemoryRoomRepository();
             AppointmentRepository = new InMemoryAppointmentRepository();
+            EquipmentRepository = new InMemoryEquipmentRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -40,7 +41,7 @@
 
         public IVacationRequestsRepository VacationRequestsRepository => throw new NotImplementedException();
 
-        public IEquipmentRepository EquipmentRepository => throw new NotImplementedException();
+        public IEquipmentRepository EquipmentRepository { get; set; }
 
         public IRelocationRepository RelocationRepository { get; set; }
 

@@ -18,13 +18,13 @@
 
         public override MedicamentTherapy Get(int id)
         {
-            return HospitalDbContext.MedicamentTherapies.Include(x => x.Medicament)
-                                                        .FirstOrDefault(x => x.Id == id);
+            return GetAll().FirstOrDefault(x => x.Id == id);
         }
 
         public override IEnumerable<MedicamentTherapy> GetAll()
         {
             return HospitalDbContext.MedicamentTherapies.Include(x => x.Medicament)
+                                                        .Where(x => !x.Deleted)
                                                         .ToList();
         }
     }
