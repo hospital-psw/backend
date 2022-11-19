@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using System;
     using System.Collections.Generic;
@@ -10,6 +11,8 @@
     public class Patient : User
     {
         public bool Hospitalized { get; set; }
+
+        public BloodType BloodType { get; set; }
 
         public Patient() { }
 

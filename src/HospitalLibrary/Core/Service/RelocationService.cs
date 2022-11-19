@@ -22,7 +22,7 @@
             {
                 return _unitOfWork.RelocationRepository.Create(entity);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -63,7 +63,7 @@
 
                 return dateTimes;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -84,7 +84,7 @@
                 else if (CheckRelocationRequests(roomId, startTime, endTime) != null) return CheckRelocationRequests(roomId, startTime, endTime);
                 else return null;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -123,7 +123,6 @@
         {
             return startTime < scheduledEndTime && endTime >= scheduledEndTime;
         }
-
 
 
     }
