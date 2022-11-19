@@ -24,6 +24,41 @@ namespace HospitalLibrary.Core.Service
             return _unitOfWork.RoomRepository.GetAll();
         }
 
+        public List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end, int equipmentType, int quantity)
+        {
+            List<Room> allRooms = (List<Room>)_unitOfWork.RoomRepository.GetAll();
+            List<Room> suitableRooms = new List<Room>();
+
+            foreach (Room room in allRooms)
+            {
+                if (room.Floor.Building.Id == buildingId)
+                {
+                    if (floorNumber == -1 || room.Floor.Number == floorNumber)
+                    {
+                        if (room.Number.Contains(roomNumber))
+                        {
+                            if (room.Purpose.Contains(purpose))
+                            {
+                                if (this.CheckWorkingHours(room, start, end))
+                                {
+                                    if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
+                                    {
+                                        suitableRooms.Add(room);
+                                    }
+                                }
+                                else
+                                {
+                                    suitableRooms.Add(room);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return suitableRooms;
+        }
+
         public Room GetById(int id)
         {
             return _unitOfWork.RoomRepository.GetById(id);
@@ -100,6 +135,15 @@ namespace HospitalLibrary.Core.Service
                 _logger.LogError($"Error in RoomService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        private bool CheckWorkingHours(Room room, DateTime start, DateTime end)
+        {
+            if (room.WorkingHours == null || TimeSpan.Compare(start.TimeOfDay, end.TimeOfDay) == 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

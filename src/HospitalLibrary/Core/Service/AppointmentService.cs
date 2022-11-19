@@ -166,7 +166,7 @@
                 List<Appointment> appointments = (List<Appointment>)_unitOfWork.AppointmentRepository.GetAppointmentsInDateRangeDoctor(doctorId, from, to);
                 return appointments;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

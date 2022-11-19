@@ -1,7 +1,6 @@
-﻿namespace HospitalLibrary.Core.Repository
+﻿namespace HospitalLibraryTest.InMemoryRepositories
 {
-    using HospitalLibrary.Core.Model;
-    using HospitalLibrary.Core.Repository.Blood;
+    using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
@@ -11,40 +10,16 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class UnitOfWork : IUnitOfWork
+    public class InMemoryUnitOfWork : IUnitOfWork
     {
-
         private readonly HospitalDbContext _context;
         private Dictionary<string, dynamic> _repositories;
 
-        public UnitOfWork(HospitalDbContext context)
+        public InMemoryUnitOfWork()
         {
-            _context = context;
-
-            UserRepository = new UserRepository(_context);
-            RoomRepository = new RoomRepository(_context);
-            FloorRepository = new FloorRepository(_context);
-            BuildingRepository = new BuildingRepository(_context);
-            WorkingHoursRepository = new WorkingHoursRepository(_context);
-            MapRepository = new MapRepository(_context);
-            AppointmentRepository = new AppointmentRepository(_context);
-            DoctorRepository = new DoctorRepository(_context);
-            FeedbackRepository = new FeedbackRepository(_context);
-            AppointmentRepository = new AppointmentRepository(_context);
-            PatientRepository = new PatientRepository(_context);
-            MedicalTreatmentRepository = new MedicalTreatmentRepository(_context);
-            TherapyRepository = new TherapyRepository(_context);
-            MedicamentTherapyRepository = new MedicamentTherapyRepository(_context);
-            BloodUnitTherapyRepository = new BloodUnitTherapyRepository(_context);
-            MedicamentRepository = new MedicamentRepository(_context);
-            VacationRequestsRepository = new VacationRequestsRepository(_context);
-            EquipmentRepository = new EquipmentRepository(_context);
-            RelocationRepository = new RelocationRepository(_context);
-
-            BloodUnitRepository = new BloodUnitRepository(_context);
-            BloodExpenditureRepository = new BloodExpenditureRepository(_context);
-            BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
-
+            RoomRepository = new InMemoryRoomRepository();
+            AppointmentRepository = new InMemoryAppointmentRepository();
+            EquipmentRepository = new InMemoryEquipmentRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -61,14 +36,20 @@
         public ITherapyRepository TherapyRepository { get; set; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }
         public IBloodUnitTherapyRepository BloodUnitTherapyRepository { get; set; }
-        public IMedicamentRepository MedicamentRepository { get; set; }
-        public IVacationRequestsRepository VacationRequestsRepository { get; set; }
-        public IEquipmentRepository EquipmentRepository { get; set; }
-        public IRelocationRepository RelocationRepository { get; set; }
 
-        public IBloodUnitRepository BloodUnitRepository { get; set; }
-        public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
-        public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }
+        public IMedicamentRepository MedicamentRepository => throw new NotImplementedException();
+
+        public IVacationRequestsRepository VacationRequestsRepository => throw new NotImplementedException();
+
+        public IEquipmentRepository EquipmentRepository { get; set; }
+
+        public IRelocationRepository RelocationRepository => throw new NotImplementedException();
+
+        public IBloodUnitRepository BloodUnitRepository => throw new NotImplementedException();
+
+        public IBloodExpenditureRepository BloodExpenditureRepository => throw new NotImplementedException();
+
+        public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

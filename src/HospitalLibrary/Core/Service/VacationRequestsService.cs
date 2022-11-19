@@ -17,7 +17,7 @@
     public class VacationRequestsService : BaseService<VacationRequest>, IVacationRequestsService
     {
         private readonly ILogger<VacationRequest> _logger;
-        private readonly IUnitOfWork _unitOfWork;
+        private new readonly IUnitOfWork _unitOfWork;
 
         public VacationRequestsService(ILogger<VacationRequest> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -31,7 +31,7 @@
             {
                 return _unitOfWork.VacationRequestsRepository.GetAllPending();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -60,7 +60,7 @@
 
                 return request;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

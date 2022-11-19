@@ -269,6 +269,39 @@
                 Room = equipmentRoom
             });
 
+            Building building = new Building()
+            {
+                Address = "Janka Cmelika 1",
+                Name = "Hospital2"
+            };
+
+            context.Buildings.Add(building);
+
+            Floor floor = new Floor()
+            {
+                Building = building,
+                Number = 0,
+                Purpose = "ortopedija"
+            };
+
+            context.Floors.Add(floor);
+
+            WorkingHours workingHours = new WorkingHours()
+            {
+                Start = new DateTime(2022, 11, 10, 4, 0, 0),
+                End = new DateTime(2022, 11, 10, 7, 0, 0)
+            };
+
+            context.WorkingHours.Add(workingHours);
+
+            context.Rooms.Add(new Room
+            {
+                Floor = floor,
+                Number = "003",
+                Purpose = "ordinacija",
+                WorkingHours = workingHours
+            });
+
             context.BloodUnits.Add(new BloodUnit
             {
                 BloodType = BloodType.A_PLUS,

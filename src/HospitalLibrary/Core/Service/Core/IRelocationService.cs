@@ -7,10 +7,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IEquipmentService
+    public interface IRelocationService
     {
-        List<Equipment> GetForRoom(int roomId);
-        Equipment Get(int id);
-        List<Room> SearchRooms(List<Room> rooms, int equipmentType, int quantity);
+        List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime from, DateTime to, int duration);
+        RelocationRequest Create(RelocationRequest entity);
     }
 }
