@@ -4,6 +4,7 @@
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.DTO.VacationRequest;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Core.Service.Core;
     using IdentityServer4.Extensions;
@@ -23,6 +24,13 @@
         {
             _vacationRequestsService = vacationRequestsService;
             _appointmentService = appointmentService;
+        }
+
+        [HttpPatch("handle")]
+        public IActionResult HandleVacationRequest([FromBody] VacationRequestDto request)
+        {
+            _vacationRequestsService.HandleVacationRequest(request.Status, request.Id, request.ManagerComment);
+            return Ok();
         }
 
         [HttpGet("getAllPending")]

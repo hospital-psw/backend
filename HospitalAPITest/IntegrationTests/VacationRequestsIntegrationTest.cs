@@ -1,6 +1,5 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
-    using HospitalAPI;
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto;
     using HospitalAPITest.Setup;
@@ -10,11 +9,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class VacationRequestsIntegrationTest : BaseIntegrationTest
     {
@@ -30,7 +25,7 @@
         }
 
         [Fact]
-        public void Test()
+        public void Test_get_all_pending()
         {
 
             using var scope = Factory.Services.CreateScope();
@@ -38,7 +33,31 @@
 
             var result = ((ObjectResult)controller.GetAllPending()).Value as List<VacationRequestDto>;
 
-            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_accept_vacation_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.HandleVacationRequest(new VacationRequestDto(1, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.APPROVED, null)) as StatusCodeResult;
+            //OkObjectResult okObject = result as OkObjectResult;
+
+
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+        }
+
+        [Fact]
+        public void Test_decline_vacation_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.HandleVacationRequest(new VacationRequestDto(2, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.REJECTED, "ne moze")) as StatusCodeResult;
+
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }
 
         [Fact]

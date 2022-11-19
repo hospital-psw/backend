@@ -38,7 +38,18 @@
                                                       .Include(x => x.MedicamentTherapies)
                                                       .ThenInclude(x => x.Medicament)
                                                       .Include(x => x.BloodUnitTherapies)
+                                                      .ThenInclude(x => x.BloodUnit)
                                                       .Where(x => !x.Deleted);
+        }
+
+        public IEnumerable<MedicalTreatment> GetActive()
+        {
+            return GetAll().Where(x => x.Active).ToList();
+        }
+
+        public IEnumerable<MedicalTreatment> GetInactive()
+        {
+            return GetAll().Where(x => !x.Active).ToList();
         }
     }
 }
