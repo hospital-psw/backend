@@ -93,10 +93,7 @@
 
             List<VacationRequestDto> dtos = new List<VacationRequestDto>();
 
-            foreach (VacationRequest vr in vacationRequests)
-            {
-                dtos.Add(VacationRequestsMapper.EntityToEntityDto(vr));
-            }
+            vacationRequests.ForEach(req => dtos.Add(VacationRequestsMapper.EntityToEntityDto(req)));
 
             return Ok(dtos);
         }
@@ -111,10 +108,7 @@
 
             List<VacationRequestDto> dtos = new List<VacationRequestDto>();
 
-            foreach (VacationRequest vr in vacationRequests)
-            {
-                dtos.Add(VacationRequestsMapper.EntityToEntityDto(vr));
-            }
+            vacationRequests.ForEach(req => dtos.Add(VacationRequestsMapper.EntityToEntityDto(req)));
 
             return Ok(dtos);
         }
@@ -130,10 +124,7 @@
 
             List<VacationRequestDto> dtos = new List<VacationRequestDto>();
 
-            foreach (VacationRequest vr in vacationRequests)
-            {
-                dtos.Add(VacationRequestsMapper.EntityToEntityDto(vr));
-            }
+            vacationRequests.ForEach(req => dtos.Add(VacationRequestsMapper.EntityToEntityDto(req)));
 
             return Ok(dtos);
         }
