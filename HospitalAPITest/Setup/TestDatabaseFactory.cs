@@ -309,7 +309,6 @@
             });
             context.VacationRequests.Add(new VacationRequest
             {
-                Deleted = false,
                 Doctor = doc,
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
@@ -321,7 +320,6 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Deleted = false,
                 Doctor = doc,
                 From = new DateTime(2023, 1, 12, 0, 0, 0),
                 To = new DateTime(2023, 1, 22, 0, 0, 0),
@@ -333,7 +331,6 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Deleted = false,
                 Doctor = doc,
                 From = new DateTime(2023, 2, 12, 0, 0, 0),
                 To = new DateTime(2023, 2, 22, 0, 0, 0),
@@ -345,7 +342,6 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Deleted = false,
                 Doctor = doc,
                 From = new DateTime(2023, 3, 12, 0, 0, 0),
                 To = new DateTime(2023, 3, 22, 0, 0, 0),
@@ -357,7 +353,6 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Deleted = false,
                 Doctor = doc,
                 From = new DateTime(2023, 4, 12, 0, 0, 0),
                 To = new DateTime(2023, 4, 22, 0, 0, 0),
@@ -369,7 +364,6 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Deleted = false,
                 Doctor = doc,
                 From = new DateTime(2023, 5, 12, 0, 0, 0),
                 To = new DateTime(2023, 5, 22, 0, 0, 0),

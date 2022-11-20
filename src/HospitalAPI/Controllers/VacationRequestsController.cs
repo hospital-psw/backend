@@ -66,7 +66,7 @@
 
             return Ok(VacationRequestsMapper.EntityToEntityDto(_vacationRequestsService.Create(dto)));
         }
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult GetAllRequestsByDoctorId(int doctorId)
         {
             List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRequestsByDoctorId(doctorId);
@@ -78,10 +78,7 @@
 
             List<VacationRequestDto> dtos = new List<VacationRequestDto>();
 
-            foreach(VacationRequest vr in vacationRequests)
-            {
-                dtos.Add(VacationRequestsMapper.EntityToEntityDto(vr));
-            }
+            vacationRequests.ForEach(req => dtos.Add(VacationRequestsMapper.EntityToEntityDto(req)));
 
             return Ok(dtos);   
         }
@@ -141,8 +138,8 @@
             return Ok(dtos);
         }
 
-        [HttpDelete("delete/{vacationRequestId}")]
-        public StatusCodeResult Delete(int vacationRequestId)
+        [HttpDelete("delete/{id}")]
+        public IActionResult Delete(int vacationRequestId)
         {
             VacationRequest vr = _vacationRequestsService.GetById(vacationRequestId);
 

@@ -125,7 +125,7 @@
             Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
         }
         [Fact]
-        public void Test_get_all_requests_for_docotor()
+        public void Test_get_all_requests_for_doctor()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
