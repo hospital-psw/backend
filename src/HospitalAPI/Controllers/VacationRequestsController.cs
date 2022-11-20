@@ -71,7 +71,7 @@
         {
             List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRequestsByDoctorId(doctorId);
 
-            if(vacationRequests.IsNullOrEmpty())
+            if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();
             }
@@ -80,7 +80,7 @@
 
             vacationRequests.ForEach(req => dtos.Add(VacationRequestsMapper.EntityToEntityDto(req)));
 
-            return Ok(dtos);   
+            return Ok(dtos);
         }
         [HttpGet("waiting")]
         public IActionResult GetAllWaitingByDoctorId(int doctorId)
@@ -123,7 +123,7 @@
         public IActionResult GetAllRejectedByDoctorId(int doctorId)
         {
             List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRejectedByDoctorId(doctorId);
-            if(vacationRequests.IsNullOrEmpty())
+            if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();
             }
@@ -143,12 +143,12 @@
         {
             VacationRequest vr = _vacationRequestsService.GetById(vacationRequestId);
 
-            if(vr == null)
+            if (vr == null)
             {
                 return NotFound();
             }
 
-            if(vr.Status != VacationRequestStatus.WAITING)
+            if (vr.Status != VacationRequestStatus.WAITING)
             {
                 return BadRequest();
             }

@@ -72,7 +72,7 @@
             {
                 return _unitOfWork.VacationRequestsRepository.GetAllRequestsByDoctorsId(doctorId);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
@@ -108,7 +108,7 @@
             {
                 return _unitOfWork.VacationRequestsRepository.GetAllRejectedByDoctorId(doctorId);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
