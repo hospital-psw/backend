@@ -39,10 +39,10 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<BloodAcquisition> BloodAcquisitions { get; set; }
         public DbSet<BloodExpenditure> BloodExpenditures { get; set; }
-
-
         public DbSet<RelocationRequest> RelocationRequests { get; set; }
         public DbSet<VacationRequest> VacationRequests { get; set; }
+        public DbSet<ApplicationPatient> ApplicationPatients { get; set; }
+        public DbSet<ApplicationDoctor> ApplicationDoctors { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
