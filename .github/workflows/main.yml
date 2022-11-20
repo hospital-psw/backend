@@ -27,9 +27,15 @@ jobs:
       
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
+      
+      - name: Setup NuGet.exe
+        uses: nuget/setup-nuget@v1
 
       - name: Check out code
         uses: actions/checkout@v2
+
+      - name: NuGet restore
+        uses: nuget restore Hospital.sln
         
       - name: Restore dependencies
         run: dotnet restore
@@ -39,6 +45,3 @@ jobs:
       
       - name: Build
         run: dotnet build --no-restore
-
-      - name: Build IntegrationService
-        run: msbuild IntegrationServices/IntegrationServices.csproj
