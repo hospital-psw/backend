@@ -163,5 +163,21 @@
             result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
 
+        [Fact]
+        public void Create_News()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            var news = new UserNewsDTO
+            {
+                DateCreated = DateTime.Now,
+                Title = "Test title",
+                Text = "Test body",
+                Image = "Test image",
+            };
+            var result = (StatusCodeResult)controller.Create(news);
+
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
+        }
     }
 }

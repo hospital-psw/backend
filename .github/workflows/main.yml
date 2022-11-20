@@ -24,9 +24,18 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      
+      - name: Setup NuGet.exe
+        uses: nuget/setup-nuget@v1
 
       - name: Check out code
         uses: actions/checkout@v2
+
+      - name: NuGet restore
+        run: nuget restore Hospital.sln
         
       - name: Restore dependencies
         run: dotnet restore

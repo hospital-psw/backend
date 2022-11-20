@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
@@ -35,6 +36,9 @@
                 MedicalTreatment medicalTreatment = _unitOfWork.MedicalTreatmentRepository.Get(medicalTreatmentId);
                 medicalTreatment.BloodUnitTherapies.Add(entity);
                 _unitOfWork.MedicalTreatmentRepository.Update(medicalTreatment);
+
+                BloodExpenditure bloodExpenditure = new BloodExpenditure(medicalTreatment.Doctor, entity.BloodUnit.BloodType, entity.AmountOfBloodUnit, "Blood therapy", DateTime.Now);
+                _unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
 
                 _unitOfWork.BloodUnitTherapyRepository.Add(entity);
                 _unitOfWork.Save();
