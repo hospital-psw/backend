@@ -39,14 +39,17 @@
                 List<DateTime> dateTimes = new List<DateTime>();
                 while (startTime.AddHours(duration) <= toTime)
                 {
-                    if (startTime.AddHours(duration).TimeOfDay > (new DateTime(2022, 1, 1, 22, 0, 0)).TimeOfDay) //building end time
+                    DateTime newStartTime = CheckRoom(roomId1, startTime, startTime.AddHours(duration));
+                    newStartTime = CheckRoom(roomId2, newStartTime, newStartTime.AddHours(duration));
+                    if (newStartTime == startTime)
                     {
-                        if (startTime.Day < toTime.Day) startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day + 1, 7, 0, 0);
-                        else break;
+                        dateTimes.Add(startTime);
+                        startTime = startTime.AddHours(duration);
                     }
-                    DateTime newStartTime = CheckBothRooms(roomId1, roomId2, startTime, duration);
-                    if (newStartTime.AddHours(duration * -1) == startTime) dateTimes.Add(startTime);
-                    startTime = newStartTime;
+                    else
+                    {
+                        startTime = newStartTime;
+                    }
                 }
 
                 return dateTimes;
@@ -55,14 +58,6 @@
             {
                 return null;
             }
-        }
-
-        public DateTime CheckBothRooms(int roomId1, int roomId2, DateTime startTime, int duration)
-        {
-            DateTime newStartTime = CheckRoom(roomId1, startTime, startTime.AddHours(duration));
-            newStartTime = CheckRoom(roomId2, newStartTime, newStartTime.AddHours(duration));
-            if (newStartTime == startTime) return startTime.AddHours(duration);
-            else return newStartTime;
         }
 
         public DateTime CheckRoom(int roomId, DateTime startTime, DateTime endTime)

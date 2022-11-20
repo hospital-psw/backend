@@ -31,8 +31,8 @@
         [HttpPut("recommend")]
         public IActionResult GetRecommendedRelocationAppointments([FromBody] RecommendRelocationRequestDto dto)
         {
-            DateTime startTime = new DateTime(dto.FromTime.Year, dto.FromTime.Month, dto.FromTime.Day, 7, 0, 0);
-            DateTime toTime = new DateTime(dto.ToTime.Year, dto.FromTime.Month, dto.FromTime.Day, 22, 0, 0);
+            DateTime startTime = new DateTime(dto.FromTime.Year, dto.FromTime.Month, dto.FromTime.Day, 0, 0, 0);
+            DateTime toTime = new DateTime(dto.ToTime.Year, dto.ToTime.Month, dto.ToTime.Day, 0, 0, 0);
             return Ok(_relocationService.GetAvailableAppointments(dto.FromRoomId, dto.ToRoomId, startTime, toTime, dto.Duration));
         }
     }
