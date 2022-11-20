@@ -25,6 +25,7 @@
             _mapper = mapper;
         }
 
+        //treba izmenjati u zavisnosti od usera koji se registruje
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDTO dto) 
         {
@@ -70,5 +71,13 @@
 
             return BadRequest("Something went wrong...");
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _authService.SignOutAsync();
+            return Ok("User logged out.");
+        }
+
     }
 }

@@ -14,6 +14,7 @@
         Task<SignInResult> Login(string email, string password, bool rememberMe);
         Task SignInAsync(ApplicationUser user);
         Task<ApplicationUser> FindByEmailAsync(string email);
-        
+        Task SignOutAsync();
+
     }
 }
