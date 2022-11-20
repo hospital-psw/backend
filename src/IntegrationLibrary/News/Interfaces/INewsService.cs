@@ -10,5 +10,8 @@
         IEnumerable<News> GetPending();
         bool Publish(int id);
         bool Archive(int id);
+        string GetImageExtension(News entity);
+        string GetImageData(News entity);
+        void SaveImageToDisk(News entity);
     }
 }

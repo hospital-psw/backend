@@ -4,6 +4,7 @@
     using IntegrationAPI.DTO.BloodBank;
     using IntegrationAPI.DTO.News;
     using IntegrationLibrary.BloodBank;
+    using IntegrationLibrary.News;
     using IntegrationLibrary.News.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -77,6 +78,18 @@
                 return Ok();
             }
             return BadRequest();
+        }
+
+        [HttpPost]
+        public virtual IActionResult Create([FromBody] UserNewsDTO news)
+        {
+            var entity = _newsService.Create(_mapper.Map<News>(news));
+
+            if (entity is null)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
     }
 }
