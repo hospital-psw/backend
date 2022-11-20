@@ -27,6 +27,39 @@
                                             ToList();
         }
 
+        public IEnumerable<VacationRequest> GetAllRequestsByDoctorsId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                            .Where(x => !x.Deleted && x.Doctor.Id == doctorId)
+                                            .ToList();
+        }
+        public IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => !x.Deleted && x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.WAITING)
+                                           .ToList();
+        }
+
+        public IEnumerable<VacationRequest> GetAllApprovedByDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => !x.Deleted && x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.APPROVED)
+                                           .ToList();
+        }
+
+        public IEnumerable<VacationRequest> GetAllRejectedByDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => !x.Deleted && x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.REJECTED)
+                                           .ToList();
+        }
+
+        public override VacationRequest Get(int id)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                            .FirstOrDefault(x => x.Id == id && !x.Deleted);
+        }
+
         public int Save()
         {
             return _context.SaveChanges();

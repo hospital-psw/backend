@@ -65,6 +65,78 @@
                 return null;
             }
         }
+
+        public IEnumerable<VacationRequest> GetAllRequestsByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllRequestsByDoctorsId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllWaitingByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<VacationRequest> getAllApprovedByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllApprovedByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<VacationRequest> GetAllRejectedByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllRejectedByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public VacationRequest GetById(int vacationRequestId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.Get(vacationRequestId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void Delete(VacationRequest vacationRequest)
+        {
+            try
+            {
+                vacationRequest.Deleted = true;
+                _unitOfWork.VacationRequestsRepository.Update(vacationRequest);
+                _unitOfWork.Save();
+
+            }
+            catch (Exception) { }
+        }
     }
 
 }
