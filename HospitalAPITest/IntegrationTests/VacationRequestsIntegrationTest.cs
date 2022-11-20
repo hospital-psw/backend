@@ -161,5 +161,17 @@
 
             Assert.NotEmpty(result);
         }
+
+        [Fact]
+        public void Test_get_all_rejected_requests_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllRejectedByDoctorId(doctorId)).Value as List<VacationRequestDto>;
+            Assert.NotEmpty(result);
+        }
     }
 }

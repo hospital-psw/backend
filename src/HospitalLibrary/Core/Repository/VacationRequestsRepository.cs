@@ -47,6 +47,13 @@
                                            .ToList();
         }
 
+        public IEnumerable<VacationRequest> GetAllRejectedByDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => !x.Deleted && x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.REJECTED)
+                                           .ToList();
+        }
+
         public int Save()
         {
             return _context.SaveChanges();

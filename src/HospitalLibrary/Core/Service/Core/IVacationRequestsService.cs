@@ -20,5 +20,6 @@
         IEnumerable<VacationRequest> GetAllRequestsByDoctorId(int doctorId);
         IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId);
         IEnumerable<VacationRequest> getAllApprovedByDoctorId(int doctorId);
+        IEnumerable<VacationRequest> GetAllRejectedByDoctorId(int doctorId);
     }
 }

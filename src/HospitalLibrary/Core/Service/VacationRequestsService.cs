@@ -101,6 +101,18 @@
                 return null;
             }
         }
+
+        public IEnumerable<VacationRequest> GetAllRejectedByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllRejectedByDoctorId(doctorId);
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+        }
     }
 
 }

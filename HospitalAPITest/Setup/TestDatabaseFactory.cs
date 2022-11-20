@@ -343,6 +343,30 @@
                 ManagerComment = ""
             });
 
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2023, 3, 12, 0, 0, 0),
+                To = new DateTime(2023, 3, 22, 0, 0, 0),
+                Status = VacationRequestStatus.REJECTED,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = "Mnogo trazis baca"
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2023, 4, 12, 0, 0, 0),
+                To = new DateTime(2023, 4, 22, 0, 0, 0),
+                Status = VacationRequestStatus.REJECTED,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = "Ti ga bas pretera"
+            });
+
             context.SaveChanges();
 
         }
