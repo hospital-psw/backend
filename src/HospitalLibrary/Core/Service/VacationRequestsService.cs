@@ -113,6 +113,30 @@
                 return null;
             }
         }
+
+        public VacationRequest GetById(int vacationRequestId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.Get(vacationRequestId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void Delete(VacationRequest vacationRequest)
+        {
+            try
+            {
+                vacationRequest.Deleted = true;
+                _unitOfWork.VacationRequestsRepository.Update(vacationRequest);
+                _unitOfWork.Save();
+
+            }
+            catch (Exception) { }
+        }
     }
 
 }

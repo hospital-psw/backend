@@ -140,5 +140,25 @@
 
             return Ok(dtos);
         }
+
+        [HttpDelete("delete/{vacationRequestId}")]
+        public StatusCodeResult Delete(int vacationRequestId)
+        {
+            VacationRequest vr = _vacationRequestsService.GetById(vacationRequestId);
+
+            if(vr == null)
+            {
+                return NotFound();
+            }
+
+            if(vr.Status != VacationRequestStatus.WAITING)
+            {
+                return BadRequest();
+            }
+
+            _vacationRequestsService.Delete(vr);
+
+            return Ok();
+        }
     }
 }

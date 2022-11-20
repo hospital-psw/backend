@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System.Collections.Generic;
+    using System.Net.NetworkInformation;
 
     public class VacationRequestsIntegrationTest : BaseIntegrationTest
     {
@@ -172,6 +173,42 @@
 
             var result = ((OkObjectResult)controller.GetAllRejectedByDoctorId(doctorId)).Value as List<VacationRequestDto>;
             Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_delete_vacation_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int vacationRequestId = 1;
+            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
+
+            Assert.Equal(result.StatusCode, StatusCodes.Status200OK);
+        }
+
+        [Fact]
+        public void Doctor_tries_to_delete_nonexistent_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int vacationRequestId = 100;
+            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
+
+            Assert.Equal(result.StatusCode, StatusCodes.Status404NotFound);
+        }
+
+        [Fact]
+        public void Doctor_tries_to_delete_nonwaiting_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int vacationRequestId = 6;
+            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
+
+            Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
         }
     }
 }

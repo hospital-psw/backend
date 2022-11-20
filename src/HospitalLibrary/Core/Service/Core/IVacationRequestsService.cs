@@ -21,5 +21,7 @@
         IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId);
         IEnumerable<VacationRequest> getAllApprovedByDoctorId(int doctorId);
         IEnumerable<VacationRequest> GetAllRejectedByDoctorId(int doctorId);
+        VacationRequest GetById(int vacationRequestId);
+        void Delete(VacationRequest vacationRequest);
     }
 }

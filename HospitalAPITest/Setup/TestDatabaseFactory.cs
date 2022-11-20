@@ -367,6 +367,18 @@
                 ManagerComment = "Ti ga bas pretera"
             });
 
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2023, 5, 12, 0, 0, 0),
+                To = new DateTime(2023, 5, 22, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = ""
+            });
+
             context.SaveChanges();
 
         }

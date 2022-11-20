@@ -54,6 +54,12 @@
                                            .ToList();
         }
 
+        public override VacationRequest Get(int id)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                            .FirstOrDefault(x => x.Id == id && !x.Deleted);
+        }
+
         public int Save()
         {
             return _context.SaveChanges();
