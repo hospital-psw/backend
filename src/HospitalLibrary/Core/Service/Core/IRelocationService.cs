@@ -9,7 +9,7 @@
 
     public interface IRelocationService
     {
-        List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime from, DateTime to, int duration);
+        List<DateTime> GetAppointments(int roomId1, int roomId2, DateTime from, DateTime to, int duration);
         RelocationRequest Create(RelocationRequest entity);
         void FinishRelocation();
 

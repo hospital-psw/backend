@@ -32,6 +32,15 @@
             }
         }
 
+        public List<DateTime> GetAppointments(int roomId1, int roomId2, DateTime from, DateTime to, int duration)
+        {
+            DateTime startTime = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
+            DateTime toTime = new DateTime(to.Year, to.Month, to.Day + 1, 0, 0, 0);
+            DateTime currentDateTime = DateTime.Now;
+            if (startTime.Day == currentDateTime.Day) startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, currentDateTime.Hour + 1, 0, 0);
+            return GetAvailableAppointments(roomId1, roomId2, startTime, toTime, duration);
+        }
+
         public List<DateTime> GetAvailableAppointments(int roomId1, int roomId2, DateTime startTime, DateTime toTime, int duration)
         {
             try
