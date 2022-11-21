@@ -34,27 +34,18 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Room room in allRooms)
             {
-                if (room.Floor.Building.Id == buildingId)
+                if (room.Floor.Building.Id == buildingId && (floorNumber == -1 || room.Floor.Number == floorNumber) && room.Number.Contains(roomNumber) && room.Purpose.Contains(purpose))
                 {
-                    if (floorNumber == -1 || room.Floor.Number == floorNumber)
+                    if (this.CheckWorkingHours(room, start, end))
                     {
-                        if (room.Number.Contains(roomNumber))
+                        if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
                         {
-                            if (room.Purpose.Contains(purpose))
-                            {
-                                if (this.CheckWorkingHours(room, start, end))
-                                {
-                                    if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
-                                    {
-                                        suitableRooms.Add(room);
-                                    }
-                                }
-                                else
-                                {
-                                    suitableRooms.Add(room);
-                                }
-                            }
+                            suitableRooms.Add(room);
                         }
+                    }
+                    else
+                    {
+                        suitableRooms.Add(room);
                     }
                 }
             }
