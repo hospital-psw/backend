@@ -41,7 +41,6 @@
             VacationRequestsRepository = new VacationRequestsRepository(_context);
             EquipmentRepository = new EquipmentRepository(_context);
             RelocationRepository = new RelocationRepository(_context);
-
             BloodUnitRepository = new BloodUnitRepository(_context);
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);

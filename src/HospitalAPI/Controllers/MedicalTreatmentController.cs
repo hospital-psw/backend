@@ -7,8 +7,10 @@
     using HospitalLibrary.Core.Service.Core;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
+    using PagedList;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     [ApiController]
@@ -96,9 +98,14 @@
             return Ok(MedicalTreatmentMapper.EntityToEntityDto(finishedTreatment));
         }
 
-        [HttpGet("active")]
-        public IActionResult GetActive()
+        [HttpGet("active/{pageSize}/{pageNumber}")]
+        public IActionResult GetActive(int pageSize, int pageNumber)
         {
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
             List<MedicalTreatment> activeTreatments = _medicalTreatmentService.GetActive().ToList();
             List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
 
@@ -108,12 +115,17 @@
             }
 
             activeTreatments.ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
-            return Ok(dtoList);
+            return Ok(dtoList.ToPagedList(pageNumber, pageSize));
         }
 
-        [HttpGet("inactive")]
-        public IActionResult GetInactive()
+        [HttpGet("inactive/{pageSize}/{pageNumber}")]
+        public IActionResult GetInactive(int pageSize, int pageNumber)
         {
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
             List<MedicalTreatment> inactiveTreatments = _medicalTreatmentService.GetInactive().ToList();
             List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
 
@@ -123,7 +135,17 @@
             }
 
             inactiveTreatments.ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
-            return Ok(dtoList);
+            return Ok(dtoList.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpGet("pdf/{id}")]
+        public IActionResult FetchPdf(int id)
+        {
+            _medicalTreatmentService.GeneratePdf(id);
+
+            var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/treatment.pdf", FileMode.Open);
+            return File(stream, "application/pdf", "treatment.pdf");
+
         }
     }
 
