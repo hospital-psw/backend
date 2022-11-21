@@ -24,5 +24,6 @@
 
         IEnumerable<MedicalTreatment> GetActive();
         IEnumerable<MedicalTreatment> GetInactive();
+        void GeneratePdf(int id);
     }
 }

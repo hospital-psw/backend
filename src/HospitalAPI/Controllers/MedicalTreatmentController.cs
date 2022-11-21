@@ -10,6 +10,7 @@
     using PagedList;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     [ApiController]
@@ -135,6 +136,16 @@
 
             inactiveTreatments.ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
             return Ok(dtoList.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpGet("pdf/{id}")]
+        public IActionResult FetchPdf(int id)
+        {
+            _medicalTreatmentService.GeneratePdf(id);
+
+            var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/treatment.pdf", FileMode.Open);
+            return File(stream, "application/pdf", "treatment.pdf");
+            
         }
     }
 
