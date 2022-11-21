@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121184054_AddedAllergiesAndDoctorColumnsToApplicationPatient")]
+    partial class AddedAllergiesAndDoctorColumnsToApplicationPatient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -959,13 +961,13 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("BloodType")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Hospitalized")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("applicationDoctorId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("applicationDoctorId");
+                    b.HasIndex("DoctorId");
 
                     b.HasDiscriminator().HasValue("ApplicationPatient");
                 });
@@ -1269,11 +1271,11 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", b =>
                 {
-                    b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", "applicationDoctor")
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
                         .WithMany()
-                        .HasForeignKey("applicationDoctorId");
+                        .HasForeignKey("DoctorId");
 
-                    b.Navigation("applicationDoctor");
+                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
