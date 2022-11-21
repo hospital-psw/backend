@@ -24,13 +24,12 @@
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(15));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
             return Task.CompletedTask;
         }
 
         public void DoWork(object state)
         {
-
             using(var scope = _serviceProvider.CreateScope())
             {
                 var _relocationService = scope.ServiceProvider.GetRequiredService<IRelocationService>();

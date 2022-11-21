@@ -37,12 +37,14 @@
         }
 
         public List<RelocationRequest> GetFinishedRelocations() {
+            DateTime currentTime = DateTime.Now;
             return HospitalDbContext.RelocationRequests.Include(x => x.FromRoom)
                                                         .Include(x => x.ToRoom)
                                                         .Include(x => x.Equipment)
-                                                        .Where(x => !x.Deleted && x.StartTime.AddHours(x.Duration) <= DateTime.Now)
+                                                        .Where(x => !x.Deleted && DateTime.Compare(x.StartTime.AddHours(x.Duration), currentTime) <= 0)
                                                         .ToList();
         }
+
         public int Save()
         {
             return _context.SaveChanges();
