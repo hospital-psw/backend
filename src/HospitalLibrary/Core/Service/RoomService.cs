@@ -13,10 +13,12 @@ namespace HospitalLibrary.Core.Service
     {
 
         private readonly ILogger<Room> _logger;
+        private readonly IEquipmentService _equipmentService;
 
-        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public RoomService(ILogger<Room> logger, IEquipmentService equipmentService, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
+            _equipmentService = equipmentService;
         }
 
         public IEnumerable<Room> GetAll()
@@ -28,6 +30,7 @@ namespace HospitalLibrary.Core.Service
         {
             List<Room> allRooms = (List<Room>)_unitOfWork.RoomRepository.GetAll();
             List<Room> suitableRooms = new List<Room>();
+            List<Room> suitableRoomsWithEquipment = new List<Room>();
 
             foreach (Room room in allRooms)
             {
@@ -55,8 +58,9 @@ namespace HospitalLibrary.Core.Service
                     }
                 }
             }
+            suitableRoomsWithEquipment = _equipmentService.SearchRooms(suitableRooms, equipmentType, quantity);
 
-            return suitableRooms;
+            return suitableRoomsWithEquipment;
         }
 
         public Room GetById(int id)
