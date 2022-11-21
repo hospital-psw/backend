@@ -7,13 +7,15 @@ using HospitalLibrary.Core.Model.Therapy;
 using HospitalLibrary.Core.Model.VacationRequest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Core.Model.ApplicationUser;
 
 namespace HospitalLibrary.Settings
 {
-    public class HospitalDbContext : DbContext
+    public class HospitalDbContext : IdentityDbContext<ApplicationUser,ApplicationRole,int>
     {
         //private static ProjectConfiguration _configuration;
 
@@ -22,7 +24,6 @@ namespace HospitalLibrary.Settings
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<RoomMap> RoomsMap { get; set; }
-
         public DbSet<WorkingHours> WorkingHours { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
@@ -38,10 +39,10 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<BloodAcquisition> BloodAcquisitions { get; set; }
         public DbSet<BloodExpenditure> BloodExpenditures { get; set; }
-
-
         public DbSet<RelocationRequest> RelocationRequests { get; set; }
         public DbSet<VacationRequest> VacationRequests { get; set; }
+        public DbSet<ApplicationPatient> ApplicationPatients { get; set; }
+        public DbSet<ApplicationDoctor> ApplicationDoctors { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -51,14 +52,7 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*modelBuilder.Entity<Floor>().HasData(
-                new Floor() { Id = 2 },
-                new Floor() { Id = 3 },
-                new Floor() { Id = 4 },
-                new Floor() { Id = 5 }
-            ) ; 
-            base.OnModelCreating(modelBuilder);*/
-
+            base.OnModelCreating(modelBuilder);
         }
 
         public override int SaveChanges()
