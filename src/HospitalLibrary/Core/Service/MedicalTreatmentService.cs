@@ -8,6 +8,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using HospitalLibrary.Util;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -72,15 +73,18 @@
             try
             {
                 Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
-                patient.Hospitalized = true;
+                HospitalizePatietnt(patient);
+
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
+                AddPatientToRoom(room, patient);
+
                 MedicalTreatment medicalTreatment = new MedicalTreatment(room, patient, doctor, new List<MedicamentTherapy>(), new List<BloodUnitTherapy>(), DateTime.Now, default(DateTime), true, "", dto.AdmittanceReason);
 
-                _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
-                _unitOfWork.Save();
+                SetupTreatment(medicalTreatment);
 
+                _unitOfWork.Save();
                 return medicalTreatment;
             }
             catch (Exception e)
@@ -88,6 +92,23 @@
                 _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        private void SetupTreatment(MedicalTreatment medicalTreatment)
+        {
+            _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
+        }
+
+        private void HospitalizePatietnt(Patient patient)
+        {
+            patient.Hospitalized = true;
+            _unitOfWork.PatientRepository.Update(patient);
+        }
+
+        private void AddPatientToRoom(Room room, Patient patient)
+        {
+            room.Patients.Add(patient);
+            _unitOfWork.RoomRepository.Update(room);
         }
 
         public void Delete(MedicalTreatment medicalTreatment)
@@ -110,7 +131,9 @@
             {
                 SetTherapiesFinished(medicalTreatment);
                 ReleasePatientFromRoom(medicalTreatment);
+                SetPatientToNonHospitalized(medicalTreatment);
                 SetTreatmentFinished(medicalTreatment, description);
+
                 _unitOfWork.Save();
                 return medicalTreatment;
             }
@@ -146,6 +169,12 @@
             _unitOfWork.RoomRepository.Update(treatment.Room);
         }
 
+        public void SetPatientToNonHospitalized(MedicalTreatment medicalTreatment)
+        {
+            medicalTreatment.Patient.Hospitalized = false;
+            _unitOfWork.PatientRepository.Update(medicalTreatment.Patient);
+        }
+
         public IEnumerable<MedicalTreatment> GetActive()
         {
             try
@@ -170,6 +199,12 @@
                 _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        public void GeneratePdf(int id)
+        {
+            MedicalTreatment treatment = _unitOfWork.MedicalTreatmentRepository.Get(id);
+            PDFUtil.GenerateTreatmentPdf(treatment);
         }
     }
 }

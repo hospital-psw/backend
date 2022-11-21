@@ -702,6 +702,9 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.User");
 
+                    b.Property<int>("BloodType")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Hospitalized")
                         .HasColumnType("bit");
 

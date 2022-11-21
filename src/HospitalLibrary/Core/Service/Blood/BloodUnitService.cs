@@ -42,6 +42,11 @@
             return _unitOfWork.BloodUnitRepository.GetAmountForSpecificBloodType(bloodType);
 
         }
+
+        public BloodUnit GetByBloodType(BloodType bloodType)
+        {
+            return _unitOfWork.BloodUnitRepository.GetByBloodType(bloodType);
+        }
     }
 }
 

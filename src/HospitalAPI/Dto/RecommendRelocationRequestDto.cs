@@ -6,10 +6,8 @@
 
     public class RecommendRelocationRequestDto
     {
-        public RoomDto FromRoom { get; set; }
-        public RoomDto ToRoom { get; set; }
-        public Equipment Equipment { get; set; }
-        public int Quantity { get; set; }
+        public int FromRoomId { get; set; }
+        public int ToRoomId { get; set; }
         public DateTime FromTime { get; set; }
         public DateTime ToTime { get; set; }
         public int Duration { get; set; }

@@ -6,6 +6,7 @@ using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Core;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace HospitalAPI.Controllers
     {
         private readonly IRoomService _roomService;
 
-        public RoomsController(IRoomService roomService)
+        public RoomsController(IRoomService roomService, IEquipmentService equipmentService)
         {
             _roomService = roomService;
         }
@@ -40,6 +41,26 @@ namespace HospitalAPI.Controllers
                 return Ok(room);
             }
             return BadRequest("Bad request, please enter valid data.");
+        }
+
+        [HttpPost]
+        public IActionResult Search(SearchCriteriaDto dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest("Bad request, please enter valid data.");
+            }
+            List<Room> rooms = _roomService.Search(dto.RoomNumber, dto.FloorNumber, dto.BuildingId, dto.RoomPurpose, dto.WorkingHoursStart, dto.WorkingHoursEnd, dto.EquipmentType, dto.Quantity);
+            List<RoomDto> searchedRoomsDto = new List<RoomDto>();
+            if (rooms == null)
+            {
+                return NotFound();
+            }
+
+            rooms.ForEach(r => searchedRoomsDto.Add(RoomMapper.EntityToEntityDto(r)));
+
+            return Ok(searchedRoomsDto);
+
         }
 
         [HttpGet("available")]

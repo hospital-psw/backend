@@ -13,15 +13,45 @@ namespace HospitalLibrary.Core.Service
     {
 
         private readonly ILogger<Room> _logger;
+        private readonly IEquipmentService _equipmentService;
 
-        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public RoomService(ILogger<Room> logger, IEquipmentService equipmentService, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
+            _equipmentService = equipmentService;
         }
 
         public IEnumerable<Room> GetAll()
         {
             return _unitOfWork.RoomRepository.GetAll();
+        }
+
+        public List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end, int equipmentType, int quantity)
+        {
+            List<Room> allRooms = (List<Room>)_unitOfWork.RoomRepository.GetAll();
+            List<Room> suitableRooms = new List<Room>();
+            List<Room> suitableRoomsWithEquipment = new List<Room>();
+
+            foreach (Room room in allRooms)
+            {
+                if (room.Floor.Building.Id == buildingId && (floorNumber == -1 || room.Floor.Number == floorNumber) && room.Number.Contains(roomNumber) && room.Purpose.Contains(purpose))
+                {
+                    if (this.CheckWorkingHours(room, start, end))
+                    {
+                        if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
+                        {
+                            suitableRooms.Add(room);
+                        }
+                    }
+                    else
+                    {
+                        suitableRooms.Add(room);
+                    }
+                }
+            }
+            suitableRoomsWithEquipment = _equipmentService.SearchRooms(suitableRooms, equipmentType, quantity);
+
+            return suitableRoomsWithEquipment;
         }
 
         public Room GetById(int id)
@@ -100,6 +130,15 @@ namespace HospitalLibrary.Core.Service
                 _logger.LogError($"Error in RoomService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        private bool CheckWorkingHours(Room room, DateTime start, DateTime end)
+        {
+            if (room.WorkingHours == null || TimeSpan.Compare(start.TimeOfDay, end.TimeOfDay) == 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
