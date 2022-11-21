@@ -44,7 +44,7 @@
                 Random rng = new Random();
                 List<string> doctorsList = new List<string>();
                 List<int> patientNumberList = new List<int>();
-                foreach (ApplicationUser doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
+                foreach (ApplicationDoctor doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
                 {
                     doctorsList.Add(doctor.FirstName + " " + doctor.LastName);
                     patientNumberList.Add(rng.Next(10));    // getNumberOfPatients(Doctor d)
@@ -106,9 +106,21 @@
             return age;
         }
 
-        public IEnumerable<ApplicationUser> Test()
+        public List<int> GetUsersByType()
         {
-            return _unitOfWork.ApplicationUserRepository.GetAllDoctors();
+            List<int> retList= new List<int>();
+            retList.Add(_unitOfWork.ApplicationUserRepository.GetAllPatients().Count());
+            int[] doctors = new int[3];
+            foreach(ApplicationDoctor doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
+            {
+                if (doctor.Specialization == Model.Enums.Specialization.GENERAL) doctors[0]++;
+                if (doctor.Specialization == Model.Enums.Specialization.NEUROLOGY) doctors[1]++;
+                if (doctor.Specialization == Model.Enums.Specialization.CARDIOLOGY) doctors[2]++;
+            }
+            retList.Add(doctors[0]);
+            retList.Add(doctors[1]);
+            retList.Add(doctors[2]);
+            return retList;
         }
     }
 }

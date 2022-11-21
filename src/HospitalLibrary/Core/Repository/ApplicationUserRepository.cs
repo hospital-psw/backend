@@ -17,11 +17,11 @@
             _context = context;
         }
 
-        public IEnumerable<ApplicationUser> GetAllDoctors()
+        public IEnumerable<ApplicationDoctor> GetAllDoctors()
         {
             return _context.ApplicationDoctors.ToList();
         }
-        public IEnumerable<ApplicationUser> GetAllPatients()
+        public IEnumerable<ApplicationPatient> GetAllPatients()
         {
             return _context.ApplicationPatients.ToList();
         }

@@ -29,14 +29,10 @@
             dto.Chart1 = _statisticsService.GetNumberOfAppointmentsPerMonth();
             (dto.Chart2Names, dto.Chart2Values) = _statisticsService.GetPatientsPerDoctor();
             (dto.Chart3Male, dto.Chart3Female) = _statisticsService.GetNumberOfPatientsByAgeGroup();
+            dto.Chart4 = _statisticsService.GetUsersByType();
 
-            if (dto.Chart1 is null || dto.Chart2Names is null || dto.Chart2Values is null || dto.Chart3Male is null || dto.Chart3Female is null) return NotFound(); //TODO: better error handling
+            if (dto.Chart1 is null || dto.Chart2Names is null || dto.Chart2Values is null || dto.Chart3Male is null || dto.Chart3Female is null || dto.Chart4 is null) return NotFound("Something went wrong :("); //TODO: better error handling
             return Ok(dto);
-        }
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            return Ok(_statisticsService.Test());
         }
     }
 }

@@ -13,6 +13,6 @@
         public IEnumerable<int> GetNumberOfAppointmentsPerMonth();
         public (IEnumerable<string>, IEnumerable<int>) GetPatientsPerDoctor();
         public (List<int>, List<int>) GetNumberOfPatientsByAgeGroup();
-        public IEnumerable<ApplicationUser> Test();
+        public List<int> GetUsersByType();
     }
 }
