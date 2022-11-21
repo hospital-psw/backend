@@ -1,13 +1,13 @@
 ﻿namespace HospitalLibrary.Util
 {
     using HospitalLibrary.Core.Model.MedicalTreatment;
+    using HospitalLibrary.Core.Model.Therapy;
+    using IronPdf;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using IronPdf;
-    using HospitalLibrary.Core.Model.Therapy;
 
     public class PDFUtil
     {
@@ -32,7 +32,7 @@
         {
             string txt = "";
 
-            foreach(BloodUnitTherapy th in treatment.BloodUnitTherapies)
+            foreach (BloodUnitTherapy th in treatment.BloodUnitTherapies)
             {
                 string helper =
                        "<div class='terapija'>" +

@@ -32,7 +32,7 @@
                 default:
                     return "";
             }
-                
+
         }
     }
 }
