@@ -102,5 +102,10 @@
         {
             throw new NotImplementedException();
         }
+
+        public CalculateDTO CalculateExpenditure(DateTime from,DateTime to)
+        {
+            return new CalculateDTO();
+        }
     }
 }

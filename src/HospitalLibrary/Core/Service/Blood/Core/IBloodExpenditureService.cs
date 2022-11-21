@@ -20,5 +20,7 @@
         public void Update(CreateExpenditureDTO expendituredto);
 
         public BloodExpenditure Delete(int id);
+
+        public CalculateDTO CalculateExpenditure(DateTime from, DateTime to);
     }
 }
