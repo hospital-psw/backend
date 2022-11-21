@@ -311,7 +311,7 @@
             context.Allergies.Add(new Allergies
             {
                 Name = "kupus"
-               
+
             });
 
             context.VacationRequests.Add(new VacationRequest

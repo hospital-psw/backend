@@ -10,6 +10,6 @@
 
     public interface IAllergiesRepository : IBaseRepository<Allergies>
     {
-        
+
     }
 }

@@ -21,7 +21,7 @@
         public override IEnumerable<Allergies> GetAll()
         {
             return _context.Allergies.ToList();
-            
+
         }
     }
 }
