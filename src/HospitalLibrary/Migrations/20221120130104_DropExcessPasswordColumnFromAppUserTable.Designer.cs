@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221120130104_DropExcessPasswordColumnFromAppUserTable")]
+    partial class DropExcessPasswordColumnFromAppUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,10 +71,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -134,38 +132,6 @@ namespace HospitalLibrary.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Allergies", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("Allergies");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -927,39 +893,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.Core.Model.ApplicationUser.ApplicationUser");
-
-                    b.Property<int?>("OfficeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Specialization")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WorkHoursId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("OfficeId");
-
-                    b.HasIndex("WorkHoursId");
-
-                    b.HasDiscriminator().HasValue("ApplicationDoctor");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.Core.Model.ApplicationUser.ApplicationUser");
-
-                    b.Property<int>("BloodType")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Hospitalized")
-                        .HasColumnType("bit");
-
-                    b.HasDiscriminator().HasValue("ApplicationPatient");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.User");
@@ -1037,13 +970,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("MedicamentId");
 
                     b.HasDiscriminator().HasValue("MedicamentTherapy");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Allergies", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", null)
-                        .WithMany("Allergies")
-                        .HasForeignKey("PatientId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -1238,21 +1164,6 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Office")
-                        .WithMany()
-                        .HasForeignKey("OfficeId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.WorkingHours", "WorkHours")
-                        .WithMany()
-                        .HasForeignKey("WorkHoursId");
-
-                    b.Navigation("Office");
-
-                    b.Navigation("WorkHours");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Room", "Office")
@@ -1311,11 +1222,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
                 {
                     b.Navigation("Patients");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
-                {
-                    b.Navigation("Allergies");
                 });
 #pragma warning restore 612, 618
         }
