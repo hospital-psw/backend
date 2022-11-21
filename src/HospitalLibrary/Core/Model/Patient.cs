@@ -16,10 +16,9 @@
 
         public Patient() { }
 
-        public Patient(bool hospitalized, List<Allergies> allergies)
+        public Patient(bool hospitalized)
         {
             Hospitalized = hospitalized;
-            Allergies = allergies;
         }
 
         public Patient(string firstName, string lastName, string email, string password, bool hospitalized) : base(firstName, lastName, email, password, Role.PATIENT)

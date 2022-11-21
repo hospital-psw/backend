@@ -33,7 +33,7 @@
             var result = ((ObjectResult)controller.GetAll()).Value as List<AllergiesDto>;
 
             Assert.NotNull(result);
-            
+
         }
 
         [Fact]
@@ -44,14 +44,14 @@
 
             AllergiesDto dto = new AllergiesDto
             {
-                Name="Dust"
+                Name = "Dust"
             };
 
             var result = ((OkObjectResult)controller.Add(dto)).Value as Allergies;
 
             Assert.NotNull(result);
             Assert.Equal("Dust", result.Name);
-      
+
         }
     }
 }

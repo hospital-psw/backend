@@ -11,7 +11,7 @@
 
             dto.Id = allergy.Id;
             dto.Name = allergy.Name;
-            
+
 
             return dto;
         }
@@ -22,7 +22,7 @@
 
             allergy.Id = dto.Id;
             allergy.Name = dto.Name;
-           
+
 
             return allergy;
         }

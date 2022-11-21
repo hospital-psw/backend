@@ -35,7 +35,7 @@
             }
         }
 
-       
+
 
         public override IEnumerable<Allergies> GetAll()
         {
