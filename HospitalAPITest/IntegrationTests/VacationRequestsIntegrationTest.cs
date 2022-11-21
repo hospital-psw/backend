@@ -1,6 +1,5 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
-    using HospitalAPI;
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto;
     using HospitalAPITest.Setup;
@@ -10,11 +9,8 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Net.NetworkInformation;
 
     public class VacationRequestsIntegrationTest : BaseIntegrationTest
     {
@@ -30,7 +26,7 @@
         }
 
         [Fact]
-        public void Test()
+        public void Test_get_all_pending()
         {
 
             using var scope = Factory.Services.CreateScope();
@@ -38,7 +34,31 @@
 
             var result = ((ObjectResult)controller.GetAllPending()).Value as List<VacationRequestDto>;
 
-            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_accept_vacation_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.HandleVacationRequest(new VacationRequestDto(1, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.APPROVED, null)) as StatusCodeResult;
+            //OkObjectResult okObject = result as OkObjectResult;
+
+
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+        }
+
+        [Fact]
+        public void Test_decline_vacation_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.HandleVacationRequest(new VacationRequestDto(2, HospitalLibrary.Core.Model.Enums.VacationRequestStatus.REJECTED, "ne moze")) as StatusCodeResult;
+
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }
 
         [Fact]
@@ -101,6 +121,92 @@
             };
 
             var result = controller.Create(dto) as StatusCodeResult;
+
+            Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
+        }
+        [Fact]
+        public void Test_get_all_requests_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllRequestsByDoctorId(doctorId)).Value as List<VacationRequestDto>;
+
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_get_all_waiting_requests_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllWaitingByDoctorId(doctorId)).Value as List<VacationRequestDto>;
+
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_get_all_accepted_requests_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllApprovedByDoctorId(doctorId)).Value as List<VacationRequestDto>;
+
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_get_all_rejected_requests_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllRejectedByDoctorId(doctorId)).Value as List<VacationRequestDto>;
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_delete_vacation_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int vacationRequestId = 1;
+            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
+
+            Assert.Equal(result.StatusCode, StatusCodes.Status200OK);
+        }
+
+        [Fact]
+        public void Doctor_tries_to_delete_nonexistent_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int vacationRequestId = 100;
+            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
+
+            Assert.Equal(result.StatusCode, StatusCodes.Status404NotFound);
+        }
+
+        [Fact]
+        public void Doctor_tries_to_delete_nonwaiting_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int vacationRequestId = 6;
+            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
 
             Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
         }

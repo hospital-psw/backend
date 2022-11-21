@@ -100,5 +100,19 @@
             return Ok();
         }
 
+        [HttpGet]
+        [Route("doctor/{id}")]
+        public IActionResult GetDoctorAppointments(int id)
+        {
+            var appointments = _appointmentService.GetByDoctorsId(id);
+
+            if (appointments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            return Ok(appointments);
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.VacationRequest;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
@@ -16,7 +17,7 @@
     public class VacationRequestsService : BaseService<VacationRequest>, IVacationRequestsService
     {
         private readonly ILogger<VacationRequest> _logger;
-        private readonly IUnitOfWork _unitOfWork;
+        private new readonly IUnitOfWork _unitOfWork;
 
         public VacationRequestsService(ILogger<VacationRequest> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -30,10 +31,20 @@
             {
                 return _unitOfWork.VacationRequestsRepository.GetAllPending();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
+        }
+
+
+        public void HandleVacationRequest(VacationRequestStatus status, int id, string managerComment)
+        {
+            VacationRequest request = _unitOfWork.VacationRequestsRepository.Get(id);
+            request.Status = status;
+            request.ManagerComment = managerComment;
+            _unitOfWork.VacationRequestsRepository.Update(request);
+            _unitOfWork.VacationRequestsRepository.Save();
         }
 
         public VacationRequest Create(NewVacationRequestDto dto)
@@ -49,10 +60,83 @@
 
                 return request;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
         }
+
+        public IEnumerable<VacationRequest> GetAllRequestsByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllRequestsByDoctorsId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllWaitingByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<VacationRequest> getAllApprovedByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllApprovedByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public IEnumerable<VacationRequest> GetAllRejectedByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.GetAllRejectedByDoctorId(doctorId);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public VacationRequest GetById(int vacationRequestId)
+        {
+            try
+            {
+                return _unitOfWork.VacationRequestsRepository.Get(vacationRequestId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void Delete(VacationRequest vacationRequest)
+        {
+            try
+            {
+                vacationRequest.Deleted = true;
+                _unitOfWork.VacationRequestsRepository.Update(vacationRequest);
+                _unitOfWork.Save();
+
+            }
+            catch (Exception) { }
+        }
     }
+
 }
