@@ -16,12 +16,10 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
-        private readonly IDoctorService _doctorService;
 
-        public StatisticalController(IStatisticsService statisticsService, IDoctorService doctorService)
+        public StatisticalController(IStatisticsService statisticsService)
         {
             _statisticsService = statisticsService;
-            _doctorService = doctorService;
         }
 
         [HttpGet("getStats")]
@@ -29,19 +27,16 @@
         {
             StatisticsDTO dto = new StatisticsDTO();
             dto.Chart1 = _statisticsService.GetNumberOfAppointmentsPerMonth();
-            dto.Chart2Names = _statisticsService.getDoctorNames();
+            (dto.Chart2Names, dto.Chart2Values) = _statisticsService.GetPatientsPerDoctor();
+            (dto.Chart3Male, dto.Chart3Female) = _statisticsService.GetNumberOfPatientsByAgeGroup();
 
-            //THIS IS TEMPORARY SINCE THERE IS NO DOCTOR-PATIENT RELATION IMPLEMENTED
-            List<int> temp = new List<int>();
-            foreach (string doctor in dto.Chart2Names)
-            {
-                temp.Add(_statisticsService.getNumberOfDoctorsPatients());
-            }
-            dto.Chart2Values = temp;
-            //THIS IS TEMPORARY SINCE THERE IS NO DOCTOR-PATIENT RELATION IMPLEMENTED
-
-            if (dto.Chart1 is null || dto.Chart2Names is null || dto.Chart2Values is null) return NotFound();
+            if (dto.Chart1 is null || dto.Chart2Names is null || dto.Chart2Values is null || dto.Chart3Male is null || dto.Chart3Female is null) return NotFound(); //TODO: better error handling
             return Ok(dto);
+        }
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok(_statisticsService.Test());
         }
     }
 }

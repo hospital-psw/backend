@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
@@ -36,69 +37,78 @@
                 return null;
             }
         }
-        public IEnumerable<string> getDoctorNames()
+        public (IEnumerable<string>, IEnumerable<int>) GetPatientsPerDoctor()
         {
             try
             {
-                List<string> returnList = new List<string>();
-                foreach (User doctor in _unitOfWork.DoctorRepository.GetAll())
+                Random rng = new Random();
+                List<string> doctorsList = new List<string>();
+                List<int> patientNumberList = new List<int>();
+                foreach (ApplicationUser doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
                 {
-                    returnList.Add(doctor.FirstName + " " + doctor.LastName);
+                    doctorsList.Add(doctor.FirstName + " " + doctor.LastName);
+                    patientNumberList.Add(rng.Next(10));    // getNumberOfPatients(Doctor d)
                 }
-                return returnList;
+                return (doctorsList, patientNumberList);
             }
             catch (Exception)
             {
-                return null;
+                return (null, null);
             }
         }
 
-        public int getNumberOfDoctorsPatients() //TODO: remove when actual doctor-patient links are established!
-                                                             //if you see this later in production please delete :)
-        {
-            try
-            {
-                Random RNG = new Random();
-                return RNG.Next(10);
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
-        }
-
-        public List<int> getNumberOfPatientsByAgeGroup() 
+        public (List<int>, List<int>) GetNumberOfPatientsByAgeGroup() 
         {
             
             try
             {
-                List<int> returnList = new List<int>();
-                for(int i =0; i<6; i++)
+                List<int> males = new List<int>();
+                List<int> females = new List<int>();
+                for (int i =0; i<6; i++)
                 {
-                    returnList.Add(0);
-                }   //implemment Gender in Users and in repository make where(x => x.Gender = male/female)
-                foreach(Patient patient in _unitOfWork.PatientRepository.GetAll())
+                    males.Add(0);
+                    females.Add(0);
+                }  
+                foreach(ApplicationUser patient in _unitOfWork.ApplicationUserRepository.GetAllPatients())
                 {
-                    returnList[getPatientsAgeGroup(patient)]++; //WARNING: NOT IMPLEMENTED
+                    if(patient.Gender == Model.Enums.Gender.MALE)
+                    {
+                        males[GetAgeGroup(patient)]++;
+                    } 
+                    else {
+                        females[GetAgeGroup(patient)]++;
+                    }
                 }
-                return returnList;
+                return (males,females);
             }
             catch (Exception)
             {
-                return null;
+                return (null, null);
             }
         }
 
-        private int getPatientsAgeGroup(Patient patient)
+        public int GetAgeGroup(ApplicationUser patient)
         {
-            throw new NotImplementedException();
-            /* 
-             patientService.getAge(patient) switch {
-                age < 16 => return 0
-                age < 25 => return 1
-                age < ...
-            }
-             */
+            int age = GetAge(patient.DateOfBirth);
+            if (age <= 15) return 0;
+            if (age >= 16 && age <= 25) return 1;
+            if (age >= 26 && age <= 35) return 2;
+            if (age >= 36 && age <= 45) return 3;
+            if (age >= 46 && age <= 60) return 4;
+            return 5;
+        }
+
+        public int GetAge(DateTime dateOfBirth)
+        {
+            DateTime now = DateTime.Now;
+            int age = DateTime.Now.Year - dateOfBirth.Year;
+            if (now.Month < dateOfBirth.Month || (now.Month == dateOfBirth.Month && now.Day < dateOfBirth.Day)) age--;
+            return age;
+        }
+
+        public IEnumerable<ApplicationUser> Test()
+        {
+            return _unitOfWork.ApplicationUserRepository.GetAllDoctors();
         }
     }
 }
