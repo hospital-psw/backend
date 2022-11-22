@@ -3,9 +3,11 @@
     using AutoMapper;
     using IntegrationAPI.Controllers;
     using IntegrationAPI.DTO.News;
+    using IntegrationAPITest.MockData;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.News;
     using IntegrationLibrary.News.Interfaces;
+    using IntegrationLibrary.Settings;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -21,11 +23,24 @@
             return new NewsController(serviceScope.ServiceProvider.GetRequiredService<INewsService>(), serviceScope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
+        private IntegrationDbContext SetupContext(IServiceScope scope)
+        {
+            var context = scope.ServiceProvider.GetService<IntegrationDbContext>();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            context.News.Add(NewsMockData.PendingNews);
+            context.News.Add(NewsMockData.ArchivedNews);
+            context.News.Add(NewsMockData.PublishedNews);
+            context.SaveChanges();
+            return context;
+        }
+
         [Fact]
         public void Get_1_ShouldReturnPending()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((OkObjectResult)controller.Get(1)).Value as ManagerNewsDTO;
 
@@ -52,6 +67,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((OkObjectResult)controller.Get(3)).Value as ManagerNewsDTO;
 
@@ -65,6 +81,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((OkObjectResult)controller.GetAll()).Value as List<ManagerNewsDTO>;
 
@@ -77,6 +94,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((StatusCodeResult)controller.Get(10));
 
@@ -89,6 +107,8 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
+            SetupContext(scope);
+
             var result = ((OkObjectResult)controller.GetArchived()).Value as List<ManagerNewsDTO>;
 
             result.ShouldNotBeNull();
@@ -100,6 +120,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((OkObjectResult)controller.GetPublished()).Value as List<ManagerNewsDTO>;
 
@@ -112,6 +133,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((OkObjectResult)controller.GetPending()).Value as List<ManagerNewsDTO>;
 
@@ -123,6 +145,7 @@
         public void Publish_1_ShouldReturnOk()
         {
             using var scope = Factory.Services.CreateScope();
+            SetupContext(scope);
             var controller = SetupController(scope);
 
             var result = ((StatusCodeResult)controller.Publish(1));
@@ -135,6 +158,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((StatusCodeResult)controller.Publish(2));
 
@@ -146,6 +170,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((StatusCodeResult)controller.Publish(3));
 
@@ -157,6 +182,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            SetupContext(scope);
 
             var result = ((StatusCodeResult)controller.Archive(3));
 
