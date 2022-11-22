@@ -7,6 +7,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -52,8 +53,20 @@
             try
             {
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To).ToList();
+                VacationRequest request = null;
 
-                VacationRequest request = new VacationRequest(doctor, dto.From, dto.To, dto.Status, dto.Comment, dto.Urgent, "");
+                if (scheduledAppointments.IsNullOrEmpty())
+                {
+                    request = new VacationRequest(doctor, dto.From, dto.To, dto.Status, dto.Comment, dto.Urgent, "");
+                }
+
+                if (!dto.Urgent)
+                {
+                    return null;
+                }
+
+
 
                 _unitOfWork.VacationRequestsRepository.Add(request);
                 _unitOfWork.Save();

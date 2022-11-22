@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,6 +16,8 @@
         Doctor Get(int doctorId);
         IEnumerable<Doctor> GetAll();
         bool Delete(int doctorId);
+
+        IEnumerable<Doctor> GetBySpecialization(Specialization specialization);
 
     }
 }

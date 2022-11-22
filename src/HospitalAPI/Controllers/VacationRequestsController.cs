@@ -61,7 +61,7 @@
 
             if (!appointments.IsNullOrEmpty())
             {
-                return BadRequest();
+                return BadRequest("You have scheduled appointments in given date interval");
             }
 
             return Ok(VacationRequestsMapper.EntityToEntityDto(_vacationRequestsService.Create(dto)));
