@@ -336,6 +336,13 @@
                 BloodType = BloodType.A_PLUS,
                 Amount = 23
             });
+
+            context.Allergies.Add(new Allergies
+            {
+                Name = "kupus"
+
+            });
+
             context.VacationRequests.Add(new VacationRequest
             {
                 Doctor = doc,
@@ -346,6 +353,7 @@
                 Urgent = true,
                 ManagerComment = ""
             });
+
 
             context.VacationRequests.Add(new VacationRequest
             {
@@ -401,6 +409,7 @@
                 Urgent = false,
                 ManagerComment = ""
             });
+
 
             context.SaveChanges();
 
