@@ -53,9 +53,15 @@
             Room room = new Room(1, "001", null, null, null);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));
             Doctor doctor = new Doctor("nikolina", "nikolic", "nina@gmail.com", "123", Specialization.GENERAL, doctorWorkingHours, room);
-            appointments.Add(new Appointment(new DateTime(2022, 12, 12, 13, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
+            appointments.Add(new Appointment(new DateTime(2022, 12, 11, 13, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
 
-            return appointments;
+            List<Appointment> retList = new List<Appointment>();
+            foreach (Appointment appointment in appointments)
+            {
+                if (appointment.Room.Id == roomId) retList.Add(appointment);
+            }
+
+            return retList;
         }
 
         public void Update(Appointment entity)

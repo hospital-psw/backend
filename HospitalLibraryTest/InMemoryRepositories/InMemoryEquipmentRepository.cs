@@ -16,6 +16,11 @@
             throw new NotImplementedException();
         }
 
+        public Equipment Create(Equipment equipment)
+        {
+            throw new NotImplementedException();
+        }
+
         public Equipment Get(int id)
         {
             throw new NotImplementedException();
@@ -40,6 +45,11 @@
             return equipments;
         }
 
+        public Equipment GetEquipment(EquipmentType type, Room room)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Equipment> GetEquipments()
         {
             var equipments = new List<Equipment>();
@@ -57,6 +67,11 @@
             equipments.Add(equipment2);
 
             return equipments;
+        }
+
+        public int Save()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Equipment entity)
