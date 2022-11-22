@@ -1,0 +1,12 @@
+﻿<mj-text font-size="16px" align="left">
+    <p>To send news to our establishment follow the guidelines below:</p>
+    <ul>
+        <li>News image <b>extension</b></li>
+        <li><b>Delimiter</b> consisting of a newline character followed by 20 '-' characters</li>
+        <li>News <b>image data</b> encoded in Base64</li>
+        <li><b>Delimiter</b></li>
+        <li>News <b>title</b></li>
+        <li><b>Delimiter</b></li>
+        <li>News <b>body</b></li>
+    </ul>
+</mj-text>

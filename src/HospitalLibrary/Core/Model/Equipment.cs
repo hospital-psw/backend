@@ -12,7 +12,7 @@
         public EquipmentType EquipmentType { get; set; }
         public int Quantity { get; set; }
         public Room Room { get; set; }
-
+        public int ReservedQuantity { get; set; }
         public Equipment()
         {
         }

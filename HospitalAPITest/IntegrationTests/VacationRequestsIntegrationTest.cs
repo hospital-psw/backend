@@ -69,7 +69,7 @@
 
             NewVacationRequestDto dto = new NewVacationRequestDto()
             {
-                DoctorId = 3,
+                DoctorId = 1,
                 From = new DateTime(2022, 11, 19),
                 To = new DateTime(2022, 12, 20),
                 Status = VacationRequestStatus.WAITING,
@@ -92,7 +92,7 @@
 
             NewVacationRequestDto dto = new NewVacationRequestDto()
             {
-                DoctorId = 3,
+                DoctorId = 1,
                 From = new DateTime(2022, 12, 20),
                 To = new DateTime(2022, 11, 19),
                 Status = VacationRequestStatus.WAITING,
@@ -112,7 +112,7 @@
 
             NewVacationRequestDto dto = new NewVacationRequestDto()
             {
-                DoctorId = 3,
+                DoctorId = 1,
                 From = new DateTime(2022, 11, 10),
                 To = new DateTime(2022, 11, 20),
                 Status = VacationRequestStatus.WAITING,

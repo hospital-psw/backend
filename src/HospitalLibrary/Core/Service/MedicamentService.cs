@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -90,6 +91,20 @@
             catch (Exception e)
             {
                 _logger.LogError($"Error in MedicamentService in Get {e.Message} in {e.StackTrace}");
+            }
+        }
+
+        public IEnumerable<Medicament> GetAcceptableMedicaments(int patientId)
+        {
+            try
+            {
+                Patient patient = _unitOfWork.PatientRepository.Get(patientId);
+                return _unitOfWork.MedicamentRepository.GetAcceptableMedicaments(patient);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in MedicamentService in Get {e.Message} in {e.StackTrace}");
+                return null;
             }
         }
     }

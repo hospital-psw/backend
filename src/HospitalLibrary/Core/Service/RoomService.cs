@@ -13,10 +13,12 @@ namespace HospitalLibrary.Core.Service
     {
 
         private readonly ILogger<Room> _logger;
+        private readonly IEquipmentService _equipmentService;
 
-        public RoomService(ILogger<Room> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public RoomService(ILogger<Room> logger, IEquipmentService equipmentService, IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _logger = logger;
+            _equipmentService = equipmentService;
         }
 
         public IEnumerable<Room> GetAll()
@@ -28,35 +30,28 @@ namespace HospitalLibrary.Core.Service
         {
             List<Room> allRooms = (List<Room>)_unitOfWork.RoomRepository.GetAll();
             List<Room> suitableRooms = new List<Room>();
+            List<Room> suitableRoomsWithEquipment = new List<Room>();
 
             foreach (Room room in allRooms)
             {
-                if (room.Floor.Building.Id == buildingId)
+                if (room.Floor.Building.Id == buildingId && (floorNumber == -1 || room.Floor.Number == floorNumber) && room.Number.Contains(roomNumber) && room.Purpose.Contains(purpose))
                 {
-                    if (floorNumber == -1 || room.Floor.Number == floorNumber)
+                    if (this.CheckWorkingHours(room, start, end))
                     {
-                        if (room.Number.Contains(roomNumber))
+                        if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
                         {
-                            if (room.Purpose.Contains(purpose))
-                            {
-                                if (this.CheckWorkingHours(room, start, end))
-                                {
-                                    if (TimeSpan.Compare(start.TimeOfDay, room.WorkingHours.Start.TimeOfDay) != -1 && TimeSpan.Compare(room.WorkingHours.End.TimeOfDay, end.TimeOfDay) != -1)
-                                    {
-                                        suitableRooms.Add(room);
-                                    }
-                                }
-                                else
-                                {
-                                    suitableRooms.Add(room);
-                                }
-                            }
+                            suitableRooms.Add(room);
                         }
+                    }
+                    else
+                    {
+                        suitableRooms.Add(room);
                     }
                 }
             }
+            suitableRoomsWithEquipment = _equipmentService.SearchRooms(suitableRooms, equipmentType, quantity);
 
-            return suitableRooms;
+            return suitableRoomsWithEquipment;
         }
 
         public Room GetById(int id)
