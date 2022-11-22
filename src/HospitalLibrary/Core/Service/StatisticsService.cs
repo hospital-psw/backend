@@ -5,6 +5,7 @@
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Util;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -21,16 +22,16 @@
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<int> GetNumberOfAppointmentsPerMonth() //TODO: unit test
+        public IEnumerable<int> GetNumberOfAppointmentsPerMonth()
         {
             try
             {
-                int[] returnArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                List<int> retrunList = ListFactory.CreateList<int>(0,0,0,0,0,0,0,0,0,0,0,0);
                 foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetThisYearsAppointments())
                 {
-                    returnArray[appointment.Date.Month - 1]++;
+                    retrunList[appointment.Date.Month - 1]++;
                 }
-                return returnArray;
+                return retrunList;
             }
             catch (Exception)
             {
@@ -69,7 +70,7 @@
                     males.Add(0);
                     females.Add(0);
                 }  
-                foreach(ApplicationUser patient in _unitOfWork.ApplicationUserRepository.GetAllPatients())
+                foreach(ApplicationPatient patient in _unitOfWork.ApplicationUserRepository.GetAllPatients())
                 {
                     if(patient.Gender == Model.Enums.Gender.MALE)
                     {

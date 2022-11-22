@@ -51,6 +51,8 @@
 
         public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
+        public IApplicationUserRepository ApplicationUserRepository => throw new NotImplementedException();
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

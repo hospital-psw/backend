@@ -20,8 +20,7 @@
         }
         private static StatisticalController SetupController(IServiceScope serviceScope)
         {
-            return new StatisticalController(serviceScope.ServiceProvider.GetRequiredService<IStatisticsService>(),
-                serviceScope.ServiceProvider.GetRequiredService<IDoctorService>());
+            return new StatisticalController(serviceScope.ServiceProvider.GetRequiredService<IStatisticsService>());
         }
 
         [Fact]
