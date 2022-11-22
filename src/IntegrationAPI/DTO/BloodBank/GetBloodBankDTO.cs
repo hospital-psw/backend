@@ -16,5 +16,7 @@
         public DateTime ReportTo { get; set; }
         public DateTime ReportFrom { get; set; }
         public int Frequently { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateUpdated { get; set; }
     }
 }

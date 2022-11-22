@@ -112,7 +112,7 @@
             {
                 if(b.Date>from && b.Date < to)
                 {
-                    retVal.totalSum += b.Amount;
+                    retVal.TotalSum += b.Amount;
                     if(b.BloodType == BloodType.A_PLUS)
                         retVal.APlusAmount +=b.Amount;
                     else if(b.BloodType == BloodType.A_MINUS)
