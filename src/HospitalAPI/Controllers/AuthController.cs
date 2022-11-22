@@ -25,7 +25,6 @@
             _mapper = mapper;
         }
 
-        //treba izmenjati u zavisnosti od usera koji se registruje
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDTO dto) 
         {
@@ -50,6 +49,32 @@
 
             return BadRequest("Something went wrong...");
         }
+
+        [HttpPost("register/patient")]
+        public async Task<IActionResult> RegisterPatient(RegisteredPatientDTO dto)
+        {
+            if (ModelState.IsValid)
+            {
+                var identityUser = await _authService.SetUpApplicationPatient(_mapper.Map<ApplicationPatient>(dto), dto.ChoosenDoctor, dto.Allergies);
+                var identityResult = await _authService.RegisterPatient(identityUser, dto.ApplicationUserDTO.Password);
+
+                if (identityResult.Succeeded)
+                {
+                    await _authService.AddToRole(identityUser);
+                    await _authService.SignInAsync(identityUser);
+                    return Ok(_mapper.Map<ApplicationUserDTO>(identityUser));
+                }
+                else
+                {
+                    List<IdentityError> errorList = identityResult.Errors.ToList();
+                    var errors = string.Join(", ", errorList.Select(e => e.Description));
+                    return BadRequest(errors);
+                }
+            }
+
+            return BadRequest("Something went wrong...");
+        }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO dto)

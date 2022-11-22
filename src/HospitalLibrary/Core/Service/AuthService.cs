@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Authentication;
@@ -15,14 +16,16 @@
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager; 
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly IAllergiesService _allergiesService;
 
         public AuthService(UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, 
-            RoleManager<ApplicationRole> roleManager)
+            RoleManager<ApplicationRole> roleManager, IAllergiesService allergiesService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _allergiesService = allergiesService; 
         }
 
         public async Task<IdentityResult> Register(ApplicationUser user, string password) 
@@ -53,5 +56,22 @@
             await _signInManager.SignOutAsync();
         }
 
+        public async Task<ApplicationPatient> SetUpApplicationPatient(ApplicationPatient patient, int doctorId, List<int> allergies)
+        {
+            patient.applicationDoctor = (ApplicationDoctor)await _userManager.FindByIdAsync(doctorId.ToString());
+            patient.Allergies = _allergiesService.GetAllergiesFromDTO(allergies);
+            return patient;
+        }
+
+        public async Task<IdentityResult> RegisterPatient(ApplicationPatient patient, string password)
+        {
+            var identityResult = await _userManager.CreateAsync(patient, password);
+            return identityResult;
+        }
+
+        public async Task<IdentityResult> AddToRole(ApplicationPatient patient) 
+        {
+            return await _userManager.AddToRoleAsync(patient, "Patient");
+        }
     }
 }
