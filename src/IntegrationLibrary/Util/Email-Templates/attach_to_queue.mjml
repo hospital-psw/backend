@@ -1,14 +1,10 @@
-<mj-section background-color="#ffffff" padding-top="0">
-    <mj-column width="500px">
-        <mj-text font-size="16px" align="left">
-            <p>To be able to send Your news to us, You will need to open a connection with our message queue</p>
-            <p>To do so, follow the guidelines below</p>
-            <ul>
-                <li>Download and install RabbitMQ message queue service</li>
-                <li>Declare a connection towards <b>Hostname=localhost</b></li>
-                <li>Declare a queue with the name <b>hello</b></li>
-                <li>All other queue parameters should be set to <b>false</b> or <b>null</b></li>
-            </ul>
-        </mj-text>
-    </mj-column>
-</mj-section>
+<mj-text font-size="16px" align="left">
+    <p>To be able to send Your news to us, You will need to open a connection with our message queue</p>
+    <p>To do so, follow the guidelines below</p>
+    <ul>
+        <li>Download and install RabbitMQ message queue service</li>
+        <li>Declare a connection towards <b>Hostname=localhost</b></li>
+        <li>Declare a queue with the name <b>hello</b></li>
+        <li>All other queue parameters should be set to <b>false</b> or <b>null</b></li>
+    </ul>
+</mj-text>
