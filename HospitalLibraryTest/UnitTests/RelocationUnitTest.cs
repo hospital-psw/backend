@@ -22,7 +22,7 @@
             var relocationRepository = new Mock<IRelocationRepository>();
 
             var unitOfWork = new Mock<IUnitOfWork>();
-               
+
             unitOfWork.Setup(u => u.EquipmentRepository).Returns(equipmentRepository.Object);
             unitOfWork.Setup(u => u.RelocationRepository).Returns(relocationRepository.Object);
 
@@ -73,7 +73,8 @@
                 Capacity = 1,
             };
 
-            var fromRoom = new Room() {
+            var fromRoom = new Room()
+            {
                 Id = 5,
             };
 
@@ -132,10 +133,10 @@
             unitOfWork.Setup(u => u.RelocationRepository.Save()).Returns(1);
 
             var relocationService = new RelocationService(unitOfWork.Object);
-            
+
             //Act
             relocationService.RelocateEquipment(request);
-            
+
 
             //Assert
             Assert.NotNull(eqUpdate);
@@ -178,7 +179,8 @@
                 Room = room
             };
 
-            var createdEquipment = new Equipment() {
+            var createdEquipment = new Equipment()
+            {
                 Id = 3,
                 Deleted = false,
                 EquipmentType = EquipmentType.BED,
@@ -186,7 +188,8 @@
                 Room = toRoom
             };
 
-            var equipment2 = new Equipment() {
+            var equipment2 = new Equipment()
+            {
                 Id = 1,
                 DateCreated = DateTime.Now,
                 DateUpdated = DateTime.Now,
@@ -203,7 +206,7 @@
                 Equipment = equipment2,
                 ToRoom = toRoom,
                 FromRoom = fromRoom
-                
+
             };
 
             Equipment retEq = null;
@@ -211,7 +214,7 @@
 
             unitOfWork.Setup(u => u.EquipmentRepository.GetEquipment(It.IsAny<EquipmentType>(), It.IsAny<Room>())).Returns(retEq);
             unitOfWork.Setup(u => u.EquipmentRepository.Create(It.IsAny<Equipment>())).Returns(createdEquipment);
-        
+
             unitOfWork.Setup(u => u.RelocationRepository.Update(It.IsAny<RelocationRequest>())).Callback((RelocationRequest req) =>
             {
                 reqUpdate = req;

@@ -36,7 +36,8 @@
                                                .ToList();
         }
 
-        public List<RelocationRequest> GetFinishedRelocations() {
+        public List<RelocationRequest> GetFinishedRelocations()
+        {
             DateTime currentTime = DateTime.Now;
             return HospitalDbContext.RelocationRequests.Include(x => x.FromRoom)
                                                         .Include(x => x.ToRoom)

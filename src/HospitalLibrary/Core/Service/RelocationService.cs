@@ -13,8 +13,9 @@
     public class RelocationService : BaseService<RelocationRequest>, IRelocationService
     {
 
-        public RelocationService(IUnitOfWork unitOfWork) : base(unitOfWork) {
-      
+        public RelocationService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+
         }
 
         public RelocationRequest Create(RelocationRequest entity)
@@ -124,20 +125,24 @@
             return startTime < scheduledEndTime && endTime >= scheduledEndTime;
         }
 
-        public void FinishRelocation() {
+        public void FinishRelocation()
+        {
             List<RelocationRequest> finished = _unitOfWork.RelocationRepository.GetFinishedRelocations();
-            foreach (RelocationRequest request in finished) {
+            foreach (RelocationRequest request in finished)
+            {
                 RelocateEquipment(request);
             }
         }
 
-        public void RelocateEquipment(RelocationRequest request) {
+        public void RelocateEquipment(RelocationRequest request)
+        {
             Equipment equipment = _unitOfWork.EquipmentRepository.GetEquipment(request.Equipment.EquipmentType, request.ToRoom);
             if (equipment == null)
             {
                 _unitOfWork.EquipmentRepository.Create(new Equipment(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
             }
-            else {
+            else
+            {
                 equipment.Quantity += request.Quantity;
                 _unitOfWork.EquipmentRepository.Update(equipment);
                 _unitOfWork.EquipmentRepository.Save();
@@ -149,7 +154,8 @@
             _unitOfWork.RelocationRepository.Save();
         }
 
-        private void SubtractEquipmentFromSourceRoom(RelocationRequest request) {
+        private void SubtractEquipmentFromSourceRoom(RelocationRequest request)
+        {
             request.Equipment.Quantity -= request.Quantity;
             if (request.Equipment.Quantity <= 0)
                 request.Equipment.Deleted = true;

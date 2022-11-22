@@ -14,7 +14,8 @@
     {
         private readonly IServiceProvider _serviceProvider;
         private Timer? _timer = null;
-        public TimedHostedService(IServiceProvider serviceProvider) {
+        public TimedHostedService(IServiceProvider serviceProvider)
+        {
             _serviceProvider = serviceProvider;
         }
         public void Dispose()
@@ -30,7 +31,7 @@
 
         public void DoWork(object state)
         {
-            using(var scope = _serviceProvider.CreateScope())
+            using (var scope = _serviceProvider.CreateScope())
             {
                 var _relocationService = scope.ServiceProvider.GetRequiredService<IRelocationService>();
                 _relocationService.FinishRelocation();

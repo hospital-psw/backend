@@ -23,7 +23,8 @@
             return _context.Equipments.Include(x => x.Room).ThenInclude(x => x.Floor).ThenInclude(x => x.Building).ToList();
         }
 
-        public Equipment GetEquipment(EquipmentType type, Room room) {
+        public Equipment GetEquipment(EquipmentType type, Room room)
+        {
             return GetEquipments().FirstOrDefault(x => (x.EquipmentType == type) && (x.Room.Id == room.Id));
         }
 
@@ -34,7 +35,8 @@
             return equipment;
         }
 
-        public int Save() {
+        public int Save()
+        {
             return _context.SaveChanges();
         }
     }
