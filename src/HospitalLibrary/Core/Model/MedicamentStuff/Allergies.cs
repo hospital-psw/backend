@@ -10,15 +10,19 @@
     {
         public string Name { get; set; }
         public List<Medicament> Medicaments { get; set; }
+        public List<Patient> Patients { get; set; }
 
         public Allergies(string name)
         {
             Name = name;
             Medicaments = new List<Medicament>();
+            Patients = new List<Patient>();
         }
 
         public Allergies()
         {
+            Medicaments = new List<Medicament>();
+            Patients = new List<Patient>();
         }
     }
 }

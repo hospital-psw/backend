@@ -14,7 +14,7 @@
         public bool Hospitalized { get; set; }
 
 
-        public List<Allergies> Allergies { get; set; }
+        public List<Allergies> Allergies { get; set; } = new List<Allergies>();
 
         public BloodType BloodType { get; set; }
 

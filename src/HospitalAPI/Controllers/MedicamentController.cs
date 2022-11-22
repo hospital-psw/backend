@@ -28,10 +28,10 @@
             return Ok(MedicamentMapper.EntityToEntityDtoList(medicaments));
         }
 
-        [HttpGet("/acceptable")]
-        public IActionResult GetAcceptableMedicaments(int patientId)
+        [HttpGet("/acceptable/{id}")]
+        public IActionResult GetAcceptableMedicaments(int id)
         {
-            List<Medicament> medicaments = _medicamentService.GetAcceptableMedicaments(patientId).ToList();
+            List<Medicament> medicaments = _medicamentService.GetAcceptableMedicaments(id).ToList();
             List<MedicamentDto> dtoList = new List<MedicamentDto>();
             if (medicaments.IsNullOrEmpty())
             {
