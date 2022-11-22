@@ -1,5 +1,7 @@
 ﻿namespace HospitalAPI.Dto.Medicament
 {
+    using System.Collections.Generic;
+
     public class MedicamentDto
     {
 
@@ -11,6 +13,6 @@
 
         public int Quantity { get; set; }
 
-        //public List<AllergensDto> Allergens { get; set; }
+        public List<AllergiesDto> Allergens { get; set; }
     }
 }

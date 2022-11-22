@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using HospitalLibrary.Core.Model;
 
     public class Medicament : Entity
     {
@@ -13,7 +14,7 @@
         public string Description { get; set; }
         public int Quantity { get; set; }
 
-        //public List<Allergens> Allergens { get; set; }
+        public List<Allergies> Allergens { get; set; }
 
         public Medicament() { }
         public Medicament(string name, string description, int quantity)

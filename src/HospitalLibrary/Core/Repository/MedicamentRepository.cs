@@ -1,8 +1,10 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,5 +17,11 @@
         {
         }
 
+        public IEnumerable<Medicament> GetAcceptableMedicaments(Patient patient)
+        {
+            return HospitalDbContext.Medicaments.Include(x => x.Allergens)
+                                                .Where(x => x.Allergens.All(al => !patient.Allergies.Contains(al)))
+                                                .ToList();
+        }
     }
 }
