@@ -13,6 +13,6 @@
 
         public int Quantity { get; set; }
 
-        public List<AllergiesDto> Allergens { get; set; }
+        public List<AllergiesDto> Allergens { get; set; } = new List<AllergiesDto>();
     }
 }

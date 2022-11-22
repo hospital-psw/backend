@@ -82,10 +82,10 @@
 
             return Ok(dtos);
         }
-        [HttpGet("waiting")]
-        public IActionResult GetAllWaitingByDoctorId(int doctorId)
+        [HttpGet("waiting/{id}")]
+        public IActionResult GetAllWaitingByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllWaitingByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllWaitingByDoctorId(id);
             if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();

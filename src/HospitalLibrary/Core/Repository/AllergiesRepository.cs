@@ -1,6 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
-    using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
@@ -20,7 +20,8 @@
         }
         public override IEnumerable<Allergies> GetAll()
         {
-            return _context.Allergies.ToList();
+            return _context.Allergies.Include(x => x.Medicaments)
+                                     .ToList();
 
         }
     }

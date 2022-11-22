@@ -14,7 +14,7 @@
         public string Description { get; set; }
         public int Quantity { get; set; }
 
-        public List<Allergies> Allergens { get; set; }
+        public List<Allergies> Allergens { get; set; } = new List<Allergies>();
 
         public Medicament() { }
         public Medicament(string name, string description, int quantity)

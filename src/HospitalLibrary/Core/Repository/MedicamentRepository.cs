@@ -17,6 +17,13 @@
         {
         }
 
+        public override IEnumerable<Medicament> GetAll()
+        {
+            return HospitalDbContext.Medicaments.Include(x => x.Allergens)
+                                                .Where(x => !x.Deleted)
+                                                .ToList();
+        }
+
         public IEnumerable<Medicament> GetAcceptableMedicaments(Patient patient)
         {
             return HospitalDbContext.Medicaments.Include(x => x.Allergens)

@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
     using System;
     using System.Collections.Generic;
@@ -49,7 +50,7 @@
         public IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId)
         {
             List<Appointment> appointments = new List<Appointment>();
-            Patient patient = new Patient("ana", "vulin", "vulinana@gmail.com", "123", false);
+            Patient patient = new Patient("ana", "vulin", "vulinana@gmail.com", "123", false, new List<Allergies>());
             Room room = new Room(1, "001", null, null, null);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));
             Doctor doctor = new Doctor("nikolina", "nikolic", "nina@gmail.com", "123", Specialization.GENERAL, doctorWorkingHours, room);
