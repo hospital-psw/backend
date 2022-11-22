@@ -43,6 +43,7 @@
             BloodUnitRepository = new BloodUnitRepository(_context);
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
+            ApplicationUserRepository = new ApplicationUserRepository(_context);
 
         }
 
@@ -68,6 +69,8 @@
         public IBloodUnitRepository BloodUnitRepository { get; set; }
         public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }
+
+        public IApplicationUserRepository ApplicationUserRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

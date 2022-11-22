@@ -35,6 +35,7 @@
         public IBloodUnitRepository BloodUnitRepository { get; }
         public IBloodExpenditureRepository BloodExpenditureRepository { get; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; }
+        public IApplicationUserRepository ApplicationUserRepository { get; }
 
 
     }
