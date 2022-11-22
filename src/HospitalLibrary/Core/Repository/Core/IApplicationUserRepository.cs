@@ -10,7 +10,7 @@
     public interface IApplicationUserRepository : IBaseRepository<ApplicationUser>
     {
         public IEnumerable<ApplicationDoctor> GetAllDoctors();
-      
+
         public IEnumerable<ApplicationPatient> GetAllPatients();
 
     }

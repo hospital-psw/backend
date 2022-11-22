@@ -24,6 +24,7 @@
         public IAppointmentRepository AppointmentRepository { get; }
         public IDoctorRepository DoctorRepository { get; }
         public IPatientRepository PatientRepository { get; }
+        public IAllergiesRepository AllergiesRepository { get; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; }
         public ITherapyRepository TherapyRepository { get; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; }
@@ -37,6 +38,6 @@
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; }
         public IApplicationUserRepository ApplicationUserRepository { get; }
 
-
+        public IApplicationUserRepository ApplicationUserRepository { get; }
     }
 }

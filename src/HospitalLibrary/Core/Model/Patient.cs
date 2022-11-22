@@ -12,13 +12,18 @@
     {
         public bool Hospitalized { get; set; }
 
+
+        public List<Allergies> Allergies { get; set; }
+
         public BloodType BloodType { get; set; }
+
 
         public Patient() { }
 
-        public Patient(bool hospitalized)
+        public Patient(bool hospitalized, List<Allergies> allergies)
         {
             Hospitalized = hospitalized;
+            Allergies = allergies;
         }
 
         public Patient(string firstName, string lastName, string email, string password, bool hospitalized) : base(firstName, lastName, email, password, Role.PATIENT)

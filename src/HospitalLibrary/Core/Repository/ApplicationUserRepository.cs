@@ -22,7 +22,7 @@
         {
             return _context.ApplicationDoctors.ToList();
         }
-        
+		
         public IEnumerable<ApplicationPatient> GetAllPatients()
         {
             return _context.ApplicationPatients.ToList();

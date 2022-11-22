@@ -17,7 +17,8 @@
         [Fact]
         public void Find_suitable_rooms()
         {
-            RoomService roomService = new RoomService(null, new InMemoryUnitOfWork());
+            EquipmentService equipmentService = new EquipmentService(null, new InMemoryUnitOfWork());
+            RoomService roomService = new RoomService(null, equipmentService, new InMemoryUnitOfWork());
 
             List<Room> rooms = roomService.Search("003", 0, 4, "ordinacija", new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0), -1, 0);
 
@@ -27,7 +28,8 @@
         [Fact]
         public void Find_no_suitable_rooms()
         {
-            RoomService roomService = new RoomService(null, new InMemoryUnitOfWork());
+            EquipmentService equipmentService = new EquipmentService(null, new InMemoryUnitOfWork());
+            RoomService roomService = new RoomService(null, equipmentService, new InMemoryUnitOfWork());
 
             List<Room> rooms = roomService.Search("101", 1, 4, "operaciona sala", new DateTime(2022, 11, 10, 12, 0, 0), new DateTime(2022, 11, 10, 12, 12, 0), -1, 0);
 

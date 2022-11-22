@@ -79,6 +79,7 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IAllergiesService, AllergiesService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBuildingService, BuildingService>();
             services.AddScoped<IFloorService, FloorService>();
@@ -93,6 +94,7 @@ namespace HospitalAPI
             services.AddScoped<IBloodUnitService, BloodUnitService>();
             services.AddScoped<IBloodAcquisitionService, BloodAcquisitionService>();
             services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IAuthService, AuthService>();
 
 
