@@ -15,6 +15,7 @@
             dto.Id = patient.Id;
             dto.Hospitalized = patient.Hospitalized;
             dto.Role = patient.Role;
+            dto.BloodType = patient.BloodType;
 
             return dto;
         }

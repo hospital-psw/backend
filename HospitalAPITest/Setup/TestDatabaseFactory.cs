@@ -3,6 +3,7 @@
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.MedicalTreatment;
@@ -269,6 +270,33 @@
                 Room = equipmentRoom
             });
 
+            BloodAcquisition aquisition1 = new BloodAcquisition
+            {
+                //Id = 1,
+                BloodType = BloodType.A_MINUS,
+                Amount = 1,
+                Status = BloodRequestStatus.ACCEPTED
+            };
+
+            BloodAcquisition aquisition2 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.DECLINED,
+            };
+
+            BloodAcquisition aquisition3 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.PENDING
+            };
+
+            context.BloodAcquisitions.Add(aquisition1);
+            context.BloodAcquisitions.Add(aquisition2);
+            context.BloodAcquisitions.Add(aquisition3);
 
             Building building = new Building()
             {
@@ -309,6 +337,12 @@
                 Amount = 23
             });
 
+            context.Allergies.Add(new Allergies
+            {
+                Name = "kupus"
+
+            });
+
             context.VacationRequests.Add(new VacationRequest
             {
                 Doctor = doc,
@@ -319,6 +353,7 @@
                 Urgent = true,
                 ManagerComment = ""
             });
+
 
             context.VacationRequests.Add(new VacationRequest
             {
@@ -374,6 +409,7 @@
                 Urgent = false,
                 ManagerComment = ""
             });
+
 
             context.SaveChanges();
 
