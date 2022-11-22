@@ -15,6 +15,7 @@
         }
         public void Add(News entity)
         {
+            entity.Status = NewsStatus.PENDING;
             _context.Set<News>().Add(entity);
         }
 
