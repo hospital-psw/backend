@@ -67,9 +67,9 @@
             return Ok(VacationRequestsMapper.EntityToEntityDto(_vacationRequestsService.Create(dto)));
         }
         [HttpGet("{id}")]
-        public IActionResult GetAllRequestsByDoctorId(int doctorId)
+        public IActionResult GetAllRequestsByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRequestsByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRequestsByDoctorId(id);
 
             if (vacationRequests.IsNullOrEmpty())
             {
@@ -97,10 +97,10 @@
 
             return Ok(dtos);
         }
-        [HttpGet("approved")]
-        public IActionResult GetAllApprovedByDoctorId(int doctorId)
+        [HttpGet("approved/{id}")]
+        public IActionResult GetAllApprovedByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.getAllApprovedByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.getAllApprovedByDoctorId(id);
             if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();
@@ -113,10 +113,10 @@
             return Ok(dtos);
         }
 
-        [HttpGet("rejected")]
-        public IActionResult GetAllRejectedByDoctorId(int doctorId)
+        [HttpGet("rejected/{id}")]
+        public IActionResult GetAllRejectedByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRejectedByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRejectedByDoctorId(id);
             if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();
@@ -130,9 +130,9 @@
         }
 
         [HttpDelete("delete/{id}")]
-        public IActionResult Delete(int vacationRequestId)
+        public IActionResult Delete(int id)
         {
-            VacationRequest vr = _vacationRequestsService.GetById(vacationRequestId);
+            VacationRequest vr = _vacationRequestsService.GetById(id);
 
             if (vr == null)
             {
