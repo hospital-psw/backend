@@ -33,7 +33,7 @@
         {
             List<Medicament> medicaments = _medicamentService.GetAcceptableMedicaments(patientId).ToList();
             List<MedicamentDto> dtoList = new List<MedicamentDto>();
-            if(medicaments.IsNullOrEmpty())
+            if (medicaments.IsNullOrEmpty())
             {
                 return NotFound();
             }
