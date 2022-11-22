@@ -41,7 +41,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             SetupContext(scope);
-            
+
             var result = ((OkObjectResult)controller.Get(1)).Value as ManagerNewsDTO;
 
             result.ShouldNotBeNull();
@@ -104,7 +104,7 @@
         [Fact]
         public void GetArchived_ShouldReturnOne()
         {
-            using var scope = Factory.Services.CreateScope();   
+            using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
             SetupContext(scope);
