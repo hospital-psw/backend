@@ -44,8 +44,8 @@
             {
                 return NotFound();
             }
-            allergies.ForEach(a => allergiesDto.Add(AllergiesMapper.EntityToEntityDto(a)));
-            return Ok(allergiesDto);
+
+            return Ok(allergies);
         }
 
     }
