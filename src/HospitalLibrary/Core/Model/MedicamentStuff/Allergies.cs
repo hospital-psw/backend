@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Model
+﻿namespace HospitalLibrary.Core.Model.Medicament
 {
     using System;
     using System.Collections.Generic;
@@ -8,11 +8,13 @@
 
     public class Allergies : Entity
     {
-        public String Name { get; set; }
+        public string Name { get; set; }
+        public List<Medicament> Medicaments { get; set; }
 
         public Allergies(string name)
         {
             Name = name;
+            Medicaments = new List<Medicament>();
         }
 
         public Allergies()
