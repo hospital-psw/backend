@@ -80,5 +80,23 @@
             var rolename = await _userManager.GetRolesAsync(user);
             return rolename.FirstOrDefault();
         }
+
+        public async Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string newPassword)
+        {
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            return result;
+        }
+
+        public async Task<bool> IsEmailConfirmedAsync(ApplicationUser user) 
+        {
+            var result = await _userManager.IsEmailConfirmedAsync(user);
+            return result;
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
+        {
+           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+           return code;
+        }
     }
 }

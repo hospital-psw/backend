@@ -52,6 +52,11 @@
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public double GetExpireInDate()
+        {
+            return _configuration.Jwt.ExpiresIn;
+        }
+
         public bool IsTokenValid(string token) 
         {
             token = token.Replace("Bearer ", string.Empty);

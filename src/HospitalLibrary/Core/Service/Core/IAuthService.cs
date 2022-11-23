@@ -19,5 +19,8 @@
         Task SignOutAsync();
         Task<IdentityResult> AddToRole(ApplicationPatient patient, string role);
         Task<string> GetUserRole(int id);
+        Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string newPassword);
+        Task<bool> IsEmailConfirmedAsync(ApplicationUser user);
+        Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
     }
 }
