@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Model.ApplicationUser
 {
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Model.Medicament;
     using System;
     using System.Collections.Generic;
     using System.Linq;
