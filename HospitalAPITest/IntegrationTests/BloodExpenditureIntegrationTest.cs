@@ -31,7 +31,7 @@
         }
 
         [Fact]
-        public void Calculate_expenditure()
+        public void Create_blood_expenditure()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -78,9 +78,12 @@
                 Add(new CreateExpenditureDTO(1, BloodType.B_PLUS, 9, null), new BadRequestObjectResult("Incorrect data"));
             }
         }
-        
-        public void Create_blood_expenditure() 
+
+        [Fact]
+        public void Calculate_expenditure() 
         {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
             DateRangeDto dto = new DateRangeDto();
             dto.From = Convert.ToDateTime("2022-11-20T12:06:44.3236514");
             dto.To = Convert.ToDateTime("2022-11-21T20:32:35.244Z");
