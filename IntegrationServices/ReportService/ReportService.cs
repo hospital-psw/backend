@@ -1,18 +1,18 @@
 ﻿namespace IntegrationServices.ReportService
 {
+    using IntegrationServices.ReportService.DTO;
+    using IntegrationServices.ReportService.Model;
     using Microsoft.Extensions.Hosting;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
     using System.Text;
+    using System.Text.Json;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Timers;
-    using System.Text.Json;
-    using IntegrationServices.ReportService.Model;
-    using Newtonsoft.Json;
-    using IntegrationServices.ReportService.DTO;
 
     public class ReportService : BackgroundService
     {
@@ -54,9 +54,9 @@
         }
         public void asdf(object source, ElapsedEventArgs e)
         {
-            dto = JsonConvert.DeserializeObject<CalculateDTO>(Connections.PostData("http://localhost:16177/api/BloodExpenditure/calculate","{"+
-                    "\"from\"" +":" + "\""+currentBB.ReportFrom.ToString("yyyy-MM-ddTHH:mm:ss") + "\"" +"," +
-                    "\"to\"" + ":" + "\""+currentBB.ReportTo.ToString("yyyy-MM-ddTHH:mm:ss") + "\"" +
+            dto = JsonConvert.DeserializeObject<CalculateDTO>(Connections.PostData("http://localhost:16177/api/BloodExpenditure/calculate", "{" +
+                    "\"from\"" + ":" + "\"" + currentBB.ReportFrom.ToString("yyyy-MM-ddTHH:mm:ss") + "\"" + "," +
+                    "\"to\"" + ":" + "\"" + currentBB.ReportTo.ToString("yyyy-MM-ddTHH:mm:ss") + "\"" +
                     "}"));
 
             string fileName = GeneratePDF.GeneratePdf(currentBB.Name, dto);

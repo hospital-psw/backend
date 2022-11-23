@@ -20,12 +20,12 @@
             return json;
         }
 
-        public static string PostData(string url,string json)
+        public static string PostData(string url, string json)
         {
             HttpClient client = new HttpClient();
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var endpoint = new Uri(url);
-            var result = client.PostAsync(endpoint,content).Result;
+            var result = client.PostAsync(endpoint, content).Result;
             var retVal = result.Content.ReadAsStringAsync().Result;
             return retVal;
         }
@@ -35,7 +35,7 @@
             var url = "http://localhost:8081/api/sendPdf";
             HttpClient httpClient = new HttpClient();
 
-            var fileRoute = @"./../PDF/"+filename;
+            var fileRoute = @"./../PDF/" + filename;
             var fileName = Path.GetFileName(fileRoute);
 
             var requestContent = new MultipartFormDataContent();

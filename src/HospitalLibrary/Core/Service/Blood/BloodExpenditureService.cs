@@ -103,19 +103,19 @@
             throw new NotImplementedException();
         }
 
-        public CalculateDTO CalculateExpenditure(DateTime from,DateTime to)
+        public CalculateDTO CalculateExpenditure(DateTime from, DateTime to)
         {
             IEnumerable<BloodExpenditure> bloodExpenditureList = GetAll();
             CalculateDTO retVal = new CalculateDTO();
 
-            foreach(BloodExpenditure b in bloodExpenditureList)
+            foreach (BloodExpenditure b in bloodExpenditureList)
             {
-                if(b.Date>from && b.Date < to)
+                if (b.Date > from && b.Date < to)
                 {
                     retVal.TotalSum += b.Amount;
-                    if(b.BloodType == BloodType.A_PLUS)
-                        retVal.APlusAmount +=b.Amount;
-                    else if(b.BloodType == BloodType.A_MINUS)
+                    if (b.BloodType == BloodType.A_PLUS)
+                        retVal.APlusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.A_MINUS)
                         retVal.AMinusAmount += b.Amount;
                     else if (b.BloodType == BloodType.B_PLUS)
                         retVal.BPlusAmount += b.Amount;

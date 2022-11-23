@@ -8,7 +8,7 @@ namespace HospitalAPI.Dto
     {
         public DateTime From { get; set; }
         public DateTime To { get; set; }
-        
+
         public DateRangeDto() { }
     }
 }

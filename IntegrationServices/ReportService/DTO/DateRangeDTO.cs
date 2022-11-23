@@ -12,8 +12,9 @@
         public DateTime To { get; set; }
 
         public DateRangeDTO() { }
-        public DateRangeDTO(DateTime from, DateTime to) {
-            From = from; 
+        public DateRangeDTO(DateTime from, DateTime to)
+        {
+            From = from;
             To = to;
         }
     }
