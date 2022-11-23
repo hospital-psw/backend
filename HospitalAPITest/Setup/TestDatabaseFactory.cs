@@ -2,6 +2,7 @@
 {
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
@@ -363,6 +364,16 @@
                 ManagerComment = ""
             });
 
+            context.ApplicationPatients.Add(new ApplicationPatient
+                ("Nikola", "Grbovic", new DateTime(2000, 11, 22), Gender.MALE, false, BloodType.A_PLUS));
+            context.ApplicationPatients.Add(new ApplicationPatient
+                ("Marko", "Matkovic", new DateTime(2000, 11, 22), Gender.MALE, false, BloodType.A_PLUS));
+            context.ApplicationPatients.Add(new ApplicationPatient
+                ("Fosilka", "Fosilovic", new DateTime(1930, 11, 26), Gender.FEMALE, false, BloodType.O_PLUS));
+            context.ApplicationDoctors.Add(new ApplicationDoctor
+                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null));
+            context.ApplicationDoctors.Add(new ApplicationDoctor
+                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, null, null));
 
             context.VacationRequests.Add(new VacationRequest
             {

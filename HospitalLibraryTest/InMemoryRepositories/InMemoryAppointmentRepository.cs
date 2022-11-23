@@ -97,6 +97,11 @@
             return !GetAppointmentsForDoctor(doctorId).Where(x => x.Date == date).Any();
         }
 
+        public IEnumerable<Appointment> GetThisYearsAppointments()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Appointment entity)
         {
             throw new NotImplementedException();

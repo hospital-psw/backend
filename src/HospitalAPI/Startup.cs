@@ -1,6 +1,8 @@
 using HospitalAPI.Configuration;
 using HospitalAPI.EmailServices;
 using HospitalAPI.Mappers;
+using HospitalAPI.TokenServices;
+using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
@@ -8,14 +10,19 @@ using HospitalLibrary.Core.Service.Blood;
 using HospitalLibrary.Core.Service.Blood.Core;
 using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
+using System;
+using System.Text;
 
 namespace HospitalAPI
 {
@@ -39,6 +46,49 @@ namespace HospitalAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<HospitalDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+                    ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+                };
+            });
+            services.AddDistributedMemoryCache();
+
+            //services.AddAuthentication(opt =>
+            //{
+            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(options =>
+            //{
+            //   options.TokenValidationParameters = new TokenValidationParameters
+            //   {
+            //       ValidateIssuer = true,
+            //       ValidateAudience = true,
+            //       ValidateLifetime = true,
+            //       ValidateIssuerSigningKey = true,
+            //       ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+            //       ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+            //       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+            //   };
+            //});
+
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -67,9 +117,14 @@ namespace HospitalAPI
             services.AddScoped<IBloodUnitService, BloodUnitService>();
             services.AddScoped<IBloodAcquisitionService, BloodAcquisitionService>();
             services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();
+            services.AddScoped<IStatisticsService, StatisticsService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
+
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
+            Configuration.Bind("ProjectConfiguration", config);
             services.AddSingleton(config);
         }
 
@@ -93,6 +148,7 @@ namespace HospitalAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
