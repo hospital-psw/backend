@@ -21,7 +21,7 @@
         public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Required!")]
-        public bool Male{ get; set; }
+        public bool Male { get; set; }
 
         [Required(ErrorMessage = "Required!")]
         [DataType(DataType.Password)]

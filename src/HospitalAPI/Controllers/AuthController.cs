@@ -19,7 +19,7 @@
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
 
-        public AuthController(IAuthService authService,IMapper mapper)
+        public AuthController(IAuthService authService, IMapper mapper)
         {
             _authService = authService;
             _mapper = mapper;
@@ -27,9 +27,9 @@
 
         //treba izmenjati u zavisnosti od usera koji se registruje
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDTO dto) 
+        public async Task<IActionResult> Register(RegisterDTO dto)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var identityUser = _mapper.Map<ApplicationUser>(dto);
                 var identityResult = await _authService.Register(identityUser, dto.Password);
@@ -40,7 +40,7 @@
                     await _authService.SignInAsync(identityUser);
                     return Ok(_mapper.Map<ApplicationUserDTO>(identityUser));
                 }
-                else 
+                else
                 {
                     List<IdentityError> errorList = identityResult.Errors.ToList();
                     var errors = string.Join(", ", errorList.Select(e => e.Description));

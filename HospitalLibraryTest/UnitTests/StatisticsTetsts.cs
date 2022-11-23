@@ -33,7 +33,7 @@
             IEnumerable<int> result = service.GetNumberOfAppointmentsPerMonth();
 
 
-            List<int> expected = ListFactory.CreateList<int>(0,0,1,0,2,0,0,0,0,0,0,0);
+            List<int> expected = ListFactory.CreateList<int>(0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0);
             Assert.NotNull(result);
             Assert.Equal(result, expected);
         }
@@ -110,7 +110,7 @@
             stub.Setup(f => f.ApplicationUserRepository.GetAllPatients()).Returns(patients);
             StatisticsService service = new StatisticsService(stub.Object);
             List<int> expected = ListFactory.CreateList(2, 1, 1, 0);
-            
+
         }
     }
 
@@ -118,7 +118,7 @@
     {
         public DatesOfBirth()
         {
-            Add(new DateTime(2000,12,26), 21);
+            Add(new DateTime(2000, 12, 26), 21);
             Add(new DateTime(2005, 5, 1), 17);
         }
     }
@@ -127,7 +127,7 @@
     {
         public TestPatients()
         {
-            Add(new ApplicationPatient("Imenko", "Prezimenic", new DateTime(2022,4,4), HospitalLibrary.Core.Model.Enums.Gender.MALE, false, HospitalLibrary.Core.Model.Blood.Enums.BloodType.A_PLUS), 0);
+            Add(new ApplicationPatient("Imenko", "Prezimenic", new DateTime(2022, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, false, HospitalLibrary.Core.Model.Blood.Enums.BloodType.A_PLUS), 0);
             Add(new ApplicationPatient("Imenko", "Prezimenic", new DateTime(2006, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, false, HospitalLibrary.Core.Model.Blood.Enums.BloodType.A_PLUS), 1);
             Add(new ApplicationPatient("Imenko", "Prezimenic", new DateTime(1996, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, false, HospitalLibrary.Core.Model.Blood.Enums.BloodType.A_PLUS), 2);
             Add(new ApplicationPatient("Imenko", "Prezimenic", new DateTime(1985, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, false, HospitalLibrary.Core.Model.Blood.Enums.BloodType.A_PLUS), 3);

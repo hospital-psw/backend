@@ -10,7 +10,7 @@
 
     public class ApplicationUser : IdentityUser<int>
     {
-        public ApplicationUser() : base() {}
+        public ApplicationUser() : base() { }
         public ApplicationUser(string firstName, string lastName, DateTime dateOfBirth, Gender gender)
         {
             FirstName = firstName;
@@ -25,6 +25,6 @@
         public DateTime DateOfBirth { get; set; }
 
         public Gender Gender { get; set; }
-        
+
     }
 }

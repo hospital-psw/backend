@@ -26,7 +26,7 @@
         {
             try
             {
-                List<int> retrunList = ListFactory.CreateList<int>(0,0,0,0,0,0,0,0,0,0,0,0);
+                List<int> retrunList = ListFactory.CreateList<int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetThisYearsAppointments())
                 {
                     retrunList[appointment.Date.Month - 1]++;
@@ -58,29 +58,30 @@
             }
         }
 
-        public (List<int>, List<int>) GetNumberOfPatientsByAgeGroup() 
+        public (List<int>, List<int>) GetNumberOfPatientsByAgeGroup()
         {
-            
+
             try
             {
                 List<int> males = new List<int>();
                 List<int> females = new List<int>();
-                for (int i =0; i<6; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     males.Add(0);
                     females.Add(0);
-                }  
-                foreach(ApplicationPatient patient in _unitOfWork.ApplicationUserRepository.GetAllPatients())
+                }
+                foreach (ApplicationPatient patient in _unitOfWork.ApplicationUserRepository.GetAllPatients())
                 {
-                    if(patient.Gender == Model.Enums.Gender.MALE)
+                    if (patient.Gender == Model.Enums.Gender.MALE)
                     {
                         males[GetAgeGroup(patient)]++;
-                    } 
-                    else {
+                    }
+                    else
+                    {
                         females[GetAgeGroup(patient)]++;
                     }
                 }
-                return (males,females);
+                return (males, females);
             }
             catch (Exception)
             {
@@ -109,10 +110,10 @@
 
         public List<int> GetUsersByType()
         {
-            List<int> retList= new List<int>();
+            List<int> retList = new List<int>();
             retList.Add(_unitOfWork.ApplicationUserRepository.GetAllPatients().Count());
             int[] doctors = new int[3];
-            foreach(ApplicationDoctor doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
+            foreach (ApplicationDoctor doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
             {
                 if (doctor.Specialization == Model.Enums.Specialization.GENERAL) doctors[0]++;
                 if (doctor.Specialization == Model.Enums.Specialization.NEUROLOGY) doctors[1]++;
