@@ -69,9 +69,16 @@
             return identityResult;
         }
 
-        public async Task<IdentityResult> AddToRole(ApplicationPatient patient) 
+        public async Task<IdentityResult> AddToRole(ApplicationPatient patient, string name) 
         {
-            return await _userManager.AddToRoleAsync(patient, "Patient");
+            return await _userManager.AddToRoleAsync(patient, name);
+        }
+
+        public async Task<string> GetUserRole(int id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            var rolename = await _userManager.GetRolesAsync(user);
+            return rolename.FirstOrDefault();
         }
     }
 }

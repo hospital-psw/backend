@@ -3,9 +3,12 @@
     using AutoMapper;
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Auth;
+    using HospitalAPI.TokenServices;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -18,11 +21,13 @@
     {
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(IAuthService authService,IMapper mapper)
+        public AuthController(IAuthService authService, IMapper mapper, ITokenService tokenService)
         {
             _authService = authService;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -35,7 +40,6 @@
 
                 if (identityResult.Succeeded)
                 {
-                    //ovde treba odraditi confirm mail
                     await _authService.SignInAsync(identityUser);
                     return Ok(_mapper.Map<ApplicationUserDTO>(identityUser));
                 }
@@ -60,7 +64,7 @@
 
                 if (identityResult.Succeeded)
                 {
-                    await _authService.AddToRole(identityUser);
+                    await _authService.AddToRole(identityUser, "Patient");
                     await _authService.SignInAsync(identityUser);
                     return Ok(_mapper.Map<ApplicationUserDTO>(identityUser));
                 }
@@ -75,7 +79,7 @@
             return BadRequest("Something went wrong...");
         }
 
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO dto)
         {
@@ -86,7 +90,11 @@
                 if (loginResult.Succeeded)
                 {
                     var user = await _authService.FindByEmailAsync(dto.Email);
-                    return Ok(_mapper.Map<LoginResponseDTO>(user));
+                    var role = await _authService.GetUserRole(user.Id);
+                    var token = _tokenService.BuildToken(user, role);
+                    var result = _mapper.Map<LoginResponseDTO>(user);
+                    result.Token = token;
+                    return Ok(result);
                 }
                 else
                 {
@@ -102,6 +110,19 @@
         {
             await _authService.SignOutAsync();
             return Ok("User logged out.");
+        }
+
+        [Authorize]
+        [HttpGet("kita")]
+        public IActionResult Kita() 
+        {
+            string token = HttpContext.Session.GetString("Token");
+            if (token == null || _tokenService.IsTokenValid(token)) 
+            {
+                return BadRequest("Mala kita");
+            }
+
+            return Ok("Velika kita");
         }
 
     }

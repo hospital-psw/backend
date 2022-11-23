@@ -17,6 +17,7 @@
         Task SignInAsync(ApplicationUser user);
         Task<ApplicationUser> FindByEmailAsync(string email);
         Task SignOutAsync();
-        Task<IdentityResult> AddToRole(ApplicationPatient patient);
+        Task<IdentityResult> AddToRole(ApplicationPatient patient, string role);
+        Task<string> GetUserRole(int id);
     }
 }

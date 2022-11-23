@@ -46,6 +46,9 @@
                 ).ForMember(
                    dest => dest.Allergies,
                    opt => opt.Ignore()
+                ).ForMember(
+                   dest => dest.applicationDoctor,
+                   opt => opt.Ignore()
                 );
         }    
     }
