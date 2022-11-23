@@ -5,6 +5,7 @@
     public interface ITokenService
     {
         string BuildToken(ApplicationUser user, string role);
-        public bool IsTokenValid(string token);
+        bool IsTokenValid(string token);
+        double GetExpireInDate();
     }
 }
