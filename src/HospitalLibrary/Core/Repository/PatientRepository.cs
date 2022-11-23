@@ -31,7 +31,7 @@
 
         public IEnumerable<Patient> GetNonHospitalized()
         {
-            return HospitalDbContext.Patients.Where(x => !x.Hospitalized)
+            return GetAll().Where(x => !x.Hospitalized)
                                              .ToList();
         }
     }
