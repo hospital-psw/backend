@@ -22,11 +22,6 @@
         BloodBank currentBB;
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            /*HttpClient client = new HttpClient();
-            var endpoint = new Uri("http://localhost:45488/api/BloodBank/all");
-            var result = client.GetAsync(endpoint).Result;
-            var json = result.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(json); */
             bloodBanks = JsonConvert.DeserializeObject<BloodBank[]>(Connections.GetData("http://localhost:45488/api/BloodBank/all"));
             return base.StartAsync(cancellationToken);
         }
@@ -44,15 +39,15 @@
                 {
                     currentBB = bank;
                     Console.WriteLine(bank.Name);
-                    collectTimer.Elapsed += new ElapsedEventHandler(asdf);
-                    collectTimer.Interval = 5000; //bank.Frequently*24*60*60*1000; //bank.Frequently//freqvently in miliseconds 
+                    collectTimer.Elapsed += new ElapsedEventHandler(GenerateAndSendReport);
+                    collectTimer.Interval = 10000; //bank.Frequently*24*60*60*1000; //bank.Frequently//freqvently in miliseconds 
                     collectTimer.Enabled = true;
                 }
             }
 
             return Task.CompletedTask;
         }
-        public void asdf(object source, ElapsedEventArgs e)
+        public void GenerateAndSendReport(object source, ElapsedEventArgs e)
         {
             dto = JsonConvert.DeserializeObject<CalculateDTO>(Connections.PostData("http://localhost:16177/api/BloodExpenditure/calculate", "{" +
                     "\"from\"" + ":" + "\"" + currentBB.ReportFrom.ToString("yyyy-MM-ddTHH:mm:ss") + "\"" + "," +

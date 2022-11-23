@@ -2,29 +2,14 @@
 {
     public class CalculateDTO
     {
-        public int APlusAmount { get; set; }
-        public int BPlusAmount { get; set; }
-        public int AMinusAmount { get; set; }
-        public int BMinusAmount { get; set; }
-        public int ABPlusAmount { get; set; }
-        public int OPlusAmount { get; set; }
-        public int ABMinusAmount { get; set; }
-        public int OMinusAmount { get; set; }
-
-        public int TotalSum { get; set; }
-
-        public CalculateDTO()
-        {
-            ABMinusAmount = 0;
-            ABPlusAmount = 0;
-            OPlusAmount = 0;
-            OMinusAmount = 0;
-            APlusAmount = 0;
-            AMinusAmount = 0;
-            BPlusAmount = 0;
-            BMinusAmount = 0;
-            TotalSum = 0;
-        }
-
+        public int APlusAmount { get; set; } = 0;
+        public int BPlusAmount { get; set; } = 0;
+        public int AMinusAmount { get; set; } = 0;
+        public int BMinusAmount { get; set; } = 0;
+        public int ABPlusAmount { get; set; } = 0;
+        public int OPlusAmount { get; set; } = 0;
+        public int ABMinusAmount { get; set; } = 0;
+        public int OMinusAmount { get; set; } = 0;
+        public int TotalSum { get; set; } = 0;
     }
 }

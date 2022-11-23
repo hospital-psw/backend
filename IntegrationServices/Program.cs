@@ -22,7 +22,7 @@ namespace PrimerServis
                 .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    //services.AddHostedService<MQSubscriberService>();
+                    services.AddHostedService<MQSubscriberService>();
                     services.AddHostedService<ReportService>();
                 });
     }

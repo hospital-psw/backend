@@ -9,20 +9,6 @@
     public class BloodBank : Entity
     {
         public BloodBank() { }
-        public BloodBank(string name, string email, string apiUrl, string apiKey, string getBloodTypeAvailability, string getBloodTypeAndAmountAvailability, string adminPassword, bool isDummyPassword, DateTime reportTo, DateTime reportFrom, int frequently)
-        {
-            Name = name;
-            Email = email;
-            ApiKey = apiKey;
-            ApiUrl = apiUrl;
-            GetBloodTypeAndAmountAvailability = getBloodTypeAndAmountAvailability;
-            GetBloodTypeAvailability = getBloodTypeAvailability;
-            AdminPassword = adminPassword;
-            IsDummyPassword = isDummyPassword;
-            ReportTo = reportTo;
-            ReportFrom = reportFrom;
-            Frequently = frequently;
-        }
         public string Name { get; set; }
         public string Email { get; set; }
         public string ApiUrl { get; set; }

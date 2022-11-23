@@ -26,7 +26,6 @@
 
             var Renderer = new ChromePdfRenderer();
             var PDF = Renderer.RenderHtmlAsPdf(text);
-            Console.WriteLine("KUC-KUC");
             string genName = DateTime.Now.ToString().Split(' ')[0].Replace('/', '-') + "-report.pdf";
             PDF.SaveAs(@"./../PDF/" + genName);
             return genName;
