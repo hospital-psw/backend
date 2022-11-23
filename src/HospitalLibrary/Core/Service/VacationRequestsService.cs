@@ -59,6 +59,9 @@
                 if (scheduledAppointments.IsNullOrEmpty())
                 {
                     request = new VacationRequest(doctor, dto.From, dto.To, dto.Status, dto.Comment, dto.Urgent, "");
+                    _unitOfWork.VacationRequestsRepository.Add(request);
+                    _unitOfWork.Save();
+                    return request;
                 }
 
                 if (!dto.Urgent)
