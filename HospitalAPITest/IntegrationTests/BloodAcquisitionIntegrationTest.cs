@@ -15,7 +15,9 @@
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
+    using System.Numerics;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -101,6 +103,27 @@
             Assert.NotNull(result);
             Assert.Equal(BloodType.O_PLUS, result.BloodType);
             Assert.Equal(BloodRequestStatus.DECLINED, result.Status);
+        }
+
+        [Fact]
+        public void Edit_acquisition()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            BloodAcquisition bloodAcquisition = new BloodAcquisition()
+            {
+                BloodType = BloodType.O_PLUS,
+                Amount = 10,
+                Reason = "test",
+                Date = DateTime.Now,
+                Status = BloodRequestStatus.RECONSIDERING
+            };
+
+            var result = ((OkObjectResult)controller.EditBloodRequest(bloodAcquisition)).Value as BloodAcquisition;
+
+            Assert.NotNull(result);
+            Assert.Equal(BloodRequestStatus.RECONSIDERING, result.Status);
         }
 
         [Theory]

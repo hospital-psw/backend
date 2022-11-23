@@ -31,6 +31,11 @@
                                                       .FirstOrDefault(x => x.Id == id);
         }
 
+        public override void Update(BloodAcquisition entity)
+        {
+            HospitalDbContext.Entry(entity).State = (entity as Entity).Id == 0 ? EntityState.Added : EntityState.Modified;
+        }
+
         public IEnumerable<BloodAcquisition> GetPendingAcquisitions()
         {
             return HospitalDbContext.BloodAcquisitions.Include(x => x.Doctor)
@@ -50,6 +55,11 @@
         public IEnumerable<BloodAcquisition> GetAllPending()
         {
             return GetAll().Where(x => x.Status == BloodRequestStatus.PENDING).ToList();
+        }
+
+        public IEnumerable<BloodAcquisition> GetAllReconsidering()
+        {
+            return GetAll().Where(x => x.Status == BloodRequestStatus.RECONSIDERING).ToList();
         }
     }
 }

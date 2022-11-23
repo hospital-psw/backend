@@ -43,6 +43,15 @@
             }
         }
 
+        public void HandleBloodRequest(BloodRequestStatus status, int id, string managerComment)
+        {
+            BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
+            bloodAcquisition.Status = status;
+            bloodAcquisition.ManagerComment = managerComment;
+            _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+            _unitOfWork.Save();
+        }
+
         public override BloodAcquisition Get(int id)
         {
             try
@@ -179,6 +188,19 @@
             try
             {
                 return _unitOfWork.BloodAcquisitionRepository.GetAllPending();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodAcquisitionService in GetAllPendingAcquisition {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<BloodAcquisition> GetAllReconsideringAcquisition()
+        {
+            try
+            {
+                return _unitOfWork.BloodAcquisitionRepository.GetAllReconsidering();
             }
             catch (Exception e)
             {

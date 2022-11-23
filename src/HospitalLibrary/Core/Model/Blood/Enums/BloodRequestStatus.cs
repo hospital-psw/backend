@@ -10,7 +10,8 @@
     {
         ACCEPTED,
         DECLINED,
-        PENDING
+        PENDING,
+        RECONSIDERING
 
     }
 }
