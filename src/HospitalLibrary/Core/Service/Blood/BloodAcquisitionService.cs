@@ -208,9 +208,12 @@
                 return null;
             }
 
-            public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id)
-            {
-                return _unitOfWork.BloodAcquisitionRepository.GetAcquisitionsForSpecificDoctor(id);
-            }
+
         }
+
+        public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id)
+        {
+            return _unitOfWork.BloodAcquisitionRepository.GetAcquisitionsForSpecificDoctor(id);
+        }
+      }
     }
