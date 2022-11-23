@@ -15,9 +15,9 @@
         public string Reason { get; set; }
         public DateTime Date { get; set; }
 
-        CreateExpenditureDTO() { }
+        public CreateExpenditureDTO() { }
 
-        CreateExpenditureDTO(int doctorId, BloodType bloodType, int amount, string reason, DateTime date)
+        public CreateExpenditureDTO(int doctorId, BloodType bloodType, int amount, string reason, DateTime date)
         {
             DoctorId = doctorId;
             BloodType = bloodType;

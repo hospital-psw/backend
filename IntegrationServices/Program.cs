@@ -1,4 +1,5 @@
 ﻿using IntegrationServices;
+using IntegrationServices.ReportService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.WindowsServices;
@@ -22,6 +23,7 @@ namespace PrimerServis
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<MQSubscriberService>();
+                    services.AddHostedService<ReportService>();
                 });
     }
 }

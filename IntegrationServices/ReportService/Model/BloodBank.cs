@@ -1,10 +1,14 @@
-﻿namespace IntegrationAPI.DTO.BloodBank
+﻿namespace IntegrationServices.ReportService.Model
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
 
-    public class GetBloodBankDTO
+    public class BloodBank : Entity
     {
-        public int Id { get; set; }
+        public BloodBank() { }
         public string Name { get; set; }
         public string Email { get; set; }
         public string ApiUrl { get; set; }
@@ -12,11 +16,9 @@
         public string GetBloodTypeAvailability { get; set; }
         public string GetBloodTypeAndAmountAvailability { get; set; }
         public string AdminPassword { get; set; }
-        public string IsDummyPassword { get; set; }
+        public bool IsDummyPassword { get; set; }
         public DateTime ReportTo { get; set; }
         public DateTime ReportFrom { get; set; }
         public int Frequently { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime DateUpdated { get; set; }
     }
 }

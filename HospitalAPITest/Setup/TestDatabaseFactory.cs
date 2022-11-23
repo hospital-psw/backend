@@ -143,7 +143,16 @@
 
             };
 
+            BloodExpenditure expenditure = new BloodExpenditure()
+            {
+                Doctor = doc,
+                BloodType = BloodType.A_PLUS,
+                Amount = 7,
+                Reason = "blabla",
+                Date = Convert.ToDateTime("2022-11-21T12:06:44.3236514")
+            };
 
+            context.BloodExpenditures.Add(expenditure);
             context.Patients.Add(pat);
 
             context.Patients.Add(pat2);
