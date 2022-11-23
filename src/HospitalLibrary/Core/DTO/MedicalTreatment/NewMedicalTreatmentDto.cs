@@ -15,5 +15,7 @@
 
         public int DoctorId { get; set; }
 
+        public string AdmittanceReason { get; set; }
+
     }
 }

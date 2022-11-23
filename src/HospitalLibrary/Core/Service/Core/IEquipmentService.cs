@@ -10,5 +10,7 @@
     public interface IEquipmentService
     {
         List<Equipment> GetForRoom(int roomId);
+        Equipment Get(int id);
+        List<Room> SearchRooms(List<Room> rooms, int equipmentType, int quantity);
     }
 }

@@ -36,7 +36,11 @@
             return Ok(bloodUnitService.GetAmountForSpecificBloodType(bloodType));
         }
 
+        [HttpGet("get/{bloodType}")]
+        public IActionResult GetByBloodType(BloodType bloodType)
+        {
+            return Ok(bloodUnitService.GetByBloodType(bloodType));
+        }
 
-      
     }
 }

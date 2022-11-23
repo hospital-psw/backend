@@ -1,6 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Blood.Core
 {
- 
+
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.Enums;
@@ -22,5 +22,6 @@
         BloodUnit Update(BloodUnit bloodUnit);
 
         int GetAmountForSpecificBloodType(BloodType bloodType);
+        BloodUnit GetByBloodType(BloodType bloodType);
     }
 }

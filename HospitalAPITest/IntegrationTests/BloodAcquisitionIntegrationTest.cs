@@ -12,6 +12,7 @@
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
@@ -20,7 +21,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BloodAcquisitionIntegrationTest:BaseIntegrationTest
+    public class BloodAcquisitionIntegrationTest : BaseIntegrationTest
     {
 
         public BloodAcquisitionIntegrationTest(TestDatabaseFactory factory) : base(factory)
@@ -32,7 +33,7 @@
             return new BloodAcquisitionController(
                 serviceScope.ServiceProvider.GetRequiredService<IBloodAcquisitionService>(),
                 serviceScope.ServiceProvider.GetRequiredService<IDoctorService>()
-            ); 
+            );
         }
 
         [Fact]
@@ -57,8 +58,51 @@
             Assert.Equal(5, result.Amount);
             Assert.Equal("Bol u uvetu", result.Reason);
             Assert.Equal(BloodType.A_PLUS, result.BloodType);
-            
-            
+
+
+        }
+
+        [Fact]
+        public void Get_all_accepted_acquisition()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+
+            var result = ((OkObjectResult)controller.GetAllAccepted()).Value as List<BloodAcquisition>;
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(BloodType.A_MINUS, result.First().BloodType);
+            Assert.Equal(BloodRequestStatus.ACCEPTED, result.First().Status);
+        }
+
+        [Fact]
+        public void Get_all_declined_acquisition()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+
+            var result = ((OkObjectResult)controller.GetAllDeclined()).Value as List<BloodAcquisition>;
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(BloodType.O_PLUS, result.First().BloodType);
+            Assert.Equal(BloodRequestStatus.DECLINED, result.First().Status);
+        }
+
+        [Fact]
+        public void Decline_acquisition()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.DeclineBloodAcquisition(3)).Value as BloodAcquisition;
+
+            Assert.NotNull(result);
+            Assert.Equal(BloodType.O_PLUS, result.BloodType);
+            Assert.Equal(BloodRequestStatus.DECLINED, result.Status);
         }
 
         [Theory]
@@ -78,7 +122,7 @@
         {
             public BloodAcquisitionData()
             {
-                Add(new CreateAcquisitionDTO(1, DateTime.Now, BloodType.A_MINUS, 6, "Bol u peti",BloodRequestStatus.PENDING), new OkObjectResult(1));
+                Add(new CreateAcquisitionDTO(1, DateTime.Now, BloodType.A_MINUS, 6, "Bol u peti", BloodRequestStatus.PENDING), new OkObjectResult(1));
                 Add(new CreateAcquisitionDTO(2, DateTime.Now, BloodType.O_PLUS, 4, "Bol u peti", BloodRequestStatus.PENDING), new BadRequestObjectResult("Doctor not found"));
                 Add(null, new BadRequestObjectResult("Incorrect data, please enter valid data"));
                 Add(new CreateAcquisitionDTO(1, DateTime.Now, BloodType.O_MINUS, -9, "Bol u glavenom predelu", BloodRequestStatus.PENDING), new BadRequestObjectResult("Incorrect data, please enter valid data"));

@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public  interface IBloodExpenditureService
+    public interface IBloodExpenditureService
     {
 
         public BloodExpenditure Get(int id);
@@ -20,5 +20,7 @@
         public void Update(CreateExpenditureDTO expendituredto);
 
         public BloodExpenditure Delete(int id);
+
+        public CalculateDTO CalculateExpenditure(DateTime from, DateTime to);
     }
 }

@@ -18,13 +18,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalAPITest", "HospitalAPITest\HospitalAPITest.csproj", "{75B56116-83C3-4589-B455-DDD5751B596D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalAPITest", "HospitalAPITest\HospitalAPITest.csproj", "{75B56116-83C3-4589-B455-DDD5751B596D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalLibraryTest", "HospitalLibraryTest\HospitalLibraryTest.csproj", "{D524AEA2-3CEB-466C-9E67-68C614854C3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalLibraryTest", "HospitalLibraryTest\HospitalLibraryTest.csproj", "{D524AEA2-3CEB-466C-9E67-68C614854C3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationAPITest", "IntegrationAPITest\IntegrationAPITest.csproj", "{C40E9A5B-0E6B-46E8-907A-5A44F48346CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationAPITest", "IntegrationAPITest\IntegrationAPITest.csproj", "{C40E9A5B-0E6B-46E8-907A-5A44F48346CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationLibraryTest", "IntegrationLibraryTest\IntegrationLibraryTest.csproj", "{618D97D0-CB35-46FD-8046-A6123C3B35D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationLibraryTest", "IntegrationLibraryTest\IntegrationLibraryTest.csproj", "{618D97D0-CB35-46FD-8046-A6123C3B35D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationServices", "IntegrationServices\IntegrationServices.csproj", "{D90C8C8B-E0ED-4D7A-B6A5-255259DC19E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,10 @@ Global
 		{618D97D0-CB35-46FD-8046-A6123C3B35D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{618D97D0-CB35-46FD-8046-A6123C3B35D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{618D97D0-CB35-46FD-8046-A6123C3B35D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D90C8C8B-E0ED-4D7A-B6A5-255259DC19E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D90C8C8B-E0ED-4D7A-B6A5-255259DC19E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D90C8C8B-E0ED-4D7A-B6A5-255259DC19E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D90C8C8B-E0ED-4D7A-B6A5-255259DC19E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{D524AEA2-3CEB-466C-9E67-68C614854C3E} = {D598A8FD-AF65-4E98-A73B-1BE4D96774C6}
 		{C40E9A5B-0E6B-46E8-907A-5A44F48346CC} = {D598A8FD-AF65-4E98-A73B-1BE4D96774C6}
 		{618D97D0-CB35-46FD-8046-A6123C3B35D8} = {D598A8FD-AF65-4E98-A73B-1BE4D96774C6}
+		{D90C8C8B-E0ED-4D7A-B6A5-255259DC19E9} = {D598A8FD-AF65-4E98-A73B-1BE4D96774C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {321E0EAD-F8FE-4843-A345-178BDB1D01E8}

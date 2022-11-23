@@ -21,6 +21,7 @@
             dto.Start = medicalTreatment.Start;
             dto.End = medicalTreatment.End;
             dto.Active = medicalTreatment.Active;
+            dto.AdmittanceReason = medicalTreatment.AdmittanceReason;
             dto.Report = medicalTreatment.Report;
 
             return dto;

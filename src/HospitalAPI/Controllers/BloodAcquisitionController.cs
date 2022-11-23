@@ -1,6 +1,10 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Dto;
+    using HospitalAPI.Mappers;
+    using HospitalAPI.Mappers.Blood;
     using HospitalLibrary.Core.DTO.BloodManagment;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Blood;
@@ -8,6 +12,7 @@
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -16,7 +21,7 @@
         private IBloodAcquisitionService bloodAcquisitionService;
         private IDoctorService doctorService;
 
-        
+
         public BloodAcquisitionController(IBloodAcquisitionService _bloodAcquisitionService, IDoctorService _doctorService)
         {
             bloodAcquisitionService = _bloodAcquisitionService;
@@ -34,10 +39,12 @@
         public IActionResult Get(int id)
         {
             BloodAcquisition bloodAcquisition = bloodAcquisitionService.Get(id);
-            if(bloodAcquisition == null) {
+            if (bloodAcquisition == null)
+            {
                 return BadRequest("Id does not exist");
-            }else
-               return Ok(bloodAcquisition);
+            }
+            else
+                return Ok(bloodAcquisition);
         }
 
 
@@ -48,7 +55,7 @@
             {
                 return BadRequest("Incorrect data, please enter valid data");
             }
-            if (createAcquisitionDTO.BloodType < 0  || createAcquisitionDTO.Reason == null || createAcquisitionDTO.Amount < 1 || createAcquisitionDTO.Date == default(DateTime))
+            if (createAcquisitionDTO.BloodType < 0 || createAcquisitionDTO.Reason == null || createAcquisitionDTO.Amount < 1 || createAcquisitionDTO.Date == default(DateTime))
             {
                 return BadRequest("Please enter valid data");
             }
@@ -57,7 +64,7 @@
                 return BadRequest("Doctor not found");
             }
             else
-            bloodAcquisitionService.Create(createAcquisitionDTO);
+                bloodAcquisitionService.Create(createAcquisitionDTO);
             return Ok(createAcquisitionDTO);
         }
 
@@ -67,10 +74,22 @@
             return Ok(bloodAcquisitionService.GetPendingAcquisitions());
         }
 
+        [HttpGet("get/all/accepted")]
+        public IActionResult GetAllAccepted()
+        {
+            return Ok(bloodAcquisitionService.GetAllAcceptedAcquisition());
+        }
+
+        [HttpGet("get/all/declined")]
+        public IActionResult GetAllDeclined()
+        {
+            return Ok(bloodAcquisitionService.GetAllDeclinedAcquisition());
+        }
+
         [HttpPut("/accept/{id}")]
         public IActionResult AcceptBloodAcquisition(int id)
         {
-            if(bloodAcquisitionService.Get(id) == null)
+            if (bloodAcquisitionService.Get(id) == null)
             {
                 return BadRequest("Id does not exist");
             }
@@ -92,8 +111,5 @@
         {
             return Ok(bloodAcquisitionService.GetAcquisitionsForSpecificDoctor(id));
         }
-
-        
-
     }
 }
