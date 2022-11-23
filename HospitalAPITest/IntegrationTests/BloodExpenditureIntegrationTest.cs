@@ -1,12 +1,12 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
     using HospitalAPI.Controllers;
+    using HospitalAPI.Dto;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
-    using HospitalAPI.Dto;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -45,7 +45,7 @@
             };
 
             var result = ((OkObjectResult)controller.Create(dto)).Value as CreateExpenditureDTO;
-            
+
             Assert.NotNull(result);
             Assert.Equal(5, result.Amount);
             Assert.Equal("Za decicu", result.Reason);
@@ -80,7 +80,7 @@
         }
 
         [Fact]
-        public void Calculate_expenditure() 
+        public void Calculate_expenditure()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);

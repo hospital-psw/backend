@@ -42,7 +42,7 @@
             return HospitalDbContext.BloodAcquisitions.Include(x => x.Doctor)
                                                       .Where(x => x.Doctor.Id == id);
         }
-        
+
         public IEnumerable<BloodAcquisition> GetAllAccepted()
         {
             return GetAll().Where(x => x.Status == BloodRequestStatus.ACCEPTED).ToList();

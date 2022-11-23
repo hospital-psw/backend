@@ -160,7 +160,7 @@
                 return null;
             }
         }
-        
+
         public IEnumerable<BloodAcquisition> GetAllDeclinedAcquisition()
         {
             try
@@ -186,9 +186,10 @@
                 return null;
             }
         }
-        
-         public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id) {
+
+        public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id)
+        {
             return _unitOfWork.BloodAcquisitionRepository.GetAcquisitionsForSpecificDoctor(id);
-         }
+        }
     }
 }
