@@ -106,7 +106,10 @@
             return Ok(bloodAcquisitionService.DeclineAcquisition(id));
         }
 
-
-
+        [HttpGet("/doctorAcquisitions/{id}")]
+        public IActionResult GetAcquisitionsForSpecificDoctor(int id)
+        {
+            return Ok(bloodAcquisitionService.GetAcquisitionsForSpecificDoctor(id));
+        }
     }
 }

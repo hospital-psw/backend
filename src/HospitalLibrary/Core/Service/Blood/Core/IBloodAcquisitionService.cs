@@ -28,6 +28,7 @@
 
         BloodAcquisition AcceptAcquisition(int id);
 
+        IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id);
         IEnumerable<BloodAcquisition> GetAllAcceptedAcquisition();
         IEnumerable<BloodAcquisition> GetAllDeclinedAcquisition();
         IEnumerable<BloodAcquisition> GetAllPendingAcquisition();

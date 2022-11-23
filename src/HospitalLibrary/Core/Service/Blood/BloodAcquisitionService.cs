@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Blood;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Settings;
@@ -134,7 +135,6 @@
                 BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
                 bloodAcquisition.Status = BloodRequestStatus.ACCEPTED;
                 BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(bloodAcquisition.BloodType);
-
                 bloodUnit.Amount += bloodAcquisition.Amount;
                 _unitOfWork.BloodUnitRepository.Update(bloodUnit);
                 _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
@@ -185,6 +185,11 @@
                 _logger.LogError($"Error in BloodAcquisitionService in GetAllPendingAcquisition {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id)
+        {
+            return _unitOfWork.BloodAcquisitionRepository.GetAcquisitionsForSpecificDoctor(id);
         }
     }
 }

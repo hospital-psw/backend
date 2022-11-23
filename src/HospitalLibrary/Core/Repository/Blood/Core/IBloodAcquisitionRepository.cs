@@ -12,10 +12,11 @@
     public interface IBloodAcquisitionRepository : IBaseRepository<BloodAcquisition>
     {
         IEnumerable<BloodAcquisition> GetPendingAcquisitions();
-
+        IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id);
         IEnumerable<BloodAcquisition> GetAllAccepted();
         IEnumerable<BloodAcquisition> GetAllDeclined();
         IEnumerable<BloodAcquisition> GetAllPending();
+
 
     }
 }

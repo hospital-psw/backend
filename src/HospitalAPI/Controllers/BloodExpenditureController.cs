@@ -17,11 +17,13 @@
 
 
         private IBloodExpenditureService bloodExpenditureService;
+        private IDoctorService doctorService;
 
-        public BloodExpenditureController(IBloodExpenditureService _bloodExpenditureService)
+        public BloodExpenditureController(IBloodExpenditureService _bloodExpenditureService, IDoctorService _doctorService)
         {
 
             bloodExpenditureService = _bloodExpenditureService;
+            this.doctorService = _doctorService;
         }
 
         [HttpGet]
@@ -39,8 +41,22 @@
         [HttpPost]
         public IActionResult Create(CreateExpenditureDTO createExpenditureDTO)
         {
+            Doctor doctor = doctorService.Get(createExpenditureDTO.DoctorId);
+            if (createExpenditureDTO == null)
+            {
+                return BadRequest("DTO is null");
+            }
+            if (createExpenditureDTO.Reason == null || createExpenditureDTO.Amount < 0 || createExpenditureDTO.BloodType < 0)
+            {
+                return BadRequest("Incorrect data");
+            }
+            if (doctor == null)
+            {
+                return BadRequest("Doctor does not exist");
+            }
+
             bloodExpenditureService.Create(createExpenditureDTO);
-            return Ok();
+            return Ok(createExpenditureDTO);
         }
 
         [HttpPost("calculate")]
