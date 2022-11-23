@@ -23,11 +23,6 @@
             _statisticsService = statisticsService;
         }
 
-        public StatisticalController(IStatisticsService statisticsService, IDoctorService doctorService) : this(statisticsService)
-        {
-            this.doctorService = doctorService;
-        }
-
         [HttpGet("getStats")]
         public IActionResult GetStats()
         {

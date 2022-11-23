@@ -68,24 +68,24 @@ namespace HospitalAPI
             });
             services.AddDistributedMemoryCache();
 
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-               options.TokenValidationParameters = new TokenValidationParameters
-               {
-                   ValidateIssuer = true,
-                   ValidateAudience = true,
-                   ValidateLifetime = true,
-                   ValidateIssuerSigningKey = true,
-                   ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
-                   ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
-                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
-               };
-            });
+            //services.AddAuthentication(opt =>
+            //{
+            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(options =>
+            //{
+            //   options.TokenValidationParameters = new TokenValidationParameters
+            //   {
+            //       ValidateIssuer = true,
+            //       ValidateAudience = true,
+            //       ValidateLifetime = true,
+            //       ValidateIssuerSigningKey = true,
+            //       ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+            //       ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+            //       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+            //   };
+            //});
 
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddAutoMapper(typeof(Startup));
