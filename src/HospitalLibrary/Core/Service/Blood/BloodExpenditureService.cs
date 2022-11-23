@@ -8,6 +8,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Logging;
     using System;
@@ -65,7 +66,7 @@
                 BloodType bloodType = expendituredto.BloodType;
                 int amount = expendituredto.Amount;
                 string reason = expendituredto.Reason;
-                DateTime date = expendituredto.Date;
+                DateTime date = DateTime.Now;
                 BloodExpenditure bloodExpenditure = new BloodExpenditure(doctor,bloodType,amount,reason,date);
                 _unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
                 _unitOfWork.Save();

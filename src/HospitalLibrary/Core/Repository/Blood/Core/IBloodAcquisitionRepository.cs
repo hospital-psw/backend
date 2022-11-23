@@ -12,5 +12,7 @@
     {
         IEnumerable<BloodAcquisition> GetPendingAcquisitions();
 
+        IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id);
+
     }
 }

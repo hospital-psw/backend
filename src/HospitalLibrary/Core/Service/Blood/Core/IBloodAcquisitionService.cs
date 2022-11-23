@@ -27,5 +27,7 @@
 
         BloodAcquisition AcceptAcquisition(int id);
 
+        IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id);
+
     }
 }

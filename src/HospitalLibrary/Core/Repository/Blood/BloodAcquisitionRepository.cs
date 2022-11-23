@@ -34,5 +34,11 @@
                                                        .Where(x => x.Status == Model.Blood.Enums.BloodRequestStatus.PENDING);
         }
 
+        public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id)
+        {
+            return HospitalDbContext.BloodAcquisitions.Include(x => x.Doctor)
+                                                      .Where(x => x.Doctor.Id == id);
+        }
+
     }
 }
