@@ -18,14 +18,14 @@
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IAllergiesService _allergiesService;
 
-        public AuthService(UserManager<ApplicationUser> userManager, 
-            SignInManager<ApplicationUser> signInManager, 
+        public AuthService(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             RoleManager<ApplicationRole> roleManager, IAllergiesService allergiesService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _allergiesService = allergiesService; 
+            _allergiesService = allergiesService;
         }
 
         public async Task<IdentityResult> Register(ApplicationUser user, string password)
@@ -69,7 +69,7 @@
             return identityResult;
         }
 
-        public async Task<IdentityResult> AddToRole(ApplicationPatient patient, string name) 
+        public async Task<IdentityResult> AddToRole(ApplicationPatient patient, string name)
         {
             return await _userManager.AddToRoleAsync(patient, name);
         }
@@ -87,7 +87,7 @@
             return result;
         }
 
-        public async Task<bool> IsEmailConfirmedAsync(ApplicationUser user) 
+        public async Task<bool> IsEmailConfirmedAsync(ApplicationUser user)
         {
             var result = await _userManager.IsEmailConfirmedAsync(user);
             return result;
@@ -95,8 +95,8 @@
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
         {
-           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-           return code;
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            return code;
         }
     }
 }

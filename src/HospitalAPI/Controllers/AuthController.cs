@@ -30,13 +30,13 @@
         private readonly ITokenService _tokenService;
         private readonly IEmailService _emailService;
 
-        public AuthController(IAuthService authService, IMapper mapper, 
+        public AuthController(IAuthService authService, IMapper mapper,
             ITokenService tokenService, IEmailService emailService)
         {
             _authService = authService;
             _mapper = mapper;
             _tokenService = tokenService;
-            _emailService = emailService; 
+            _emailService = emailService;
         }
 
         [HttpPost("register")]
@@ -140,7 +140,7 @@
             {
                 var user = await _authService.FindByEmailAsync(dto.Email);
 
-                if (user == null) 
+                if (user == null)
                     return BadRequest("Something went wrong...");
 
                 var token = await _authService.GenerateEmailConfirmationTokenAsync(user);
@@ -176,10 +176,10 @@
 
         [Authorize(Roles = "Patient")]
         [HttpGet("test")]
-        public IActionResult Test() 
+        public IActionResult Test()
         {
             string token = Request.Headers["Authorization"];
-            if (token == null || !_tokenService.IsTokenValid(token)) 
+            if (token == null || !_tokenService.IsTokenValid(token))
             {
                 return BadRequest("Error");
             }

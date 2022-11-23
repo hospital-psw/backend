@@ -48,12 +48,12 @@
                 return null;
             }
         }
-        public List<Allergies> GetAllergiesFromDTO(List<int> ids) 
+        public List<Allergies> GetAllergiesFromDTO(List<int> ids)
         {
             try
             {
                 List<Allergies> allergies = new List<Allergies>();
-                foreach (int id in ids) 
+                foreach (int id in ids)
                 {
                     allergies.Add(Get(id));
                 }
@@ -65,7 +65,7 @@
                 _logger.LogError($"Error in AllergiesService in GetAllergiesFromDTO {e.Message} in {e.StackTrace}");
                 return null;
             }
-        
+
         }
 
     }

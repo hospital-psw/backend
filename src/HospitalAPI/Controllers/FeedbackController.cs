@@ -137,7 +137,7 @@
         [HttpPost("add")]
         public IActionResult Add(NewFeedbackDTO dto)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 string token = Request.Headers["Authorization"];
                 if (token == null || !_tokenService.IsTokenValid(token))
