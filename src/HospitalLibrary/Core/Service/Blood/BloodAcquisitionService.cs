@@ -215,5 +215,5 @@
         {
             return _unitOfWork.BloodAcquisitionRepository.GetAcquisitionsForSpecificDoctor(id);
         }
-      }
     }
+}
