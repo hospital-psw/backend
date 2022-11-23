@@ -7,10 +7,12 @@
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
+    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Net.Http.Headers;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -112,17 +114,22 @@
             return Ok("User logged out.");
         }
 
-        [Authorize]
-        [HttpGet("kita")]
-        public IActionResult Kita() 
+        [Authorize(Roles = "Patient")]
+        [HttpGet("test")]
+        public IActionResult Test() 
         {
-            string token = HttpContext.Session.GetString("Token");
-            if (token == null || _tokenService.IsTokenValid(token)) 
+            string token = Request.Headers["Authorization"];
+            if (token == null) 
             {
-                return BadRequest("Mala kita");
+                return BadRequest("Error");
+            }
+            
+            if (!_tokenService.IsTokenValid(token)) 
+            {
+                return BadRequest("Error");
             }
 
-            return Ok("Velika kita");
+            return Ok("Success");
         }
 
     }

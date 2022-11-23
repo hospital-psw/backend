@@ -50,8 +50,10 @@
             var jwtToken = JsonSerializer.Serialize(stringToken);
             return jwtToken;
         }
+
         public bool IsTokenValid(string token) 
         {
+            token = token.Replace("Bearer ", string.Empty);
             var mySecret = Encoding.UTF8.GetBytes(_configuration.Jwt.Key);
             var mySecurityKey = new SymmetricSecurityKey(mySecret);
             var tokenHandler = new JwtSecurityTokenHandler();
