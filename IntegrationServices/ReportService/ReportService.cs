@@ -45,7 +45,7 @@
                     currentBB = bank;
                     Console.WriteLine(bank.Name);
                     collectTimer.Elapsed += new ElapsedEventHandler(asdf);
-                    collectTimer.Interval = 60000; //bank.Frequently*24*60*60*1000; //bank.Frequently//freqvently in miliseconds 
+                    collectTimer.Interval = 5000; //bank.Frequently*24*60*60*1000; //bank.Frequently//freqvently in miliseconds 
                     collectTimer.Enabled = true;
                 }
             }
@@ -54,10 +54,9 @@
         }
         public void asdf(object source, ElapsedEventArgs e)
         {
-            var dateRange = new DateRangeDTO(currentBB.ReportFrom,currentBB.ReportTo);
             dto = JsonConvert.DeserializeObject<CalculateDTO>(Connections.PostData("http://localhost:16177/api/BloodExpenditure/calculate","{"+
-                    "\"from\"" +":" + "\""+currentBB.ReportFrom.ToString()+"\"" +"," +
-                    "\"to\"" + ":" + "\""+currentBB.ReportTo.ToString()+"\"" +
+                    "\"from\"" +":" + "\""+currentBB.ReportFrom.ToString("yyyy-MM-ddTHH:mm:ss") + "\"" +"," +
+                    "\"to\"" + ":" + "\""+currentBB.ReportTo.ToString("yyyy-MM-ddTHH:mm:ss") + "\"" +
                     "}"));
 
             string fileName = GeneratePDF.GeneratePdf(currentBB.Name, dto);

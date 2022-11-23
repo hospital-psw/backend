@@ -1,5 +1,6 @@
 ﻿namespace IntegrationServices.ReportService
 {
+    using IntegrationServices.ReportService.DTO;
     using System;
     using System.Collections.Generic;
     using System.IO;
