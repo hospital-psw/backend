@@ -13,8 +13,8 @@
     [Route("api/[controller]")]
     public class BloodExpenditureController : BaseController<BloodExpenditure>
     {
-        
-        
+
+
         private IBloodExpenditureService bloodExpenditureService;
         private IDoctorService doctorService;
 
@@ -41,15 +41,15 @@
         public IActionResult Create(CreateExpenditureDTO createExpenditureDTO)
         {
             Doctor doctor = doctorService.Get(createExpenditureDTO.DoctorId);
-            if(createExpenditureDTO == null)
+            if (createExpenditureDTO == null)
             {
                 return BadRequest("DTO is null");
             }
-            if(createExpenditureDTO.Reason == null || createExpenditureDTO.Amount <0 || createExpenditureDTO.BloodType <0) 
+            if (createExpenditureDTO.Reason == null || createExpenditureDTO.Amount < 0 || createExpenditureDTO.BloodType < 0)
             {
                 return BadRequest("Incorrect data");
             }
-            if(doctor == null)
+            if (doctor == null)
             {
                 return BadRequest("Doctor does not exist");
             }
@@ -58,6 +58,6 @@
             return Ok(createExpenditureDTO);
         }
 
-        
-    }   
+
+    }
 }

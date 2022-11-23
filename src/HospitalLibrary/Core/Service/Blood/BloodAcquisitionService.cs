@@ -34,7 +34,7 @@
         {
             try
             {
-                
+
                 return _unitOfWork.BloodAcquisitionRepository.GetAll();
             }
             catch (Exception e)
@@ -48,7 +48,7 @@
         {
             try
             {
-                
+
                 return _unitOfWork.BloodAcquisitionRepository.Get(id);
             }
             catch (Exception e)
@@ -62,7 +62,7 @@
         {
             try
             {
-                
+
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(acquisitionDTO.DoctorId);
                 DateTime date = acquisitionDTO.Date;
                 BloodType bloodType = acquisitionDTO.BloodType;
@@ -84,7 +84,7 @@
         {
             try
             {
-                
+
                 bloodAcquisition.Deleted = true;
                 _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
                 _unitOfWork.Save();
@@ -113,7 +113,7 @@
 
         public IEnumerable<BloodAcquisition> GetPendingAcquisitions()
         {
-            
+
             return _unitOfWork.BloodAcquisitionRepository.GetPendingAcquisitions();
         }
 
@@ -141,9 +141,10 @@
             return bloodAcquisition;
         }
 
-        public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id) {
+        public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id)
+        {
             return _unitOfWork.BloodAcquisitionRepository.GetAcquisitionsForSpecificDoctor(id);
-         }
+        }
 
 
 

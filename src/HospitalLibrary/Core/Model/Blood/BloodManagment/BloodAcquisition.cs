@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BloodAcquisition:Entity
+    public class BloodAcquisition : Entity
     {
         public Doctor Doctor { get; set; }
         public BloodType BloodType { get; set; }
@@ -18,12 +18,12 @@
 
         public BloodRequestStatus Status { get; set; }
 
-        
-        
-        
+
+
+
         public BloodAcquisition() { }
 
-        public BloodAcquisition(Doctor doctor, BloodType bloodType, int amount, string reason, DateTime date,BloodRequestStatus status)
+        public BloodAcquisition(Doctor doctor, BloodType bloodType, int amount, string reason, DateTime date, BloodRequestStatus status)
         {
             Doctor = doctor;
             BloodType = bloodType;

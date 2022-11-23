@@ -14,7 +14,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BloodExpenditureIntegrationTest:BaseIntegrationTest
+    public class BloodExpenditureIntegrationTest : BaseIntegrationTest
     {
 
         public BloodExpenditureIntegrationTest(TestDatabaseFactory factory) : base(factory)
@@ -72,7 +72,7 @@
         {
             public BloodExpenditureData()
             {
-                
+
                 Add(new CreateExpenditureDTO(1, BloodType.A_PLUS, 6, "Za decu"), new OkObjectResult(1));
                 Add(new CreateExpenditureDTO(2, BloodType.O_PLUS, 4, "Za pacijenta retosa"), new BadRequestObjectResult("Incorrect Data"));
                 Add(new CreateExpenditureDTO(), new BadRequestObjectResult("DTO is null"));

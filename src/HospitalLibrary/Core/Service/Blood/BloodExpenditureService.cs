@@ -32,7 +32,7 @@
         {
             try
             {
-                
+
                 return _unitOfWork.BloodExpenditureRepository.Get(id);
             }
             catch (Exception e)
@@ -46,8 +46,8 @@
         {
             try
             {
-                
-                return  _unitOfWork.BloodExpenditureRepository.GetAll();
+
+                return _unitOfWork.BloodExpenditureRepository.GetAll();
             }
             catch (Exception e)
             {
@@ -59,15 +59,15 @@
 
         public void Create(CreateExpenditureDTO expendituredto)
         {
-            try 
-            { 
-                
+            try
+            {
+
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(expendituredto.DoctorId);
                 BloodType bloodType = expendituredto.BloodType;
                 int amount = expendituredto.Amount;
                 string reason = expendituredto.Reason;
                 DateTime date = DateTime.Now;
-                BloodExpenditure bloodExpenditure = new BloodExpenditure(doctor,bloodType,amount,reason,date);
+                BloodExpenditure bloodExpenditure = new BloodExpenditure(doctor, bloodType, amount, reason, date);
                 _unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
                 _unitOfWork.Save();
 
@@ -83,7 +83,7 @@
         {
             try
             {
-                
+
                 _unitOfWork.BloodExpenditureRepository.Update(bloodExpenditure);
                 return bloodExpenditure;
             }

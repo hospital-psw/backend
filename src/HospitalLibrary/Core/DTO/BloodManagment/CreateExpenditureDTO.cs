@@ -17,7 +17,7 @@
 
         public CreateExpenditureDTO() { }
 
-        public CreateExpenditureDTO(int doctorId, BloodType bloodType,int amount, string reason)
+        public CreateExpenditureDTO(int doctorId, BloodType bloodType, int amount, string reason)
         {
             DoctorId = doctorId;
             BloodType = bloodType;

@@ -16,7 +16,7 @@
         private IBloodAcquisitionService bloodAcquisitionService;
         private IDoctorService doctorService;
 
-        
+
         public BloodAcquisitionController(IBloodAcquisitionService _bloodAcquisitionService, IDoctorService _doctorService)
         {
             bloodAcquisitionService = _bloodAcquisitionService;
@@ -34,10 +34,12 @@
         public IActionResult Get(int id)
         {
             BloodAcquisition bloodAcquisition = bloodAcquisitionService.Get(id);
-            if(bloodAcquisition == null) {
+            if (bloodAcquisition == null)
+            {
                 return BadRequest("Id does not exist");
-            }else
-               return Ok(bloodAcquisition);
+            }
+            else
+                return Ok(bloodAcquisition);
         }
 
 
@@ -48,7 +50,7 @@
             {
                 return BadRequest("Incorrect data, please enter valid data");
             }
-            if (createAcquisitionDTO.BloodType < 0  || createAcquisitionDTO.Reason == null || createAcquisitionDTO.Amount < 1 || createAcquisitionDTO.Date == default(DateTime))
+            if (createAcquisitionDTO.BloodType < 0 || createAcquisitionDTO.Reason == null || createAcquisitionDTO.Amount < 1 || createAcquisitionDTO.Date == default(DateTime))
             {
                 return BadRequest("Please enter valid data");
             }
@@ -57,7 +59,7 @@
                 return BadRequest("Doctor not found");
             }
             else
-            bloodAcquisitionService.Create(createAcquisitionDTO);
+                bloodAcquisitionService.Create(createAcquisitionDTO);
             return Ok(createAcquisitionDTO);
         }
 
@@ -70,7 +72,7 @@
         [HttpPut("/accept/{id}")]
         public IActionResult AcceptBloodAcquisition(int id)
         {
-            if(bloodAcquisitionService.Get(id) == null)
+            if (bloodAcquisitionService.Get(id) == null)
             {
                 return BadRequest("Id does not exist");
             }
@@ -93,7 +95,7 @@
             return Ok(bloodAcquisitionService.GetAcquisitionsForSpecificDoctor(id));
         }
 
-        
+
 
     }
 }

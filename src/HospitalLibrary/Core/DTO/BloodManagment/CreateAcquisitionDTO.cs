@@ -11,11 +11,11 @@
     {
 
         public int DoctorId { get; set; }
-        public DateTime Date { get; set; } 
-        public BloodType BloodType { get; set; }    
+        public DateTime Date { get; set; }
+        public BloodType BloodType { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }
-       
+
 
 
 
