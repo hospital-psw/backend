@@ -39,7 +39,7 @@
             var result = ((OkObjectResult)controller.CalculateExpenditure(dto)).Value as CalculateDTO;
 
             Assert.NotNull(result);
-            Assert.Equal(7, result.totalSum);
+            Assert.Equal(7, result.TotalSum);
             Assert.Equal(7, result.APlusAmount);
         }
     }
