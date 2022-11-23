@@ -22,6 +22,41 @@ namespace HospitalLibrary.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Allergies", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("ApplicationPatientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationPatientId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Allergies");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationRole", b =>
                 {
                     b.Property<int>("Id")
@@ -927,6 +962,11 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Hospitalized")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("applicationDoctorId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("applicationDoctorId");
+
                     b.HasDiscriminator().HasValue("ApplicationPatient");
                 });
 
@@ -1007,6 +1047,17 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("MedicamentId");
 
                     b.HasDiscriminator().HasValue("MedicamentTherapy");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Allergies", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", null)
+                        .WithMany("Allergies")
+                        .HasForeignKey("ApplicationPatientId");
+
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", null)
+                        .WithMany("Allergies")
+                        .HasForeignKey("PatientId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -1216,6 +1267,15 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("WorkHours");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", "applicationDoctor")
+                        .WithMany()
+                        .HasForeignKey("applicationDoctorId");
+
+                    b.Navigation("applicationDoctor");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Room", "Office")
@@ -1274,6 +1334,16 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
                 {
                     b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", b =>
+                {
+                    b.Navigation("Allergies");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
+                {
+                    b.Navigation("Allergies");
                 });
 #pragma warning restore 612, 618
         }

@@ -32,6 +32,7 @@
         public IAppointmentRepository AppointmentRepository { get; set; }
         public IDoctorRepository DoctorRepository { get; set; }
         public IPatientRepository PatientRepository { get; set; }
+        public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }

@@ -8,6 +8,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using HospitalLibrary.Util;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -198,6 +199,12 @@
                 _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        public void GeneratePdf(int id)
+        {
+            MedicalTreatment treatment = _unitOfWork.MedicalTreatmentRepository.Get(id);
+            PDFUtil.GenerateTreatmentPdf(treatment);
         }
     }
 }

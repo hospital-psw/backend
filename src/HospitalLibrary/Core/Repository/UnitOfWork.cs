@@ -32,6 +32,7 @@
             FeedbackRepository = new FeedbackRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
             PatientRepository = new PatientRepository(_context);
+            AllergiesRepository = new AllergiesRepository(_context);
             MedicalTreatmentRepository = new MedicalTreatmentRepository(_context);
             TherapyRepository = new TherapyRepository(_context);
             MedicamentTherapyRepository = new MedicamentTherapyRepository(_context);
@@ -40,7 +41,6 @@
             VacationRequestsRepository = new VacationRequestsRepository(_context);
             EquipmentRepository = new EquipmentRepository(_context);
             RelocationRepository = new RelocationRepository(_context);
-
             BloodUnitRepository = new BloodUnitRepository(_context);
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
@@ -58,6 +58,7 @@
         public IAppointmentRepository AppointmentRepository { get; set; }
         public IDoctorRepository DoctorRepository { get; set; }
         public IPatientRepository PatientRepository { get; set; }
+        public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }

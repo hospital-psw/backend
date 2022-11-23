@@ -18,7 +18,9 @@
             BloodType = type;
         }
         public bool Hospitalized { get; set; }
-
         public BloodType BloodType { get; set; }
+        public ApplicationDoctor applicationDoctor { get; set; }
+        public List<Allergies> Allergies { get; set; }
+
     }
 }

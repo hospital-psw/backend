@@ -16,10 +16,16 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
+        private IDoctorService doctorService;
 
         public StatisticalController(IStatisticsService statisticsService)
         {
             _statisticsService = statisticsService;
+        }
+
+        public StatisticalController(IStatisticsService statisticsService, IDoctorService doctorService) : this(statisticsService)
+        {
+            this.doctorService = doctorService;
         }
 
         [HttpGet("getStats")]

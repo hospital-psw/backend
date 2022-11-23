@@ -308,9 +308,15 @@
                 BloodType = BloodType.A_PLUS,
                 Amount = 23
             });
+
+            context.Allergies.Add(new Allergies
+            {
+                Name = "kupus"
+
+            });
+
             context.VacationRequests.Add(new VacationRequest
             {
-                Deleted = false,
                 Doctor = doc,
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
@@ -330,6 +336,62 @@
                 ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null));
             context.ApplicationDoctors.Add(new ApplicationDoctor
                 ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, null, null));
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 1, 12, 0, 0, 0),
+                To = new DateTime(2023, 1, 22, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 2, 12, 0, 0, 0),
+                To = new DateTime(2023, 2, 22, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = ""
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 3, 12, 0, 0, 0),
+                To = new DateTime(2023, 3, 22, 0, 0, 0),
+                Status = VacationRequestStatus.REJECTED,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = "Mnogo trazis baca"
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 4, 12, 0, 0, 0),
+                To = new DateTime(2023, 4, 22, 0, 0, 0),
+                Status = VacationRequestStatus.REJECTED,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = "Ti ga bas pretera"
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 5, 12, 0, 0, 0),
+                To = new DateTime(2023, 5, 22, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = ""
+            });
+
 
             context.SaveChanges();
 

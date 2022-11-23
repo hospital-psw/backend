@@ -4,6 +4,7 @@
     using HospitalAPI.Dto.Auth;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using System.Data;
 
     public class ApplicationUserProfile : Profile
     {

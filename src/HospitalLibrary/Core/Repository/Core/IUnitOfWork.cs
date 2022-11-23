@@ -24,6 +24,7 @@
         public IAppointmentRepository AppointmentRepository { get; }
         public IDoctorRepository DoctorRepository { get; }
         public IPatientRepository PatientRepository { get; }
+        public IAllergiesRepository AllergiesRepository { get; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; }
         public ITherapyRepository TherapyRepository { get; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; }
