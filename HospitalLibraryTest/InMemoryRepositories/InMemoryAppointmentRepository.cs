@@ -58,6 +58,11 @@
             return appointments;
         }
 
+        public IEnumerable<Appointment> GetThisYearsAppointments()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Appointment entity)
         {
             throw new NotImplementedException();

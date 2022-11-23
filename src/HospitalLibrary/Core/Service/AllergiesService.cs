@@ -35,8 +35,6 @@
             }
         }
 
-
-
         public override IEnumerable<Allergies> GetAll()
         {
             try
@@ -48,6 +46,26 @@
                 _logger.LogError($"Error in AllergiesService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        public List<Allergies> GetAllergiesFromDTO(List<int> ids) 
+        {
+            try
+            {
+                List<Allergies> allergies = new List<Allergies>();
+                foreach (int id in ids) 
+                {
+                    allergies.Add(Get(id));
+                }
+
+                return allergies;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in AllergiesService in GetAllergiesFromDTO {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        
         }
 
     }

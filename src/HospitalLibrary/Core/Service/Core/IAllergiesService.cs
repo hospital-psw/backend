@@ -11,5 +11,6 @@
     {
         Allergies Add(Allergies allergy);
         IEnumerable<Allergies> GetAll();
+        List<Allergies> GetAllergiesFromDTO(List<int> ids);
     }
 }
