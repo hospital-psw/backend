@@ -29,7 +29,34 @@
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)
         {
-            throw new NotImplementedException();
+            Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, null, null);
+            doc1.Id = 1;
+            Doctor doc2 = new Doctor("Vuk", "Milanovic", "123", "ckepa@gmail.com", Specialization.GENERAL, null, null);
+            doc2.Id = 2;
+            Doctor doc4 = new Doctor("Ilija", "Galin", "123", "iki@gmail.com", Specialization.GENERAL, null, null);
+            doc4.Id = 4;
+            Appointment app1 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc1);
+            app1.Id = 1;
+            Appointment app2 = new Appointment(new DateTime(2022, 11, 23, 11, 30, 0), ExaminationType.GENERAL, null, null, doc1);
+            app2.Id = 2;
+            Appointment app3 = new Appointment(new DateTime(2022, 11, 24, 12, 0, 0), ExaminationType.GENERAL, null, null, doc1);
+            app3.Id = 3;
+            Appointment app6 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc2);
+            app1.Id = 6;
+            Appointment app7 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc4);
+            app1.Id = 7;
+            Appointment app4 = new Appointment(new DateTime(2022, 11, 24, 12, 0, 0), ExaminationType.GENERAL, null, null, doc2);
+            app3.Id = 5;
+
+            List<Appointment> appointments = new List<Appointment>();
+            appointments.Add(app1);
+            appointments.Add(app2);
+            appointments.Add(app3);
+            appointments.Add(app4);
+            appointments.Add(app6);
+            appointments.Add(app7);
+
+            return appointments.Where(x => x.Doctor.Id == doctorId);
         }
 
         public IEnumerable<Appointment> GetAppointmentsForPatient(int patientId)
@@ -39,7 +66,7 @@
 
         public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to)
         {
-            throw new NotImplementedException();
+            return GetAppointmentsForDoctor(doctorId).Where(x => from <= x.Date && to >= x.Date);
         }
 
         public IEnumerable<Appointment> GetScheduledAppointments(int doctorId, int patientId)
@@ -63,6 +90,11 @@
             }
 
             return retList;
+        }
+
+        public bool IsDoctorAvailable(int doctorId, DateTime date)
+        {
+            return !GetAppointmentsForDoctor(doctorId).Where(x => x.Date == date).Any();
         }
 
         public void Update(Appointment entity)

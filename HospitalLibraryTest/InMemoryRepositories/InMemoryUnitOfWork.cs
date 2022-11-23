@@ -20,6 +20,7 @@
             RoomRepository = new InMemoryRoomRepository();
             AppointmentRepository = new InMemoryAppointmentRepository();
             EquipmentRepository = new InMemoryEquipmentRepository();
+            DoctorRepository = new InMemoryDoctorRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
