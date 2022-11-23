@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Mappers;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
@@ -29,9 +30,6 @@
             }
 
             return Ok(_allergiesService.Add(AllergiesMapper.EntityDtoToEntity(dto)));
-
-
-
         }
 
         [HttpGet("all")]
@@ -43,8 +41,8 @@
             {
                 return NotFound();
             }
-
-            return Ok(allergies);
+            allergies.ForEach(a => allergiesDto.Add(AllergiesMapper.EntityToEntityDto(a)));
+            return Ok(allergiesDto);
         }
 
     }

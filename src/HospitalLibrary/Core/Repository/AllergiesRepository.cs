@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository.Core;

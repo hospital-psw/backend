@@ -3,7 +3,7 @@
     using System.Collections.Generic;
 
     public class StatisticsDTO
-    {  
+    {
         public IEnumerable<int> Chart1 { get; set; }
         public IEnumerable<string> Chart2Names { get; set; }
         public IEnumerable<int> Chart2Values { get; set; }

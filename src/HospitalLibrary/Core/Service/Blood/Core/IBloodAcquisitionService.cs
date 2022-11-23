@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -28,9 +29,12 @@
 
         BloodAcquisition AcceptAcquisition(int id);
 
+        IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id);
         IEnumerable<BloodAcquisition> GetAllAcceptedAcquisition();
         IEnumerable<BloodAcquisition> GetAllDeclinedAcquisition();
         IEnumerable<BloodAcquisition> GetAllPendingAcquisition();
+        IEnumerable<BloodAcquisition> GetAllReconsideringAcquisition();
+        void HandleBloodRequest(BloodRequestStatus status, int id, string managerComment);
 
 
     }

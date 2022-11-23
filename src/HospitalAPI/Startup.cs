@@ -1,6 +1,7 @@
 using HospitalAPI.Configuration;
 using HospitalAPI.EmailServices;
 using HospitalAPI.Mappers;
+using HospitalAPI.TokenServices;
 using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
@@ -12,6 +13,7 @@ using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -49,7 +51,7 @@ namespace HospitalAPI
                 .AddEntityFrameworkStores<HospitalDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.SaveToken = false;
@@ -63,10 +65,30 @@ namespace HospitalAPI
                     ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
                 };
-
             });
+            services.AddDistributedMemoryCache();
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //services.AddAuthentication(opt =>
+            //{
+            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(options =>
+            //{
+            //   options.TokenValidationParameters = new TokenValidationParameters
+            //   {
+            //       ValidateIssuer = true,
+            //       ValidateAudience = true,
+            //       ValidateLifetime = true,
+            //       ValidateIssuerSigningKey = true,
+            //       ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+            //       ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+            //       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+            //   };
+            //});
+
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -97,7 +119,7 @@ namespace HospitalAPI
             services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();
             services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
+            services.AddScoped<ITokenService, TokenService>();
 
 
             ProjectConfiguration config = new ProjectConfiguration();

@@ -16,6 +16,7 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
+        private IDoctorService doctorService;
 
         public StatisticalController(IStatisticsService statisticsService)
         {
