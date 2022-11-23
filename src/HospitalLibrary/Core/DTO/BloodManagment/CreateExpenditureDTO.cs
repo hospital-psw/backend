@@ -13,17 +13,15 @@
         public BloodType BloodType { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }
-        public DateTime Date { get; set; }
 
-        CreateExpenditureDTO() { }
+        public CreateExpenditureDTO() { }
 
-        CreateExpenditureDTO(int doctorId, BloodType bloodType, int amount, string reason, DateTime date)
+        public CreateExpenditureDTO(int doctorId, BloodType bloodType, int amount, string reason)
         {
             DoctorId = doctorId;
             BloodType = bloodType;
             Amount = amount;
             Reason = reason;
-            Date = date;
         }
 
 

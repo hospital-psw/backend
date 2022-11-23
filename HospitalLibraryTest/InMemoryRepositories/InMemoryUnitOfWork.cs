@@ -20,6 +20,7 @@
             RoomRepository = new InMemoryRoomRepository();
             AppointmentRepository = new InMemoryAppointmentRepository();
             EquipmentRepository = new InMemoryEquipmentRepository();
+            DoctorRepository = new InMemoryDoctorRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -32,6 +33,7 @@
         public IAppointmentRepository AppointmentRepository { get; set; }
         public IDoctorRepository DoctorRepository { get; set; }
         public IPatientRepository PatientRepository { get; set; }
+        public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }
@@ -43,7 +45,7 @@
 
         public IEquipmentRepository EquipmentRepository { get; set; }
 
-        public IRelocationRepository RelocationRepository => throw new NotImplementedException();
+        public IRelocationRepository RelocationRepository { get; set; }
 
         public IBloodUnitRepository BloodUnitRepository => throw new NotImplementedException();
 

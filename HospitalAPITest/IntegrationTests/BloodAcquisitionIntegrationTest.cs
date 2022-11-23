@@ -8,6 +8,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -128,7 +129,7 @@
 
         [Theory]
         [ClassData(typeof(BloodAcquisitionData))]
-        public void Release_patient_from_treatment(CreateAcquisitionDTO dto, IActionResult expectedResult)
+        public void Check_blood_acquisition_creation(CreateAcquisitionDTO dto, IActionResult expectedResult)
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -137,6 +138,7 @@
 
             Assert.Equal(expectedResult.GetType(), result.GetType());
         }
+
 
         class BloodAcquisitionData : TheoryData<CreateAcquisitionDTO, IActionResult>
         {
@@ -149,6 +151,9 @@
                 Add(new CreateAcquisitionDTO(1, DateTime.Now, BloodType.B_PLUS, -9, null, BloodRequestStatus.PENDING), new BadRequestObjectResult("Incorrect data, please enter valid data"));
             }
         }
+
+
+
 
     }
 }

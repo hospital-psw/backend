@@ -8,6 +8,6 @@
 
     public enum EquipmentType
     {
-        BED, SCISSORS, NEEDLE, BANDAGE
+        BED, SCISSORS, NEEDLE, BANDAGE, RESPIRATOR, STETHOSCOPE, XRAY, PLASTER
     }
 }

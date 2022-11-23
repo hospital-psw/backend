@@ -18,5 +18,7 @@
         Medicament Add(Medicament mediacament);
 
         void Delete(Medicament medicament);
+
+        IEnumerable<Medicament> GetAcceptableMedicaments(int patientId);
     }
 }

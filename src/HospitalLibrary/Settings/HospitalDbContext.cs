@@ -28,6 +28,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<Allergies> Allergies { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<MedicalTreatment> MedicalTreatments { get; set; }
         public DbSet<Therapy> Therapies { get; set; }

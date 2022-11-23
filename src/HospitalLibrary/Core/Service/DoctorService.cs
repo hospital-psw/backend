@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -82,6 +83,19 @@
             catch (Exception e)
             {
                 _logger.LogError($"Error in DoctorService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<Doctor> GetBySpecialization(Specialization specialization)
+        {
+            try
+            {
+                return _unitOfWork.DoctorRepository.GetBySpecialization(specialization);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in DoctorService in GetBySpecialization {e.Message} in {e.StackTrace}");
                 return null;
             }
         }

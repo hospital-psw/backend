@@ -127,6 +127,10 @@
             return Ok(bloodAcquisitionService.Update(bloodAcquisition));
         }
 
-
+        [HttpGet("/doctorAcquisitions/{id}")]
+        public IActionResult GetAcquisitionsForSpecificDoctor(int id)
+        {
+            return Ok(bloodAcquisitionService.GetAcquisitionsForSpecificDoctor(id));
+        }
     }
 }
