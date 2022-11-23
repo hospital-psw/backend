@@ -10,6 +10,7 @@
 
     public class ApplicationPatient : ApplicationUser
     {
+        public ApplicationPatient() : base() { }
         public ApplicationPatient(string firstName, string lastName, DateTime dateOfBirth, Gender gender, bool hospitalized, BloodType type) 
             : base(firstName, lastName, dateOfBirth, gender)
         {

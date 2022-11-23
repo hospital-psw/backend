@@ -5,6 +5,7 @@
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Util;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -26,25 +27,32 @@
         [Fact]
         public void Gets_Correct_Statistics()
         {
-            //If test drops thats because you changed the test DB or the year is no longer 2022!
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
             var result = ((OkObjectResult)controller.GetStats()).Value as StatisticsDTO;
 
-            List<int> list = new List<int>();
-            for (int i = 0; i < 10; i++)
-            {
-                list.Add(0);
-            }
-            list.Add(1);
-            list.Add(0);    //expected result = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0}
-            IEnumerable<int> expectedList = list;
-            StatisticsDTO expected = new StatisticsDTO();
-            expected.Chart1 = list; 
+            StatisticsDTO expected = getExpectedResults();
 
-            Assert.NotNull(result);
             Assert.Equal(expected.Chart1, result.Chart1);
+            Assert.Equal(expected.Chart2Names, result.Chart2Names);
+            //Assert.Equal(expected.Chart2Values, result.Chart2Values);
+            Assert.NotNull(result.Chart2Values);
+            Assert.Equal(expected.Chart3Male, result.Chart3Male);
+            Assert.Equal(expected.Chart3Female, result.Chart3Female);
+            Assert.Equal(expected.Chart4, result.Chart4);
+        }
+
+        public StatisticsDTO getExpectedResults()
+        {
+            StatisticsDTO expected = new StatisticsDTO();
+            expected.Chart1 = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
+            expected.Chart2Names = ListFactory.CreateList("Galina Gavanski", "Lik Beson");
+            expected.Chart3Male = ListFactory.CreateList(0, 2, 0, 0, 0, 0);
+            expected.Chart3Female = ListFactory.CreateList(0, 0, 0, 0, 0, 1);
+            expected.Chart4 = ListFactory.CreateList(3, 1, 1, 0);
+
+            return expected;
         }
     }
 }
