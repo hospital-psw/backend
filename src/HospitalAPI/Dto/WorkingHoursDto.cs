@@ -10,5 +10,11 @@
 
         public WorkingHoursDto() { }
 
+        public WorkingHoursDto(int id, DateTime start, DateTime end)
+        {
+            Id = id;
+            Start = start;
+            End = end;
+        }
     }
 }

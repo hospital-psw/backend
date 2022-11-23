@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
 
     [Route("api/[controller]")]
@@ -22,12 +23,15 @@
         [HttpGet("{roomId}")]
         public IActionResult GetForRoom(int roomId)
         {
+            List<EquipmentDto> equipmentDto = new List<EquipmentDto>();
             List<Equipment> equipment = _equipmentService.GetForRoom(roomId);
+
             if (equipment == null)
             {
                 return NotFound();
             }
-            return Ok(equipment);
+            equipment.ForEach(e => equipmentDto.Add(EquipmentMapper.EntityToEntityDto(e)));
+            return Ok(equipmentDto);
         }
     }
 }

@@ -26,6 +26,7 @@
 
         public bool Active { get; set; }
 
+        public string AdmittanceReason { get; set; }
         public string Report { get; set; }
 
         public MedicalTreatment()
@@ -33,7 +34,7 @@
 
         }
 
-        public MedicalTreatment(Room room, Patient patient, Doctor doctor, List<MedicamentTherapy> medicamentTherapies, List<BloodUnitTherapy> bloodUnitTherapies, DateTime start, DateTime end, bool active, string report)
+        public MedicalTreatment(Room room, Patient patient, Doctor doctor, List<MedicamentTherapy> medicamentTherapies, List<BloodUnitTherapy> bloodUnitTherapies, DateTime start, DateTime end, bool active, string report, string reason)
         {
             Room = room;
             Patient = patient;
@@ -43,6 +44,7 @@
             Start = start;
             End = end;
             Active = active;
+            AdmittanceReason = reason;
             Report = report;
         }
 

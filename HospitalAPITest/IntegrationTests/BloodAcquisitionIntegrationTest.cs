@@ -12,6 +12,7 @@
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
@@ -59,6 +60,49 @@
             Assert.Equal(BloodType.A_PLUS, result.BloodType);
 
 
+        }
+
+        [Fact]
+        public void Get_all_accepted_acquisition()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+
+            var result = ((OkObjectResult)controller.GetAllAccepted()).Value as List<BloodAcquisition>;
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(BloodType.A_MINUS, result.First().BloodType);
+            Assert.Equal(BloodRequestStatus.ACCEPTED, result.First().Status);
+        }
+
+        [Fact]
+        public void Get_all_declined_acquisition()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+
+            var result = ((OkObjectResult)controller.GetAllDeclined()).Value as List<BloodAcquisition>;
+
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal(BloodType.O_PLUS, result.First().BloodType);
+            Assert.Equal(BloodRequestStatus.DECLINED, result.First().Status);
+        }
+
+        [Fact]
+        public void Decline_acquisition()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.DeclineBloodAcquisition(3)).Value as BloodAcquisition;
+
+            Assert.NotNull(result);
+            Assert.Equal(BloodType.O_PLUS, result.BloodType);
+            Assert.Equal(BloodRequestStatus.DECLINED, result.Status);
         }
 
         [Theory]

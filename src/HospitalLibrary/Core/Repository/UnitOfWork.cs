@@ -32,6 +32,7 @@
             FeedbackRepository = new FeedbackRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
             PatientRepository = new PatientRepository(_context);
+            AllergiesRepository = new AllergiesRepository(_context);
             MedicalTreatmentRepository = new MedicalTreatmentRepository(_context);
             TherapyRepository = new TherapyRepository(_context);
             MedicamentTherapyRepository = new MedicamentTherapyRepository(_context);
@@ -39,7 +40,7 @@
             MedicamentRepository = new MedicamentRepository(_context);
             VacationRequestsRepository = new VacationRequestsRepository(_context);
             EquipmentRepository = new EquipmentRepository(_context);
-
+            RelocationRepository = new RelocationRepository(_context);
             BloodUnitRepository = new BloodUnitRepository(_context);
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
@@ -56,6 +57,7 @@
         public IAppointmentRepository AppointmentRepository { get; set; }
         public IDoctorRepository DoctorRepository { get; set; }
         public IPatientRepository PatientRepository { get; set; }
+        public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; set; }
@@ -63,6 +65,7 @@
         public IMedicamentRepository MedicamentRepository { get; set; }
         public IVacationRequestsRepository VacationRequestsRepository { get; set; }
         public IEquipmentRepository EquipmentRepository { get; set; }
+        public IRelocationRepository RelocationRepository { get; set; }
         public IBloodUnitRepository BloodUnitRepository { get; set; }
         public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }

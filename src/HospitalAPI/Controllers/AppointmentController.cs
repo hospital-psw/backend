@@ -100,5 +100,19 @@
             return Ok();
         }
 
+        [HttpGet]
+        [Route("doctor/{id}")]
+        public IActionResult GetDoctorAppointments(int id)
+        {
+            List<Appointment> appointments = (List<Appointment>)_appointmentService.GetByDoctorsId(id);
+
+            if (appointments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
+        }
+
     }
 }

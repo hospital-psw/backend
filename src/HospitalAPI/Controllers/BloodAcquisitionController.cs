@@ -1,6 +1,10 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Dto;
+    using HospitalAPI.Mappers;
+    using HospitalAPI.Mappers.Blood;
     using HospitalLibrary.Core.DTO.BloodManagment;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Blood;
@@ -8,6 +12,7 @@
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -69,6 +74,18 @@
             return Ok(bloodAcquisitionService.GetPendingAcquisitions());
         }
 
+        [HttpGet("get/all/accepted")]
+        public IActionResult GetAllAccepted()
+        {
+            return Ok(bloodAcquisitionService.GetAllAcceptedAcquisition());
+        }
+
+        [HttpGet("get/all/declined")]
+        public IActionResult GetAllDeclined()
+        {
+            return Ok(bloodAcquisitionService.GetAllDeclinedAcquisition());
+        }
+
         [HttpPut("/accept/{id}")]
         public IActionResult AcceptBloodAcquisition(int id)
         {
@@ -94,8 +111,5 @@
         {
             return Ok(bloodAcquisitionService.GetAcquisitionsForSpecificDoctor(id));
         }
-
-
-
     }
 }

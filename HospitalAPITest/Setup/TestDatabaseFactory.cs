@@ -2,6 +2,9 @@
 {
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
@@ -47,6 +50,7 @@
         private static void InitializeDatabase(HospitalDbContext context)
         {
             context.Database.EnsureDeleted();
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE VacationRequests");
             context.Database.EnsureCreated();
 
             //context.Database.ExecuteSqlRaw("DELETE FROM ");
@@ -139,7 +143,16 @@
 
             };
 
+            BloodExpenditure expenditure = new BloodExpenditure()
+            {
+                Doctor = doc,
+                BloodType = BloodType.A_PLUS,
+                Amount = 7,
+                Reason = "blabla",
+                Date = Convert.ToDateTime("2022-11-21T12:06:44.3236514")
+            };
 
+            context.BloodExpenditures.Add(expenditure);
             context.Patients.Add(pat);
 
             context.Patients.Add(pat2);
@@ -207,6 +220,19 @@
                 ManagerComment = ""
             });
 
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Deleted = false,
+                Doctor = doc,
+                From = new DateTime(2022, 12, 12, 0, 0, 0),
+                To = new DateTime(2022, 12, 15, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+
             //for equipment controller
             Room equipmentRoom = new Room()
             {
@@ -253,10 +279,149 @@
                 Room = equipmentRoom
             });
 
+            BloodAcquisition aquisition1 = new BloodAcquisition
+            {
+                //Id = 1,
+                BloodType = BloodType.A_MINUS,
+                Amount = 1,
+                Status = BloodRequestStatus.ACCEPTED
+            };
 
+            BloodAcquisition aquisition2 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.DECLINED,
+            };
+
+            BloodAcquisition aquisition3 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.PENDING
+            };
+
+            context.BloodAcquisitions.Add(aquisition1);
+            context.BloodAcquisitions.Add(aquisition2);
+            context.BloodAcquisitions.Add(aquisition3);
+
+            Building building = new Building()
+            {
+                Address = "Janka Cmelika 1",
+                Name = "Hospital2"
+            };
+
+            context.Buildings.Add(building);
+
+            Floor floor = new Floor()
+            {
+                Building = building,
+                Number = 0,
+                Purpose = "ortopedija"
+            };
+
+            context.Floors.Add(floor);
+
+            WorkingHours workingHours = new WorkingHours()
+            {
+                Start = new DateTime(2022, 11, 10, 4, 0, 0),
+                End = new DateTime(2022, 11, 10, 7, 0, 0)
+            };
+
+            context.WorkingHours.Add(workingHours);
+
+            context.Rooms.Add(new Room
+            {
+                Floor = floor,
+                Number = "003",
+                Purpose = "ordinacija",
+                WorkingHours = workingHours
+            });
+
+            context.BloodUnits.Add(new BloodUnit
+            {
+                BloodType = BloodType.A_PLUS,
+                Amount = 23
+            });
+
+            context.Allergies.Add(new Allergies
+            {
+                Name = "kupus"
+
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2022, 12, 12, 0, 0, 0),
+                To = new DateTime(2022, 12, 15, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 1, 12, 0, 0, 0),
+                To = new DateTime(2023, 1, 22, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = ""
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 2, 12, 0, 0, 0),
+                To = new DateTime(2023, 2, 22, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = ""
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 3, 12, 0, 0, 0),
+                To = new DateTime(2023, 3, 22, 0, 0, 0),
+                Status = VacationRequestStatus.REJECTED,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = "Mnogo trazis baca"
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 4, 12, 0, 0, 0),
+                To = new DateTime(2023, 4, 22, 0, 0, 0),
+                Status = VacationRequestStatus.REJECTED,
+                Comment = "",
+                Urgent = true,
+                ManagerComment = "Ti ga bas pretera"
+            });
+
+            context.VacationRequests.Add(new VacationRequest
+            {
+                Doctor = doc,
+                From = new DateTime(2023, 5, 12, 0, 0, 0),
+                To = new DateTime(2023, 5, 22, 0, 0, 0),
+                Status = VacationRequestStatus.WAITING,
+                Comment = "",
+                Urgent = false,
+                ManagerComment = ""
+            });
 
 
             context.SaveChanges();
+
         }
     }
 }

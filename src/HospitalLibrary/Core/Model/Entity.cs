@@ -16,5 +16,11 @@
 
         public bool Deleted { get; set; }
 
+        public Entity() { }
+        public Entity(int id)
+        {
+            Id = id;
+        }
+
     }
 }

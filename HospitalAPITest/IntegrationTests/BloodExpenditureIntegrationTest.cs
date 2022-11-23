@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalAPI.Dto;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -14,9 +15,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
+
     public class BloodExpenditureIntegrationTest : BaseIntegrationTest
     {
-
         public BloodExpenditureIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
         }
@@ -30,11 +31,10 @@
         }
 
         [Fact]
-        public void Create_blood_expenditure()
+        public void Calculate_expenditure()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-
 
             CreateExpenditureDTO dto = new CreateExpenditureDTO
             {
@@ -45,13 +45,11 @@
             };
 
             var result = ((OkObjectResult)controller.Create(dto)).Value as CreateExpenditureDTO;
-
+            
             Assert.NotNull(result);
             Assert.Equal(5, result.Amount);
             Assert.Equal("Za decicu", result.Reason);
             Assert.Equal(BloodType.A_PLUS, result.BloodType);
-
-
         }
 
 
@@ -80,7 +78,18 @@
                 Add(new CreateExpenditureDTO(1, BloodType.B_PLUS, 9, null), new BadRequestObjectResult("Incorrect data"));
             }
         }
+        
+        public void Create_blood_expenditure() 
+        {
+            DateRangeDto dto = new DateRangeDto();
+            dto.From = Convert.ToDateTime("2022-11-20T12:06:44.3236514");
+            dto.To = Convert.ToDateTime("2022-11-21T20:32:35.244Z");
 
+            var result = ((OkObjectResult)controller.CalculateExpenditure(dto)).Value as CalculateDTO;
 
+            Assert.NotNull(result);
+            Assert.Equal(7, result.TotalSum);
+            Assert.Equal(7, result.APlusAmount);
+        }
     }
 }

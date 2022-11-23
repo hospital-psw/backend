@@ -22,6 +22,36 @@ namespace HospitalLibrary.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AllergiesMedicament", b =>
+                {
+                    b.Property<int>("AllergensId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicamentsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllergensId", "MedicamentsId");
+
+                    b.HasIndex("MedicamentsId");
+
+                    b.ToTable("AllergiesMedicament");
+                });
+
+            modelBuilder.Entity("AllergiesPatient", b =>
+                {
+                    b.Property<int>("AllergiesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllergiesId", "PatientsId");
+
+                    b.HasIndex("PatientsId");
+
+                    b.ToTable("AllergiesPatient");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.Property<int>("Id")
@@ -231,6 +261,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("ReservedQuantity")
+                        .HasColumnType("int");
+
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
@@ -324,6 +357,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<string>("AdmittanceReason")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -360,6 +396,31 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("MedicalTreatments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Medicament.Allergies", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Allergies");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Medicament.Medicament", b =>
@@ -699,6 +760,9 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.User");
 
+                    b.Property<int>("BloodType")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Hospitalized")
                         .HasColumnType("bit");
 
@@ -717,9 +781,14 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("AmountOfBloodUnit")
                         .HasColumnType("int");
 
+                    b.Property<int?>("BloodUnitId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MedicalTreatmentId")
                         .HasColumnType("int")
                         .HasColumnName("BloodUnitTherapy_MedicalTreatmentId");
+
+                    b.HasIndex("BloodUnitId");
 
                     b.HasIndex("MedicalTreatmentId");
 
@@ -744,6 +813,36 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("MedicamentId");
 
                     b.HasDiscriminator().HasValue("MedicamentTherapy");
+                });
+
+            modelBuilder.Entity("AllergiesMedicament", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Medicament.Allergies", null)
+                        .WithMany()
+                        .HasForeignKey("AllergensId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Medicament.Medicament", null)
+                        .WithMany()
+                        .HasForeignKey("MedicamentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AllergiesPatient", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Medicament.Allergies", null)
+                        .WithMany()
+                        .HasForeignKey("AllergiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", null)
+                        .WithMany()
+                        .HasForeignKey("PatientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -911,9 +1010,15 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.BloodUnitTherapy", b =>
                 {
+                    b.HasOne("HospitalLibrary.Core.Model.Blood.BloodUnit", "BloodUnit")
+                        .WithMany()
+                        .HasForeignKey("BloodUnitId");
+
                     b.HasOne("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", null)
                         .WithMany("BloodUnitTherapies")
                         .HasForeignKey("MedicalTreatmentId");
+
+                    b.Navigation("BloodUnit");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.MedicamentTherapy", b =>

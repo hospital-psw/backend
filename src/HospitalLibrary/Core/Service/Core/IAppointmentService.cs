@@ -21,5 +21,7 @@
         void Delete(Appointment appointment);
 
         IEnumerable<Appointment> GetByDoctorsId(int doctorId);
+
+        IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to);
     }
 }

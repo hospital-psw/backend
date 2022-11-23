@@ -10,8 +10,7 @@
     public interface IUnitOfWork : IDisposable
     {
         int Save();
-
-        void Dispose();
+        new void Dispose();
 
         IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
 
@@ -25,6 +24,7 @@
         public IAppointmentRepository AppointmentRepository { get; }
         public IDoctorRepository DoctorRepository { get; }
         public IPatientRepository PatientRepository { get; }
+        public IAllergiesRepository AllergiesRepository { get; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; }
         public ITherapyRepository TherapyRepository { get; }
         public IMedicamentTherapyRepository MedicamentTherapyRepository { get; }
@@ -32,10 +32,10 @@
         public IMedicamentRepository MedicamentRepository { get; }
         public IVacationRequestsRepository VacationRequestsRepository { get; }
         public IEquipmentRepository EquipmentRepository { get; }
+        public IRelocationRepository RelocationRepository { get; }
         public IBloodUnitRepository BloodUnitRepository { get; }
         public IBloodExpenditureRepository BloodExpenditureRepository { get; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; }
-
 
     }
 }

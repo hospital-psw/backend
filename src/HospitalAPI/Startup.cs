@@ -1,5 +1,6 @@
 using HospitalAPI.Configuration;
 using HospitalAPI.EmailServices;
+using HospitalAPI.Mappers;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
@@ -50,6 +51,7 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IDoctorService, DoctorService>();
             services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IAllergiesService, AllergiesService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBuildingService, BuildingService>();
             services.AddScoped<IFloorService, FloorService>();
@@ -60,11 +62,11 @@ namespace HospitalAPI
             services.AddScoped<IMedicamentService, MedicamentService>();
             services.AddScoped<IVacationRequestsService, VacationRequestsService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
+            services.AddScoped<IRelocationService, RelocationService>();
+            services.AddHostedService<TimedHostedService>();
             services.AddScoped<IBloodUnitService, BloodUnitService>();
             services.AddScoped<IBloodAcquisitionService, BloodAcquisitionService>();
             services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();
-
-
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);

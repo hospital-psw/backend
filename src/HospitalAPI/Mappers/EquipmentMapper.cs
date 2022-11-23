@@ -6,12 +6,14 @@
 
     public class EquipmentMapper
     {
-        public static EquipmentDto EntityToEntityDto(EquipmentDto equipment)
+        public static EquipmentDto EntityToEntityDto(Equipment equipment)
         {
             EquipmentDto dto = new EquipmentDto();
             dto.EquipmentType = equipment.EquipmentType;
             dto.Quantity = equipment.Quantity;
             dto.Id = equipment.Id;
+            dto.Room = RoomMapper.EntityToEntityDto(equipment.Room);
+            dto.ReservedQuantity = equipment.ReservedQuantity;
             return dto;
         }
 
@@ -22,6 +24,8 @@
             equipment.EquipmentType = dto.EquipmentType;
             equipment.Quantity = dto.Quantity;
             equipment.Id = dto.Id;
+            equipment.Room = RoomMapper.EntityDtoToEntity(dto.Room);
+            equipment.ReservedQuantity = dto.ReservedQuantity;
             return equipment;
         }
     }
