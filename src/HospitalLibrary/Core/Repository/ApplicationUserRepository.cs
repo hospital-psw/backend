@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
@@ -24,6 +25,10 @@
         public IEnumerable<ApplicationPatient> GetAllPatients()
         {
             return _context.ApplicationPatients.ToList();
+        }
+        public ApplicationPatient GetPatient(int id)
+        {
+            return GetAllPatients().FirstOrDefault(x => x.Id == id);
         }
     }
 }

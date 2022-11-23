@@ -97,6 +97,7 @@ namespace HospitalAPI
             services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();
             services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
 
 
             ProjectConfiguration config = new ProjectConfiguration();
