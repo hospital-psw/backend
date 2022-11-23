@@ -90,5 +90,10 @@
             //DateTime.Compare(x.Date, from) > 0 && DateTime.Compare(x.Date, to) < 0
             //DbFunctions.TruncateTime()
         }
+
+        public bool IsDoctorAvailable(int doctorId, DateTime date)
+        {
+            return !GetAppointmentsForDoctor(doctorId).Where(x => x.Date == date).Any();
+        }
     }
 }

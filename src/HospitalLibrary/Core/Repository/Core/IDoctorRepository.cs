@@ -11,5 +11,6 @@
     public interface IDoctorRepository : IBaseRepository<Doctor>
     {
         IEnumerable<Doctor> GetBySpecialization(Specialization specialization);
+        IEnumerable<Doctor> GetOtherSpecializationDoctors(Specialization specialization, int doctorId);
     }
 }

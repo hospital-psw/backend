@@ -31,6 +31,11 @@
         {
             return GetAll().Where(x => x.Specialization == specialization).ToList();
         }
+
+        public IEnumerable<Doctor> GetOtherSpecializationDoctors(Specialization specialization, int doctorId)
+        {
+            return GetBySpecialization(specialization).Where(x => x.Id != doctorId).ToList();
+        }
     }
 }
 

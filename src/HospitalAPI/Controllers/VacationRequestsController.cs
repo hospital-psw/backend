@@ -57,14 +57,19 @@
                 return BadRequest();
             }
 
-            List<Appointment> appointments = (List<Appointment>)_appointmentService.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To);
+            if ((dto.From - DateTime.Now).TotalDays < 5 && !dto.Urgent)
+            {
+                return BadRequest("Request for vacation must be submitted at least 5 days before start date");
+            }
 
-            if (!appointments.IsNullOrEmpty())
+            VacationRequest request = _vacationRequestsService.Create(dto);
+
+            if (request == null)
             {
                 return BadRequest("You have scheduled appointments in given date interval");
             }
 
-            return Ok(VacationRequestsMapper.EntityToEntityDto(_vacationRequestsService.Create(dto)));
+            return Ok(VacationRequestsMapper.EntityToEntityDto(request));
         }
         [HttpGet("{id}")]
         public IActionResult GetAllRequestsByDoctorId(int id)
