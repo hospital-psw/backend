@@ -57,9 +57,9 @@
                     };
 
                     //izgenerisati email poruku i poslati je putem _emailServic-a;
-
                     var result = _mapper.Map<ApplicationUserDTO>(identityUser);
-                    var callback = QueryHelpers.AddQueryString(result.ClientURI, param);
+                    var callback = QueryHelpers.AddQueryString("http://localhost:16177/api/Auth/ConfirmEmail", param);
+                    await _emailService.SendActivationEmail(identityUser, callback);
                     return Ok(result);
                 }
                 else 
@@ -185,6 +185,18 @@
             }
 
             return Ok("Success");
+        }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string email, string token)
+        {
+            var user = await _authService.FindByEmailAsync(email);
+            var confirmResult = await _authService.ConfirmEmailAsync(user, token);
+            if (!confirmResult.Succeeded)
+            {
+                return BadRequest("Invalid Email Confirmation Request");
+            }
+            return Ok();
         }
 
     }

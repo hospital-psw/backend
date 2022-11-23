@@ -98,5 +98,11 @@
            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
            return code;
         }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(ApplicationUser user, string token)
+        {
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            return result;
+        }
     }
 }
