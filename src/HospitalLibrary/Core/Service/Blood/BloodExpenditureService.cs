@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Repository;
@@ -68,6 +69,11 @@
                 string reason = expendituredto.Reason;
                 DateTime date = DateTime.Now;
                 BloodExpenditure bloodExpenditure = new BloodExpenditure(doctor, bloodType, amount, reason, date);
+
+                BloodUnit bu = _unitOfWork.BloodUnitRepository.GetByBloodType(expendituredto.BloodType);
+                bu.Amount -= expendituredto.Amount;
+                _unitOfWork.BloodUnitRepository.Update(bu);
+
                 _unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
                 _unitOfWork.Save();
 
