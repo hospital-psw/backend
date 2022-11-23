@@ -136,17 +136,6 @@ namespace HospitalAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
 
-            //app.UseSession();
-            //app.Use(async (context, next) =>
-            //{
-            //    var token = context.Session.GetString("token");
-            //    if (!string.IsNullOrEmpty(token))
-            //    {
-            //        context.Request.Headers.Add("Authorization", "Bearer " + token);
-            //    }
-            //    await next();
-            //});
-
             app.UseRouting();
 
             app.UseAuthentication();

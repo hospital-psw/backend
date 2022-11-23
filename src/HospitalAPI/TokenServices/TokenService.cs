@@ -24,6 +24,9 @@
 
         public string BuildToken(ApplicationUser user, string role)
         {
+            if (role == null)
+                role = "Undefined";
+            
             var issuer = _configuration.Jwt.Issuer;
             var audience = _configuration.Jwt.Audience;
             var key = Encoding.ASCII.GetBytes(_configuration.Jwt.Key);
@@ -46,9 +49,7 @@
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var stringToken = tokenHandler.WriteToken(token);
-            var jwtToken = JsonSerializer.Serialize(stringToken);
-            return jwtToken;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public bool IsTokenValid(string token) 
