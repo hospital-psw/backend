@@ -17,12 +17,10 @@ namespace HospitalAPI.Controllers
     public class RoomsController : BaseController<Room>
     {
         private readonly IRoomService _roomService;
-        private readonly IEquipmentService _equipmentService;
 
         public RoomsController(IRoomService roomService, IEquipmentService equipmentService)
         {
             _roomService = roomService;
-            _equipmentService = equipmentService;
         }
 
         [HttpPut]
@@ -53,14 +51,13 @@ namespace HospitalAPI.Controllers
                 return BadRequest("Bad request, please enter valid data.");
             }
             List<Room> rooms = _roomService.Search(dto.RoomNumber, dto.FloorNumber, dto.BuildingId, dto.RoomPurpose, dto.WorkingHoursStart, dto.WorkingHoursEnd, dto.EquipmentType, dto.Quantity);
-            List<Room> searchedRooms = _equipmentService.SearchRooms(rooms, dto.EquipmentType, dto.Quantity);
             List<RoomDto> searchedRoomsDto = new List<RoomDto>();
-            if (searchedRooms == null)
+            if (rooms == null)
             {
                 return NotFound();
             }
 
-            searchedRooms.ForEach(r => searchedRoomsDto.Add(RoomMapper.EntityToEntityDto(r)));
+            rooms.ForEach(r => searchedRoomsDto.Add(RoomMapper.EntityToEntityDto(r)));
 
             return Ok(searchedRoomsDto);
 

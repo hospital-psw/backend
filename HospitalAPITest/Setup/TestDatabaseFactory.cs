@@ -307,6 +307,14 @@
                 BloodType = BloodType.A_PLUS,
                 Amount = 23
             });
+<<<<<<<<< Temporary merge branch 1
+            context.Allergies.Add(new Allergies
+            {
+                Name = "kupus"
+               
+            });
+
+=========
             context.VacationRequests.Add(new VacationRequest
             {
                 Doctor = doc,
@@ -316,7 +324,8 @@
                 Comment = "",
                 Urgent = true,
                 ManagerComment = ""
-            });
+
+>>>>>>>>> Temporary merge branch 2
 
             context.VacationRequests.Add(new VacationRequest
             {
@@ -372,6 +381,7 @@
                 Urgent = false,
                 ManagerComment = ""
             });
+
 
             context.SaveChanges();
 
