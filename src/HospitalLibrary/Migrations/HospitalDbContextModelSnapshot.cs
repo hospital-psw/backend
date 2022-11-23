@@ -172,6 +172,35 @@ namespace HospitalLibrary.Migrations
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
+            modelBuilder.Entity("AllergiesMedicament", b =>
+                {
+                    b.Property<int>("AllergensId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicamentsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllergensId", "MedicamentsId");
+
+                    b.HasIndex("MedicamentsId");
+
+                    b.ToTable("AllergiesMedicament");
+                });
+
+            modelBuilder.Entity("AllergiesPatient", b =>
+                {
+                    b.Property<int>("AllergiesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllergiesId", "PatientsId");
+
+                    b.HasIndex("PatientsId");
+
+                    b.ToTable("AllergiesPatient");
+                });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
@@ -250,6 +279,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ManagerComment")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
@@ -380,6 +412,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReservedQuantity")
                         .HasColumnType("int");
 
                     b.Property<int?>("RoomId")
@@ -514,6 +549,31 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("MedicalTreatments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Medicament.Allergies", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Allergies");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Medicament.Medicament", b =>
@@ -1058,6 +1118,35 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.Patient", null)
                         .WithMany("Allergies")
                         .HasForeignKey("PatientId");
+                });
+            modelBuilder.Entity("AllergiesMedicament", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Medicament.Allergies", null)
+                        .WithMany()
+                        .HasForeignKey("AllergensId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Medicament.Medicament", null)
+                        .WithMany()
+                        .HasForeignKey("MedicamentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AllergiesPatient", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Medicament.Allergies", null)
+                        .WithMany()
+                        .HasForeignKey("AllergiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", null)
+                        .WithMany()
+                        .HasForeignKey("PatientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>

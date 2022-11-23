@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Blood;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Settings;
@@ -38,9 +39,18 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in BloodAcquisitionService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        public void HandleBloodRequest(BloodRequestStatus status, int id, string managerComment)
+        {
+            BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
+            bloodAcquisition.Status = status;
+            bloodAcquisition.ManagerComment = managerComment;
+            _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+            _unitOfWork.Save();
         }
 
         public override BloodAcquisition Get(int id)
@@ -52,7 +62,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in BloodAcquisitionService in Get {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -75,7 +85,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in BloodAcquisitionService in Get {e.Message} in {e.StackTrace}");
             }
         }
 
@@ -104,7 +114,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in BloodAcquisitionService in Get {e.Message} in {e.StackTrace}");
                 return null;
 
             }
@@ -122,22 +132,88 @@
             BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
             bloodAcquisition.Status = BloodRequestStatus.DECLINED;
             _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+            _unitOfWork.Save();
             return bloodAcquisition;
         }
 
 
         public BloodAcquisition AcceptAcquisition(int id)
         {
-            BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
-            bloodAcquisition.Status = BloodRequestStatus.ACCEPTED;
-            BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(bloodAcquisition.BloodType);
-
-            bloodUnit.Amount += bloodAcquisition.Amount;
-            _unitOfWork.BloodUnitRepository.Update(bloodUnit);
-            return bloodAcquisition;
+            try
+            {
+                BloodAcquisition bloodAcquisition = _unitOfWork.BloodAcquisitionRepository.Get(id);
+                bloodAcquisition.Status = BloodRequestStatus.ACCEPTED;
+                BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(bloodAcquisition.BloodType);
+                bloodUnit.Amount += bloodAcquisition.Amount;
+                _unitOfWork.BloodUnitRepository.Update(bloodUnit);
+                _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
+                _unitOfWork.Save();
+                return bloodAcquisition;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodAcquisitionService in AcceptedAcquisition {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
+        public IEnumerable<BloodAcquisition> GetAllAcceptedAcquisition()
+        {
+            try
+            {
+                return _unitOfWork.BloodAcquisitionRepository.GetAllAccepted();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodAcquisitionService in GetAllAcceptedAcquisition {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<BloodAcquisition> GetAllDeclinedAcquisition()
+        {
+            try
+            {
+                return _unitOfWork.BloodAcquisitionRepository.GetAllDeclined();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodAcquisitionService in GetAllDeclinedAcquisition {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<BloodAcquisition> GetAllPendingAcquisition()
+        {
+            try
+            {
+                return _unitOfWork.BloodAcquisitionRepository.GetAllPending();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodAcquisitionService in GetAllPendingAcquisition {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<BloodAcquisition> GetAllReconsideringAcquisition()
+        {
+            try
+            {
+                return _unitOfWork.BloodAcquisitionRepository.GetAllReconsidering();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in BloodAcquisitionService in GetAllPendingAcquisition {e.Message} in {e.StackTrace}");
+                return null;
+            }
 
 
+        }
+
+        public IEnumerable<BloodAcquisition> GetAcquisitionsForSpecificDoctor(int id)
+        {
+            return _unitOfWork.BloodAcquisitionRepository.GetAcquisitionsForSpecificDoctor(id);
+        }
     }
 }

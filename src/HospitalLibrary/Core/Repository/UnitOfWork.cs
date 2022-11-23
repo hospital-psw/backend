@@ -67,7 +67,6 @@
         public IVacationRequestsRepository VacationRequestsRepository { get; set; }
         public IEquipmentRepository EquipmentRepository { get; set; }
         public IRelocationRepository RelocationRepository { get; set; }
-
         public IBloodUnitRepository BloodUnitRepository { get; set; }
         public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }

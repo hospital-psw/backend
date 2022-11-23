@@ -1,7 +1,7 @@
 ﻿namespace HospitalAPI.Mappers
-{
     using HospitalAPI.Dto;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Medicament;
 
     public class AllergiesMapper
     {
@@ -11,7 +11,6 @@
 
             dto.Id = allergy.Id;
             dto.Name = allergy.Name;
-
 
             return dto;
         }
@@ -23,8 +22,6 @@
             allergy.Id = dto.Id;
             allergy.Name = dto.Name;
 
-
             return allergy;
         }
     }
-}

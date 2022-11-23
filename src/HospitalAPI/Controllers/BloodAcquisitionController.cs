@@ -1,13 +1,19 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Dto;
+    using HospitalAPI.Mappers;
+    using HospitalAPI.Mappers.Blood;
     using HospitalLibrary.Core.DTO.BloodManagment;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Blood;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System;
+    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -23,6 +29,13 @@
             doctorService = _doctorService;
         }
 
+        [HttpPatch("/handle")]
+        public IActionResult HandleBloodAcquisition([FromBody] EditAcquisitionDTO acquisition)
+        {
+            bloodAcquisitionService.HandleBloodRequest(acquisition.Status, acquisition.Id, acquisition.ManagerComment);
+            return Ok();
+        }
+
 
         [HttpGet]
         public IActionResult GetAll()
@@ -30,7 +43,7 @@
             return Ok(bloodAcquisitionService.GetAll());
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             BloodAcquisition bloodAcquisition = bloodAcquisitionService.Get(id);
@@ -69,6 +82,24 @@
             return Ok(bloodAcquisitionService.GetPendingAcquisitions());
         }
 
+        [HttpGet("get/all/accepted")]
+        public IActionResult GetAllAccepted()
+        {
+            return Ok(bloodAcquisitionService.GetAllAcceptedAcquisition());
+        }
+
+        [HttpGet("get/all/declined")]
+        public IActionResult GetAllDeclined()
+        {
+            return Ok(bloodAcquisitionService.GetAllDeclinedAcquisition());
+        }
+
+        [HttpGet("get/all/reconsidering")]
+        public IActionResult GetAllReconsidering()
+        {
+            return Ok(bloodAcquisitionService.GetAllReconsideringAcquisition());
+        }
+
         [HttpPut("/accept/{id}")]
         public IActionResult AcceptBloodAcquisition(int id)
         {
@@ -89,7 +120,17 @@
             return Ok(bloodAcquisitionService.DeclineAcquisition(id));
         }
 
+        [HttpPut("/edit")]
+        public IActionResult EditBloodRequest(BloodAcquisition bloodAcquisition)
+        {
+            bloodAcquisition.Status = BloodRequestStatus.PENDING;
+            return Ok(bloodAcquisitionService.Update(bloodAcquisition));
+        }
 
-
+        [HttpGet("/doctorAcquisitions/{id}")]
+        public IActionResult GetAcquisitionsForSpecificDoctor(int id)
+        {
+            return Ok(bloodAcquisitionService.GetAcquisitionsForSpecificDoctor(id));
+        }
     }
 }

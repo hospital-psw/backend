@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.MedicalTreatment;
@@ -143,7 +144,16 @@
 
             };
 
+            BloodExpenditure expenditure = new BloodExpenditure()
+            {
+                Doctor = doc,
+                BloodType = BloodType.A_PLUS,
+                Amount = 7,
+                Reason = "blabla",
+                Date = Convert.ToDateTime("2022-11-21T12:06:44.3236514")
+            };
 
+            context.BloodExpenditures.Add(expenditure);
             context.Patients.Add(pat);
 
             context.Patients.Add(pat2);
@@ -269,6 +279,34 @@
                 Quantity = 5,
                 Room = equipmentRoom
             });
+
+            BloodAcquisition aquisition1 = new BloodAcquisition
+            {
+                //Id = 1,
+                BloodType = BloodType.A_MINUS,
+                Amount = 1,
+                Status = BloodRequestStatus.ACCEPTED
+            };
+
+            BloodAcquisition aquisition2 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.DECLINED,
+            };
+
+            BloodAcquisition aquisition3 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.PENDING
+            };
+
+            context.BloodAcquisitions.Add(aquisition1);
+            context.BloodAcquisitions.Add(aquisition2);
+            context.BloodAcquisitions.Add(aquisition3);
 
             Building building = new Building()
             {

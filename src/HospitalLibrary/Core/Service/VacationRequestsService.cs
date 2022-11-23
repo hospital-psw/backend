@@ -7,6 +7,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -52,8 +53,25 @@
             try
             {
                 Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To).ToList();
+                VacationRequest request = null;
 
-                VacationRequest request = new VacationRequest(doctor, dto.From, dto.To, dto.Status, dto.Comment, dto.Urgent, "");
+                if (scheduledAppointments.IsNullOrEmpty())
+                {
+                    request = new VacationRequest(doctor, dto.From, dto.To, dto.Status, dto.Comment, dto.Urgent, "");
+                    _unitOfWork.VacationRequestsRepository.Add(request);
+                    _unitOfWork.Save();
+                    return request;
+                }
+
+                if (!dto.Urgent)
+                {
+                    return null;
+                }
+
+                request = CreateEmergencyRequest(scheduledAppointments, doctor, dto);
+
+                if (request == null) return null;
 
                 _unitOfWork.VacationRequestsRepository.Add(request);
                 _unitOfWork.Save();
@@ -64,6 +82,37 @@
             {
                 return null;
             }
+        }
+
+        public VacationRequest CreateEmergencyRequest(List<Appointment> appointments, Doctor doctor, NewVacationRequestDto dto)
+        {
+
+            if (!SubstituteDoctors(appointments))
+            {
+                return null;
+            }
+
+            return new VacationRequest(doctor, dto.From, dto.To, dto.Status, dto.Comment, dto.Urgent, "");
+        }
+
+        public bool SubstituteDoctors(List<Appointment> appointments)
+        {
+            foreach (Appointment a in appointments)
+            {
+                Doctor substitution = GetAvailableDoctorOfSameSpecialization(a);
+                if (substitution == null) return false;
+                a.Doctor = substitution;
+                _unitOfWork.AppointmentRepository.Update(a);
+            }
+
+            return true;
+        }
+
+        public Doctor GetAvailableDoctorOfSameSpecialization(Appointment appointment)
+        {
+            List<Doctor> sameSpecializationDoctors = _unitOfWork.DoctorRepository.GetOtherSpecializationDoctors(appointment.Doctor.Specialization, appointment.Doctor.Id).ToList();
+            List<Doctor> availableDoctors = sameSpecializationDoctors.Where(x => _unitOfWork.AppointmentRepository.IsDoctorAvailable(x.Id, appointment.Date)).ToList();
+            return availableDoctors.FirstOrDefault();
         }
 
         public IEnumerable<VacationRequest> GetAllRequestsByDoctorId(int doctorId)

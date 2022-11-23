@@ -8,6 +8,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.Extensions.Logging;
     using System;
@@ -65,7 +66,7 @@
                 BloodType bloodType = expendituredto.BloodType;
                 int amount = expendituredto.Amount;
                 string reason = expendituredto.Reason;
-                DateTime date = expendituredto.Date;
+                DateTime date = DateTime.Now;
                 BloodExpenditure bloodExpenditure = new BloodExpenditure(doctor, bloodType, amount, reason, date);
                 _unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
                 _unitOfWork.Save();
@@ -101,6 +102,37 @@
         BloodExpenditure IBloodExpenditureService.Delete(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public CalculateDTO CalculateExpenditure(DateTime from, DateTime to)
+        {
+            IEnumerable<BloodExpenditure> bloodExpenditureList = GetAll();
+            CalculateDTO retVal = new CalculateDTO();
+
+            foreach (BloodExpenditure b in bloodExpenditureList)
+            {
+                if (b.Date > from && b.Date < to)
+                {
+                    retVal.TotalSum += b.Amount;
+                    if (b.BloodType == BloodType.A_PLUS)
+                        retVal.APlusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.A_MINUS)
+                        retVal.AMinusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.B_PLUS)
+                        retVal.BPlusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.B_MINUS)
+                        retVal.BMinusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.AB_PLUS)
+                        retVal.ABPlusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.AB_MINUS)
+                        retVal.ABMinusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.O_PLUS)
+                        retVal.OPlusAmount += b.Amount;
+                    else if (b.BloodType == BloodType.O_MINUS)
+                        retVal.OMinusAmount += b.Amount;
+                }
+            }
+            return retVal;
         }
     }
 }

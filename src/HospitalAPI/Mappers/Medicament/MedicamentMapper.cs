@@ -14,7 +14,7 @@
             dto.Name = medicament.Name;
             dto.Quantity = medicament.Quantity;
             dto.Description = medicament.Description;
-            //dto.Allergens = medicament.Allergens;
+            medicament.Allergens.ForEach(al => dto.Allergens.Add(AllergiesMapper.EntityToEntityDto(al)));
 
             return dto;
         }

@@ -37,6 +37,8 @@
                 "<p>The password is " + password + "</p><br/>" +
                 "<p>For further communication between our servers use the following API key: <b>" + apiKey + "</b></p>" +
                 "</mj-text>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "attach_to_queue.mjml" }) + "\" />" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "news_sending.mjml" }) + "\" />" +
                 "</mj-column>" +
                 "</mj-section>" +
                 "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +

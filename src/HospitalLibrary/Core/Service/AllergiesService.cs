@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.Extensions.Logging;
@@ -47,7 +48,6 @@
                 return null;
             }
         }
-
         public List<Allergies> GetAllergiesFromDTO(List<int> ids) 
         {
             try

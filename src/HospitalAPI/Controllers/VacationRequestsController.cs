@@ -57,19 +57,24 @@
                 return BadRequest();
             }
 
-            List<Appointment> appointments = (List<Appointment>)_appointmentService.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To);
-
-            if (!appointments.IsNullOrEmpty())
+            if ((dto.From - DateTime.Now).TotalDays < 5 && !dto.Urgent)
             {
-                return BadRequest();
+                return BadRequest("Request for vacation must be submitted at least 5 days before start date");
             }
 
-            return Ok(VacationRequestsMapper.EntityToEntityDto(_vacationRequestsService.Create(dto)));
+            VacationRequest request = _vacationRequestsService.Create(dto);
+
+            if (request == null)
+            {
+                return BadRequest("You have scheduled appointments in given date interval");
+            }
+
+            return Ok(VacationRequestsMapper.EntityToEntityDto(request));
         }
         [HttpGet("{id}")]
-        public IActionResult GetAllRequestsByDoctorId(int doctorId)
+        public IActionResult GetAllRequestsByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRequestsByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRequestsByDoctorId(id);
 
             if (vacationRequests.IsNullOrEmpty())
             {
@@ -82,10 +87,10 @@
 
             return Ok(dtos);
         }
-        [HttpGet("waiting")]
-        public IActionResult GetAllWaitingByDoctorId(int doctorId)
+        [HttpGet("waiting/{id}")]
+        public IActionResult GetAllWaitingByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllWaitingByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllWaitingByDoctorId(id);
             if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();
@@ -97,10 +102,10 @@
 
             return Ok(dtos);
         }
-        [HttpGet("approved")]
-        public IActionResult GetAllApprovedByDoctorId(int doctorId)
+        [HttpGet("approved/{id}")]
+        public IActionResult GetAllApprovedByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.getAllApprovedByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.getAllApprovedByDoctorId(id);
             if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();
@@ -113,10 +118,10 @@
             return Ok(dtos);
         }
 
-        [HttpGet("rejected")]
-        public IActionResult GetAllRejectedByDoctorId(int doctorId)
+        [HttpGet("rejected/{id}")]
+        public IActionResult GetAllRejectedByDoctorId(int id)
         {
-            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRejectedByDoctorId(doctorId);
+            List<VacationRequest> vacationRequests = (List<VacationRequest>)_vacationRequestsService.GetAllRejectedByDoctorId(id);
             if (vacationRequests.IsNullOrEmpty())
             {
                 return NotFound();
@@ -130,9 +135,9 @@
         }
 
         [HttpDelete("delete/{id}")]
-        public IActionResult Delete(int vacationRequestId)
+        public IActionResult Delete(int id)
         {
-            VacationRequest vr = _vacationRequestsService.GetById(vacationRequestId);
+            VacationRequest vr = _vacationRequestsService.GetById(id);
 
             if (vr == null)
             {

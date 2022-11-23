@@ -16,9 +16,22 @@
         {
         }
 
+        public override Patient Get(int id)
+        {
+            return GetAll().Where(x => x.Id == id)
+                            .FirstOrDefault();
+        }
+
+        public override IEnumerable<Patient> GetAll()
+        {
+            return HospitalDbContext.Patients.Include(x => x.Allergies)
+                                             .Where(x => !x.Deleted)
+                                             .ToList();
+        }
+
         public IEnumerable<Patient> GetNonHospitalized()
         {
-            return HospitalDbContext.Patients.Where(x => !x.Hospitalized)
+            return GetAll().Where(x => !x.Hospitalized)
                                              .ToList();
         }
     }
