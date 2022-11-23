@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
+    using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Blood;
     using HospitalLibrary.Core.Service.Blood.Core;
@@ -28,6 +29,13 @@
             doctorService = _doctorService;
         }
 
+        [HttpPatch("/handle")]
+        public IActionResult HandleBloodAcquisition([FromBody] EditAcquisitionDTO acquisition)
+        {
+            bloodAcquisitionService.HandleBloodRequest(acquisition.Status, acquisition.Id, acquisition.ManagerComment);
+            return Ok();
+        }
+
 
         [HttpGet]
         public IActionResult GetAll()
@@ -35,7 +43,7 @@
             return Ok(bloodAcquisitionService.GetAll());
         }
 
-        [HttpGet("/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             BloodAcquisition bloodAcquisition = bloodAcquisitionService.Get(id);
@@ -86,6 +94,12 @@
             return Ok(bloodAcquisitionService.GetAllDeclinedAcquisition());
         }
 
+        [HttpGet("get/all/reconsidering")]
+        public IActionResult GetAllReconsidering()
+        {
+            return Ok(bloodAcquisitionService.GetAllReconsideringAcquisition());
+        }
+
         [HttpPut("/accept/{id}")]
         public IActionResult AcceptBloodAcquisition(int id)
         {
@@ -104,6 +118,13 @@
                 return BadRequest("Id does not exist");
             }
             return Ok(bloodAcquisitionService.DeclineAcquisition(id));
+        }
+
+        [HttpPut("/edit")]
+        public IActionResult EditBloodRequest(BloodAcquisition bloodAcquisition)
+        {
+            bloodAcquisition.Status = BloodRequestStatus.PENDING;
+            return Ok(bloodAcquisitionService.Update(bloodAcquisition));
         }
 
         [HttpGet("/doctorAcquisitions/{id}")]

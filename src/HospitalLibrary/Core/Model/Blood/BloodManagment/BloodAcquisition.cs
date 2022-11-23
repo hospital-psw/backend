@@ -17,7 +17,7 @@
         public DateTime Date { get; set; }
 
         public BloodRequestStatus Status { get; set; }
-
+        public string ManagerComment { get; set; }
 
 
 

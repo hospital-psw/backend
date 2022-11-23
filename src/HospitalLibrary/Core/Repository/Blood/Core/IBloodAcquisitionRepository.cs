@@ -16,6 +16,7 @@
         IEnumerable<BloodAcquisition> GetAllAccepted();
         IEnumerable<BloodAcquisition> GetAllDeclined();
         IEnumerable<BloodAcquisition> GetAllPending();
+        IEnumerable<BloodAcquisition> GetAllReconsidering();
 
 
     }
