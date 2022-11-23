@@ -19,7 +19,7 @@
         public VacationRequestsService SetupService()
         {
             var logger = new Mock<ILogger<VacationRequest>>();
-            return new VacationRequestsService(logger.Object, new InMemoryUnitOfWork());      
+            return new VacationRequestsService(logger.Object, new InMemoryUnitOfWork());
         }
 
         [Theory]
@@ -30,7 +30,7 @@
 
             var result = service.GetAvailableDoctorOfSameSpecialization(appointment);
             int value = result != null ? result.Id : -1;
-            
+
             Assert.Equal(value, expectedId);
         }
 

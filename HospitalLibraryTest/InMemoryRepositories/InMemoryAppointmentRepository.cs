@@ -65,7 +65,7 @@
         }
 
         public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to)
-        { 
+        {
             return GetAppointmentsForDoctor(doctorId).Where(x => from <= x.Date && to >= x.Date);
         }
 

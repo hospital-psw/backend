@@ -82,12 +82,12 @@
         }
 
         public VacationRequest CreateEmergencyRequest(List<Appointment> appointments, Doctor doctor, NewVacationRequestDto dto)
-        { 
-            
-            if(!SubstituteDoctors(appointments))
+        {
+
+            if (!SubstituteDoctors(appointments))
             {
                 return null;
-            } 
+            }
 
             return new VacationRequest(doctor, dto.From, dto.To, dto.Status, dto.Comment, dto.Urgent, "");
         }
@@ -105,7 +105,7 @@
             return true;
         }
 
-        public Doctor GetAvailableDoctorOfSameSpecialization(Appointment appointment) 
+        public Doctor GetAvailableDoctorOfSameSpecialization(Appointment appointment)
         {
             List<Doctor> sameSpecializationDoctors = _unitOfWork.DoctorRepository.GetOtherSpecializationDoctors(appointment.Doctor.Specialization, appointment.Doctor.Id).ToList();
             List<Doctor> availableDoctors = sameSpecializationDoctors.Where(x => _unitOfWork.AppointmentRepository.IsDoctorAvailable(x.Id, appointment.Date)).ToList();
