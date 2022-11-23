@@ -1,4 +1,5 @@
 ﻿namespace HospitalAPI.Mappers
+{
     using HospitalAPI.Dto;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Medicament;
@@ -25,3 +26,4 @@
             return allergy;
         }
     }
+}

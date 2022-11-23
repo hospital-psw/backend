@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Util;
@@ -21,7 +22,7 @@
             var stub = new Mock<IUnitOfWork>();
             List<Appointment> appointments = new List<Appointment>();
             Room room = new Room(1, "101", null, "Test", null);
-            Patient patient = new Patient("Imenko", "Prezimenic", "email@email.com", "password", false);
+            Patient patient = new Patient("Imenko", "Prezimenic", "email@email.com", "password", false, new List<Allergies>());
             Doctor doctor = new Doctor("Imenko", "Prezimenic", "password", "email@email.com", HospitalLibrary.Core.Model.Enums.Specialization.GENERAL, null, null);
             appointments.Add(new Appointment(new DateTime(2022, 5, 1), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));
             appointments.Add(new Appointment(new DateTime(2022, 5, 2), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));
