@@ -9,7 +9,10 @@
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
+    using System;
     using System.Text.Json;
+    using HospitalLibrary.Core.Model.ApplicationUser;
+    using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
     public class TokenService : ITokenService
     {

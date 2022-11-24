@@ -362,7 +362,8 @@
                 Comment = "",
                 Urgent = true,
                 ManagerComment = ""
-            });
+
+>>>>>>>>> Temporary merge branch 2
 
             context.ApplicationPatients.Add(new ApplicationPatient
                 ("Nikola", "Grbovic", new DateTime(2000, 11, 22), Gender.MALE, false, BloodType.A_PLUS));
