@@ -21,6 +21,7 @@
             AppointmentRepository = new InMemoryAppointmentRepository();
             EquipmentRepository = new InMemoryEquipmentRepository();
             DoctorRepository = new InMemoryDoctorRepository();
+            ApplicationUserRepository = new InMemoryApplicationUserRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -53,7 +54,7 @@
 
         public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
-        public IApplicationUserRepository ApplicationUserRepository => throw new NotImplementedException();
+        public IApplicationUserRepository ApplicationUserRepository { get; set;}
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
