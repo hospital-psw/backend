@@ -59,7 +59,8 @@
                     //izgenerisati email poruku i poslati je putem _emailServic-a;
 
                     var result = _mapper.Map<ApplicationUserDTO>(identityUser);
-                    var callback = QueryHelpers.AddQueryString(result.ClientURI, param);
+                    var callback = QueryHelpers.AddQueryString("http://localhost:16177/api/Auth/ConfirmEmail", param);
+                    await _emailService.SendActivationEmail(identityUser, callback);
                     return Ok(result);
                 }
                 else
