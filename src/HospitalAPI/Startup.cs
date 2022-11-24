@@ -120,6 +120,7 @@ namespace HospitalAPI
             services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
 
 
             ProjectConfiguration config = new ProjectConfiguration();

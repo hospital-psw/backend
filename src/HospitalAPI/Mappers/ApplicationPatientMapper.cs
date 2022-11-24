@@ -20,8 +20,8 @@
             dto.DateOfBirth = patient.DateOfBirth;
             dto.Gender = patient.Gender;
             dto.BloodType = patient.BloodType;
-            dto.DoctorName = patient.applicationDoctor.FirstName + patient.applicationDoctor.LastName;
-            dto.Allergies = patient.Allergies.ConvertAll(o => o.Name);
+            //dto.DoctorName = patient.applicationDoctor.FirstName + patient.applicationDoctor.LastName;
+            //dto.Allergies = patient.Allergies.ConvertAll(o => o.Name);
             dto.Email = patient.Email;
 
             return dto;
