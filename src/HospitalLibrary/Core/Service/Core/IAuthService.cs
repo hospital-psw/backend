@@ -12,7 +12,7 @@
     {
         Task<ApplicationPatient> SetUpApplicationPatient(ApplicationPatient patient, int doctorId, List<int> allergies);
         Task<IdentityResult> Register(ApplicationUser user, string password);
-        Task<IdentityResult> RegisterPatient(ApplicationPatient patient, string password);  
+        Task<IdentityResult> RegisterPatient(ApplicationPatient patient, string password);
         Task<SignInResult> Login(string email, string password, bool rememberMe);
         Task SignInAsync(ApplicationUser user);
         Task<ApplicationUser> FindByEmailAsync(string email);

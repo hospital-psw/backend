@@ -51,28 +51,44 @@ namespace HospitalAPI
                 .AddEntityFrameworkStores<HospitalDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+                    ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+                };
+            });
             services.AddDistributedMemoryCache();
 
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-               options.TokenValidationParameters = new TokenValidationParameters
-               {
-                   ValidateIssuer = true,
-                   ValidateAudience = true,
-                   ValidateLifetime = true,
-                   ValidateIssuerSigningKey = true,
-                   ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
-                   ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
-                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
-               };
-            });
+            //services.AddAuthentication(opt =>
+            //{
+            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(options =>
+            //{
+            //   options.TokenValidationParameters = new TokenValidationParameters
+            //   {
+            //       ValidateIssuer = true,
+            //       ValidateAudience = true,
+            //       ValidateLifetime = true,
+            //       ValidateIssuerSigningKey = true,
+            //       ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+            //       ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+            //       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+            //   };
+            //});
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -97,6 +113,7 @@ namespace HospitalAPI
             services.AddScoped<IVacationRequestsService, VacationRequestsService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
             services.AddScoped<IRelocationService, RelocationService>();
+            services.AddHostedService<TimedHostedService>();
             services.AddScoped<IBloodUnitService, BloodUnitService>();
             services.AddScoped<IBloodAcquisitionService, BloodAcquisitionService>();
             services.AddScoped<IBloodExpenditureService, BloodExpenditureService>();

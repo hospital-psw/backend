@@ -2,7 +2,9 @@
 {
     using HospitalAPI;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood;
+    using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.MedicalTreatment;
@@ -142,7 +144,16 @@
 
             };
 
+            BloodExpenditure expenditure = new BloodExpenditure()
+            {
+                Doctor = doc,
+                BloodType = BloodType.A_PLUS,
+                Amount = 7,
+                Reason = "blabla",
+                Date = Convert.ToDateTime("2022-11-21T12:06:44.3236514")
+            };
 
+            context.BloodExpenditures.Add(expenditure);
             context.Patients.Add(pat);
 
             context.Patients.Add(pat2);
@@ -269,6 +280,34 @@
                 Room = equipmentRoom
             });
 
+            BloodAcquisition aquisition1 = new BloodAcquisition
+            {
+                //Id = 1,
+                BloodType = BloodType.A_MINUS,
+                Amount = 1,
+                Status = BloodRequestStatus.ACCEPTED
+            };
+
+            BloodAcquisition aquisition2 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.DECLINED,
+            };
+
+            BloodAcquisition aquisition3 = new BloodAcquisition
+            {
+                //Id = 2,
+                BloodType = BloodType.O_PLUS,
+                Amount = 2,
+                Status = BloodRequestStatus.PENDING
+            };
+
+            context.BloodAcquisitions.Add(aquisition1);
+            context.BloodAcquisitions.Add(aquisition2);
+            context.BloodAcquisitions.Add(aquisition3);
+
             Building building = new Building()
             {
                 Address = "Janka Cmelika 1",
@@ -307,14 +346,13 @@
                 BloodType = BloodType.A_PLUS,
                 Amount = 23
             });
-<<<<<<<<< Temporary merge branch 1
+
             context.Allergies.Add(new Allergies
             {
                 Name = "kupus"
-               
+
             });
 
-=========
             context.VacationRequests.Add(new VacationRequest
             {
                 Doctor = doc,
@@ -326,6 +364,17 @@
                 ManagerComment = ""
 
 >>>>>>>>> Temporary merge branch 2
+
+            context.ApplicationPatients.Add(new ApplicationPatient
+                ("Nikola", "Grbovic", new DateTime(2000, 11, 22), Gender.MALE, false, BloodType.A_PLUS));
+            context.ApplicationPatients.Add(new ApplicationPatient
+                ("Marko", "Matkovic", new DateTime(2000, 11, 22), Gender.MALE, false, BloodType.A_PLUS));
+            context.ApplicationPatients.Add(new ApplicationPatient
+                ("Fosilka", "Fosilovic", new DateTime(1930, 11, 26), Gender.FEMALE, false, BloodType.O_PLUS));
+            context.ApplicationDoctors.Add(new ApplicationDoctor
+                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null));
+            context.ApplicationDoctors.Add(new ApplicationDoctor
+                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, null, null));
 
             context.VacationRequests.Add(new VacationRequest
             {

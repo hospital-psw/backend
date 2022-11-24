@@ -119,6 +119,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.7.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.6.4.0\lib\net461\RabbitMQ.Client.dll</HintPath>
     </Reference>
@@ -205,6 +208,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQServices\NewsDTO.cs" />
     <Compile Include="RabbitMQServices\PostMessageToAPI.cs" />
+    <Compile Include="ReportService\Connections.cs" />
+    <Compile Include="ReportService\DTO\CalculateDTO.cs" />
+    <Compile Include="ReportService\DTO\DateRangeDTO.cs" />
+    <Compile Include="ReportService\GeneratePDF.cs" />
+    <Compile Include="ReportService\Model\BloodBank.cs" />
+    <Compile Include="ReportService\Model\Entity.cs" />
+    <Compile Include="ReportService\ReportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

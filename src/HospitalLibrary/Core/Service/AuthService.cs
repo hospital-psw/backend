@@ -14,44 +14,44 @@
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager; 
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IAllergiesService _allergiesService;
 
-        public AuthService(UserManager<ApplicationUser> userManager, 
-            SignInManager<ApplicationUser> signInManager, 
+        public AuthService(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             RoleManager<ApplicationRole> roleManager, IAllergiesService allergiesService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _allergiesService = allergiesService; 
+            _allergiesService = allergiesService;
         }
 
-        public async Task<IdentityResult> Register(ApplicationUser user, string password) 
+        public async Task<IdentityResult> Register(ApplicationUser user, string password)
         {
             var identityResult = await _userManager.CreateAsync(user, password);
             return identityResult;
         }
 
-        public async Task<SignInResult> Login(string email, string password, bool rememberMe) 
+        public async Task<SignInResult> Login(string email, string password, bool rememberMe)
         {
             var result = await _signInManager.PasswordSignInAsync(email, password, rememberMe, lockoutOnFailure: false);
             return result;
         }
 
-        public async Task SignInAsync(ApplicationUser user) 
+        public async Task SignInAsync(ApplicationUser user)
         {
             await _signInManager.SignInAsync(user, isPersistent: false);
         }
 
-        public async Task<ApplicationUser> FindByEmailAsync(string email) 
+        public async Task<ApplicationUser> FindByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             return user;
         }
 
-        public async Task SignOutAsync() 
+        public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
         }
@@ -69,7 +69,7 @@
             return identityResult;
         }
 
-        public async Task<IdentityResult> AddToRole(ApplicationPatient patient, string name) 
+        public async Task<IdentityResult> AddToRole(ApplicationPatient patient, string name)
         {
             return await _userManager.AddToRoleAsync(patient, name);
         }
@@ -87,7 +87,7 @@
             return result;
         }
 
-        public async Task<bool> IsEmailConfirmedAsync(ApplicationUser user) 
+        public async Task<bool> IsEmailConfirmedAsync(ApplicationUser user)
         {
             var result = await _userManager.IsEmailConfirmedAsync(user);
             return result;
@@ -95,8 +95,8 @@
 
         public async Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user)
         {
-           var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-           return code;
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            return code;
         }
 
         public async Task<IdentityResult> ConfirmEmailAsync(ApplicationUser user, string token)

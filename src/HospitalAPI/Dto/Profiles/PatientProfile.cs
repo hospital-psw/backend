@@ -50,6 +50,6 @@
                    dest => dest.applicationDoctor,
                    opt => opt.Ignore()
                 );
-        }    
+        }
     }
 }

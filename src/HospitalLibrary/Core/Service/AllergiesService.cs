@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.Extensions.Logging;
@@ -48,12 +49,12 @@
             }
         }
 
-        public List<Allergies> GetAllergiesFromDTO(List<int> ids) 
+        public List<Allergies> GetAllergiesFromDTO(List<int> ids)
         {
             try
             {
                 List<Allergies> allergies = new List<Allergies>();
-                foreach (int id in ids) 
+                foreach (int id in ids)
                 {
                     allergies.Add(Get(id));
                 }
@@ -65,7 +66,7 @@
                 _logger.LogError($"Error in AllergiesService in GetAllergiesFromDTO {e.Message} in {e.StackTrace}");
                 return null;
             }
-        
+
         }
 
     }

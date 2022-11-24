@@ -1,8 +1,11 @@
 ﻿namespace HospitalAPI.TokenServices
 {
     using HospitalAPI.Configuration;
+    using HospitalLibrary.Core.Model.ApplicationUser;
+    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
+    using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
@@ -26,7 +29,7 @@
         {
             if (role == null)
                 role = "Undefined";
-            
+
             var issuer = _configuration.Jwt.Issuer;
             var audience = _configuration.Jwt.Audience;
             var key = Encoding.ASCII.GetBytes(_configuration.Jwt.Key);
@@ -57,7 +60,7 @@
             return _configuration.Jwt.ExpiresIn;
         }
 
-        public bool IsTokenValid(string token) 
+        public bool IsTokenValid(string token)
         {
             token = token.Replace("Bearer ", string.Empty);
             var mySecret = Encoding.UTF8.GetBytes(_configuration.Jwt.Key);

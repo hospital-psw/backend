@@ -17,8 +17,6 @@
         public string Reason { get; set; }
 
 
-
-
         public CreateAcquisitionDTO() { }
 
         public CreateAcquisitionDTO(int doctorId, DateTime date, BloodType bloodType, int amount, string reason, BloodRequestStatus status)

@@ -5,6 +5,7 @@
     using HospitalAPITest.Setup;
 
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
