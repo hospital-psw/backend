@@ -40,9 +40,9 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 1;
+            int roomId = 5;
 
-            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);
@@ -55,7 +55,7 @@
             var controller = SetupController(scope);
             int roomId = 1;
 
-            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
 
             Assert.NotNull(result);
             Assert.Empty(result);
