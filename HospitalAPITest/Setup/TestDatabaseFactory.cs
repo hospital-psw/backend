@@ -488,6 +488,16 @@
                 Duration = 2
             });
 
+            context.Appointments.Add(new Appointment
+            {
+                Date = new DateTime(2023, 12, 25, 12, 0, 0),
+                Duration = 5,
+                IsDone = false,
+                Room = relocationFromRoom,
+                Patient = pat2,
+                Doctor = doc
+            });
+
 
             context.SaveChanges();
 

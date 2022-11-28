@@ -101,5 +101,14 @@
         {
             return !GetAppointmentsForDoctor(doctorId).Where(x => x.Date == date).Any();
         }
+
+        public List<Appointment> GetAllForRoom(int roomId)
+        {
+            return HospitalDbContext.Appointments.Include(x => x.Room)
+                                               .Where(x => !x.Deleted && (x.Room.Id == roomId))
+                                               .OrderBy(x => x.Date)
+                                               .Distinct()
+                                               .ToList();
+        }
     }
 }
