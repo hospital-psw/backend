@@ -22,7 +22,7 @@
         {
             List<ApplicationDoctor> result = new List<ApplicationDoctor>();
             List<int> numberOfPatients = new List<int>();
-            int min ;
+            int min;
             foreach (ApplicationDoctor i in _unitOfWork.ApplicationUserRepository.GetAllGeneralDoctors())
             {
                 numberOfPatients.Add(GetNumberOfPatientsForDoctor(i));

@@ -54,7 +54,7 @@
 
         public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
-        public IApplicationUserRepository ApplicationUserRepository { get; set;}
+        public IApplicationUserRepository ApplicationUserRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

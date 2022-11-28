@@ -5,8 +5,8 @@
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.Medicament;
-    using System.Collections.Generic;
     using System;
+    using System.Collections.Generic;
 
     public class ApplicationPatientMapper
     {

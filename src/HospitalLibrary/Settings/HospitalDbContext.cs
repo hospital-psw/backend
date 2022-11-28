@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.ApplicationUser;
+using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.Blood;
 using HospitalLibrary.Core.Model.Blood.BloodManagment;
 using HospitalLibrary.Core.Model.MedicalTreatment;
@@ -7,13 +8,12 @@ using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
 using HospitalLibrary.Core.Model.VacationRequest;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HospitalLibrary.Core.Model.ApplicationUser;
 
 namespace HospitalLibrary.Settings
 {

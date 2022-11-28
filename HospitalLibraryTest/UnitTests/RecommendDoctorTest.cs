@@ -18,13 +18,13 @@
         [Fact]
         public void Find_suitable_doctors()
         {
-            ApplicationDoctorService applicationDoctorService = new ApplicationDoctorService(null,new InMemoryUnitOfWork());
-             
+            ApplicationDoctorService applicationDoctorService = new ApplicationDoctorService(null, new InMemoryUnitOfWork());
+
             IEnumerable<ApplicationDoctor> appDoctors = applicationDoctorService.RecommendDoctors();
             ApplicationDoctor applicationDoctor = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
             appDoctors.ShouldNotBeEmpty();
             appDoctors.Contains(applicationDoctor);
-           
+
         }
     }
 }

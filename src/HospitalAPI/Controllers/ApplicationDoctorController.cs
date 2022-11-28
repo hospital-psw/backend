@@ -11,26 +11,26 @@
     public class ApplicationDoctorController : BaseController<ApplicationDoctor>
     {
 
-            private IApplicationDoctorService _applicationDoctorService;
+        private IApplicationDoctorService _applicationDoctorService;
 
-            public ApplicationDoctorController(IApplicationDoctorService applicationDoctorService) : base()
+        public ApplicationDoctorController(IApplicationDoctorService applicationDoctorService) : base()
+        {
+            _applicationDoctorService = applicationDoctorService;
+        }
+        [HttpGet("allrecommended")]
+        public IActionResult GetAll()
+        {
+            List<ApplicationDoctorDto> applicationDoctorDto = new List<ApplicationDoctorDto>();
+            List<ApplicationDoctor> applicationDoctors = _applicationDoctorService.RecommendDoctors().ToList();
+            if (applicationDoctors == null)
             {
-                _applicationDoctorService = applicationDoctorService;
+                return NotFound();
             }
-            [HttpGet("allrecommended")]
-            public IActionResult GetAll()
-            {
-                List<ApplicationDoctorDto> applicationDoctorDto = new List<ApplicationDoctorDto>();
-                List<ApplicationDoctor> applicationDoctors = _applicationDoctorService.RecommendDoctors().ToList();
-                if (applicationDoctors == null)
-                {
-                    return NotFound();
-                }
 
-                applicationDoctors.ForEach(bt => applicationDoctorDto.Add(ApplicationDoctorMapper.EntityToEntityDto(bt)));
-                return Ok(applicationDoctorDto);
-            }
-        
+            applicationDoctors.ForEach(bt => applicationDoctorDto.Add(ApplicationDoctorMapper.EntityToEntityDto(bt)));
+            return Ok(applicationDoctorDto);
+        }
+
     }
 
 

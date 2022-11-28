@@ -38,7 +38,7 @@
             doc1.Id = 1;
             ApplicationDoctor doc2 = new ApplicationDoctor("Slavko", "Slavkovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
             doc2.Id = 2;
-           
+
             List<ApplicationDoctor> doctors = new List<ApplicationDoctor>();
             doctors.Add(doc1);
             doctors.Add(doc2);
@@ -51,7 +51,7 @@
             doc1.Id = 1;
             ApplicationDoctor doc2 = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
             doc2.Id = 2;
-            ApplicationPatient pat1 = new ApplicationPatient("Mitar", "Miric", new DateTime(), Gender.MALE, null,null,doc2, null);
+            ApplicationPatient pat1 = new ApplicationPatient("Mitar", "Miric", new DateTime(), Gender.MALE, null, null, doc2, null);
             pat1.Id = 1;
             ApplicationPatient pat2 = new ApplicationPatient("Petar", "Petrovic", new DateTime(), Gender.MALE, null, null, doc1, null);
             pat2.Id = 2;
@@ -61,7 +61,7 @@
             pat4.Id = 4;
             ApplicationPatient pat5 = new ApplicationPatient("Milan", "Maric", new DateTime(), Gender.MALE, null, null, doc1, null);
             pat5.Id = 5;
-            
+
             List<ApplicationPatient> patients = new List<ApplicationPatient>();
             patients.Add(pat1);
             patients.Add(pat2);

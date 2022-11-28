@@ -122,7 +122,7 @@ namespace HospitalAPI
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
             services.AddScoped<IApplicationDoctorService, ApplicationDoctorService>();
-            
+
 
 
 
