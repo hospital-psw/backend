@@ -4,7 +4,6 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository;
-    using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;

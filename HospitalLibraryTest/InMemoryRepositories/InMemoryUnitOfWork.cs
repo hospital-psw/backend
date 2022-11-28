@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibraryTest.InMemoryRepositories
 {
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
@@ -54,6 +55,8 @@
         public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
         public IApplicationUserRepository ApplicationUserRepository => throw new NotImplementedException();
+
+        public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

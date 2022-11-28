@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPI.Dto.Profiles
 {
     using AutoMapper;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.Dto.Auth;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;

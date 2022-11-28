@@ -6,6 +6,8 @@ using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.AppUsers;
+using HospitalLibrary.Core.Service.AppUsers.Core;
 using HospitalLibrary.Core.Service.Blood;
 using HospitalLibrary.Core.Service.Blood.Core;
 using HospitalLibrary.Core.Service.Core;
@@ -120,7 +122,8 @@ namespace HospitalAPI
             services.AddScoped<IStatisticsService, StatisticsService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
-
+            services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
+            services.AddScoped<IApplicationDoctorService, ApplicationDoctorService>();
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
