@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using System;
     using System.Collections.Generic;
@@ -7,9 +8,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IApplicationDoctorService
+    public interface IApplicationPatientService
     {
-        IEnumerable<ApplicationDoctor> RecommendDoctors();
-        int GetNumberOfPatientsForDoctor(ApplicationDoctor appDoctor);
+        ApplicationPatient GetPatient(int patientId);
     }
 }

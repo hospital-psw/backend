@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Configuration;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Util;
     using Microsoft.Extensions.Logging;
     using System;
@@ -55,6 +56,41 @@
             catch (Exception e)
             {
                 _logger.LogError($"Error in HospitalAPI EmailService in CreateEmailMessage {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public async Task SendActivationEmail(ApplicationUser identityUser, string url)
+        {
+            try
+            {
+                string body = $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>";
+                MailMessage mailMessage = CreateActivationEmail(body, "Confirm your email", identityUser.Email);
+
+                await SendEmailMessage(mailMessage);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in EmailService in Send {e.Message} in {e.StackTrace}");
+            }
+        }
+
+        private MailMessage CreateActivationEmail(string body, string subject, string patientEmail)
+        {
+            try
+            {
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(_configuration.EmailSettings.FromEmail);
+                message.Subject = subject;
+                message.Body = body;
+                message.IsBodyHtml = true;
+                message.To.Add(patientEmail);
+
+                return message;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in HospitalAPI EmailService in CreateActivationEmail {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
