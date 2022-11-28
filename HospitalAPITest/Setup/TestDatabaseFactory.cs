@@ -430,6 +430,64 @@
                 ManagerComment = ""
             });
 
+            Room relocationFromRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+
+            Room relocationToRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+
+            Equipment relocationEquipment =new Equipment
+            {
+                EquipmentType = EquipmentType.BED,
+                Quantity = 8,
+                Room = equipmentRoom
+            };
+
+            context.RelocationRequests.Add(new RelocationRequest
+            {
+                FromRoom = relocationFromRoom,
+                ToRoom = relocationToRoom,
+                Equipment = relocationEquipment,
+                StartTime = new DateTime(2022, 12, 10, 23, 0, 0),
+                Duration = 2
+            });
+
 
             context.SaveChanges();
 

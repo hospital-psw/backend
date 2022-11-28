@@ -28,6 +28,11 @@
             return Ok(_relocationService.Create(RelocationRequestMapper.EntityDtoToEntity(dto, _roomService.GetById(dto.FromRoomId), _roomService.GetById(dto.ToRoomId), _equipmentService.Get(dto.EquipmentId))));
         }
 
+        public OkObjectResult GetForRoom(int roomId)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPut("recommend")]
         public IActionResult GetRecommendedRelocationAppointments([FromBody] RecommendRelocationRequestDto dto)
         {
