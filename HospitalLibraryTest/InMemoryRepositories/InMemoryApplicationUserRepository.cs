@@ -72,6 +72,11 @@
 
         }
 
+        public ApplicationPatient GetPatient(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(ApplicationUser entity)
         {
             throw new NotImplementedException();
