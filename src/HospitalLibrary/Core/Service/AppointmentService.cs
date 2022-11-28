@@ -118,8 +118,10 @@
         {
             try
             {
-                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                //Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
+                //Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                var patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
+                var doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(16);
                 Appointment newAppointment = new Appointment(dto.Date, dto.ExamType, null, patient, doctor);
                 newAppointment.Room = room;

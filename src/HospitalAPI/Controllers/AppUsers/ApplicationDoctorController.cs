@@ -53,12 +53,11 @@
         [HttpGet("specialization/{spec}")]
         public IActionResult GetBySpecialization(Specialization specialization) 
         {
-            //var doctor = _doctorService.GetBySpecialization(specialization);
-            //if (doctor == null)
-            //    return NotFound();
+            var doctor = _doctorService.GetBySpecialization(specialization);
+            if (doctor == null)
+                return NotFound();
 
-            //var result = _mapper.Map<ApplicationDoctorDTO>(doctor);
-            return Ok(_doctorService.GetBySpecialization(specialization));
+            return Ok(doctor);
         }
     }
 }

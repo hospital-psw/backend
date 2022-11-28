@@ -22,8 +22,8 @@
             var stub = new Mock<IUnitOfWork>();
             List<Appointment> appointments = new List<Appointment>();
             Room room = new Room(1, "101", null, "Test", null);
-            Patient patient = new Patient("Imenko", "Prezimenic", "email@email.com", "password", false, new List<Allergies>());
-            Doctor doctor = new Doctor("Imenko", "Prezimenic", "password", "email@email.com", HospitalLibrary.Core.Model.Enums.Specialization.GENERAL, null, null);
+            ApplicationPatient patient = new ApplicationPatient("Imenko", "Prezimenic", "email@email.com", false, new List<Allergies>());
+            ApplicationDoctor doctor = new ApplicationDoctor("Imenko", "Prezimenic", "email@email.com", HospitalLibrary.Core.Model.Enums.Specialization.GENERAL, null, null);
             appointments.Add(new Appointment(new DateTime(2022, 5, 1), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));
             appointments.Add(new Appointment(new DateTime(2022, 5, 2), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));
             appointments.Add(new Appointment(new DateTime(2022, 3, 1), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));

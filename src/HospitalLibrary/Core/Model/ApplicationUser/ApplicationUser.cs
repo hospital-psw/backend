@@ -26,5 +26,12 @@
             DateOfBirth = dateOfBirth;
             Gender = gender;
         }
+
+        public ApplicationUser(string firstName,string lastName, string email)
+        {
+            FirstName = firstName;
+            LastName = lastName; 
+            Email = email;
+        }
     }
 }

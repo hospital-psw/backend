@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using System;
     using System.Collections.Generic;
@@ -19,9 +20,11 @@
 
         public Room Room { get; set; }
 
-        public Patient Patient { get; set; }
+        //public Patient Patient { get; set; }
 
-        public Doctor Doctor { get; set; }
+        //public Doctor Doctor { get; set; }
+        public ApplicationPatient Patient { get; set; }
+        public ApplicationDoctor Doctor { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -30,7 +33,7 @@
 
         public Appointment() { }
 
-        public Appointment(DateTime date, ExaminationType examType, Room room, Patient patient, Doctor doctor)
+        public Appointment(DateTime date, ExaminationType examType, Room room, ApplicationPatient patient, ApplicationDoctor doctor)
         {
             Date = date;
             Duration = 30;

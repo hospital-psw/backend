@@ -58,6 +58,8 @@
 
         public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
 
+        public IApplicationDoctorRepository ApplicationDoctorRepository => throw new NotImplementedException();
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

@@ -82,43 +82,68 @@
             //    Start = DateTime.Now,
             //    Type = TherapyType.MEDICAMENT
             //});
+            ApplicationPatient appPat = new ApplicationPatient()
+            {
+                FirstName = "Mika",
+                LastName = "Mikic",
+                Email = "mika@com",
+                Hospitalized = true
+            };
+
             Patient pat = new Patient()
             {
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
-                Password = "mikica",
-                Role = Role.PATIENT,
                 Hospitalized = true
             };
 
-            Patient pat2 = new Patient
+            ApplicationPatient appPat2 = new ApplicationPatient
             {
                 FirstName = "Djura",
                 LastName = "Djuric",
                 Email = "djura@com",
-                Password = "djurica",
-                Role = Role.PATIENT,
                 Hospitalized = true,
             };
 
-            List<Patient> patients = new List<Patient>();
-            patients.Add(pat);
-            patients.Add(pat2);
+            Patient pat2 = new Patient()
+            {
+                FirstName = "Mika",
+                LastName = "Mikic",
+                Email = "mika@com",
+                Hospitalized = true
+            };
+
+            List<ApplicationPatient> patients = new List<ApplicationPatient>();
+            patients.Add(appPat);
+            patients.Add(appPat2);
+
+            ApplicationDoctor appDoc = new ApplicationDoctor()
+            {
+                FirstName = "Djankarlo",
+                LastName = "Rapacoti",
+                Email = "djankarlno@asd.com",
+                Specialization = Specialization.CARDIOLOGY,
+                WorkHours = new WorkingHours()
+                {
+                    Start = new DateTime(1, 1, 1, 12, 0, 0),
+                    End = new DateTime(1, 1, 1, 16, 0, 0)
+                },
+                Office = null
+            };
 
             Doctor doc = new Doctor()
             {
                 FirstName = "Djankarlo",
                 LastName = "Rapacoti",
                 Email = "djankarlno@asd.com",
-                Password = "djani",
-                Role = Role.DOCTOR,
                 Specialization = Specialization.CARDIOLOGY,
                 WorkHours = new WorkingHours()
                 {
                     Start = new DateTime(1, 1, 1, 12, 0, 0),
                     End = new DateTime(1, 1, 1, 16, 0, 0)
-                }
+                },
+                Office = null
             };
 
             Room room = new Room()
@@ -140,7 +165,7 @@
                     Start = new DateTime(),
                     End = new DateTime(1, 1, 1, 23, 0, 0)
                 },
-                Patients = patients
+                //Patients = patients
 
             };
 
@@ -161,8 +186,8 @@
             context.Appointments.Add(new Appointment
             {
                 Date = new DateTime(2022, 11, 11, 14, 0, 0),
-                Doctor = doc,
-                Patient = pat,
+                Doctor = appDoc,
+                Patient = appPat,
                 Room = room,
                 IsDone = false,
                 ExamType = ExaminationType.OPERATION,

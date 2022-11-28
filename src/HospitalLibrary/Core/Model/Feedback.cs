@@ -11,7 +11,6 @@
 
     public class Feedback : Entity
     {
-        //public Patient Creator { get; set; }
         public ApplicationPatient Creator { get; set; } 
         public string Message { get; set; }
 

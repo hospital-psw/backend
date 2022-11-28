@@ -22,5 +22,12 @@
             WorkHours = workingHours;
             Office = office;
         }
+
+        public ApplicationDoctor(string firstName, string lastName, string email, Specialization specialization, WorkingHours workHours, Room office) : base(firstName, lastName, email)
+        {
+            Specialization = specialization;
+            WorkHours = workHours;
+            Office = office;
+        }
     }
 }

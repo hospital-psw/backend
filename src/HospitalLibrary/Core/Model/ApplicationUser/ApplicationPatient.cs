@@ -24,5 +24,11 @@
             BloodType = type;
         }
 
+        public ApplicationPatient(string firstName, string lastName, string email, bool hospitalized, List<Allergies> allergens) : base(firstName, lastName, email)
+        {
+            Hospitalized = hospitalized;
+            Allergies = allergens;
+        }
+
     }
 }
