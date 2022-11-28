@@ -42,7 +42,7 @@
             var controller = SetupController(scope);
             int roomId = 1;
 
-            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<RelocationRequestDto>;
+            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);
@@ -55,7 +55,7 @@
             var controller = SetupController(scope);
             int roomId = 1;
 
-            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<RelocationRequestDto>;
+            var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
 
             Assert.NotNull(result);
             Assert.Empty(result);
