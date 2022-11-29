@@ -6,18 +6,18 @@
 
     public class NewDoctorMapper
     {
-        public static Doctor EntityDtoToEntity(NewDoctorDto dto)
-        {
-            Doctor doctor = new Doctor();
+        //public static Doctor EntityDtoToEntity(NewDoctorDto dto)
+        //{
+        //    Doctor doctor = new Doctor();
 
-            doctor.Specialization = dto.Specialization;
-            doctor.FirstName = dto.FirstName;
-            doctor.LastName = dto.LastName;
-            doctor.Email = dto.Email;
-            doctor.Password = dto.Password;
-            doctor.Role = Role.DOCTOR;
+        //    doctor.Specialization = dto.Specialization;
+        //    doctor.FirstName = dto.FirstName;
+        //    doctor.LastName = dto.LastName;
+        //    doctor.Email = dto.Email;
+        //    doctor.Password = dto.Password;
+        //    doctor.Role = Role.DOCTOR;
 
-            return doctor;
-        }
+        //    return doctor;
+        //}
     }
 }

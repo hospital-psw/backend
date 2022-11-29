@@ -31,10 +31,8 @@
             WorkingHoursRepository = new WorkingHoursRepository(_context);
             MapRepository = new MapRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
-            DoctorRepository = new DoctorRepository(_context);
             FeedbackRepository = new FeedbackRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
-            PatientRepository = new PatientRepository(_context);
             AllergiesRepository = new AllergiesRepository(_context);
             MedicalTreatmentRepository = new MedicalTreatmentRepository(_context);
             TherapyRepository = new TherapyRepository(_context);
@@ -60,8 +58,6 @@
         public IMapRepository MapRepository { get; set; }
         public IWorkingHoursRepository WorkingHoursRepository { get; set; }
         public IAppointmentRepository AppointmentRepository { get; set; }
-        public IDoctorRepository DoctorRepository { get; set; }
-        public IPatientRepository PatientRepository { get; set; }
         public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }

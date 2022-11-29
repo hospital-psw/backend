@@ -6,18 +6,18 @@
 
     public class UpdatePatientMapper
     {
-        public static Patient EntityDtoToEntity(UpdatePatientDto dto)
-        {
-            Patient patient = new Patient();
+        //public static Patient EntityDtoToEntity(UpdatePatientDto dto)
+        //{
+        //    Patient patient = new Patient();
 
-            patient.Id = dto.Id;
-            patient.FirstName = dto.FirstName;
-            patient.LastName = dto.LastName;
-            patient.Email = dto.Email;
-            patient.Hospitalized = dto.Hospitalized;
-            patient.Role = Role.PATIENT;
+        //    patient.Id = dto.Id;
+        //    patient.FirstName = dto.FirstName;
+        //    patient.LastName = dto.LastName;
+        //    patient.Email = dto.Email;
+        //    patient.Hospitalized = dto.Hospitalized;
+        //    patient.Role = Role.PATIENT;
 
-            return patient;
-        }
+        //    return patient;
+        //}
     }
 }

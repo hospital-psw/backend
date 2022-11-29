@@ -25,6 +25,11 @@
             _authService = authService;
         }
 
+        public ApplicationPatientController(IApplicationPatientService appPatientService)
+        {
+            _appPatientService = appPatientService;
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id) 
         {

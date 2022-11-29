@@ -83,8 +83,8 @@ namespace HospitalAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<IDoctorService, DoctorService>();
-            services.AddScoped<IPatientService, PatientService>();
+            //services.AddScoped<IDoctorService, DoctorService>();
+            //services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IAllergiesService, AllergiesService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBuildingService, BuildingService>();

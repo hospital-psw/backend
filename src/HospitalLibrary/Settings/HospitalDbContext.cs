@@ -27,8 +27,8 @@ namespace HospitalLibrary.Settings
         public DbSet<WorkingHours> WorkingHours { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
+        //public DbSet<Doctor> Doctors { get; set; }
+        //public DbSet<Patient> Patients { get; set; }
         public DbSet<Allergies> Allergies { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<MedicalTreatment> MedicalTreatments { get; set; }

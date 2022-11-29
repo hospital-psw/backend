@@ -7,18 +7,18 @@
     public class NewPatientMapper
     {
 
-        public static Patient EntityDtoToEntity(NewPatientDto dto)
-        {
-            Patient patient = new Patient();
+        //public static Patient EntityDtoToEntity(NewPatientDto dto)
+        //{
+        //    Patient patient = new Patient();
 
-            patient.FirstName = dto.FirstName;
-            patient.LastName = dto.LastName;
-            patient.Email = dto.Email;
-            patient.Password = dto.Password;
-            patient.Hospitalized = false;
-            patient.Role = Role.PATIENT;
+        //    patient.FirstName = dto.FirstName;
+        //    patient.LastName = dto.LastName;
+        //    patient.Email = dto.Email;
+        //    patient.Password = dto.Password;
+        //    patient.Hospitalized = false;
+        //    patient.Role = Role.PATIENT;
 
-            return patient;
-        }
+        //    return patient;
+        //}
     }
 }

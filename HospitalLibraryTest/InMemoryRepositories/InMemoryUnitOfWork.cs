@@ -32,8 +32,8 @@
         public IMapRepository MapRepository { get; set; }
         public IWorkingHoursRepository WorkingHoursRepository { get; set; }
         public IAppointmentRepository AppointmentRepository { get; set; }
-        public IDoctorRepository DoctorRepository { get; set; }
-        public IPatientRepository PatientRepository { get; set; }
+        //public IDoctorRepository DoctorRepository { get; set; }
+        //public IPatientRepository PatientRepository { get; set; }
         public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
