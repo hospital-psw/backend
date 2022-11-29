@@ -10,7 +10,7 @@
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;

@@ -4,7 +4,7 @@
     using HospitalAPI.Mappers.AppUsers;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
 
     public class VacationRequestsMapper
     {
