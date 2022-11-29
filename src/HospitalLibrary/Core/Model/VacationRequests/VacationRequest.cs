@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Model.VacationRequest
+﻿namespace HospitalLibrary.Core.Model.VacationRequests
 {
     using HospitalLibrary.Core.Model.Enums;
     using System;

@@ -10,7 +10,7 @@
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -371,9 +371,9 @@
             context.ApplicationPatients.Add(new ApplicationPatient
                 ("Fosilka", "Fosilovic", new DateTime(1930, 11, 26), Gender.FEMALE, false, BloodType.O_PLUS));
             context.ApplicationDoctors.Add(new ApplicationDoctor
-                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null));
+                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null, null));
             context.ApplicationDoctors.Add(new ApplicationDoctor
-                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, null, null));
+                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, null, null, null));
 
             context.VacationRequests.Add(new VacationRequest
             {

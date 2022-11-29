@@ -24,6 +24,7 @@
         {
             return HospitalDbContext.Doctors.Include(x => x.Office)
                                             .Include(x => x.WorkHours)
+                                            .Include(x => x.DoctorSchedule)
                                             .ToList();
         }
 

@@ -56,6 +56,9 @@
 
         public IApplicationUserRepository ApplicationUserRepository { get; set; }
 
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

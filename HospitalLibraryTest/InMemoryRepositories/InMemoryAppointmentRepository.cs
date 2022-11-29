@@ -31,11 +31,11 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)
         {
-            Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, null, null);
+            Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, null, null, null);
             doc1.Id = 1;
-            Doctor doc2 = new Doctor("Vuk", "Milanovic", "123", "ckepa@gmail.com", Specialization.GENERAL, null, null);
+            Doctor doc2 = new Doctor("Vuk", "Milanovic", "123", "ckepa@gmail.com", Specialization.GENERAL, null, null, null);
             doc2.Id = 2;
-            Doctor doc4 = new Doctor("Ilija", "Galin", "123", "iki@gmail.com", Specialization.GENERAL, null, null);
+            Doctor doc4 = new Doctor("Ilija", "Galin", "123", "iki@gmail.com", Specialization.GENERAL, null, null, null);
             doc4.Id = 4;
             Appointment app1 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc1);
             app1.Id = 1;
@@ -82,7 +82,7 @@ namespace HospitalLibraryTest.InMemoryRepositories
             Patient patient = new Patient("ana", "vulin", "vulinana@gmail.com", "123", false, new List<Allergies>());
             Room room = new Room(1, "001", null, null, null);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));
-            Doctor doctor = new Doctor("nikolina", "nikolic", "nina@gmail.com", "123", Specialization.GENERAL, doctorWorkingHours, room);
+            Doctor doctor = new Doctor("nikolina", "nikolic", "nina@gmail.com", "123", Specialization.GENERAL, doctorWorkingHours, room, null);
             appointments.Add(new Appointment(new DateTime(2022, 12, 11, 13, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
 
             List<Appointment> retList = new List<Appointment>();

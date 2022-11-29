@@ -37,5 +37,7 @@
         public IBloodExpenditureRepository BloodExpenditureRepository { get; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; }
         public IApplicationUserRepository ApplicationUserRepository { get; }
+        public IConsiliumRepository ConsiliumRepository { get; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; }
     }
 }

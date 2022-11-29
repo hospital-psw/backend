@@ -34,9 +34,9 @@
 
         public IEnumerable<ApplicationDoctor> GetAllGeneralDoctors()
         {
-            ApplicationDoctor doc1 = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
+            ApplicationDoctor doc1 = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null, null);
             doc1.Id = 1;
-            ApplicationDoctor doc2 = new ApplicationDoctor("Slavko", "Slavkovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
+            ApplicationDoctor doc2 = new ApplicationDoctor("Slavko", "Slavkovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null, null);
             doc2.Id = 2;
 
             List<ApplicationDoctor> doctors = new List<ApplicationDoctor>();
@@ -47,9 +47,9 @@
 
         public IEnumerable<ApplicationPatient> GetAllPatients()
         {
-            ApplicationDoctor doc1 = new ApplicationDoctor("Slavko", "Slavkovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
+            ApplicationDoctor doc1 = new ApplicationDoctor("Slavko", "Slavkovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null, null);
             doc1.Id = 1;
-            ApplicationDoctor doc2 = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
+            ApplicationDoctor doc2 = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null, null);
             doc2.Id = 2;
             ApplicationPatient pat1 = new ApplicationPatient("Mitar", "Miric", new DateTime(), Gender.MALE, null, null, doc2, null);
             pat1.Id = 1;

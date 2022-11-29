@@ -23,7 +23,7 @@
             List<Appointment> appointments = new List<Appointment>();
             Room room = new Room(1, "101", null, "Test", null);
             Patient patient = new Patient("Imenko", "Prezimenic", "email@email.com", "password", false, new List<Allergies>());
-            Doctor doctor = new Doctor("Imenko", "Prezimenic", "password", "email@email.com", HospitalLibrary.Core.Model.Enums.Specialization.GENERAL, null, null);
+            Doctor doctor = new Doctor("Imenko", "Prezimenic", "password", "email@email.com", HospitalLibrary.Core.Model.Enums.Specialization.GENERAL, null, null, null);
             appointments.Add(new Appointment(new DateTime(2022, 5, 1), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));
             appointments.Add(new Appointment(new DateTime(2022, 5, 2), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));
             appointments.Add(new Appointment(new DateTime(2022, 3, 1), HospitalLibrary.Core.Model.Enums.ExaminationType.GENERAL, room, patient, doctor));
@@ -105,8 +105,8 @@
             patients.Add(new ApplicationPatient("Imenko", "Prezimenic", new DateTime(2022, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, false, HospitalLibrary.Core.Model.Blood.Enums.BloodType.A_PLUS));
             patients.Add(new ApplicationPatient("Imenko", "Prezimenic", new DateTime(2006, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, false, HospitalLibrary.Core.Model.Blood.Enums.BloodType.A_PLUS));
             List<ApplicationDoctor> doctors = new List<ApplicationDoctor>();
-            doctors.Add(new ApplicationDoctor("Imenko", "Prezimenic", new DateTime(2022, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, HospitalLibrary.Core.Model.Enums.Specialization.GENERAL, null, null));
-            doctors.Add(new ApplicationDoctor("Imenko", "Prezimenic", new DateTime(2022, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, HospitalLibrary.Core.Model.Enums.Specialization.CARDIOLOGY, null, null));
+            doctors.Add(new ApplicationDoctor("Imenko", "Prezimenic", new DateTime(2022, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, HospitalLibrary.Core.Model.Enums.Specialization.GENERAL, null, null, null));
+            doctors.Add(new ApplicationDoctor("Imenko", "Prezimenic", new DateTime(2022, 4, 4), HospitalLibrary.Core.Model.Enums.Gender.MALE, HospitalLibrary.Core.Model.Enums.Specialization.CARDIOLOGY, null, null, null));
             stub.Setup(f => f.ApplicationUserRepository.GetAllDoctors()).Returns(doctors);
             stub.Setup(f => f.ApplicationUserRepository.GetAllPatients()).Returns(patients);
             StatisticsService service = new StatisticsService(stub.Object);

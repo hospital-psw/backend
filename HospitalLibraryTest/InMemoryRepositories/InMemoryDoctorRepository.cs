@@ -24,15 +24,15 @@
         public IEnumerable<Doctor> GetAll()
         {
             WorkingHours workingHours = new WorkingHours(5, new DateTime(), new DateTime(), false, new DateTime(2022, 11, 10, 10, 0, 0), new DateTime(2022, 11, 10, 16, 0, 0));
-            Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, workingHours, null);
+            Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, workingHours, null, null);
             doc1.Id = 1;
-            Doctor doc2 = new Doctor("Vuk", "Milanovic", "123", "ckepa@gmail.com", Specialization.GENERAL, workingHours, null);
+            Doctor doc2 = new Doctor("Vuk", "Milanovic", "123", "ckepa@gmail.com", Specialization.GENERAL, workingHours, null, null);
             doc2.Id = 2;
-            Doctor doc3 = new Doctor("Andrija", "Stanisic", "123", "stane@gmail.com", Specialization.CARDIOLOGY, workingHours, null);
+            Doctor doc3 = new Doctor("Andrija", "Stanisic", "123", "stane@gmail.com", Specialization.CARDIOLOGY, workingHours, null, null);
             doc3.Id = 3;
-            Doctor doc4 = new Doctor("Ilija", "Galin", "123", "iki@gmail.com", Specialization.GENERAL, workingHours, null);
+            Doctor doc4 = new Doctor("Ilija", "Galin", "123", "iki@gmail.com", Specialization.GENERAL, workingHours, null, null);
             doc4.Id = 4;
-            Doctor doc5 = new Doctor("Nikola", "Grbovic", "123", "kwicknik@gmail.com", Specialization.CARDIOLOGY, workingHours, null);
+            Doctor doc5 = new Doctor("Nikola", "Grbovic", "123", "kwicknik@gmail.com", Specialization.CARDIOLOGY, workingHours, null, null);
             doc5.Id = 5;
 
             List<Doctor> doctors = new List<Doctor>();

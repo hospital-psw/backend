@@ -15,12 +15,15 @@
 
         public Room Office { get; set; }
 
+        public DoctorSchedule DoctorSchedule { get; set; }
+
         public Doctor() { }
-        public Doctor(string firstName, string lastName, string password, string email, Specialization specialization, WorkingHours workHours, Room office) : base(firstName, lastName, email, password, Role.DOCTOR)
+        public Doctor(string firstName, string lastName, string password, string email, Specialization specialization, WorkingHours workHours, Room office, DoctorSchedule doctorSchedule) : base(firstName, lastName, email, password, Role.DOCTOR)
         {
             Specialization = specialization;
             WorkHours = workHours;
             Office = office;
+            DoctorSchedule = doctorSchedule;
         }
     }
 }

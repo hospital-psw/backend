@@ -45,6 +45,8 @@
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
             ApplicationUserRepository = new ApplicationUserRepository(_context);
+            ConsiliumRepository = new ConsiliumRepository(_context);
+            DoctorScheduleRepository = new DoctorScheduleRepository(_context);
 
         }
 
@@ -71,7 +73,8 @@
         public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }
         public IApplicationUserRepository ApplicationUserRepository { get; set; }
-
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;
