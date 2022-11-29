@@ -1,10 +1,12 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
     using HospitalAPI.Controllers;
+    using HospitalAPI.Controllers.AppUsers;
     using HospitalAPI.Dto;
     using HospitalAPI.EmailServices;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -18,9 +20,9 @@
         public EmailSendingIntegrationTests(TestDatabaseFactory factory) : base(factory)
         {
         }
-        private static PatientController SetupController(IServiceScope serviceScope)
+        private static ApplicationPatientController SetupController(IServiceScope serviceScope)
         {
-            return new PatientController(serviceScope.ServiceProvider.GetRequiredService<IPatientService>());
+            return new ApplicationPatientController(serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
         }
     }
 }

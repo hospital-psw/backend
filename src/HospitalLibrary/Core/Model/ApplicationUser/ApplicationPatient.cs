@@ -30,5 +30,9 @@
             Allergies = allergens;
         }
 
+        public ApplicationPatient(string firstName, string lastName, DateTime dateOfBirth, Gender gender, ApplicationDoctor doc2) : base(firstName, lastName, dateOfBirth, gender)
+        {
+            applicationDoctor = doc2;
+        }
     }
 }

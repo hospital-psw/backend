@@ -60,5 +60,39 @@
                 return null;
             }
         }
+
+        public IEnumerable<ApplicationDoctor> RecommendDoctors()
+        {
+            List<ApplicationDoctor> result = new List<ApplicationDoctor>();
+            List<int> numberOfPatients = new List<int>();
+            int min;
+            foreach (ApplicationDoctor i in _unitOfWork.ApplicationUserRepository.GetAllGeneralDoctors())
+            {
+                numberOfPatients.Add(GetNumberOfPatientsForDoctor(i));
+            }
+            min = numberOfPatients.Min();
+
+            foreach (ApplicationDoctor i in _unitOfWork.ApplicationUserRepository.GetAllGeneralDoctors())
+            {
+                if (GetNumberOfPatientsForDoctor(i) <= min + 2)
+                {
+                    result.Add(i);
+                }
+            }
+            return result;
+        }
+
+        private int GetNumberOfPatientsForDoctor(ApplicationDoctor appDoctor)
+        {
+            List<ApplicationPatient> doctorsPatients = new List<ApplicationPatient>();
+            foreach (ApplicationPatient i in _unitOfWork.ApplicationUserRepository.GetAllPatients())
+            {
+                if (i.applicationDoctor == appDoctor)
+                {
+                    doctorsPatients.Add(i);
+                }
+            }
+            return doctorsPatients.Count();
+        }
     }
 }

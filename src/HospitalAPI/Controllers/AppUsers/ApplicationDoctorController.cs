@@ -1,8 +1,13 @@
 ﻿namespace HospitalAPI.Controllers.AppUsers
 {
     using AutoMapper;
+    using HospitalAPI.Dto;
     using HospitalAPI.Dto.AppUsers;
+    using HospitalAPI.Mappers;
+    using HospitalAPI.Mappers.AppUsers;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Service.AppUsers;
     using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -39,7 +44,7 @@
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
             var doctors = _doctorService.GetAll().ToList();
             if (doctors == null)
@@ -58,6 +63,20 @@
                 return NotFound();
 
             return Ok(doctor);
+        }
+
+        [HttpGet("allrecommended")]
+        public IActionResult GetAllRecomended()
+        {
+            List<ApplicationDoctorDTO> applicationDoctorDto = new List<ApplicationDoctorDTO>();
+            List<ApplicationDoctor> applicationDoctors = _doctorService.RecommendDoctors().ToList();
+            if (applicationDoctors == null)
+            {
+                return NotFound();
+            }
+
+            applicationDoctors.ForEach(bt => applicationDoctorDto.Add(ApplicationDoctorMapper.EntityToEntityDTO(bt)));
+            return Ok(applicationDoctorDto);
         }
     }
 }

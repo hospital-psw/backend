@@ -1,8 +1,11 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
     using HospitalAPI.Controllers;
+    using HospitalAPI.Controllers.AppUsers;
     using HospitalAPI.Dto;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPITest.Setup;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -22,13 +25,13 @@
             return new ApplicationPatientController(scope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
         }
         [Fact]
-        public void Get_app_patient()
+        public async void Get_app_patient()
         {
 
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Get(13)).Value as ApplicationPatientDto;
+            var result = ((OkObjectResult)await controller.Get(9)).Value as ApplicationPatientDTO;
 
             Assert.NotNull(result);
         }

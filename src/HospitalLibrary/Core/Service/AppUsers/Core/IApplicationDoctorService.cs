@@ -13,5 +13,6 @@
         ApplicationDoctor Get(int id);
         IEnumerable<ApplicationDoctor> GetAll();
         IEnumerable<ApplicationDoctor> GetBySpecialization(Specialization specialization);
+        IEnumerable<ApplicationDoctor> RecommendDoctors();
     }
 }
