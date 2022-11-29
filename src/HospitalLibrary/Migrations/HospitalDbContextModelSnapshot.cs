@@ -1377,6 +1377,16 @@ namespace HospitalLibrary.Migrations
                 {
                     b.Navigation("Patients");
                 });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", b =>
+                {
+                    b.Navigation("Allergies");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
+                {
+                    b.Navigation("Allergies");
+                });
 #pragma warning restore 612, 618
         }
     }

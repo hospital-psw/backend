@@ -22,5 +22,6 @@
         Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string newPassword);
         Task<bool> IsEmailConfirmedAsync(ApplicationUser user);
         Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
+        Task<IdentityResult> ConfirmEmailAsync(ApplicationUser user, string token);
     }
 }

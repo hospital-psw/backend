@@ -11,6 +11,8 @@
     {
         public IEnumerable<ApplicationDoctor> GetAllDoctors();
         public IEnumerable<ApplicationPatient> GetAllPatients();
+        public ApplicationPatient GetPatient(int id);
+        public IEnumerable<ApplicationDoctor> GetAllGeneralDoctors();
 
     }
 

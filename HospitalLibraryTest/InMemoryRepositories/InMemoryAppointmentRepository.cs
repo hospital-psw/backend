@@ -1,4 +1,6 @@
-﻿namespace HospitalLibraryTest.InMemoryRepositories
+﻿using static IdentityServer4.Models.IdentityResources;
+
+namespace HospitalLibraryTest.InMemoryRepositories
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
@@ -102,6 +104,7 @@
         {
             throw new NotImplementedException();
         }
+
 
         public void Update(Appointment entity)
         {
