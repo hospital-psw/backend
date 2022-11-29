@@ -19,7 +19,7 @@
 
         private static RelocationController SetupController(IServiceScope serviceScope)
         {
-            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>());
+            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomScheduleService>());
         }
 
         [Fact]

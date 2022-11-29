@@ -107,7 +107,7 @@ namespace HospitalAPI
             services.AddScoped<IApplicationDoctorService, ApplicationDoctorService>();
             services.AddScoped<IRenovationService, RenovationService>();
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-
+            services.AddScoped<IRoomScheduleService, RoomScheduleService>();
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);

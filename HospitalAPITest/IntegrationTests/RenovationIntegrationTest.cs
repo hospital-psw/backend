@@ -20,7 +20,7 @@
 
         private static RenovationController SetupController(IServiceScope serviceScope)
         {
-            return new RenovationController(serviceScope.ServiceProvider.GetRequiredService<IRenovationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>());
+            return new RenovationController(serviceScope.ServiceProvider.GetRequiredService<IRenovationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomScheduleService>());
         }
 
         [Fact]

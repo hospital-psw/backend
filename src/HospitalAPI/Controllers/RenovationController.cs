@@ -4,6 +4,7 @@
     using HospitalAPI.Mappers;
     using HospitalAPI.Mappers.Renovation;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -16,11 +17,13 @@
     {
         private IRenovationService _renovationService;
         private IRoomService _roomService;
+        private IRoomScheduleService _roomScheduleService;
 
-        public RenovationController(IRenovationService renovationService, IRoomService roomService)
+        public RenovationController(IRenovationService renovationService, IRoomService roomService, IRoomScheduleService roomScheduleService)
         {
             _renovationService = renovationService;
             _roomService = roomService;
+            _roomScheduleService = roomScheduleService;
         }
 
         [HttpPost("createRenovationRequest")]
@@ -32,6 +35,12 @@
                 rooms.Add(_roomService.GetById(roomId));
             }
             return Ok(_renovationService.Create(RenovationRequestMapper.EntityDtoToEntity(dto, rooms)));
+        }
+
+        [HttpPut("recommend")]
+        public IActionResult GetFreeTimeSlots([FromBody] RecommendRelocationRequestDto dto)
+        {
+            return Ok(_roomScheduleService.GetAppointments(dto.RoomsId, dto.FromTime, dto.ToTime, dto.Duration));
         }
     }
 }

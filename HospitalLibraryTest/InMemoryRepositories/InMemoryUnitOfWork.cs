@@ -59,6 +59,8 @@
 
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
 
+        public IRenovationRepository RenovationRepository => throw new NotImplementedException();
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

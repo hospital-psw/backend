@@ -14,12 +14,14 @@
         private IRelocationService _relocationService;
         private IRoomService _roomService;
         private IEquipmentService _equipmentService;
+        private IRoomScheduleService _roomScheduleService;
 
-        public RelocationController(IRelocationService relocationService, IRoomService roomService, IEquipmentService equipmentService)
+        public RelocationController(IRelocationService relocationService, IRoomService roomService, IEquipmentService equipmentService, IRoomScheduleService roomScheduleService)
         {
             _relocationService = relocationService;
             _roomService = roomService;
             _equipmentService = equipmentService;
+            _roomScheduleService = roomScheduleService;
         }
 
         [HttpPost("createRelocationRequest")]
@@ -29,9 +31,9 @@
         }
 
         [HttpPut("recommend")]
-        public IActionResult GetRecommendedRelocationAppointments([FromBody] RecommendRelocationRequestDto dto)
+        public IActionResult GetFreeTimeSlots([FromBody] RecommendRelocationRequestDto dto)
         {
-            return Ok(_relocationService.GetAppointments(dto.FromRoomId, dto.ToRoomId, dto.FromTime, dto.ToTime, dto.Duration));
+            return Ok(_roomScheduleService.GetAppointments(dto.RoomsId, dto.FromTime, dto.ToTime, dto.Duration));
         }
     }
 }
