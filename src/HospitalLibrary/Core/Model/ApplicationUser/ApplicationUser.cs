@@ -10,14 +10,6 @@
 
     public class ApplicationUser : IdentityUser<int>
     {
-        public ApplicationUser() : base() { }
-        public ApplicationUser(string firstName, string lastName, DateTime dateOfBirth, Gender gender)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            DateOfBirth = dateOfBirth;
-            Gender = gender;
-        }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -26,5 +18,20 @@
 
         public Gender Gender { get; set; }
 
+        public ApplicationUser() : base() { }
+        public ApplicationUser(string firstName, string lastName, DateTime dateOfBirth, Gender gender)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            DateOfBirth = dateOfBirth;
+            Gender = gender;
+        }
+
+        public ApplicationUser(string firstName, string lastName, string email)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+        }
     }
 }

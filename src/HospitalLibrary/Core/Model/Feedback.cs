@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
     using HospitalLibrary.Core.DTO.Feedback;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using System;
     using System.Collections.Generic;
@@ -10,7 +11,7 @@
 
     public class Feedback : Entity
     {
-        public Patient Creator { get; set; }
+        public ApplicationPatient Creator { get; set; }
 
         public string Message { get; set; }
 

@@ -8,6 +8,7 @@
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Service;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Blood;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
@@ -20,13 +21,12 @@
     public class BloodAcquisitionController : BaseController<BloodAcquisition>
     {
         private IBloodAcquisitionService bloodAcquisitionService;
-        private IDoctorService doctorService;
+        private readonly IApplicationDoctorService _doctorService;
 
-
-        public BloodAcquisitionController(IBloodAcquisitionService _bloodAcquisitionService, IDoctorService _doctorService)
+        public BloodAcquisitionController(IBloodAcquisitionService _bloodAcquisitionService, IApplicationDoctorService doctorService)
         {
             bloodAcquisitionService = _bloodAcquisitionService;
-            doctorService = _doctorService;
+
         }
 
         [HttpPatch("/handle")]
@@ -67,7 +67,7 @@
             {
                 return BadRequest("Please enter valid data");
             }
-            if (doctorService.Get(createAcquisitionDTO.DoctorId) == null)
+            if (_doctorService.Get(createAcquisitionDTO.DoctorId) == null)
             {
                 return BadRequest("Doctor not found");
             }

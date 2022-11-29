@@ -19,9 +19,10 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<Room> GetAll()
         {
             // return _context.Rooms.ToList();
-            return _context.Rooms.Include(x => x.Floor.Building).Include(x => x.Floor).Include(x => x.WorkingHours)
-                                    .Where(x => !x.Deleted)
-                                    .ToList();
+            return _context.Rooms.Include(x => x.Floor.Building)
+                                 .Include(x => x.Floor).Include(x => x.WorkingHours)
+                                 .Where(x => !x.Deleted)
+                                 .ToList();
         }
 
         public Room GetById(int id)

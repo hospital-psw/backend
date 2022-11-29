@@ -1,6 +1,8 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using System;
@@ -21,9 +23,18 @@
         {
             return _context.ApplicationDoctors.ToList();
         }
+        public IEnumerable<ApplicationDoctor> GetAllGeneralDoctors()
+        {
+            return GetAllDoctors().Where(x => x.Specialization == Specialization.GENERAL).ToList();
+        }
+
         public IEnumerable<ApplicationPatient> GetAllPatients()
         {
             return _context.ApplicationPatients.ToList();
+        }
+        public ApplicationPatient GetPatient(int id)
+        {
+            return GetAllPatients().FirstOrDefault(x => x.Id == id);
         }
     }
 }

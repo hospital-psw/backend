@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibraryTest.InMemoryRepositories
 {
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
@@ -20,7 +21,8 @@
             RoomRepository = new InMemoryRoomRepository();
             AppointmentRepository = new InMemoryAppointmentRepository();
             EquipmentRepository = new InMemoryEquipmentRepository();
-            DoctorRepository = new InMemoryDoctorRepository();
+            ApplicationDoctorRepository = new InMemoryDoctorRepository();
+            ApplicationUserRepository = new InMemoryApplicationUserRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -31,8 +33,6 @@
         public IMapRepository MapRepository { get; set; }
         public IWorkingHoursRepository WorkingHoursRepository { get; set; }
         public IAppointmentRepository AppointmentRepository { get; set; }
-        public IDoctorRepository DoctorRepository { get; set; }
-        public IPatientRepository PatientRepository { get; set; }
         public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
@@ -53,7 +53,11 @@
 
         public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
-        public IApplicationUserRepository ApplicationUserRepository => throw new NotImplementedException();
+        public IApplicationUserRepository ApplicationUserRepository { get; set; }
+
+        public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
+
+        public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

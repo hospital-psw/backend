@@ -1,11 +1,13 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.ApplicationUser;
+using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.Blood;
 using HospitalLibrary.Core.Model.Blood.BloodManagment;
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
 using HospitalLibrary.Core.Model.VacationRequest;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -20,15 +22,12 @@ namespace HospitalLibrary.Settings
         //private static ProjectConfiguration _configuration;
 
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<RoomMap> RoomsMap { get; set; }
         public DbSet<WorkingHours> WorkingHours { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
         public DbSet<Allergies> Allergies { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<MedicalTreatment> MedicalTreatments { get; set; }

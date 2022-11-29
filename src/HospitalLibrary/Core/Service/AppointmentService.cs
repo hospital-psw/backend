@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
@@ -72,8 +73,8 @@
             try
             {
                 List<RecommendedAppointmentDto> generatedAppointments = new List<RecommendedAppointmentDto>();
-                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
+                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(16);
                 DateTime shiftIterator = doctor.WorkHours.Start;
                 DateTime startDate = new DateTime(dto.Date.Year, dto.Date.Month, dto.Date.Day, doctor.WorkHours.Start.Hour, doctor.WorkHours.Start.Minute, doctor.WorkHours.Start.Second);
@@ -118,8 +119,8 @@
         {
             try
             {
-                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
+                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(16);
                 Appointment newAppointment = new Appointment(dto.Date, dto.ExamType, null, patient, doctor);
                 newAppointment.Room = room;
@@ -142,7 +143,10 @@
                 _unitOfWork.AppointmentRepository.Update(appointment);
                 _unitOfWork.Save();
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         public IEnumerable<Appointment> GetByDoctorsId(int doctorId)

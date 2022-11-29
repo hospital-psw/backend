@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPI.Dto.Profiles
 {
     using AutoMapper;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.Dto.Auth;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
@@ -50,6 +51,31 @@
                    dest => dest.applicationDoctor,
                    opt => opt.Ignore()
                 );
+
+            //EntityToEntityDTO
+            CreateMap<ApplicationPatient, ApplicationPatientDTO>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => $"{src.Id}")
+                 ).ForMember(
+                    dest => dest.FirstName,
+                    opt => opt.MapFrom(src => $"{src.FirstName}")
+                 ).ForMember(
+                    dest => dest.LastName,
+                    opt => opt.MapFrom(src => $"{src.LastName}")
+                 ).ForMember(
+                    dest => dest.Email,
+                    opt => opt.MapFrom(src => $"{src.Email}")
+                 ).ForMember(
+                   dest => dest.BloodType,
+                   opt => opt.MapFrom(src => $"{((BloodType)src.BloodType)}")
+                 ).ForMember(
+                   dest => dest.Hospitalized,
+                   opt => opt.MapFrom(src => $"{src.Hospitalized}")
+                 ).ForMember(
+                   dest => dest.Role,
+                   opt => opt.MapFrom(src => $"{"Patient"}")
+                 );
         }
     }
 }

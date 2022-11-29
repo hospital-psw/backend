@@ -1,6 +1,8 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using AutoMapper;
     using HospitalAPI.Dto;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.EmailServices;
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.DTO.Appointments;
@@ -15,8 +17,8 @@
     [Route("api/[controller]")]
     public class AppointmentController : BaseController<Appointment>
     {
-        private IAppointmentService _appointmentService;
-        private IEmailService _emailService;
+        private readonly IAppointmentService _appointmentService;
+        private readonly IEmailService _emailService;
 
         public AppointmentController(IAppointmentService appointmentService, IEmailService emailService)
         {
@@ -32,8 +34,8 @@
             {
                 return NotFound();
             }
-            AppointmentDto dto = AppointmentMapper.EntityToEntityDto(appointment);
-            return Ok(dto);
+
+            return Ok(AppointmentMapper.EntityToEntityDto(appointment));
         }
 
         [HttpPut]

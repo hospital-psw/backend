@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Model.VacationRequest
 {
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using System;
     using System.Collections.Generic;
@@ -9,7 +10,7 @@
 
     public class VacationRequest : Entity
     {
-        public Doctor Doctor { get; set; }
+        public ApplicationDoctor Doctor { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public VacationRequestStatus Status { get; set; }
@@ -19,7 +20,7 @@
 
         public VacationRequest() { }
 
-        public VacationRequest(Doctor doctor, DateTime from, DateTime to, VacationRequestStatus status, string comment, bool urgent, string managerComment)
+        public VacationRequest(ApplicationDoctor doctor, DateTime from, DateTime to, VacationRequestStatus status, string comment, bool urgent, string managerComment)
         {
             Doctor = doctor;
             From = from;

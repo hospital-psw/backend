@@ -82,43 +82,38 @@
             //    Start = DateTime.Now,
             //    Type = TherapyType.MEDICAMENT
             //});
-            Patient pat = new Patient()
+            ApplicationPatient appPat = new ApplicationPatient()
             {
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
-                Password = "mikica",
-                Role = Role.PATIENT,
                 Hospitalized = true
             };
 
-            Patient pat2 = new Patient
+            ApplicationPatient appPat2 = new ApplicationPatient
             {
                 FirstName = "Djura",
                 LastName = "Djuric",
                 Email = "djura@com",
-                Password = "djurica",
-                Role = Role.PATIENT,
                 Hospitalized = true,
             };
 
-            List<Patient> patients = new List<Patient>();
-            patients.Add(pat);
-            patients.Add(pat2);
+            List<ApplicationPatient> patients = new List<ApplicationPatient>();
+            patients.Add(appPat);
+            patients.Add(appPat2);
 
-            Doctor doc = new Doctor()
+            ApplicationDoctor appDoc = new ApplicationDoctor()
             {
                 FirstName = "Djankarlo",
                 LastName = "Rapacoti",
                 Email = "djankarlno@asd.com",
-                Password = "djani",
-                Role = Role.DOCTOR,
                 Specialization = Specialization.CARDIOLOGY,
                 WorkHours = new WorkingHours()
                 {
                     Start = new DateTime(1, 1, 1, 12, 0, 0),
                     End = new DateTime(1, 1, 1, 16, 0, 0)
-                }
+                },
+                Office = null
             };
 
             Room room = new Room()
@@ -146,7 +141,7 @@
 
             BloodExpenditure expenditure = new BloodExpenditure()
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 BloodType = BloodType.A_PLUS,
                 Amount = 7,
                 Reason = "blabla",
@@ -154,15 +149,15 @@
             };
 
             context.BloodExpenditures.Add(expenditure);
-            context.Patients.Add(pat);
+            context.ApplicationPatients.Add(appPat);
 
-            context.Patients.Add(pat2);
+            context.ApplicationPatients.Add(appPat2);
 
             context.Appointments.Add(new Appointment
             {
                 Date = new DateTime(2022, 11, 11, 14, 0, 0),
-                Doctor = doc,
-                Patient = pat,
+                Doctor = appDoc,
+                Patient = appPat,
                 Room = room,
                 IsDone = false,
                 ExamType = ExaminationType.OPERATION,
@@ -186,8 +181,8 @@
             context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
-                Doctor = doc,
-                Patient = pat,
+                Doctor = appDoc,
+                Patient = appPat,
                 MedicamentTherapies = new List<MedicamentTherapy>(),
                 BloodUnitTherapies = new List<BloodUnitTherapy>(),
                 Active = true,
@@ -199,8 +194,8 @@
             context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
-                Doctor = doc,
-                Patient = pat2,
+                Doctor = appDoc,
+                Patient = appPat2,
                 MedicamentTherapies = new List<MedicamentTherapy>(),
                 BloodUnitTherapies = new List<BloodUnitTherapy>(),
                 Active = false,
@@ -212,7 +207,7 @@
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2022, 11, 25, 0, 0, 0),
                 To = new DateTime(2022, 12, 11, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -224,7 +219,7 @@
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -355,7 +350,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -377,7 +372,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 1, 12, 0, 0, 0),
                 To = new DateTime(2023, 1, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
@@ -388,7 +383,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 2, 12, 0, 0, 0),
                 To = new DateTime(2023, 2, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
@@ -399,7 +394,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 3, 12, 0, 0, 0),
                 To = new DateTime(2023, 3, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
@@ -410,7 +405,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 4, 12, 0, 0, 0),
                 To = new DateTime(2023, 4, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
@@ -421,7 +416,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 5, 12, 0, 0, 0),
                 To = new DateTime(2023, 5, 22, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -494,9 +489,10 @@
                 Duration = 5,
                 IsDone = false,
                 Room = relocationFromRoom,
-                Patient = pat2,
-                Doctor = doc
+                Patient = appPat,
+                Doctor = appDoc
             });
+
 
 
             context.SaveChanges();

@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.VacationRequest;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequest;
     using HospitalLibrary.Core.Repository.Core;
@@ -52,7 +53,7 @@
         {
             try
             {
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
                 List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To).ToList();
                 VacationRequest request = null;
 
@@ -84,7 +85,7 @@
             }
         }
 
-        public VacationRequest CreateEmergencyRequest(List<Appointment> appointments, Doctor doctor, NewVacationRequestDto dto)
+        public VacationRequest CreateEmergencyRequest(List<Appointment> appointments, ApplicationDoctor doctor, NewVacationRequestDto dto)
         {
 
             if (!SubstituteDoctors(appointments))
@@ -99,7 +100,7 @@
         {
             foreach (Appointment a in appointments)
             {
-                Doctor substitution = GetAvailableDoctorOfSameSpecialization(a);
+                var substitution = GetAvailableDoctorOfSameSpecialization(a);
                 if (substitution == null) return false;
                 a.Doctor = substitution;
                 _unitOfWork.AppointmentRepository.Update(a);
@@ -108,10 +109,10 @@
             return true;
         }
 
-        public Doctor GetAvailableDoctorOfSameSpecialization(Appointment appointment)
+        public ApplicationDoctor GetAvailableDoctorOfSameSpecialization(Appointment appointment)
         {
-            List<Doctor> sameSpecializationDoctors = _unitOfWork.DoctorRepository.GetOtherSpecializationDoctors(appointment.Doctor.Specialization, appointment.Doctor.Id).ToList();
-            List<Doctor> availableDoctors = sameSpecializationDoctors.Where(x => _unitOfWork.AppointmentRepository.IsDoctorAvailable(x.Id, appointment.Date)).ToList();
+            var sameSpecializationDoctors = _unitOfWork.ApplicationDoctorRepository.GetOtherSpecializationDoctors(appointment.Doctor.Specialization, appointment.Doctor.Id).ToList();
+            var availableDoctors = sameSpecializationDoctors.Where(x => _unitOfWork.AppointmentRepository.IsDoctorAvailable(x.Id, appointment.Date)).ToList();
             return availableDoctors.FirstOrDefault();
         }
 
