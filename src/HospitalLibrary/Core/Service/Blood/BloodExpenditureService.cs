@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
@@ -33,7 +34,6 @@
         {
             try
             {
-
                 return _unitOfWork.BloodExpenditureRepository.Get(id);
             }
             catch (Exception e)
@@ -47,12 +47,11 @@
         {
             try
             {
-
                 return _unitOfWork.BloodExpenditureRepository.GetAll();
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in AppointmentService in GetAll {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -62,8 +61,7 @@
         {
             try
             {
-
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(expendituredto.DoctorId);
+                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(expendituredto.DoctorId);
                 BloodType bloodType = expendituredto.BloodType;
                 int amount = expendituredto.Amount;
                 string reason = expendituredto.Reason;
@@ -80,7 +78,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in AppointmentService in Create {e.Message} in {e.StackTrace}");
             }
 
         }
@@ -89,13 +87,12 @@
         {
             try
             {
-
                 _unitOfWork.BloodExpenditureRepository.Update(bloodExpenditure);
                 return bloodExpenditure;
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in AppointmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in AppointmentService in Update {e.Message} in {e.StackTrace}");
                 return null;
             }
         }

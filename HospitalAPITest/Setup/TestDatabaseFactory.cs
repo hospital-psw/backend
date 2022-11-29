@@ -171,7 +171,7 @@
 
             BloodExpenditure expenditure = new BloodExpenditure()
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 BloodType = BloodType.A_PLUS,
                 Amount = 7,
                 Reason = "blabla",
