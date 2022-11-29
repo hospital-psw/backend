@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPI.Mappers
 {
     using HospitalAPI.Dto;
+    using HospitalAPI.Mappers.AppUsers;
     using HospitalLibrary.Core.Model;
     using System.Collections.Generic;
 
@@ -16,6 +17,8 @@
             dto.Duration = appointment.Duration;
             dto.IsDone = appointment.IsDone;
             dto.ExamType = appointment.ExamType;
+            dto.Patient = ApplicationPatientMapper.EntityToEntityDTO(appointment.Patient);
+            dto.Doctor = ApplicationDoctorMapper.EntityToEntityDTO(appointment.Doctor);
             dto.Room = RoomMapper.EntityToEntityDto(appointment.Room);
 
             return dto;

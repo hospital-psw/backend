@@ -74,16 +74,6 @@ namespace HospitalAPI
 
             services.AddAutoMapper(typeof(Startup));
 
-            static Mapper InitializeAutomapper()
-            {
-                var config = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<ApplicationPatient, ApplicationPatientDTO>();
-                });
-
-                var mapper = new Mapper(config);
-                return mapper;
-            }
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IRoomService, RoomService>();

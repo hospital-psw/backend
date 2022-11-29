@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPI.Dto.MedicamentTreatment
 {
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.Dto.Therapy;
     using System;
     using System.Collections.Generic;
@@ -11,9 +12,9 @@
 
         public RoomDto Room { get; set; }
 
-        public PatientDto Patient { get; set; }
+        public ApplicationPatientDTO Patient { get; set; }
 
-        public DoctorDto Doctor { get; set; }
+        public ApplicationDoctorDTO Doctor { get; set; }
 
         public List<MedicamentTherapyDto> MedicamentTherapies { get; set; } = new List<MedicamentTherapyDto>();
 

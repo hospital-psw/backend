@@ -19,14 +19,6 @@
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IEmailService _emailService;
-        private readonly IMapper _mapper;
-
-        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService, IMapper mapper)
-        {
-            _appointmentService = appointmentService;
-            _emailService = emailService;
-            _mapper = mapper;   
-        }
 
         public AppointmentController(IAppointmentService appointmentService, IEmailService emailService)
         {
@@ -42,10 +34,8 @@
             {
                 return NotFound();
             }
-            AppointmentDto dto = AppointmentMapper.EntityToEntityDto(appointment);
-            dto.Patient = _mapper.Map<ApplicationPatientDTO>(appointment.Patient);
-            dto.Doctor = _mapper.Map<ApplicationDoctorDTO>(appointment.Doctor);
-            return Ok(dto);
+
+            return Ok(AppointmentMapper.EntityToEntityDto(appointment));
         }
 
         [HttpPut]
