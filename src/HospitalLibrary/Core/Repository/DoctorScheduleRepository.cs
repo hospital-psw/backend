@@ -23,8 +23,7 @@
 
         public override IEnumerable<DoctorSchedule> GetAll()
         {
-            return HospitalDbContext.DoctorSchedules.Include(x => x.Doctor)
-                                                    .Include(x => x.Consiliums)
+            return HospitalDbContext.DoctorSchedules.Include(x => x.Consiliums)
                                                     .Include(x => x.Appointments)
                                                     .Include(x => x.VacationRequests)
                                                     .Where(x => !x.Deleted)
