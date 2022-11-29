@@ -50,7 +50,7 @@
         {
             public AvailableSubstituteDoctorsData()
             {
-                ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
+                ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null, null);
                 doc1.Id = 1;
                 Appointment app3 = new Appointment(new DateTime(2022, 11, 24, 12, 0, 0), ExaminationType.GENERAL, null, null, doc1);
                 app3.Id = 3;
@@ -65,7 +65,7 @@
         {
             public DoctorSubstitutionData()
             {
-                ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
+                ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null, null);
                 doc1.Id = 1;
                 Appointment app1 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc1);
                 app1.Id = 1;

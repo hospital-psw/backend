@@ -32,11 +32,11 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)
         {
-            ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
+            ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null, null);
             doc1.Id = 1;
-            ApplicationDoctor doc2 = new ApplicationDoctor("Vuk", "Milanovic", "ckepa@gmail.com", Specialization.GENERAL, null, null);
+            ApplicationDoctor doc2 = new ApplicationDoctor("Vuk", "Milanovic", "ckepa@gmail.com", Specialization.GENERAL, null, null, null);
             doc2.Id = 2;
-            ApplicationDoctor doc4 = new ApplicationDoctor("Ilija", "Galin", "iki@gmail.com", Specialization.GENERAL, null, null);
+            ApplicationDoctor doc4 = new ApplicationDoctor("Ilija", "Galin", "iki@gmail.com", Specialization.GENERAL, null, null, null);
             doc4.Id = 4;
             Appointment app1 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc1);
             app1.Id = 1;
@@ -83,7 +83,7 @@ namespace HospitalLibraryTest.InMemoryRepositories
             ApplicationPatient patient = new ApplicationPatient("ana", "vulin", "vulinana@gmail.com", false, new List<Allergies>());
             Room room = new Room(1, "001", null, null, null);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));
-            ApplicationDoctor doctor = new ApplicationDoctor("nikolina", "nikolic", "nina@gmail.com", Specialization.GENERAL, doctorWorkingHours, room);
+            ApplicationDoctor doctor = new ApplicationDoctor("nikolina", "nikolic", "nina@gmail.com", Specialization.GENERAL, doctorWorkingHours, room, null);
             appointments.Add(new Appointment(new DateTime(2022, 12, 11, 13, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
 
             List<Appointment> retList = new List<Appointment>();

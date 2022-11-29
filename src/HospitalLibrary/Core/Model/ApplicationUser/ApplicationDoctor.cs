@@ -15,6 +15,8 @@
 
         public Room Office { get; set; }
 
+        public DoctorSchedule DoctorSchedule { get; set; }
+
         public ApplicationDoctor() : base() { }
         public ApplicationDoctor(string firstName, string lastName, DateTime dateOfBirth, Gender gender, Specialization specialization, WorkingHours workingHours, Room office, DoctorSchedule doctorSchedule) : base(firstName, lastName, dateOfBirth, gender)
         {
@@ -24,9 +26,12 @@
             DoctorSchedule = doctorSchedule;
         }
 
-        public Specialization Specialization { get; set; }
-        public WorkingHours WorkHours { get; set; }
-        public Room Office { get; set; }
-        public DoctorSchedule DoctorSchedule { get; set; }
+        public ApplicationDoctor(string firstName, string lastName, string email, Specialization specialization, WorkingHours workingHours, Room office, DoctorSchedule doctorSchedule) : base(firstName, lastName, email)
+        { 
+            Specialization= specialization;
+            WorkHours = workingHours;
+            Office = office;
+            DoctorSchedule = doctorSchedule;
+        }
     }
 }
