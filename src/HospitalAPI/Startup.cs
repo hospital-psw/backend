@@ -27,6 +27,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace HospitalAPI
 {
@@ -104,6 +105,9 @@ namespace HospitalAPI
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
             services.AddScoped<IApplicationDoctorService, ApplicationDoctorService>();
+            services.AddScoped<IRenovationService, RenovationService>();
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);

@@ -48,6 +48,7 @@
             ApplicationUserRepository = new ApplicationUserRepository(_context);
             ApplicationPatientRepository = new ApplicationPatientRepository(_context);
             ApplicationDoctorRepository = new ApplicationDoctorRepository(_context);
+            RenovationRepository = new RenovationRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -73,6 +74,7 @@
         public IApplicationUserRepository ApplicationUserRepository { get; set; }
         public IApplicationPatientRepository ApplicationPatientRepository { get; set; }
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
+        public IRenovationRepository RenovationRepository { get; set; }
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;
