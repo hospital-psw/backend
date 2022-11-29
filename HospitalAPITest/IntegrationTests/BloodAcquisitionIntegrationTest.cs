@@ -9,6 +9,7 @@
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@
         {
             return new BloodAcquisitionController(
                 serviceScope.ServiceProvider.GetRequiredService<IBloodAcquisitionService>(),
-                serviceScope.ServiceProvider.GetRequiredService<IDoctorService>()
+                serviceScope.ServiceProvider.GetRequiredService<IApplicationDoctorService>()
             );
         }
 

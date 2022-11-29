@@ -5,6 +5,7 @@
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@
         {
             return new BloodExpenditureController(
                 serviceScope.ServiceProvider.GetRequiredService<IBloodExpenditureService>(),
-                serviceScope.ServiceProvider.GetRequiredService<IDoctorService>()
+                serviceScope.ServiceProvider.GetRequiredService<IApplicationDoctorService>()
             );
         }
 

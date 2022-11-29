@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPI.Dto
 {
+    using HospitalAPI.Dto.AppUsers;
     using HospitalLibrary.Core.DTO;
     using HospitalLibrary.Core.Model.Enums;
     using System;
@@ -21,8 +22,8 @@
 
         public RoomDto Room { get; set; }
 
-        public PatientDto Patient { get; set; }
+        public ApplicationPatientDTO Patient { get; set; }
 
-        public DoctorDto Doctor { get; set; }
+        public ApplicationDoctorDTO Doctor { get; set; }
     }
 }

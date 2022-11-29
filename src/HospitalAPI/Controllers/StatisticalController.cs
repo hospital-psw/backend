@@ -4,6 +4,7 @@
     using HospitalAPI.Dto.Statistics;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,6 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
-        private IDoctorService doctorService;
 
         public StatisticalController(IStatisticsService statisticsService)
         {

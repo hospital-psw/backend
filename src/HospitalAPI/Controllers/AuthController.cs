@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using HospitalAPI.Dto;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.Dto.Auth;
     using HospitalAPI.EmailServices;
     using HospitalAPI.TokenServices;

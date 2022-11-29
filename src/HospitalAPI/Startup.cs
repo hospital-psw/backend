@@ -1,4 +1,6 @@
+using AutoMapper;
 using HospitalAPI.Configuration;
+using HospitalAPI.Dto.AppUsers;
 using HospitalAPI.EmailServices;
 using HospitalAPI.Mappers;
 using HospitalAPI.TokenServices;
@@ -6,6 +8,8 @@ using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.Core;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.AppUsers;
+using HospitalLibrary.Core.Service.AppUsers.Core;
 using HospitalLibrary.Core.Service.Blood;
 using HospitalLibrary.Core.Service.Blood.Core;
 using HospitalLibrary.Core.Service.Core;
@@ -68,26 +72,6 @@ namespace HospitalAPI
             });
             services.AddDistributedMemoryCache();
 
-            //services.AddAuthentication(opt =>
-            //{
-            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(options =>
-            //{
-            //   options.TokenValidationParameters = new TokenValidationParameters
-            //   {
-            //       ValidateIssuer = true,
-            //       ValidateAudience = true,
-            //       ValidateLifetime = true,
-            //       ValidateIssuerSigningKey = true,
-            //       ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
-            //       ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
-            //       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
-            //   };
-            //});
-
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -99,8 +83,6 @@ namespace HospitalAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
-            services.AddScoped<IDoctorService, DoctorService>();
-            services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IAllergiesService, AllergiesService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBuildingService, BuildingService>();
@@ -122,9 +104,6 @@ namespace HospitalAPI
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
             services.AddScoped<IApplicationDoctorService, ApplicationDoctorService>();
-
-
-
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);

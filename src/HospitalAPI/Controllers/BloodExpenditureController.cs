@@ -3,8 +3,10 @@
     using HospitalAPI.Dto;
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -14,16 +16,14 @@
     [Route("api/[controller]")]
     public class BloodExpenditureController : BaseController<BloodExpenditure>
     {
-
-
         private IBloodExpenditureService bloodExpenditureService;
-        private IDoctorService doctorService;
+        private readonly IApplicationDoctorService _doctorService;
 
-        public BloodExpenditureController(IBloodExpenditureService _bloodExpenditureService, IDoctorService _doctorService)
+        public BloodExpenditureController(IBloodExpenditureService _bloodExpenditureService, IApplicationDoctorService doctorService)
         {
 
             bloodExpenditureService = _bloodExpenditureService;
-            this.doctorService = _doctorService;
+            _doctorService = doctorService;
         }
 
         [HttpGet]
@@ -41,7 +41,7 @@
         [HttpPost]
         public IActionResult Create(CreateExpenditureDTO createExpenditureDTO)
         {
-            Doctor doctor = doctorService.Get(createExpenditureDTO.DoctorId);
+            ApplicationDoctor doctor = _doctorService.Get(createExpenditureDTO.DoctorId);
             if (createExpenditureDTO == null)
             {
                 return BadRequest("DTO is null");

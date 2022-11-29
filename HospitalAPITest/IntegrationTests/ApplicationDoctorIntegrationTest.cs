@@ -2,9 +2,12 @@
 {
     using CsvHelper;
     using HospitalAPI.Controllers;
+    using HospitalAPI.Controllers.AppUsers;
     using HospitalAPI.Dto;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -21,15 +24,16 @@
         }
         private static ApplicationDoctorController SetupController(IServiceScope scope)
         {
-            return new ApplicationDoctorController(scope.ServiceProvider.GetRequiredService<IApplicationDoctorService>());
+            return new ApplicationDoctorController(scope.ServiceProvider.GetRequiredService<IApplicationDoctorService>(), null, null);
         }
+
         [Fact]
-        public void GetAll()
+        public void GetAllRecomended()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((ObjectResult)controller.GetAll()).Value as List<ApplicationDoctorDto>;
+            var result = ((ObjectResult)controller.GetAllRecomended()).Value as List<ApplicationDoctorDTO>;
 
             Assert.NotNull(result);
             Assert.Equal("Galina", result.First().FirstName);

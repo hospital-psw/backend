@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -29,7 +30,7 @@
             try
             {
                 Feedback feedback = new Feedback(dto);
-                feedback.Creator = _unitOfWork.PatientRepository.Get(dto.CreatorId);
+                feedback.Creator = (ApplicationPatient)_unitOfWork.ApplicationUserRepository.Get(dto.CreatorId);
                 _unitOfWork.FeedbackRepository.Add(feedback);
                 _unitOfWork.Save();
 
