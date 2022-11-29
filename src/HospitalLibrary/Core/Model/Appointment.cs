@@ -20,10 +20,8 @@
 
         public Room Room { get; set; }
 
-        //public Patient Patient { get; set; }
-
-        //public Doctor Doctor { get; set; }
         public ApplicationPatient Patient { get; set; }
+
         public ApplicationDoctor Doctor { get; set; }
 
         public override bool Equals(object obj)

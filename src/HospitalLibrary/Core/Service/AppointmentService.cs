@@ -143,7 +143,10 @@
                 _unitOfWork.AppointmentRepository.Update(appointment);
                 _unitOfWork.Save();
             }
-            catch (Exception) { }
+            catch (Exception e) 
+            {
+                throw;
+            }
         }
 
         public IEnumerable<Appointment> GetByDoctorsId(int doctorId)

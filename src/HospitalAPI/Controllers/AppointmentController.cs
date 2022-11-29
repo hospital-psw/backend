@@ -28,6 +28,12 @@
             _mapper = mapper;   
         }
 
+        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService)
+        {
+            _appointmentService = appointmentService;
+            _emailService = emailService;
+        }
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {

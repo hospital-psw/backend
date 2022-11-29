@@ -12,6 +12,7 @@
     public class Feedback : Entity
     {
         public ApplicationPatient Creator { get; set; } 
+        
         public string Message { get; set; }
 
         public bool Anonymous { get; set; }

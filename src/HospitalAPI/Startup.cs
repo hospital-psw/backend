@@ -1,4 +1,6 @@
+using AutoMapper;
 using HospitalAPI.Configuration;
+using HospitalAPI.Dto.AppUsers;
 using HospitalAPI.EmailServices;
 using HospitalAPI.Mappers;
 using HospitalAPI.TokenServices;
@@ -70,27 +72,17 @@ namespace HospitalAPI
             });
             services.AddDistributedMemoryCache();
 
-            //services.AddAuthentication(opt =>
-            //{
-            //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(options =>
-            //{
-            //   options.TokenValidationParameters = new TokenValidationParameters
-            //   {
-            //       ValidateIssuer = true,
-            //       ValidateAudience = true,
-            //       ValidateLifetime = true,
-            //       ValidateIssuerSigningKey = true,
-            //       ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
-            //       ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
-            //       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
-            //   };
-            //});
-
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddAutoMapper(typeof(Startup));
+
+            static Mapper InitializeAutomapper()
+            {
+                var config = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ApplicationPatient, ApplicationPatientDTO>();
+                });
+
+                var mapper = new Mapper(config);
+                return mapper;
+            }
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

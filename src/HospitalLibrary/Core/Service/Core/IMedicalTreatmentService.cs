@@ -12,16 +12,11 @@
     {
 
         MedicalTreatment Get(int id);
-
         MedicalTreatment Update(MedicalTreatment medicalTreatment);
-
         IEnumerable<MedicalTreatment> GetAll();
-
         MedicalTreatment Add(NewMedicalTreatmentDto dto);
-
         void Delete(MedicalTreatment medicalTreatment);
         MedicalTreatment ReleasePatient(MedicalTreatment medicalTreatment, string description);
-
         IEnumerable<MedicalTreatment> GetActive();
         IEnumerable<MedicalTreatment> GetInactive();
         void GeneratePdf(int id);

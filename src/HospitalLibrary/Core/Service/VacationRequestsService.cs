@@ -53,7 +53,7 @@
         {
             try
             {
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
                 List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetAppointmentsInDateRangeDoctor(dto.DoctorId, dto.From, dto.To).ToList();
                 VacationRequest request = null;
 
@@ -85,7 +85,7 @@
             }
         }
 
-        public VacationRequest CreateEmergencyRequest(List<Appointment> appointments, Doctor doctor, NewVacationRequestDto dto)
+        public VacationRequest CreateEmergencyRequest(List<Appointment> appointments, ApplicationDoctor doctor, NewVacationRequestDto dto)
         {
 
             if (!SubstituteDoctors(appointments))

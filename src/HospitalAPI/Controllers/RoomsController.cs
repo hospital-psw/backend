@@ -78,5 +78,11 @@ namespace HospitalAPI.Controllers
             return Ok(dtoList);
         }
 
+
+        [HttpGet("all")]
+        public IActionResult GetAll() 
+        {
+            return Ok(_roomService.GetAll());
+        }
     }
 }

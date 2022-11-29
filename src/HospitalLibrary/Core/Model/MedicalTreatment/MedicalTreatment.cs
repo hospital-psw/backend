@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Model.MedicalTreatment
 {
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Therapy;
     using System;
     using System.Collections.Generic;
@@ -12,9 +13,9 @@
 
         public Room Room { get; set; }
 
-        public Patient Patient { get; set; }
+        public ApplicationPatient Patient{ get; set; }
 
-        public Doctor Doctor { get; set; }
+        public ApplicationDoctor Doctor{ get; set; }
 
         public List<MedicamentTherapy> MedicamentTherapies { get; set; }
 
@@ -34,7 +35,7 @@
 
         }
 
-        public MedicalTreatment(Room room, Patient patient, Doctor doctor, List<MedicamentTherapy> medicamentTherapies, List<BloodUnitTherapy> bloodUnitTherapies, DateTime start, DateTime end, bool active, string report, string reason)
+        public MedicalTreatment(Room room, ApplicationPatient patient, ApplicationDoctor doctor, List<MedicamentTherapy> medicamentTherapies, List<BloodUnitTherapy> bloodUnitTherapies, DateTime start, DateTime end, bool active, string report, string reason)
         {
             Room = room;
             Patient = patient;

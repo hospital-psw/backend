@@ -12,7 +12,7 @@
             VacationRequestDto dto = new VacationRequestDto();
 
             dto.Id = vacationRequest.Id;
-            dto.Doctor = DoctorMapper.EntityToEntityDto(vacationRequest.Doctor);
+            //dto.Doctor = DoctorMapper.EntityToEntityDto(vacationRequest.Doctor);
             dto.From = vacationRequest.From;
             dto.To = vacationRequest.To;
             dto.Status = vacationRequest.Status;

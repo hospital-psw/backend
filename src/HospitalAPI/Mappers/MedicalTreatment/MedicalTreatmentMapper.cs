@@ -12,8 +12,8 @@
 
             dto.Id = medicalTreatment.Id;
             dto.Room = RoomMapper.EntityToEntityDto(medicalTreatment.Room);
-            dto.Patient = PatientMapper.EntityToEntityDto(medicalTreatment.Patient);
-            dto.Doctor = DoctorMapper.EntityToEntityDto(medicalTreatment.Doctor);
+            //dto.Patient = PatientMapper.EntityToEntityDto(medicalTreatment.Patient);
+            //dto.Doctor = DoctorMapper.EntityToEntityDto(medicalTreatment.Doctor);
 
             medicalTreatment.MedicamentTherapies.ForEach(t => dto.MedicamentTherapies.Add(MedicamentTherapyMapper.EntityToEntityDto(t)));
             medicalTreatment.BloodUnitTherapies.ForEach(t => dto.BloodUnitTherapies.Add(BloodUnitTherapyMapper.EntityToEntityDto(t)));

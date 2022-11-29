@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Repository.Core
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using System;
     using System.Collections.Generic;
