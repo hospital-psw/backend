@@ -10,7 +10,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class ApplicationPatientService : BaseService<ApplicationPatient>,IApplicationPatientService
+    public class ApplicationPatientService : BaseService<ApplicationPatient>, IApplicationPatientService
     {
         private readonly ILogger<ApplicationPatient> _logger;
 
@@ -19,7 +19,7 @@
             _logger = logger;
         }
 
-        public ApplicationPatient Get(int id) 
+        public ApplicationPatient Get(int id)
         {
             try
             {
@@ -32,7 +32,7 @@
             }
         }
 
-        public IEnumerable<ApplicationPatient> GetAll() 
+        public IEnumerable<ApplicationPatient> GetAll()
         {
             try
             {
@@ -45,7 +45,7 @@
             }
         }
 
-        public IEnumerable<ApplicationPatient> GetNonHospitalized() 
+        public IEnumerable<ApplicationPatient> GetNonHospitalized()
         {
             try
             {

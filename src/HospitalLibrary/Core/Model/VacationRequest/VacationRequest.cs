@@ -10,7 +10,7 @@
 
     public class VacationRequest : Entity
     {
-        public ApplicationDoctor Doctor{ get; set; }
+        public ApplicationDoctor Doctor { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public VacationRequestStatus Status { get; set; }

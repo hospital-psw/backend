@@ -17,7 +17,7 @@
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
 
-        public ApplicationPatientController(IApplicationPatientService appPatientService, 
+        public ApplicationPatientController(IApplicationPatientService appPatientService,
                                             IAuthService authService, IMapper mapper)
         {
             _appPatientService = appPatientService;
@@ -31,7 +31,7 @@
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id) 
+        public async Task<IActionResult> Get(int id)
         {
             var patient = _appPatientService.Get(id);
             if (patient == null)
@@ -43,7 +43,7 @@
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
         {
             List<ApplicationPatientDTO> patientsDTO = new List<ApplicationPatientDTO>();
             var patients = _appPatientService.GetAll().ToList();
@@ -55,7 +55,7 @@
         }
 
         [HttpGet("non-hospitalized")]
-        public IActionResult GetNonHospitalized() 
+        public IActionResult GetNonHospitalized()
         {
             List<ApplicationPatientDTO> patientDTOs = new List<ApplicationPatientDTO>();
             var patients = _appPatientService.GetNonHospitalized().ToList();

@@ -10,7 +10,7 @@
 
     public class BloodAcquisition : Entity
     {
-        public ApplicationDoctor Doctor{ get; set; }
+        public ApplicationDoctor Doctor { get; set; }
         public BloodType BloodType { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }

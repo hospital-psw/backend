@@ -32,7 +32,7 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)
         {
-            ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null); 
+            ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
             doc1.Id = 1;
             ApplicationDoctor doc2 = new ApplicationDoctor("Vuk", "Milanovic", "ckepa@gmail.com", Specialization.GENERAL, null, null);
             doc2.Id = 2;

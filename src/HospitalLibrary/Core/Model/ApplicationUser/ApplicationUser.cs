@@ -27,10 +27,10 @@
             Gender = gender;
         }
 
-        public ApplicationUser(string firstName,string lastName, string email)
+        public ApplicationUser(string firstName, string lastName, string email)
         {
             FirstName = firstName;
-            LastName = lastName; 
+            LastName = lastName;
             Email = email;
         }
     }
