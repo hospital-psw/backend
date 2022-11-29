@@ -9,6 +9,12 @@
 
     public class ApplicationDoctor : ApplicationUser
     {
+        public Specialization Specialization { get; set; }
+
+        public WorkingHours WorkHours { get; set; }
+
+        public Room Office { get; set; }
+
         public ApplicationDoctor() : base() { }
         public ApplicationDoctor(string firstName, string lastName, DateTime dateOfBirth, Gender gender, Specialization specialization, WorkingHours workingHours, Room office, DoctorSchedule doctorSchedule) : base(firstName, lastName, dateOfBirth, gender)
         {

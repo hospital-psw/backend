@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
@@ -24,7 +25,7 @@
                                                 .ToList();
         }
 
-        public IEnumerable<Medicament> GetAcceptableMedicaments(Patient patient)
+        public IEnumerable<Medicament> GetAcceptableMedicaments(ApplicationPatient patient)
         {
             return HospitalDbContext.Medicaments.Include(x => x.Allergens)
                                                 .Where(x => x.Allergens.All(al => !patient.Allergies.Contains(al)))

@@ -14,7 +14,6 @@
     public interface IVacationRequestsService
     {
         IEnumerable<VacationRequest> GetAllPending();
-
         void HandleVacationRequest(VacationRequestStatus status, int id, string managerComment);
         VacationRequest Create(NewVacationRequestDto dto);
         IEnumerable<VacationRequest> GetAllRequestsByDoctorId(int doctorId);

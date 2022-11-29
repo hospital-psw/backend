@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.MedicalTreatment;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Repository;
@@ -50,7 +51,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in MedicalTreatmentService in Update {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -63,7 +64,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in MedicalTreatmentService in GetAll {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -72,10 +73,10 @@
         {
             try
             {
-                Patient patient = _unitOfWork.PatientRepository.Get(dto.PatientId);
+                ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
                 HospitalizePatietnt(patient);
 
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(dto.DoctorId);
+                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
                 Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
 
                 AddPatientToRoom(room, patient);
@@ -85,11 +86,11 @@
                 SetupTreatment(medicalTreatment);
 
                 _unitOfWork.Save();
-                return medicalTreatment;
+                return null;
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in MedicalTreatmentService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in MedicalTreatmentService in Add {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -99,13 +100,13 @@
             _unitOfWork.MedicalTreatmentRepository.Add(medicalTreatment);
         }
 
-        private void HospitalizePatietnt(Patient patient)
+        private void HospitalizePatietnt(ApplicationPatient patient)
         {
             patient.Hospitalized = true;
-            _unitOfWork.PatientRepository.Update(patient);
+            _unitOfWork.ApplicationPatientRepository.Update(patient);
         }
 
-        private void AddPatientToRoom(Room room, Patient patient)
+        private void AddPatientToRoom(Room room, ApplicationPatient patient)
         {
             room.Patients.Add(patient);
             _unitOfWork.RoomRepository.Update(room);
@@ -172,7 +173,7 @@
         public void SetPatientToNonHospitalized(MedicalTreatment medicalTreatment)
         {
             medicalTreatment.Patient.Hospitalized = false;
-            _unitOfWork.PatientRepository.Update(medicalTreatment.Patient);
+            _unitOfWork.ApplicationPatientRepository.Update(medicalTreatment.Patient);
         }
 
         public IEnumerable<MedicalTreatment> GetActive()
@@ -183,7 +184,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in MedicalTreatmentService in GetActive {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -196,7 +197,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in MedicalTreatmentService in ReleasePatient {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in MedicalTreatmentService in GetInactive {e.Message} in {e.StackTrace}");
                 return null;
             }
         }

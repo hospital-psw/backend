@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Repository.Core
 {
+    using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using System;
     using System.Collections.Generic;
@@ -22,8 +23,6 @@
         public IMapRepository MapRepository { get; }
         public IWorkingHoursRepository WorkingHoursRepository { get; }
         public IAppointmentRepository AppointmentRepository { get; }
-        public IDoctorRepository DoctorRepository { get; }
-        public IPatientRepository PatientRepository { get; }
         public IAllergiesRepository AllergiesRepository { get; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; }
         public ITherapyRepository TherapyRepository { get; }
@@ -37,6 +36,8 @@
         public IBloodExpenditureRepository BloodExpenditureRepository { get; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; }
         public IApplicationUserRepository ApplicationUserRepository { get; }
+        public IApplicationPatientRepository ApplicationPatientRepository { get; }
+        public IApplicationDoctorRepository ApplicationDoctorRepository { get; }
         public IConsiliumRepository ConsiliumRepository { get; }
         public IDoctorScheduleRepository DoctorScheduleRepository { get; }
     }

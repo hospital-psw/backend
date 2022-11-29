@@ -1,5 +1,7 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using AutoMapper;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.Dto.MedicamentTreatment;
     using HospitalAPI.Mappers.MedicalTreatment;
     using HospitalLibrary.Core.DTO.MedicalTreatment;
@@ -17,7 +19,6 @@
     [Route("api/[controller]")]
     public class MedicalTreatmentController : BaseController<MedicalTreatment>
     {
-
         private readonly IMedicalTreatmentService _medicalTreatmentService;
 
         public MedicalTreatmentController(IMedicalTreatmentService medicalTreatmentService)

@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service;
+    using HospitalLibrary.Core.Service.AppUsers;
     using HospitalLibrary.Util;
     using HospitalLibraryTest.InMemoryRepositories;
     using Shouldly;
