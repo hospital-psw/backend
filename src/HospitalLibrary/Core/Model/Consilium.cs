@@ -15,7 +15,7 @@
         public int Duration { get; set; }
         public List<DoctorSchedule> DoctorsSchedule { get; set; }
 
-        public Consilium() 
+        public Consilium()
         {
             DoctorsSchedule = new List<DoctorSchedule>();
         }

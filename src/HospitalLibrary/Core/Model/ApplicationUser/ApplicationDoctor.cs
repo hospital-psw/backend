@@ -24,8 +24,8 @@
         }
 
         public ApplicationDoctor(string firstName, string lastName, string email, Specialization specialization, WorkingHours workingHours, Room office) : base(firstName, lastName, email)
-        { 
-            Specialization= specialization;
+        {
+            Specialization = specialization;
             WorkHours = workingHours;
             Office = office;
         }

@@ -27,7 +27,7 @@
         public IActionResult Get(int id)
         {
             Consilium consilium = _consiliumService.Get(id);
-            if(consilium == null)
+            if (consilium == null)
             {
                 return NotFound();
             }
@@ -40,7 +40,7 @@
         {
             //List<ConsiliumDto> consiliumDtoList = new List<ConsiliumDto>();
             List<Consilium> consiliumList = _consiliumService.GetAll().ToList();
-            if(consiliumList.IsNullOrEmpty())
+            if (consiliumList.IsNullOrEmpty())
             {
                 return NotFound();
             }

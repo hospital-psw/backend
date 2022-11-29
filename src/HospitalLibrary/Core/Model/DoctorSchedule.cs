@@ -1,7 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
-    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,8 +15,8 @@
         public List<VacationRequest> VacationRequests { get; set; }
         public List<Consilium> Consiliums { get; set; }
 
-        public DoctorSchedule() 
-        { 
+        public DoctorSchedule()
+        {
             Appointments = new List<Appointment>();
             VacationRequests = new List<VacationRequest>();
             Consiliums = new List<Consilium>();
