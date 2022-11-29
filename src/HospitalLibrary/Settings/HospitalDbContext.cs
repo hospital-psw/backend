@@ -43,6 +43,8 @@ namespace HospitalLibrary.Settings
         public DbSet<VacationRequest> VacationRequests { get; set; }
         public DbSet<ApplicationPatient> ApplicationPatients { get; set; }
         public DbSet<ApplicationDoctor> ApplicationDoctors { get; set; }
+        public DbSet<RenovationDetails> RenovationDetails { get; set; }
+        public DbSet<RenovationRequest> RenovationRequests { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 

@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129200329_CreatedRenovationRequestEntity")]
+    partial class CreatedRenovationRequestEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("PatientsId");
 
-                    b.ToTable("AllergiesApplicationPatient", (string)null);
+                    b.ToTable("AllergiesApplicationPatient");
                 });
 
             modelBuilder.Entity("AllergiesMedicament", b =>
@@ -49,7 +51,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("MedicamentsId");
 
-                    b.ToTable("AllergiesMedicament", (string)null);
+                    b.ToTable("AllergiesMedicament");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationRole", b =>
@@ -214,7 +216,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Appointments", (string)null);
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Blood.BloodManagment.BloodAcquisition", b =>
@@ -259,7 +261,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("BloodAcquisitions", (string)null);
+                    b.ToTable("BloodAcquisitions");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Blood.BloodManagment.BloodExpenditure", b =>
@@ -298,7 +300,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("BloodExpenditures", (string)null);
+                    b.ToTable("BloodExpenditures");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Blood.BloodUnit", b =>
@@ -326,7 +328,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BloodUnits", (string)null);
+                    b.ToTable("BloodUnits");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Building", b =>
@@ -354,7 +356,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buildings", (string)null);
+                    b.ToTable("Buildings");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
@@ -390,7 +392,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Equipment", (string)null);
+                    b.ToTable("Equipment");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -429,7 +431,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Feedback", (string)null);
+                    b.ToTable("Feedback");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
@@ -462,7 +464,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("BuildingId");
 
-                    b.ToTable("Floors", (string)null);
+                    b.ToTable("Floors");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
@@ -514,7 +516,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("MedicalTreatments", (string)null);
+                    b.ToTable("MedicalTreatments");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Medicament.Allergies", b =>
@@ -539,7 +541,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Allergies", (string)null);
+                    b.ToTable("Allergies");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Medicament.Medicament", b =>
@@ -570,7 +572,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Medicaments", (string)null);
+                    b.ToTable("Medicaments");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.RelocationRequest", b =>
@@ -616,7 +618,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("ToRoomId");
 
-                    b.ToTable("RelocationRequests", (string)null);
+                    b.ToTable("RelocationRequests");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationDetails", b =>
@@ -649,7 +651,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RenovationRequestId");
 
-                    b.ToTable("RenovationDetails", (string)null);
+                    b.ToTable("RenovationDetails");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationRequest", b =>
@@ -680,7 +682,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RenovationRequests", (string)null);
+                    b.ToTable("RenovationRequests");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -721,7 +723,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("WorkingHoursId");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.RoomMap", b =>
@@ -760,7 +762,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomsMap", (string)null);
+                    b.ToTable("RoomsMap");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.Therapy", b =>
@@ -798,7 +800,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Therapies", (string)null);
+                    b.ToTable("Therapies");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Therapy");
                 });
@@ -845,7 +847,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("VacationRequests", (string)null);
+                    b.ToTable("VacationRequests");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkingHours", b =>
@@ -873,7 +875,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkingHours", (string)null);
+                    b.ToTable("WorkingHours");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -991,7 +993,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomsId");
 
-                    b.ToTable("RenovationRequestRoom", (string)null);
+                    b.ToTable("RenovationRequestRoom");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", b =>
