@@ -90,14 +90,6 @@
                 Hospitalized = true
             };
 
-            Patient pat = new Patient()
-            {
-                FirstName = "Mika",
-                LastName = "Mikic",
-                Email = "mika@com",
-                Hospitalized = true
-            };
-
             ApplicationPatient appPat2 = new ApplicationPatient
             {
                 FirstName = "Djura",
@@ -106,33 +98,11 @@
                 Hospitalized = true,
             };
 
-            Patient pat2 = new Patient()
-            {
-                FirstName = "Mika",
-                LastName = "Mikic",
-                Email = "mika@com",
-                Hospitalized = true
-            };
-
             List<ApplicationPatient> patients = new List<ApplicationPatient>();
             patients.Add(appPat);
             patients.Add(appPat2);
 
             ApplicationDoctor appDoc = new ApplicationDoctor()
-            {
-                FirstName = "Djankarlo",
-                LastName = "Rapacoti",
-                Email = "djankarlno@asd.com",
-                Specialization = Specialization.CARDIOLOGY,
-                WorkHours = new WorkingHours()
-                {
-                    Start = new DateTime(1, 1, 1, 12, 0, 0),
-                    End = new DateTime(1, 1, 1, 16, 0, 0)
-                },
-                Office = null
-            };
-
-            Doctor doc = new Doctor()
             {
                 FirstName = "Djankarlo",
                 LastName = "Rapacoti",
@@ -165,7 +135,7 @@
                     Start = new DateTime(),
                     End = new DateTime(1, 1, 1, 23, 0, 0)
                 },
-                //Patients = patients
+                Patients = patients
 
             };
 
@@ -179,9 +149,9 @@
             };
 
             context.BloodExpenditures.Add(expenditure);
-            context.Patients.Add(pat);
+            context.ApplicationPatients.Add(appPat);
 
-            context.Patients.Add(pat2);
+            context.ApplicationPatients.Add(appPat2);
 
             context.Appointments.Add(new Appointment
             {

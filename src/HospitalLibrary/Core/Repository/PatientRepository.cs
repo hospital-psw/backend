@@ -24,7 +24,7 @@
 
         public override IEnumerable<Patient> GetAll()
         {
-            return HospitalDbContext.Patients.Include(x => x.Allergies)
+            return HospitalDbContext.Patients//.Include(x => x.Allergies)
                                              .Where(x => !x.Deleted)
                                              .ToList();
         }

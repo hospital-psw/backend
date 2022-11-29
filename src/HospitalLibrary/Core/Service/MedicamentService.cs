@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -98,7 +99,7 @@
         {
             try
             {
-                Patient patient = _unitOfWork.PatientRepository.Get(patientId);
+                ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(patientId);
                 return _unitOfWork.MedicamentRepository.GetAcceptableMedicaments(patient);
             }
             catch (Exception e)
