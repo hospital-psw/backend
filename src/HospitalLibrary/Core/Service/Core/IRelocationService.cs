@@ -11,7 +11,7 @@
     {
         RelocationRequest Create(RelocationRequest entity);
         void FinishRelocation();
-
         void RelocateEquipment(RelocationRequest request);
+        List<RelocationRequest> GetAllForRoom(int roomId);
     }
 }

@@ -6,7 +6,7 @@
 
     public class ApplicationPatientMapper
     {
-        public static ApplicationPatientDTO EntityToEntityDTO(ApplicationPatient patient) 
+        public static ApplicationPatientDTO EntityToEntityDTO(ApplicationPatient patient)
         {
             ApplicationPatientDTO dto = new ApplicationPatientDTO();
 

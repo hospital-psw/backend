@@ -70,5 +70,15 @@
             request.Equipment.ReservedQuantity -= request.Quantity;
         }
 
+        public List<RelocationRequest> GetAllForRoom(int roomId)
+        {
+            //.Where(x => x.StartTime >= DateTime.Now && x.Deleted==false)
+            List<RelocationRequest> futureRequests = new List<RelocationRequest>();
+            foreach (RelocationRequest relocationRequest in _unitOfWork.RelocationRepository.GetScheduledRelocationsForRoom(roomId))
+            {
+                if (relocationRequest.StartTime >= DateTime.Now && relocationRequest.Deleted == false) futureRequests.Add(relocationRequest);
+            }
+            return futureRequests;
+        }
     }
 }

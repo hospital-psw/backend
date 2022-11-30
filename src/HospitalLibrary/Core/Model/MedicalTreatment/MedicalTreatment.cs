@@ -13,9 +13,9 @@
 
         public Room Room { get; set; }
 
-        public ApplicationPatient Patient{ get; set; }
+        public ApplicationPatient Patient { get; set; }
 
-        public ApplicationDoctor Doctor{ get; set; }
+        public ApplicationDoctor Doctor { get; set; }
 
         public List<MedicamentTherapy> MedicamentTherapies { get; set; }
 

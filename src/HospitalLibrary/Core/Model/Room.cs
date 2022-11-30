@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.Model
         public List<ApplicationPatient> Patients { get; set; } = new List<ApplicationPatient>();
         public List<RenovationRequest> Renovations { get; set; }
 
+
         public Room() { }
 
         public Room(int id, string number, DateTime dateCreated, DateTime dateUpdated, bool deleted, Floor floor, string purpose, WorkingHours workingHours)

@@ -6,11 +6,13 @@
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -164,12 +166,14 @@
                 Duration = 30
             });
 
-            context.Medicaments.Add(new Medicament
+            Medicament med = new Medicament
             {
                 Name = "Aspirin",
                 Description = "Nesto protiv bolova",
                 Quantity = 15
-            });
+            };
+
+            context.Medicaments.Add(med);
 
             context.Medicaments.Add(new Medicament
             {
@@ -425,7 +429,87 @@
                 ManagerComment = ""
             });
 
+            Room relocationFromRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
 
+            Room relocationToRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+
+            Equipment relocationEquipment = new Equipment
+            {
+                EquipmentType = EquipmentType.BED,
+                Quantity = 8,
+                Room = equipmentRoom
+            };
+
+            context.RelocationRequests.Add(new RelocationRequest
+            {
+                FromRoom = relocationFromRoom,
+                ToRoom = relocationToRoom,
+                Equipment = relocationEquipment,
+                StartTime = new DateTime(2022, 12, 10, 23, 0, 0),
+                Duration = 2
+            });
+
+            context.Appointments.Add(new Appointment
+            {
+                Date = new DateTime(2023, 12, 25, 12, 0, 0),
+                Duration = 5,
+                IsDone = false,
+                Room = relocationFromRoom,
+                Patient = appPat,
+                Doctor = appDoc
+            });
+
+
+            context.Prescriptions.Add(new Prescription
+            {
+                Medicament = med,
+                Description = "Pacijent je dobio migrenu",
+                DateRange = new DateRange(DateTime.Now, DateTime.Now.AddDays(2))
+            });
+
+
+            context.Symptoms.Add(new Symptom
+            {
+                Name = "Glavobolja"
+            });
 
             context.SaveChanges();
 

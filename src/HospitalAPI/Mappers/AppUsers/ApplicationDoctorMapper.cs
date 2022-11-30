@@ -6,7 +6,8 @@
 
     public class ApplicationDoctorMapper
     {
-        public static ApplicationDoctorDTO EntityToEntityDTO(ApplicationDoctor doctor) 
+
+        public static ApplicationDoctorDTO EntityToEntityDTO(ApplicationDoctor doctor)
         {
             ApplicationDoctorDTO dto = new ApplicationDoctorDTO();
 
@@ -16,7 +17,7 @@
             dto.Email = doctor.Email;
             dto.Role = Role.DOCTOR.ToString();
             dto.Specialization = doctor.Specialization;
-            
+
             return dto;
         }
 

@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
+    using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
@@ -60,6 +61,12 @@
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
 
         public IRenovationRepository RenovationRepository => throw new NotImplementedException();
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
+
+        public IPrescriptionRepository PrescriptionRepository { get; set; }
+
+        public ISymptomRepository SymptomRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

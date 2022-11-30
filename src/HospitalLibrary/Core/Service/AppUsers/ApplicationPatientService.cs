@@ -19,7 +19,7 @@
             _logger = logger;
         }
 
-        public ApplicationPatient Get(int id) 
+        public ApplicationPatient Get(int id)
         {
             try
             {
@@ -45,7 +45,7 @@
             }
         }
 
-        public IEnumerable<ApplicationPatient> GetNonHospitalized() 
+        public IEnumerable<ApplicationPatient> GetNonHospitalized()
         {
             try
             {

@@ -80,7 +80,7 @@ namespace HospitalAPI.Controllers
 
 
         [HttpGet("all")]
-        public IActionResult GetAll() 
+        public IActionResult GetAll()
         {
             return Ok(_roomService.GetAll());
         }

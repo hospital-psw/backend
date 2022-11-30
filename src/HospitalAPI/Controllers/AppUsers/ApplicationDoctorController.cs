@@ -24,18 +24,19 @@
         private readonly IMapper _mapper;
 
         public ApplicationDoctorController(IApplicationDoctorService doctorService,
-                                           IAuthService authService ,IMapper mapper)
+
+                                           IAuthService authService, IMapper mapper)
         {
             _doctorService = doctorService;
             _mapper = mapper;
-            _authService = authService; 
+            _authService = authService;
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id) 
+        public async Task<IActionResult> Get(int id)
         {
             var doctor = _doctorService.Get(id);
-            if(doctor == null)
+            if (doctor == null)
                 return NotFound();
 
             var result = _mapper.Map<ApplicationDoctorDTO>(doctor);
@@ -56,7 +57,7 @@
         }
 
         [HttpGet("specialization/{spec}")]
-        public IActionResult GetBySpecialization(Specialization specialization) 
+        public IActionResult GetBySpecialization(Specialization specialization)
         {
             var doctor = _doctorService.GetBySpecialization(specialization);
             if (doctor == null)

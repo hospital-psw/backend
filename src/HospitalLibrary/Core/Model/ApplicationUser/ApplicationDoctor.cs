@@ -23,10 +23,10 @@
             Office = office;
         }
 
-        public ApplicationDoctor(string firstName, string lastName, string email, Specialization specialization, WorkingHours workHours, Room office) : base(firstName, lastName, email)
+        public ApplicationDoctor(string firstName, string lastName, string email, Specialization specialization, WorkingHours workingHours, Room office) : base(firstName, lastName, email)
         {
             Specialization = specialization;
-            WorkHours = workHours;
+            WorkHours = workingHours;
             Office = office;
         }
     }

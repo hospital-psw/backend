@@ -3,10 +3,11 @@ using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.Blood;
 using HospitalLibrary.Core.Model.Blood.BloodManagment;
+using HospitalLibrary.Core.Model.Examinations;
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
-using HospitalLibrary.Core.Model.VacationRequest;
+using HospitalLibrary.Core.Model.VacationRequests;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,12 @@ namespace HospitalLibrary.Settings
         public DbSet<ApplicationDoctor> ApplicationDoctors { get; set; }
         public DbSet<RenovationDetails> RenovationDetails { get; set; }
         public DbSet<RenovationRequest> RenovationRequests { get; set; }
+        public DbSet<Consilium> Consiliums { get; set; }
+        public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
 
+        public DbSet<Prescription> Prescriptions { get; set; }
+
+        public DbSet<Symptom> Symptoms { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         public HospitalDbContext()

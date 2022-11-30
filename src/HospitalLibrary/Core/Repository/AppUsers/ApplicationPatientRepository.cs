@@ -28,7 +28,7 @@
                            .FirstOrDefault();
         }
 
-        public IEnumerable<ApplicationPatient> GetNonHospitalized() 
+        public IEnumerable<ApplicationPatient> GetNonHospitalized()
         {
             return GetAll().Where(x => !x.Hospitalized)
                            .ToList();
