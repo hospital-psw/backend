@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood.Core;
+    using HospitalLibrary.Core.Repository.Examinations.Core;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -40,5 +41,9 @@
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; }
         public IConsiliumRepository ConsiliumRepository { get; }
         public IDoctorScheduleRepository DoctorScheduleRepository { get; }
+
+        public IPrescriptionRepository PrescriptionRepository { get; }
+
+        public ISymptomRepository SymptomRepository { get; }
     }
 }
