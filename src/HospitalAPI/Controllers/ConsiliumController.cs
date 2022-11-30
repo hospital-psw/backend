@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Dto.Consilium;
     using HospitalAPI.Mappers.Consilium;
     using HospitalLibrary.Core.DTO.Consilium;
     using HospitalLibrary.Core.Model;
@@ -51,21 +52,20 @@
             {
                 return NotFound();
             }
-            //ConsiliumDto dto = 
-            return Ok();
+            return Ok(ConsiliumMapper.EntityToDto(consilium));
         }
 
         [HttpGet("all")]
         public IActionResult GetAll()
         {
-            //List<ConsiliumDto> consiliumDtoList = new List<ConsiliumDto>();
+            List<ConsiliumDto> consiliumDtoList = new List<ConsiliumDto>();
             List<Consilium> consiliumList = _consiliumService.GetAll().ToList();
             if (consiliumList.IsNullOrEmpty())
             {
                 return NotFound();
             }
-            //consiliumList.ForEach(consilium => consiliumDtoList.Add());
-            return Ok();
+            consiliumList.ForEach(consilium => consiliumDtoList.Add(ConsiliumMapper.EntityToDto(consilium)));
+            return Ok(consiliumDtoList);
         }
 
     }
