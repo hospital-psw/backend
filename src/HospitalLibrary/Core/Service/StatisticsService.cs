@@ -42,13 +42,13 @@
         {
             try
             {
-                Random rng = new Random();
                 List<string> doctorsList = new List<string>();
                 List<int> patientNumberList = new List<int>();
-                foreach (ApplicationDoctor doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
+                List<ApplicationDoctor> doctorList = _unitOfWork.ApplicationDoctorRepository.GetAll().ToList(); //had to do it like this
+                foreach (ApplicationDoctor doctor in doctorList)
                 {
                     doctorsList.Add(doctor.FirstName + " " + doctor.LastName);
-                    patientNumberList.Add(rng.Next(10));    // getNumberOfPatients(Doctor d)
+                    patientNumberList.Add(GetNumberOfDoctorsPatients(doctor));  //because this function iterates over the same collection
                 }
                 return (doctorsList, patientNumberList);
             }
@@ -60,16 +60,10 @@
 
         public (List<int>, List<int>) GetNumberOfPatientsByAgeGroup()
         {
-
             try
             {
-                List<int> males = new List<int>();
-                List<int> females = new List<int>();
-                for (int i = 0; i < 6; i++)
-                {
-                    males.Add(0);
-                    females.Add(0);
-                }
+                List<int> males = ListFactory.CreateList(0,0,0,0,0,0);
+                List<int> females = ListFactory.CreateList(0, 0, 0, 0, 0, 0);
                 foreach (ApplicationPatient patient in _unitOfWork.ApplicationUserRepository.GetAllPatients())
                 {
                     if (patient.Gender == Model.Enums.Gender.MALE)
@@ -110,19 +104,25 @@
 
         public List<int> GetUsersByType()
         {
-            List<int> retList = new List<int>();
-            retList.Add(_unitOfWork.ApplicationUserRepository.GetAllPatients().Count());
-            int[] doctors = new int[3];
+            List<int> retList = ListFactory.CreateList(0,0,0,0);
+            retList[0] = _unitOfWork.ApplicationPatientRepository.GetAll().Count();
             foreach (ApplicationDoctor doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
             {
-                if (doctor.Specialization == Model.Enums.Specialization.GENERAL) doctors[0]++;
-                if (doctor.Specialization == Model.Enums.Specialization.NEUROLOGY) doctors[1]++;
-                if (doctor.Specialization == Model.Enums.Specialization.CARDIOLOGY) doctors[2]++;
+                if (doctor.Specialization == Model.Enums.Specialization.GENERAL) retList[1]++;
+                if (doctor.Specialization == Model.Enums.Specialization.NEUROLOGY) retList[2]++;
+                if (doctor.Specialization == Model.Enums.Specialization.CARDIOLOGY) retList[3]++;
             }
-            retList.Add(doctors[0]);
-            retList.Add(doctors[1]);
-            retList.Add(doctors[2]);
             return retList;
+        }
+
+        public int GetNumberOfDoctorsPatients(ApplicationDoctor doctor)
+        {
+            int counter = 0;
+            foreach (ApplicationPatient patient in _unitOfWork.ApplicationPatientRepository.GetAll())
+            {
+                if(patient.applicationDoctor == doctor) counter++;
+            }
+            return counter;
         }
     }
 }

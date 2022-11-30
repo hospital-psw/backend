@@ -32,7 +32,7 @@
             (dto.Chart3Male, dto.Chart3Female) = _statisticsService.GetNumberOfPatientsByAgeGroup();
             dto.Chart4 = _statisticsService.GetUsersByType();
 
-            if (dto.Chart1 is null || dto.Chart2Names is null || dto.Chart2Values is null || dto.Chart3Male is null || dto.Chart3Female is null || dto.Chart4 is null) return NotFound("Something went wrong :("); //TODO: better error handling
+            if (dto.Chart1 is null || dto.Chart2Names is null || dto.Chart2Values is null || dto.Chart3Male is null || dto.Chart3Female is null || dto.Chart4 is null) return NotFound("Something went wrong :(");
             return Ok(dto);
         }
     }
