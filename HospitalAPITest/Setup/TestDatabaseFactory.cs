@@ -6,7 +6,9 @@
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
@@ -164,12 +166,14 @@
                 Duration = 30
             });
 
-            context.Medicaments.Add(new Medicament
+            Medicament med = new Medicament
             {
                 Name = "Aspirin",
                 Description = "Nesto protiv bolova",
                 Quantity = 15
-            });
+            };
+
+            context.Medicaments.Add(med);
 
             context.Medicaments.Add(new Medicament
             {
@@ -425,7 +429,17 @@
                 ManagerComment = ""
             });
 
+            context.Prescriptions.Add(new Prescription
+            {
+                Medicament = med,
+                Description = "Pacijent je dobio migrenu",
+                DateRange = new DateRange(DateTime.Now, DateTime.Now.AddDays(2))
+            });
 
+            context.Symptoms.Add(new Symptom
+            {
+                Name = "Glavobolja"
+            });
 
             context.SaveChanges();
 
