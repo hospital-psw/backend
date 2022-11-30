@@ -64,6 +64,8 @@
 
         public IPrescriptionRepository PrescriptionRepository { get; set; }
 
+        public ISymptomRepository SymptomRepository { get; set; }
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;
