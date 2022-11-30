@@ -177,5 +177,13 @@
             _unitOfWork.Save();
             return bloodBank;
         }
+
+        public BloodBank SaveMonthlyTransferConfiguration(int id, MonthlyTransfer mt)
+        {
+            var bloodBank = _unitOfWork.BloodBankRepository.Get(id);
+            bloodBank.MonthlyTransfer = mt;
+            _unitOfWork.Save();
+            return bloodBank;
+        }
     }
 }
