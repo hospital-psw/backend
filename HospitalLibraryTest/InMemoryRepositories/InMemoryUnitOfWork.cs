@@ -58,6 +58,8 @@
         public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
 
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

@@ -38,5 +38,7 @@
         public IApplicationUserRepository ApplicationUserRepository { get; }
         public IApplicationPatientRepository ApplicationPatientRepository { get; }
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; }
+        public IConsiliumRepository ConsiliumRepository { get; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; }
     }
 }

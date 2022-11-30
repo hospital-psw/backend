@@ -3,7 +3,7 @@
 
     using HospitalLibrary.Core.DTO.VacationRequest;
     using HospitalLibrary.Core.Model.Enums;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using System;
     using System.Collections.Generic;
     using System.Linq;
