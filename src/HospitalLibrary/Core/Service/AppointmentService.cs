@@ -180,9 +180,9 @@
         {
             List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAllForRoom(roomId);
             List<Appointment> futureAppointments = new List<Appointment>();
-            foreach(Appointment appointment in appointments)
+            foreach (Appointment appointment in appointments)
             {
-                if(appointment.Date >=  DateTime.Now) futureAppointments.Add(appointment);
+                if (appointment.Date >= DateTime.Now) futureAppointments.Add(appointment);
             }
             return futureAppointments;
         }

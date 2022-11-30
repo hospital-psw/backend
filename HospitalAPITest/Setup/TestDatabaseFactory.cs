@@ -467,7 +467,7 @@
                 },
             };
 
-            Equipment relocationEquipment =new Equipment
+            Equipment relocationEquipment = new Equipment
             {
                 EquipmentType = EquipmentType.BED,
                 Quantity = 8,

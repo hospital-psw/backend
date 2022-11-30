@@ -42,18 +42,18 @@
         {
             return Ok(_relocationService.GetAppointments(dto.FromRoomId, dto.ToRoomId, dto.FromTime, dto.ToTime, dto.Duration));
         }
-        
+
         [HttpGet("{roomId}")]
         public IActionResult GetAllForRoom(int roomId)
         {
             List<RelocationRequestDisplayDto> relocationDtos = new List<RelocationRequestDisplayDto>();
-            foreach(RelocationRequest relocationRequest in _relocationService.GetAllForRoom(roomId))
+            foreach (RelocationRequest relocationRequest in _relocationService.GetAllForRoom(roomId))
             {
                 relocationDtos.Add(RelocationRequestDisplayMapper.EntityToEntityDto(relocationRequest));
             }
             return Ok(relocationDtos);
         }
-        
+
 
     }
 }
