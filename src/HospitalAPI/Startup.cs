@@ -13,6 +13,8 @@ using HospitalLibrary.Core.Service.AppUsers.Core;
 using HospitalLibrary.Core.Service.Blood;
 using HospitalLibrary.Core.Service.Blood.Core;
 using HospitalLibrary.Core.Service.Core;
+using HospitalLibrary.Core.Service.Examinations;
+using HospitalLibrary.Core.Service.Examinations.Core;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -106,6 +108,8 @@ namespace HospitalAPI
             services.AddScoped<IApplicationDoctorService, ApplicationDoctorService>();
             services.AddScoped<IConsiliumService, ConsiliumService>();
             services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
+            services.AddScoped<ISymptomService, SymptomService>();
 
 
             ProjectConfiguration config = new ProjectConfiguration();
