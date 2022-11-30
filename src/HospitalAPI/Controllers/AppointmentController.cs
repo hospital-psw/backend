@@ -7,6 +7,8 @@
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Domain;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
@@ -126,6 +128,19 @@
                 appointmentDtos.Add(AppointmentDisplayMapper.EntityToEntityDto(appointment));
             }
             return Ok(appointmentDtos);
+        }
+
+        public IActionResult GetAllBySpecialization(Specialization spec,[FromBody] DateRangeDto dateRangeDto)
+        {
+            DateRange dateRange = new DateRange(dateRangeDto.From, dateRangeDto.To);
+            List<Appointment> appointments = (List<Appointment>)_appointmentService.GetAllBySpecialization(spec, dateRange);
+
+            if (appointments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
         }
     }
 }

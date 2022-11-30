@@ -511,6 +511,70 @@
                 Name = "Glavobolja"
             });
 
+            context.ApplicationDoctors.Add(new ApplicationDoctor
+            {
+                FirstName = "Pero",
+                LastName ="Perovic",
+                Email = "pero@gmail.com",
+                Specialization = Specialization.CARDIOLOGY,
+                WorkHours = new WorkingHours
+                {
+                    Start = new DateTime(1, 1, 1, 8, 0, 0),
+                    End = new DateTime(1, 1, 1, 16, 0, 0)
+                },
+                Office = null
+            });
+
+            context.ApplicationDoctors.Add(new ApplicationDoctor
+            {
+                FirstName = "Miro",
+                LastName = "Govedarica",
+                Email = "miro@gmail.com",
+                Specialization = Specialization.GENERAL,
+                WorkHours = new WorkingHours
+                {
+                    Start = new DateTime(1, 1, 1, 8, 0, 0),
+                    End = new DateTime(1, 1, 1, 16, 0, 0)
+                },
+                Office = null
+            });
+
+            context.ApplicationDoctors.Add(new ApplicationDoctor
+            {
+                FirstName = "Mito",
+                LastName = "Mitovic",
+                Email = "mito@gmail.com",
+                Specialization = Specialization.CARDIOLOGY,
+                WorkHours = new WorkingHours
+                {
+                    Start = new DateTime(1, 1, 1, 8, 0, 0),
+                    End = new DateTime(1, 1, 1, 16, 0, 0)
+                },
+                Office = null
+            });
+
+            context.Appointments.Add(new Appointment
+            {
+                Date = new DateTime(2023, 1, 9, 12, 0, 0),
+                Duration = 5,
+                IsDone = false,
+                Room = relocationFromRoom,
+                Patient = appPat,
+                Doctor = appDoc
+            });
+
+            context.Appointments.Add(new Appointment
+            {
+                Date = new DateTime(2023, 1, 12, 12, 0, 0),
+                Duration = 5,
+                IsDone = false,
+                Room = relocationFromRoom,
+                Patient = appPat,
+                Doctor = appDoc
+            });
+
+
+
             context.SaveChanges();
 
         }

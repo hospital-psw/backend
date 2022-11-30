@@ -6,6 +6,7 @@
     using HospitalAPI.EmailServices;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.Appointments;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -69,6 +70,23 @@
 
             Assert.NotNull(result);
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public void Get_appointments_by_doctor_specialization() 
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            Specialization spec = Specialization.CARDIOLOGY;
+            DateRangeDto dateRangeDto = new DateRangeDto();
+            dateRangeDto.From = new DateTime(2023, 1, 8);
+            dateRangeDto.To = new DateTime(2023, 1, 18);
+
+            var result = controller.GetAllBySpecialization(spec, dateRangeDto);
+
+            Assert.NotNull(result);
+            
         }
 
     }

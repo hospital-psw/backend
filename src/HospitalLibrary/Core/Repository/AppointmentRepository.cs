@@ -1,6 +1,8 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Domain;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using Microsoft.EntityFrameworkCore;
@@ -109,6 +111,13 @@
                                                .OrderBy(x => x.Date)
                                                .Distinct()
                                                .ToList();
+        }
+
+        public List<Appointment> GetAllBySpecialization(Specialization specialization, DateRange dateRange)
+        {
+            return HospitalDbContext.Appointments.Include(x => x.Doctor)
+                                                 .Where(x => x.Doctor.Specialization == specialization && dateRange.InRange(x.Date) && !x.Deleted && !x.IsDone)
+                                                 .ToList();
         }
     }
 }

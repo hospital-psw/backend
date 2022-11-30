@@ -3,6 +3,8 @@
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.Domain;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
@@ -185,6 +187,19 @@
                 if (appointment.Date >= DateTime.Now) futureAppointments.Add(appointment);
             }
             return futureAppointments;
+        }
+
+        public IEnumerable<Appointment> GetAllBySpecialization(Specialization specialization, DateRange dateRange)
+        {
+            try
+            {
+                List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAllBySpecialization(specialization, dateRange);
+                return appointments;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
     }
 }
