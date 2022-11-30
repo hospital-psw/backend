@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using System;
@@ -171,6 +172,13 @@
                 if (relocationRequest.StartTime >= DateTime.Now && relocationRequest.Deleted == false) futureRequests.Add(relocationRequest);
             }
             return futureRequests;
+        }
+
+        public void Decline(int requestId)
+        {
+            RelocationRequest request = _unitOfWork.RelocationRepository.Get(requestId);
+            request.Deleted = true;
+            _unitOfWork.RelocationRepository.Update(request);
         }
     }
 }

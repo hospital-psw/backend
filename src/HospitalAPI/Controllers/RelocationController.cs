@@ -57,7 +57,8 @@
         [HttpPost("{requestId}")]
         public IActionResult Decline(int requestId)
         {
-            throw new NotImplementedException();
+            _relocationService.Decline(requestId);
+            return Ok();
         }
     }
 }

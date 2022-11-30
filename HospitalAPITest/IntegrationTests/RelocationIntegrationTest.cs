@@ -67,7 +67,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = controller.Decline(0) as StatusCodeResult;
+            var result = controller.Decline(1) as StatusCodeResult;
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
 
 
