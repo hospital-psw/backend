@@ -65,5 +65,12 @@
             return _context.SaveChanges();
         }
 
+        public IEnumerable<VacationRequest> GetAllDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.APPROVED)
+                                           .ToList();
+        }
+
     }
 }

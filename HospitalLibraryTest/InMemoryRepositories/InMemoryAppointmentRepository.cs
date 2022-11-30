@@ -110,5 +110,10 @@ namespace HospitalLibraryTest.InMemoryRepositories
         {
             throw new NotImplementedException();
         }
+
+        public List<Appointment> GetAllForRoom(int roomId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
