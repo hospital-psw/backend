@@ -1,7 +1,9 @@
 ﻿namespace HospitalAPI.Controllers.AppUsers
 {
     using AutoMapper;
+    using HospitalAPI.Dto;
     using HospitalAPI.Dto.AppUsers;
+    using HospitalAPI.Mappers;
     using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -25,11 +27,6 @@
             _authService = authService;
         }
 
-        public ApplicationPatientController(IApplicationPatientService appPatientService)
-        {
-            _appPatientService = appPatientService;
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -39,6 +36,18 @@
 
             var result = _mapper.Map<ApplicationPatientDTO>(patient);
             result.Role = await _authService.GetUserRole(id);
+            return Ok(result);
+        }
+
+
+        [HttpGet("getprofile/{id}")]
+        public async Task<IActionResult> GetForProfile(int id)
+        {
+            var patient = _appPatientService.Get(id);
+            if (patient == null)
+                return NotFound();
+
+            var result = AppPatientProfileMapper.EntityToEntityDTO(patient);
             return Ok(result);
         }
 
