@@ -116,5 +116,16 @@
             return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
         }
 
+        [HttpGet]
+        [Route("room/{id}")]
+        public IActionResult GetAllForRoom(int id)
+        {
+            List<AppointmentDisplayDto> appointmentDtos = new List<AppointmentDisplayDto>();
+            foreach (Appointment appointment in _appointmentService.GetAllForRoom(id))
+            {
+                appointmentDtos.Add(AppointmentDisplayMapper.EntityToEntityDto(appointment));
+            }
+            return Ok(appointmentDtos);
+        }
     }
 }
