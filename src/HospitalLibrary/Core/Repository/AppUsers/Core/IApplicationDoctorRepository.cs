@@ -13,5 +13,8 @@
     {
         IEnumerable<ApplicationDoctor> GetBySpecialization(Specialization specialization);
         IEnumerable<ApplicationDoctor> GetOtherSpecializationDoctors(Specialization specialization, int doctorId);
+        IEnumerable<ApplicationDoctor> GetSelectedDoctors(List<int> doctorsIds);
+        IEnumerable<ApplicationDoctor> GetDoctorsWhoWorksInSameShift(int workHourId);
+        IEnumerable<ApplicationDoctor> GetDoctorsOfSelectedSpecializations(List<Specialization> specializations, int workHourId);
     }
 }

@@ -52,5 +52,6 @@
         {
             return GetAll().Where(x => specializations.Contains(x.Specialization) && x.WorkHours.Id == workHourId).ToList();
         }
+
     }
 }

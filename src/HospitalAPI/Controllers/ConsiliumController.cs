@@ -1,5 +1,7 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Mappers.Consilium;
+    using HospitalLibrary.Core.DTO.Consilium;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
     using IdentityServer4.Extensions;
@@ -12,16 +14,34 @@
     public class ConsiliumController : BaseController<Consilium>
     {
         public IConsiliumService _consiliumService;
+        public IDoctorScheduleService _doctorScheduleService;
 
-        public ConsiliumController(IConsiliumService consiliumService)
+        public ConsiliumController(IConsiliumService consiliumService, IDoctorScheduleService doctorScheduleService)
         {
             _consiliumService = consiliumService;
+            _doctorScheduleService = doctorScheduleService;
         }
 
-        //public IActionResult Schedule(NewConsiliumDto dto)
-        //{
+        [HttpPost]
+        public IActionResult Schedule(ScheduleConsiliumDto dto)
+        {
+            if(dto == null)
+            {
+                return BadRequest("Please pass valid data.");
+            }
+            if(dto.Topic == default(string) || dto.Duration == default(int) || dto.DateRange == null)
+            {
+                return BadRequest("Please pass valid data.");
+            }
 
-        //}
+            Consilium consilium = _doctorScheduleService.TryToScheduleConsilium(dto);
+            if (consilium == null)
+            {
+                return BadRequest("Can not schedule consilium in passed date range.");
+            }
+
+            return Ok(ConsiliumMapper.EntityToDto(_consiliumService.Schedule(consilium)));
+        }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
