@@ -54,6 +54,10 @@
             return Ok(relocationDtos);
         }
 
-
+        [HttpPost("{requestId}")]
+        public IActionResult Decline(int requestId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
