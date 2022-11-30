@@ -2,7 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
 
-    public class Anamnesis : Entity 
+    public class Anamnesis : Entity
     {
 
     }

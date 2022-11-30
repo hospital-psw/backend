@@ -29,7 +29,7 @@
 
         public bool Overlaps(DateRange date)
         {
-            return !(To <= date.From || From >= date.To); 
+            return !(To <= date.From || From >= date.To);
         }
 
         public override bool Equals(object obj)

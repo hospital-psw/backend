@@ -26,7 +26,7 @@
         {
             Symptom symptom = _symptomService.Get(id);
 
-            if(symptom == null)
+            if (symptom == null)
             {
                 return NotFound("Symptom doesnt exist");
             }

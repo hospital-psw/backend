@@ -5,7 +5,7 @@
 
     public class PrescriptionDto
     {
-        public MedicamentDto Medicament { get; set; }   
+        public MedicamentDto Medicament { get; set; }
 
         public string Description { get; set; }
 

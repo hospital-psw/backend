@@ -44,6 +44,6 @@
 
         public IPrescriptionRepository PrescriptionRepository { get; }
 
-        public ISymptomRepository SymptomRepository { get;  }
+        public ISymptomRepository SymptomRepository { get; }
     }
 }
