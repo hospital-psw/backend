@@ -62,7 +62,7 @@
         {
             try
             {
-                List<int> males = ListFactory.CreateList(0,0,0,0,0,0);
+                List<int> males = ListFactory.CreateList(0, 0, 0, 0, 0, 0);
                 List<int> females = ListFactory.CreateList(0, 0, 0, 0, 0, 0);
                 foreach (ApplicationPatient patient in _unitOfWork.ApplicationUserRepository.GetAllPatients())
                 {
@@ -104,7 +104,7 @@
 
         public List<int> GetUsersByType()
         {
-            List<int> retList = ListFactory.CreateList(0,0,0,0);
+            List<int> retList = ListFactory.CreateList(0, 0, 0, 0);
             retList[0] = _unitOfWork.ApplicationPatientRepository.GetAll().Count();
             foreach (ApplicationDoctor doctor in _unitOfWork.ApplicationUserRepository.GetAllDoctors())
             {
@@ -120,7 +120,7 @@
             int counter = 0;
             foreach (ApplicationPatient patient in _unitOfWork.ApplicationPatientRepository.GetAll())
             {
-                if(patient.applicationDoctor == doctor) counter++;
+                if (patient.applicationDoctor == doctor) counter++;
             }
             return counter;
         }
