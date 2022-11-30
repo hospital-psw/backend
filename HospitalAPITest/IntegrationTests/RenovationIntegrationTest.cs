@@ -36,5 +36,31 @@
             var result = (OkObjectResult)controller.Create(dto);
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }
+
+        [Fact]
+        public void Test_get_renovations_for_room()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 5;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RenovationRequestDisplayDto>;
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_get_renovations_for_room_empty()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 5;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RenovationRequestDisplayDto>;
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
     }
 }

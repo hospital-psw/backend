@@ -42,5 +42,10 @@
         {
             return Ok(_roomScheduleService.GetAppointments(dto.RoomsId, dto.FromTime, dto.ToTime, dto.Duration));
         }
+
+        public OkObjectResult GetAllForRoom(int roomId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
