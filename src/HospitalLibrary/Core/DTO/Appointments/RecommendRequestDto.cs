@@ -21,5 +21,8 @@
             DoctorId = doctorId;
         }
 
+        public RecommendRequestDto()
+        {
+        }
     }
 }

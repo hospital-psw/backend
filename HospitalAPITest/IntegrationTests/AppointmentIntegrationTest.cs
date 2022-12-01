@@ -24,7 +24,8 @@
         private static AppointmentController SetupController(IServiceScope serviceScope)
         {
             return new AppointmentController(serviceScope.ServiceProvider.GetRequiredService<IAppointmentService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IEmailService>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IEmailService>(),
+                                             serviceScope.ServiceProvider.GetRequiredService<IDoctorScheduleService>());
         }
 
         [Fact]

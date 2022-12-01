@@ -9,6 +9,7 @@
     using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Exceptions;
     using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
@@ -65,7 +66,7 @@
                 List<ApplicationDoctor> selectedSpecializationsDoctors = _unitOfWork.ApplicationDoctorRepository.GetDoctorsOfSelectedSpecializations(dto.SelectedSpecializations, doctor.WorkHours.Id).ToList();
                 return ScheduleBySelectedSpecializations(dto, selectedSpecializationsDoctors);
             }
-            return null;
+            throw new ScheduleConsiliumException("Invalid data passed.");
         }
 
         private Consilium ScheduleBySelectedDoctors(ScheduleConsiliumDto dto, List<ApplicationDoctor> doctors)
@@ -91,7 +92,7 @@
                     }
                 }
             }
-            return null;
+            throw new ScheduleConsiliumException("One or more selected doctors are not able to attend the consilium in the given period.");
         }
 
         private void CheckIfDoctorsAreAvailableInCurrentAppointment(bool canSchedule, List<ApplicationDoctor> doctors, DateTime currentAppointment, DateTime currentDate)
@@ -144,7 +145,8 @@
 
             if (maxPresence < dto.SelectedSpecializations.Count())
             {
-                return null;
+                throw new ScheduleConsiliumException("It is not possible to schedule consilium in the given period." +
+                    " No doctor of any of the selected specializations is able to attend.");
             }
             else
             {
@@ -165,7 +167,7 @@
             List<ApplicationDoctor> currentAppointmentAvailableDoctors = new List<ApplicationDoctor>();
             currentDateAvailableDoctors.ForEach(doc => {
                 RecommendRequestDto dto = new RecommendRequestDto(date, default(int), doc.Id);
-                if(GetDatesListOutOfDtoList(RecommendAppointments(dto).ToList()).Contains(appointment))
+                if(GetDatesListOutOfDtoList(RecommendAppointments(dto).ToList()).Exists(dto => dto.Hour == appointment.Hour && dto.Minute == appointment.Minute))
                 {
                     presence++;
                     currentAppointmentAvailableDoctors.Add(doc);

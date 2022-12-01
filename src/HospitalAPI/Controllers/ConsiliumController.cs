@@ -5,6 +5,7 @@
     using HospitalLibrary.Core.DTO.Consilium;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Exceptions;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -26,22 +27,24 @@
         [HttpPost]
         public IActionResult Schedule(ScheduleConsiliumDto dto)
         {
-            if(dto == null)
+            try
             {
-                return BadRequest("Please pass valid data.");
-            }
-            if(dto.Topic == default(string) || dto.Duration == default(int) || dto.DateRange == null)
-            {
-                return BadRequest("Please pass valid data.");
-            }
+                if (dto == null)
+                {
+                    return BadRequest("Please pass valid data.");
+                }
+                if (dto.Topic == default(string) || dto.Duration == default(int) || dto.DateRange == null)
+                {
+                    return BadRequest("Please pass valid data.");
+                }
 
-            Consilium consilium = _doctorScheduleService.TryToScheduleConsilium(dto);
-            if (consilium == null)
-            {
-                return BadRequest("Can not schedule consilium in passed date range.");
+                Consilium consilium = _doctorScheduleService.TryToScheduleConsilium(dto);
+                return Ok(ConsiliumMapper.EntityToDto(_consiliumService.Schedule(consilium)));
             }
-
-            return Ok(ConsiliumMapper.EntityToDto(_consiliumService.Schedule(consilium)));
+            catch (ScheduleConsiliumException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
