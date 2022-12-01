@@ -1,5 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service.Examinations
 {
+    using HospitalLibrary.Core.DTO.Examinations;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Repository.Core;
@@ -83,6 +85,23 @@
             {
                 _logger.LogError($"Error in GetInDateRange in AnamnesisService {e.Message} in {e.StackTrace}");
                 return null;
+            }
+        }
+
+        public Anamnesis Add(NewAnamnesisDto dto)
+        {
+            try
+            {
+                Appointment appointment = _unitOfWork.AppointmentRepository.Get(dto.AppointmentId);
+
+                if (appointment == null) throw new Exception("Appointment doesn't exist");
+
+                return new Anamnesis();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in Add in AnamnesisService {e.Message} in {e.StackTrace}");
+                throw e;
             }
         }
     }

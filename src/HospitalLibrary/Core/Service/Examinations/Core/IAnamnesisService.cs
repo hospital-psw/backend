@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Examinations.Core
 {
+    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Core;
@@ -16,5 +17,7 @@
         IEnumerable<Anamnesis> GetByPatient(int patientId);
 
         IEnumerable<Anamnesis> GetInDateRange(DateRange dateRange);
+
+        Anamnesis Add(NewAnamnesisDto dto);
     }
 }
