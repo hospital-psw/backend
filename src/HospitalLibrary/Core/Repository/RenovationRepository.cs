@@ -24,5 +24,12 @@
             return renovationRequest;
         }
 
+        List<RenovationRequest> IRenovationRepository.GetAll()
+        {
+            /*return _context.RenovationRequests.Include(x => x.Rooms)
+                                              .Where(x => !x.Deleted)
+                                               .ToList();  */
+            return null;
+        }
     }
 }

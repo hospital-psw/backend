@@ -27,5 +27,20 @@
                 return null;
             }
         }
+
+        public List<RenovationRequest> GetAllForRoom(int roomId)
+        {
+            List<RenovationRequest> futureRenovations = new List<RenovationRequest>();
+
+            foreach(RenovationRequest renovationRequest in _unitOfWork.RenovationRepository.GetAll())
+            {
+                foreach(Room room in renovationRequest.Rooms)
+                {
+                    if (room.Id != roomId) continue;
+                    if (renovationRequest.StartTime >= DateTime.Now) futureRenovations.Add(renovationRequest);
+                }
+            }
+            return futureRenovations;
+        }
     }
 }

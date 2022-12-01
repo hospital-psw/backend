@@ -43,9 +43,15 @@
             return Ok(_roomScheduleService.GetAppointments(dto.RoomsId, dto.FromTime, dto.ToTime, dto.Duration));
         }
 
-        public OkObjectResult GetAllForRoom(int roomId)
+        [HttpGet("{roomId}")]
+        public IActionResult GetAllForRoom(int roomId)
         {
-            throw new NotImplementedException();
+            List<RenovationRequestDisplayDto> renovationsDto = new List<RenovationRequestDisplayDto>();
+            foreach(RenovationRequest renovationRequest in _renovationService.GetAllForRoom(roomId))
+            {
+                renovationsDto.Add(RenovationRequestDisplayMapper.EntityToEntityDto(renovationRequest));
+            }
+            return Ok(renovationsDto);
         }
     }
 }
