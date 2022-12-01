@@ -7,5 +7,6 @@
     {
         RenovationRequest Create(RenovationRequest entity);
         List<RenovationRequest> GetAllForRoom(int roomId);
+        void Decline(int requestId);
     }
 }

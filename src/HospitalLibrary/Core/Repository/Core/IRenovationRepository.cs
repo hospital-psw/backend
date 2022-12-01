@@ -11,5 +11,6 @@
     {
         RenovationRequest Create(RenovationRequest request);
         List<RenovationRequest> GetAll();
+        public int Save();
     }
 }

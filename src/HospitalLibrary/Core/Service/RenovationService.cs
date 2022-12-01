@@ -42,5 +42,13 @@
             }
             return futureRenovations;
         }
+
+        public void Decline(int requestId)
+        {
+            RenovationRequest request = _unitOfWork.RenovationRepository.Get(requestId);
+            request.Deleted = true;
+            _unitOfWork.RenovationRepository.Update(request);
+            _unitOfWork.RenovationRepository.Save();
+        }
     }
 }

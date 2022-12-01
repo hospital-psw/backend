@@ -57,7 +57,8 @@
         [HttpPost("decline")]
         public StatusCodeResult Decline([FromBody] int requestId)
         {
-            throw new NotImplementedException();
+            _renovationService.Decline(requestId);
+            return Ok();
         }
     }
 }

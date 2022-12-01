@@ -31,5 +31,10 @@
                                                .ToList();  */
             return null;
         }
+
+        public int Save()
+        {
+            return _context.SaveChanges();
+        }
     }
 }
