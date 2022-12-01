@@ -53,5 +53,11 @@
             }
             return Ok(renovationsDto);
         }
+
+        [HttpPost("decline")]
+        public StatusCodeResult Decline([FromBody] int requestId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

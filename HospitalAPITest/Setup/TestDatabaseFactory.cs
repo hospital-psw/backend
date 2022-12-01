@@ -510,6 +510,17 @@
             {
                 Name = "Glavobolja"
             });
+            List<Room> roomsRenovation = new List<Room>();
+            roomsRenovation.Add(room);
+            List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
+            context.RenovationRequests.Add(new RenovationRequest
+            {
+                RenovationType = RenovationType.SPLIT,
+                Rooms = roomsRenovation,
+                StartTime = new DateTime(),
+                Duration = 2,
+                RenovationDetails = renovationDetails
+            });
 
             context.SaveChanges();
 
