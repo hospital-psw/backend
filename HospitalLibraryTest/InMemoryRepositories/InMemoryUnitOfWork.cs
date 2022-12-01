@@ -59,6 +59,8 @@
         public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
 
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
+
+        public IRenovationRepository RenovationRepository => throw new NotImplementedException();
         public IConsiliumRepository ConsiliumRepository { get; set; }
         public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
 

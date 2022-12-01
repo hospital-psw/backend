@@ -48,7 +48,7 @@
             }
         }
 
-        public IEnumerable<ApplicationDoctor> GetBySpecialization(Specialization specialization)
+        public IEnumerable<ApplicationDoctor> GetBySpecialization(Specialization specialization) 
         {
             try
             {

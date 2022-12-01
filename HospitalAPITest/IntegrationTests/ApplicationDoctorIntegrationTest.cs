@@ -24,7 +24,7 @@
         }
         private static ApplicationDoctorController SetupController(IServiceScope scope)
         {
-            return new ApplicationDoctorController(scope.ServiceProvider.GetRequiredService<IApplicationDoctorService>(), null, null);
+            return new ApplicationDoctorController(scope.ServiceProvider.GetRequiredService<IApplicationDoctorService>(),null,null);
         }
 
         [Fact]
