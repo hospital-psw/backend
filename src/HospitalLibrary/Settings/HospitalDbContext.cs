@@ -50,6 +50,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Prescription> Prescriptions { get; set; }
 
         public DbSet<Symptom> Symptoms { get; set; }
+
+        public DbSet<Anamnesis> Anamneses { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         public HospitalDbContext()
