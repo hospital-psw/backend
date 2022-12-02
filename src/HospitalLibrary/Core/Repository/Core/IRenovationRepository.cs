@@ -7,8 +7,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IConsiliumRepository : IBaseRepository<Consilium>
+    public interface IRenovationRepository : IBaseRepository<RenovationRequest>
     {
-        List<Consilium> GetScheduledConsiliumsForRoom(int roomId);
+        RenovationRequest Create(RenovationRequest request);
+        List<RenovationRequest> GetAll();
+        public int Save();
     }
 }

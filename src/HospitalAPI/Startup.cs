@@ -29,6 +29,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace HospitalAPI
 {
@@ -106,6 +107,9 @@ namespace HospitalAPI
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IApplicationPatientService, ApplicationPatientService>();
             services.AddScoped<IApplicationDoctorService, ApplicationDoctorService>();
+            services.AddScoped<IRenovationService, RenovationService>();
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            services.AddScoped<IRoomScheduleService, RoomScheduleService>();
             services.AddScoped<IConsiliumService, ConsiliumService>();
             services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();

@@ -3,59 +3,61 @@
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto;
     using HospitalAPITest.Setup;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
 
-    public class RelocationIntegrationTest : BaseIntegrationTest
+    public class RenovationIntegrationTest : BaseIntegrationTest
     {
 
-        public RelocationIntegrationTest(TestDatabaseFactory factory) : base(factory)
+        public RenovationIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
 
         }
 
-        private static RelocationController SetupController(IServiceScope serviceScope)
+        private static RenovationController SetupController(IServiceScope serviceScope)
         {
-            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomScheduleService>());
+            return new RenovationController(serviceScope.ServiceProvider.GetRequiredService<IRenovationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomScheduleService>());
         }
 
         [Fact]
-        public void Test_Create_Relocation_Request()
+        public void Test_Create_Renovation_Request()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            RelocationRequestDto dto = new RelocationRequestDto(1, 1, 4, 1, new DateTime(2022, 12, 12, 15, 0, 0), 2);
+            var renovationDetails = new List<RenovationDetailsDto>() { new RenovationDetailsDto("newR1", "ordinacija1") };
+            List<int> rooms = new() { 1, 2 };
+            RenovationRequestDto dto = new(RenovationType.MERGE, rooms, new DateTime(2022, 12, 12, 15, 0, 0), 4, renovationDetails);
+
             var result = (OkObjectResult)controller.Create(dto);
-
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
-
         }
 
         [Fact]
-        public void Test_get_relocations_for_room()
+        public void Test_get_renovations_for_room()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             int roomId = 5;
 
-            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RenovationRequestDisplayDto>;
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);
         }
 
         [Fact]
-        public void Test_get_relocations_for_room_empty()
+        public void Test_get_renovations_for_room_empty()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 1;
+            int roomId = 5;
 
-            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RenovationRequestDisplayDto>;
 
             Assert.NotNull(result);
             Assert.Empty(result);
