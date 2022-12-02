@@ -47,7 +47,7 @@
         public IActionResult GetAllForRoom(int roomId)
         {
             List<RenovationRequestDisplayDto> renovationsDto = new List<RenovationRequestDisplayDto>();
-            foreach(RenovationRequest renovationRequest in _renovationService.GetAllForRoom(roomId))
+            foreach (RenovationRequest renovationRequest in _renovationService.GetAllForRoom(roomId))
             {
                 renovationsDto.Add(RenovationRequestDisplayMapper.EntityToEntityDto(renovationRequest));
             }

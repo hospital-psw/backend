@@ -14,7 +14,8 @@
     {
 
         protected readonly IUnitOfWork _unitOfWork;
-        public RoomScheduleService(IUnitOfWork unitOfWork) {
+        public RoomScheduleService(IUnitOfWork unitOfWork)
+        {
             _unitOfWork = unitOfWork;
         }
 
@@ -36,7 +37,7 @@
                 while (startTime.AddHours(duration) <= toTime)
                 {
                     DateTime newStartTime = startTime;
-                    foreach(int room in rooms)
+                    foreach (int room in rooms)
                     {
                         newStartTime = CheckRoom(room, newStartTime, newStartTime.AddHours(duration));
                     }

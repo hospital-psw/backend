@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HospitalLibrary.Core.Model
 {
     public class RenovationDetails : Entity
-    { 
+    {
         public string NewRoomName { get; set; }
         public string NewRoomPurpose { get; set; }
 

@@ -32,9 +32,9 @@
         {
             List<RenovationRequest> futureRenovations = new List<RenovationRequest>();
 
-            foreach(RenovationRequest renovationRequest in _unitOfWork.RenovationRepository.GetAll())
+            foreach (RenovationRequest renovationRequest in _unitOfWork.RenovationRepository.GetAll())
             {
-                foreach(Room room in renovationRequest.Rooms)
+                foreach (Room room in renovationRequest.Rooms)
                 {
                     if (room.Id != roomId) continue;
                     if (renovationRequest.StartTime >= DateTime.Now) futureRenovations.Add(renovationRequest);

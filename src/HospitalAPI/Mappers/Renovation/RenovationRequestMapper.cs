@@ -10,7 +10,7 @@
         {
             RenovationRequest renovationRequest = new RenovationRequest();
 
-            
+
             renovationRequest.RenovationType = dto.RenovationType;
             renovationRequest.Rooms = Rooms;
             renovationRequest.StartTime = dto.StartTime;
