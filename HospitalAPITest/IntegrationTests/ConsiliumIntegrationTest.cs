@@ -37,9 +37,10 @@
             var result = ((OkObjectResult)controller.Get(1)).Value as ConsiliumDto;
 
             Assert.NotNull(result);
-            Assert.Equal("Topic1", result.Topic);
-            Assert.Equal(6, result.Doctors.Count);
+            Assert.Equal("Tema", result.Topic);
+            Assert.Equal(2, result.Doctors.Count);
             Assert.Equal(30, result.Duration);
+            Assert.Contains(result.Doctors, x => x.LastName.Equals("Rapacoti"));
         }
 
         [Fact]
@@ -49,19 +50,18 @@
             var controller = SetupController(scope);
 
             List<int> selectedDoctors = new List<int>();
+            selectedDoctors.Add(1);
             selectedDoctors.Add(2);
-            selectedDoctors.Add(3);
-            selectedDoctors.Add(4);
 
             ScheduleConsiliumDto dto = new ScheduleConsiliumDto
             {
-                DateRange = new DateRange(),
+                DateRange = new DateRange(new DateTime(2022, 12, 28), new DateTime(2022, 12, 31)),
                 Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
                 Duration = 30,
-                DoctorId = 3,
+                DoctorId = 1,
                 SelectedDoctors = selectedDoctors,
                 SelectedSpecializations = null,
-                RoomId = 2
+                RoomId = 1
             };
 
             var result = ((OkObjectResult)controller.Schedule(dto)).Value as ConsiliumDto;
@@ -79,17 +79,16 @@
             List<Specialization> selectedSpecializations = new List<Specialization>();
             selectedSpecializations.Add(Specialization.GENERAL);
             selectedSpecializations.Add(Specialization.CARDIOLOGY);
-            selectedSpecializations.Add(Specialization.NEUROLOGY);
 
             ScheduleConsiliumDto dto = new ScheduleConsiliumDto
             {
-                DateRange = new DateRange(),
+                DateRange = new DateRange(new DateTime(2022, 12, 28), new DateTime(2022, 12, 31)),
                 Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
                 Duration = 30,
-                DoctorId = 3,
+                DoctorId = 1,
                 SelectedDoctors = null,
                 SelectedSpecializations = selectedSpecializations,
-                RoomId = 2
+                RoomId = 1
             };
 
             var result = ((OkObjectResult)controller.Schedule(dto)).Value as ConsiliumDto;

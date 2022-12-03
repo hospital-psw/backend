@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Data;
 
     public class ConsiliumRepository : BaseRepository<Consilium>, IConsiliumRepository
     {
@@ -22,6 +23,12 @@
         public override IEnumerable<Consilium> GetAll()
         {
             return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)
+                                               .ThenInclude(x => x.Doctor)
+                                               .Include(x => x.Room)
+                                               .ThenInclude(x => x.Floor)
+                                               .ThenInclude(x => x.Building)
+                                               .Include(x => x.Room)
+                                               .ThenInclude(x => x.WorkingHours)
                                                .Where(x => !x.Deleted)
                                                .ToList();
         }

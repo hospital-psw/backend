@@ -522,6 +522,25 @@
                 RenovationDetails = renovationDetails
             });
 
+            ApplicationDoctor appDoc2 = new ApplicationDoctor
+                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null);
+
+            DoctorSchedule doctorSchedule = new DoctorSchedule(appDoc, new List<Appointment>(), new List<VacationRequest>(), new List<Consilium>());
+            DoctorSchedule doctorSchedule2 = new DoctorSchedule(appDoc2, new List<Appointment>(), new List<VacationRequest>(), new List<Consilium>());
+
+            List<DoctorSchedule> schedules = new List<DoctorSchedule>();
+            schedules.Add(doctorSchedule);
+            schedules.Add(doctorSchedule2);
+
+            context.Consiliums.Add(new Consilium
+            {
+                DateTime = DateTime.Now,
+                Topic = "Tema",
+                Duration = 30,
+                DoctorsSchedule = schedules,
+                Room = room,
+            });
+
             context.SaveChanges();
 
         }
