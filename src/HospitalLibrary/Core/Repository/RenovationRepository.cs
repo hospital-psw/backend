@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -26,10 +27,9 @@
 
         List<RenovationRequest> IRenovationRepository.GetAll()
         {
-            /*return _context.RenovationRequests.Include(x => x.Rooms)
+            return _context.RenovationRequests.Include(x => x.Rooms)
                                               .Where(x => !x.Deleted)
-                                               .ToList();  */
-            return null;
+                                               .ToList();
         }
 
         public int Save()
