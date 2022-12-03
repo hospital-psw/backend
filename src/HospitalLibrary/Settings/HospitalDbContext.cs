@@ -44,6 +44,8 @@ namespace HospitalLibrary.Settings
         public DbSet<VacationRequest> VacationRequests { get; set; }
         public DbSet<ApplicationPatient> ApplicationPatients { get; set; }
         public DbSet<ApplicationDoctor> ApplicationDoctors { get; set; }
+        public DbSet<RenovationDetails> RenovationDetails { get; set; }
+        public DbSet<RenovationRequest> RenovationRequests { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
 

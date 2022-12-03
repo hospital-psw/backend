@@ -24,6 +24,7 @@
         private readonly IMapper _mapper;
 
         public ApplicationDoctorController(IApplicationDoctorService doctorService,
+
                                            IAuthService authService, IMapper mapper)
         {
             _doctorService = doctorService;

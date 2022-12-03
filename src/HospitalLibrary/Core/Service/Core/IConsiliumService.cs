@@ -13,6 +13,7 @@
         Consilium Schedule(Consilium consilium);
         Consilium Get(int consiliumId);
         IEnumerable<Consilium> GetAll();
+        List<Consilium> GetAllForRoom(int roomId);
 
     }
 }
