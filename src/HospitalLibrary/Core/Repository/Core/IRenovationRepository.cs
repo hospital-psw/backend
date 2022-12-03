@@ -10,5 +10,6 @@
     public interface IRenovationRepository : IBaseRepository<RenovationRequest>
     {
         RenovationRequest Create(RenovationRequest request);
+        List<RenovationRequest> GetScheduledRenovationsForRoom(int roomId);
     }
 }
