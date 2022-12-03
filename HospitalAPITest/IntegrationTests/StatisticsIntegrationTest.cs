@@ -61,7 +61,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.GetVacationStatistics(1)).Value as List<int>;
+            var result = ((OkObjectResult)controller.GetVacationStatistics(6)).Value as List<int>;
 
             List<int> expected = ListFactory.CreateList(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 

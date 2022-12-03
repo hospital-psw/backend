@@ -126,7 +126,7 @@
             return retList;
         }
 
-        public IEnumerable<int> GetNumberOfVacationDaysPerMonth(int doctorId)
+        public List<int> GetNumberOfVacationDaysPerMonth(int doctorId)
         {
             try
             {
