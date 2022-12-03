@@ -9,5 +9,6 @@
 
     public interface IConsiliumRepository : IBaseRepository<Consilium>
     {
+        IEnumerable<Consilium> GetConsiliumsByDoctorId(int doctorId);
     }
 }

@@ -94,5 +94,18 @@
             }
             return doctorsPatients.Count();
         }
+
+        public IEnumerable<ApplicationDoctor> GetDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            try
+            {
+                return _unitOfWork.ApplicationDoctorRepository.GetDoctorsWhoWorksInSameShift(workHourId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ApplicationDoctorService in GetAll {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
     }
 }

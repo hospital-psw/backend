@@ -78,5 +78,18 @@
             applicationDoctors.ForEach(bt => applicationDoctorDto.Add(ApplicationDoctorMapper.EntityToEntityDTO(bt)));
             return Ok(applicationDoctorDto);
         }
+
+        [HttpGet("same-shift/{workHourId}")]
+        public IActionResult GetDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            List<ApplicationDoctor> doctors = _doctorService.GetDoctorsWhoWorksInSameShift(workHourId).ToList();
+            List<ApplicationDoctorDTO> dtoList = new List<ApplicationDoctorDTO>();
+            if (doctors == null)
+            {
+                return NotFound();
+            }
+            doctors.ForEach(doc => dtoList.Add(ApplicationDoctorMapper.EntityToEntityDTO(doc)));
+            return Ok(dtoList);
+        }
     }
 }

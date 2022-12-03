@@ -15,6 +15,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Numerics;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -57,36 +58,42 @@
         {
             if (dto.SelectedSpecializations.IsNullOrEmpty())
             {
-                List<ApplicationDoctor> selectedDoctors = _unitOfWork.ApplicationDoctorRepository.GetSelectedDoctors(dto.SelectedDoctors).ToList();
-                return ScheduleBySelectedDoctors(dto, selectedDoctors);
+                return TryToScheduleBySelectedDoctors(dto);
             } 
             else if (dto.SelectedDoctors.IsNullOrEmpty())
             {
-                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
-                List<ApplicationDoctor> selectedSpecializationsDoctors = _unitOfWork.ApplicationDoctorRepository.GetDoctorsOfSelectedSpecializations(dto.SelectedSpecializations, doctor.WorkHours.Id).ToList();
-                return ScheduleBySelectedSpecializations(dto, selectedSpecializationsDoctors);
+                return TryToScheduleBySelectedSpecializations(dto);
             }
             throw new ScheduleConsiliumException("Invalid data passed.");
+        }
+
+        private Consilium TryToScheduleBySelectedDoctors(ScheduleConsiliumDto dto)
+        {
+            List<ApplicationDoctor> selectedDoctors = _unitOfWork.ApplicationDoctorRepository.GetSelectedDoctors(dto.SelectedDoctors).ToList();
+            return ScheduleBySelectedDoctors(dto, selectedDoctors);
+        }
+
+        private Consilium TryToScheduleBySelectedSpecializations(ScheduleConsiliumDto dto)
+        {
+            ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
+            List<ApplicationDoctor> selectedSpecializationsDoctors = _unitOfWork.ApplicationDoctorRepository.GetDoctorsOfSelectedSpecializations(dto.SelectedSpecializations, doctor.WorkHours.Id).ToList();
+            CheckIfNoAvailableDoctors(selectedSpecializationsDoctors);
+            return ScheduleBySelectedSpecializations(dto, selectedSpecializationsDoctors);
         }
 
         private Consilium ScheduleBySelectedDoctors(ScheduleConsiliumDto dto, List<ApplicationDoctor> doctors)
         {
             ApplicationDoctor firstSelectedDoctor = doctors.First();
 
-            for(DateTime date = dto.DateRange.From; date <= dto.DateRange.To; date.AddDays(1) )
+            for (DateTime date = dto.DateRange.From; date.CompareTo(dto.DateRange.To) <= 0; date = date.AddDays(1))
             {
-                if(IsSomeDoctorOnVacation(doctors, date) || IsSomeDoctorBusy(doctors, date))
+                if (IsSomeDoctorOnVacation(doctors, date) || IsSomeDoctorBusy(doctors, date))
                 {
                     continue;
                 }
-                RecommendRequestDto requestDto = new RecommendRequestDto(date, default(int), firstSelectedDoctor.Id);
-                List<DateTime> firstDoctorAvailableAppointments = GetDatesListOutOfDtoList(RecommendAppointments(requestDto).ToList());
-                
-                foreach(DateTime appointment in firstDoctorAvailableAppointments)
+                foreach (DateTime appointment in GetDoctorAvailableAppointments(date, firstSelectedDoctor))
                 {
-                    bool canSchedule = true;
-                    CheckIfDoctorsAreAvailableInCurrentAppointment(canSchedule, doctors, appointment, date);
-                    if (canSchedule)
+                    if (CheckIfDoctorsAreAvailableInCurrentAppointment(doctors, appointment, date))
                     {
                         return CreateConsiliumEntity(date, appointment, doctors, dto);
                     }
@@ -95,7 +102,45 @@
             throw new ScheduleConsiliumException("One or more selected doctors are not able to attend the consilium in the given period.");
         }
 
-        private void CheckIfDoctorsAreAvailableInCurrentAppointment(bool canSchedule, List<ApplicationDoctor> doctors, DateTime currentAppointment, DateTime currentDate)
+        private List<DateTime> GetDoctorAvailableAppointments(DateTime date, ApplicationDoctor doctor)
+        {
+            RecommendRequestDto requestDto = new RecommendRequestDto(date, default(int), doctor.Id);
+            List<DateTime> firstDoctorAvailableAppointments = GetDatesListOutOfDtoList(RecommendAppointments(requestDto).ToList());
+            List<DateTime> firstDoctorConsiliumAppointments = GetDoctorsConsiliumsDateTimes(doctor.Id);
+            return RemoveConsiliumFromAvailableAppointment(firstDoctorAvailableAppointments, firstDoctorConsiliumAppointments);
+        }
+
+        private List<DateTime> RemoveConsiliumFromAvailableAppointment(List<DateTime> availableAppointments, List<DateTime> consiliumsAppointments)
+        {
+            List<DateTime> available = new List<DateTime>();
+            foreach (DateTime availableApp in availableAppointments)
+            {
+                if (!consiliumsAppointments.Exists(consiliumApp => availableApp.Hour == consiliumApp.Hour && availableApp.Minute == consiliumApp.Minute))
+                {
+                    available.Add(availableApp);
+                }
+            }
+            return available;
+        }
+
+        private List<DateTime> GetDoctorsConsiliumsDateTimes(int doctorId)
+        {
+            List<DateTime> firstDoctorConsiliumAppointments = new List<DateTime>();
+            _unitOfWork.ConsiliumRepository.GetConsiliumsByDoctorId(doctorId)
+                .ToList()
+                .ForEach(con => firstDoctorConsiliumAppointments.Add(con.DateTime));
+            return firstDoctorConsiliumAppointments;
+        }
+
+        private void CheckIfNoAvailableDoctors(List<ApplicationDoctor> doctors)
+        {
+            if (doctors.IsNullOrEmpty())
+            {
+                throw new ScheduleConsiliumException("No available doctors.");
+            }
+        }
+
+        private bool CheckIfDoctorsAreAvailableInCurrentAppointment(List<ApplicationDoctor> doctors, DateTime currentAppointment, DateTime currentDate)
         {
             foreach (ApplicationDoctor doc in doctors)
             {
@@ -103,10 +148,10 @@
                 List<RecommendedAppointmentDto> currentDoctorAvailableAppointments = RecommendAppointments(rDto).ToList();
                 if (!currentDoctorAvailableAppointments.Exists(curr => curr.Date.Hour == currentAppointment.Hour && curr.Date.Minute == currentAppointment.Minute))
                 {
-                    canSchedule = false;
-                    break;
+                    return false;
                 }
             }
+            return true;
         }
 
         private Consilium ScheduleBySelectedSpecializations(ScheduleConsiliumDto dto, List<ApplicationDoctor> doctors)
@@ -116,26 +161,25 @@
             DateTime timeOfMaxPresence = default(DateTime);
             List<ApplicationDoctor> presenceDoctors = new List<ApplicationDoctor>();
 
-            for(DateTime date = dto.DateRange.From; date <= dto.DateRange.To; date.AddDays(1))
+            for (DateTime date = dto.DateRange.From; date.CompareTo(dto.DateRange.To) <= 0; date = date.AddDays(1))
             {
                 List<ApplicationDoctor> currentDayAvailableDoctors = CurrentDateAvailableDoctors(doctors, date);
                 if (SpecializationsDontExistInDoctorList(dto.SelectedSpecializations, currentDayAvailableDoctors))
                 {
                     continue;
                 }
-                List<DateTime> unionOfAvailableAppointments = UnionAllAvailableAppointments(currentDayAvailableDoctors, date);
-                
-                foreach(DateTime appointment in unionOfAvailableAppointments) {
+                List<DateTime> unionOfAllAvailableAppointments = UnionAllAvailableAppointments(currentDayAvailableDoctors, date);
+                foreach (DateTime appointment in unionOfAllAvailableAppointments) {
                     int presence = 0;
-                    List<ApplicationDoctor> currentAppointmentAvailableDoctors = DoctorsAvailableForCurrentAppointment(currentDayAvailableDoctors, presence, date, appointment);
-
-                    if (SpecializationsDontExistInDoctorList(dto.SelectedSpecializations, currentAppointmentAvailableDoctors))
+                    ScheduleBySpecializationDto specDto = DoctorsAvailableForCurrentAppointment(currentDayAvailableDoctors, presence, date, appointment);
+                    if (SpecializationsDontExistInDoctorList(dto.SelectedSpecializations, specDto.CurrentAppointmentAvailableDoctors))
                     {
                         continue;
                     }
+                    presence = specDto.Presence;
                     if (presence > maxPresence)
                     {
-                        presenceDoctors = currentAppointmentAvailableDoctors;
+                        presenceDoctors = specDto.CurrentAppointmentAvailableDoctors;
                         maxPresence = presence;
                         timeOfMaxPresence = appointment;
                         dateOfMaxPresence = date;
@@ -162,27 +206,33 @@
             return consilium;
         }
 
-        private List<ApplicationDoctor> DoctorsAvailableForCurrentAppointment(List<ApplicationDoctor> currentDateAvailableDoctors, int presence, DateTime date, DateTime appointment)
+        private ScheduleBySpecializationDto DoctorsAvailableForCurrentAppointment(List<ApplicationDoctor> currentDateAvailableDoctors, int presence, DateTime date, DateTime appointment)
         {
             List<ApplicationDoctor> currentAppointmentAvailableDoctors = new List<ApplicationDoctor>();
-            currentDateAvailableDoctors.ForEach(doc => {
-                RecommendRequestDto dto = new RecommendRequestDto(date, default(int), doc.Id);
-                if(GetDatesListOutOfDtoList(RecommendAppointments(dto).ToList()).Exists(dto => dto.Hour == appointment.Hour && dto.Minute == appointment.Minute))
+            foreach (ApplicationDoctor doc in currentDateAvailableDoctors)
+            {
+                RecommendRequestDto requestDto = new RecommendRequestDto(date, default(int), doc.Id);
+                if (GetDoctorAvailableAppointments(date, doc).ToList().Exists(x => x.Hour == appointment.Hour && x.Minute == appointment.Minute))
                 {
                     presence++;
                     currentAppointmentAvailableDoctors.Add(doc);
                 }
-            });
-            return currentAppointmentAvailableDoctors;
+            }
+            ScheduleBySpecializationDto dto = new ScheduleBySpecializationDto(presence, currentAppointmentAvailableDoctors);
+            return dto;
         }
 
         private List<DateTime> UnionAllAvailableAppointments(List<ApplicationDoctor> availableDoctors, DateTime date)
         {
             List<DateTime> allAvailableAppointments = new List<DateTime>();
-            availableDoctors.ForEach(doc => {
+            foreach(ApplicationDoctor doc in availableDoctors)
+            {
                 RecommendRequestDto dto = new RecommendRequestDto(date, default(int), doc.Id);
-                allAvailableAppointments.Union(GetDatesListOutOfDtoList(RecommendAppointments(dto).ToList()));
-            });
+                List<DateTime> dates = GetDoctorAvailableAppointments(date, doc);
+                allAvailableAppointments.AddRange(dates);
+            }
+            allAvailableAppointments = allAvailableAppointments.GroupBy(x => new { x.Hour, x.Minute }).Select(y => y.First()).ToList();
+            allAvailableAppointments = allAvailableAppointments.OrderBy(x => x.TimeOfDay).ToList();
             return allAvailableAppointments;
         }
 

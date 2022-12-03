@@ -17,7 +17,7 @@
 
         public DateRange(DateTime from, DateTime to)
         {
-            if (From >= To) { throw new Exception("Invalid Date Range Exception, Start date should be before End"); }
+            if (from >= to) { throw new Exception("Invalid Date Range Exception, Start date should be before End"); }
             From = from;
             To = to;
         }

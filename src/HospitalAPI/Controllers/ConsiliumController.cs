@@ -33,7 +33,7 @@
                 {
                     return BadRequest("Please pass valid data.");
                 }
-                if (dto.Topic == default(string) || dto.Duration == default(int) || dto.DateRange == null)
+                if (dto.Topic == default(string) || dto.Duration == default(int))
                 {
                     return BadRequest("Please pass valid data.");
                 }

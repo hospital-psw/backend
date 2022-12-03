@@ -25,5 +25,11 @@
                                                .Where(x => !x.Deleted)
                                                .ToList();
         }
+
+        public IEnumerable<Consilium> GetConsiliumsByDoctorId(int doctorId)
+        {
+            return GetAll().Where(x => x.DoctorsSchedule.Exists(x => x.Doctor.Id == doctorId))
+                           .ToList();
+        }
     }
 }
