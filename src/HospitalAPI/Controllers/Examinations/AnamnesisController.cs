@@ -10,16 +10,19 @@
     using System.Linq;
     using HospitalLibrary.Core.DTO.Examinations;
     using System;
+    using System.Collections.Generic;
 
     [Route("api/[controller]")]
     [ApiController]
     public class AnamnesisController : BaseController<Anamnesis>
     {
         private readonly IAnamnesisService _anamnesisService;
+        private readonly IPrescriptionService _prescriptionService;
 
-        public AnamnesisController(IAnamnesisService anamnesisService)
+        public AnamnesisController(IAnamnesisService anamnesisService, IPrescriptionService prescriptionService)
         {
             _anamnesisService = anamnesisService;
+            _prescriptionService = prescriptionService;
         }
 
         [HttpGet]
@@ -39,8 +42,23 @@
         {
             try
             {
+                if (string.IsNullOrEmpty(dto.Description))
+                {
+                    return BadRequest("Please enter anamnesis report");
+                }
+
                 Anamnesis anamnesis = _anamnesisService.Add(dto);
-                return Ok("Uspeo sam");
+                List<Prescription> prescriptions = null;
+
+                if (dto.NewPrescriptions != null)
+                {
+                    prescriptions = _prescriptionService.AddMultiple(dto.NewPrescriptions);
+                }
+                
+
+                _anamnesisService.AddPrescriptions(anamnesis.Id, prescriptions);
+
+                return Ok(AnamnesisMapper.EntityToEntityDto(anamnesis));                
             }
             catch (Exception e)
             {

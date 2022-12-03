@@ -14,6 +14,7 @@
 
         public static List<SymptomDto> EntityListToEntityDtoList(List<Symptom> sypmtoms)
         {
+            if (sypmtoms == null) return null;
             List<SymptomDto> symptomList = new List<SymptomDto>();
             sypmtoms.ForEach(x => symptomList.Add(EntityToEntityDto(x)));
             return symptomList;

@@ -15,6 +15,7 @@
 
         public static List<PrescriptionDto> EntityListToEntityDtoList(List<Prescription> prescriptions)
         {
+            if (prescriptions == null) return null;
             List<PrescriptionDto> retList = new List<PrescriptionDto>();
             prescriptions.ForEach(x => retList.Add(EntityToEntityDto(x)));
             return retList;

@@ -19,5 +19,7 @@
         IEnumerable<Anamnesis> GetInDateRange(DateRange dateRange);
 
         Anamnesis Add(NewAnamnesisDto dto);
+
+        Anamnesis AddPrescriptions(int anamnesisId, List<Prescription> prescriptions);
     }
 }

@@ -90,19 +90,35 @@
 
         public Anamnesis Add(NewAnamnesisDto dto)
         {
-            try
-            {
-                Appointment appointment = _unitOfWork.AppointmentRepository.Get(dto.AppointmentId);
 
-                if (appointment == null) throw new Exception("Appointment doesn't exist");
+            Appointment appointment = _unitOfWork.AppointmentRepository.Get(dto.AppointmentId);
 
-                return new Anamnesis();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in Add in AnamnesisService {e.Message} in {e.StackTrace}");
-                throw e;
-            }
+            if (appointment == null) throw new Exception("Appointment doesn't exist");
+
+            List<Symptom> symptoms = new List<Symptom>();
+
+            if (dto.SymptomIds != null)
+                symptoms = _unitOfWork.SymptomRepository.GetSelectedSymptoms(dto.SymptomIds).ToList();
+
+            Anamnesis newAnamnesis = new Anamnesis(appointment, dto.Description);
+            newAnamnesis.Symptoms = symptoms;
+
+            appointment.IsDone = true;
+            _unitOfWork.AppointmentRepository.Update(appointment);
+            _unitOfWork.AnamnesisRepository.Add(newAnamnesis);
+            _unitOfWork.Save();
+
+            return newAnamnesis;
+        }
+
+        public Anamnesis AddPrescriptions(int anamnesisId, List<Prescription> prescriptions)
+        {
+            Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.Get(anamnesisId);
+            anamnesis.Prescriptions = prescriptions;
+            _unitOfWork.AnamnesisRepository.Update(anamnesis);
+            //prescriptions.ForEach(_unitOfWork.PrescriptionRepository.Update);
+            _unitOfWork.Save();
+            return anamnesis;
         }
     }
 }

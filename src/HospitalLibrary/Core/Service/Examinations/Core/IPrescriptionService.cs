@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Examinations.Core
 {
+    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Examinations;
     using System;
@@ -15,6 +16,8 @@
         Prescription Add(int medicamentId, string description, DateRange dateRange);
 
         IEnumerable<Prescription> GetAll();
+
+        List<Prescription> AddMultiple(List<NewPrescriptionDto> dtos);
 
     }
 }
