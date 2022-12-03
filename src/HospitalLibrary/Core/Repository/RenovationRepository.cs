@@ -25,7 +25,7 @@
             return renovationRequest;
         }
 
-        List<RenovationRequest> IRenovationRepository.GetAll()
+        public List<RenovationRequest> GetAll()
         {
             return _context.RenovationRequests.Include(x => x.Rooms)
                                               .Where(x => !x.Deleted)
