@@ -41,7 +41,10 @@
             List<RenovationRequest> roomRenovations = new();
             foreach(var request in GetAll())
             {
-                if (request.Id == roomId) roomRenovations.Add(request);
+                foreach (var room in request.Rooms)
+                {
+                    if (room.Id == roomId) roomRenovations.Add(request);
+                }
             }
             return roomRenovations;
         }
