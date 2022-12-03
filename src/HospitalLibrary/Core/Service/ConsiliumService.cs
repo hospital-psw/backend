@@ -60,5 +60,15 @@
                 return null;
             }
         }
+
+        public List<Consilium> GetAllForRoom(int roomId)
+        {
+            List<Consilium> futureRequests = _unitOfWork.ConsiliumRepository.GetScheduledConsiliumsForRoom(roomId);
+            if (futureRequests == null)
+            {
+                return new List<Consilium>();
+            }
+            return futureRequests;
+        }
     }
 }

@@ -31,5 +31,14 @@
             return GetAll().Where(x => x.DoctorsSchedule.Exists(x => x.Doctor.Id == doctorId))
                            .ToList();
         }
+        
+        public List<Consilium> GetScheduledConsiliumsForRoom(int roomId)
+        {
+            return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)
+                                               .Where(x => !x.Deleted && x.Room.Id == roomId)
+                                               .OrderBy(x => x.DateTime)
+                                               .Distinct()
+                                               .ToList();
+        }
     }
 }

@@ -3,7 +3,10 @@
     using HospitalAPI.Dto.Consilium;
     using HospitalAPI.Mappers.Consilium;
     using HospitalLibrary.Core.DTO.Consilium;
+    using HospitalAPI.Dto;
+    using HospitalAPI.Mappers;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Exceptions;
     using IdentityServer4.Extensions;
@@ -69,6 +72,17 @@
             }
             consiliumList.ForEach(consilium => consiliumDtoList.Add(ConsiliumMapper.EntityToDto(consilium)));
             return Ok(consiliumDtoList);
+        }
+        
+        [HttpGet("room/{roomId}")]
+        public IActionResult GetAllForRoom(int roomId)
+        {
+            List<ConsiliumDisplayDto> consiliumDtos = new List<ConsiliumDisplayDto>();
+            foreach (Consilium consilium in _consiliumService.GetAllForRoom(roomId))
+            {
+                consiliumDtos.Add(ConsiliumDisplayMapper.EntityToEntityDto(consilium));
+            }
+            return Ok(consiliumDtos);
         }
 
     }

@@ -6,6 +6,7 @@
 
     public class ApplicationDoctorMapper
     {
+
         public static ApplicationDoctorDTO EntityToEntityDTO(ApplicationDoctor doctor)
         {
             ApplicationDoctorDTO dto = new ApplicationDoctorDTO();
