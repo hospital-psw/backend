@@ -3,6 +3,8 @@ using IntegrationLibrary.BloodBank.Interfaces;
 using IntegrationLibrary.Core;
 using IntegrationLibrary.News;
 using IntegrationLibrary.News.Interfaces;
+using IntegrationLibrary.Tender;
+using IntegrationLibrary.Tender.Interfaces;
 using IntegrationLibrary.Settings;
 using IntegrationLibrary.Util;
 using IntegrationLibrary.Util.Interfaces;
@@ -44,6 +46,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<ITenderService, TenderService>();
 
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<IBBConnections, BBConnections>();
