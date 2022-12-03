@@ -16,5 +16,6 @@
         public List<Specialization> SelectedSpecializations { get; set; }
         public int Duration { get; set; }
         public int DoctorId { get; set; }
+        public int RoomId { get; set; }
     }
 }

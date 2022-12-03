@@ -53,13 +53,15 @@
             selectedDoctors.Add(3);
             selectedDoctors.Add(4);
 
-            ScheduleConsiliumDto dto = new ScheduleConsiliumDto {
+            ScheduleConsiliumDto dto = new ScheduleConsiliumDto
+            {
                 DateRange = new DateRange(),
                 Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
                 Duration = 30,
                 DoctorId = 3,
                 SelectedDoctors = selectedDoctors,
-                SelectedSpecializations = null
+                SelectedSpecializations = null,
+                RoomId = 2
             };
 
             var result = ((OkObjectResult)controller.Schedule(dto)).Value as ConsiliumDto;
@@ -86,7 +88,8 @@
                 Duration = 30,
                 DoctorId = 3,
                 SelectedDoctors = null,
-                SelectedSpecializations = selectedSpecializations
+                SelectedSpecializations = selectedSpecializations,
+                RoomId = 2
             };
 
             var result = ((OkObjectResult)controller.Schedule(dto)).Value as ConsiliumDto;

@@ -1,10 +1,10 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalAPI.Dto;
     using HospitalAPI.Dto.Consilium;
+    using HospitalAPI.Mappers;
     using HospitalAPI.Mappers.Consilium;
     using HospitalLibrary.Core.DTO.Consilium;
-    using HospitalAPI.Dto;
-    using HospitalAPI.Mappers;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
@@ -73,14 +73,14 @@
             consiliumList.ForEach(consilium => consiliumDtoList.Add(ConsiliumMapper.EntityToDto(consilium)));
             return Ok(consiliumDtoList);
         }
-        
+
         [HttpGet("room/{roomId}")]
         public IActionResult GetAllForRoom(int roomId)
         {
-            List<ConsiliumDisplayDto> consiliumDtos = new List<ConsiliumDisplayDto>();
+            List<ConsiliumDto> consiliumDtos = new List<ConsiliumDto>();
             foreach (Consilium consilium in _consiliumService.GetAllForRoom(roomId))
             {
-                consiliumDtos.Add(ConsiliumDisplayMapper.EntityToEntityDto(consilium));
+                consiliumDtos.Add(ConsiliumMapper.EntityToDto(consilium));
             }
             return Ok(consiliumDtos);
         }

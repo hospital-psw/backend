@@ -31,7 +31,7 @@
             return GetAll().Where(x => x.DoctorsSchedule.Exists(x => x.Doctor.Id == doctorId))
                            .ToList();
         }
-        
+
         public List<Consilium> GetScheduledConsiliumsForRoom(int roomId)
         {
             return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)
