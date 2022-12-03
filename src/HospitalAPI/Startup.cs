@@ -46,7 +46,8 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+            options.UseSqlServer(Configuration.GetConnectionString("HospitalDb"),
+            providerOptions => providerOptions.EnableRetryOnFailure()));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
