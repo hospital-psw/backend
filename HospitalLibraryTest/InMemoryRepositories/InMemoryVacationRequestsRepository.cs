@@ -38,7 +38,7 @@
 
             ApplicationDoctor doc1 = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
             doc1.Id = 1;
-            
+
             VacationRequest v1 = new VacationRequest(doc1, new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 15, 4, 0, 0), VacationRequestStatus.APPROVED, "aaa", false, "aaa");
             v1.Id = 1;
             VacationRequest v2 = new VacationRequest(doc1, new DateTime(2022, 12, 10, 4, 0, 0), new DateTime(2022, 12, 15, 4, 0, 0), VacationRequestStatus.APPROVED, "aaa", false, "aaa");
@@ -76,6 +76,11 @@
         }
 
         public void Update(VacationRequest entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<VacationRequest> IVacationRequestsRepository.GetAllDoctorId(int doctorId)
         {
             throw new NotImplementedException();
         }

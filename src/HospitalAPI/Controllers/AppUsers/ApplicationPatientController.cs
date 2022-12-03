@@ -43,15 +43,15 @@
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public Task<IActionResult> GetAll()
         {
             List<ApplicationPatientDTO> patientsDTO = new List<ApplicationPatientDTO>();
             var patients = _appPatientService.GetAll().ToList();
             if (patients == null)
-                return NotFound();
+                return Task.FromResult(NotFound());
 
             patients.ForEach(p => patientsDTO.Add(_mapper.Map<ApplicationPatientDTO>(p)));
-            return Ok(patientsDTO);
+            return Task.FromResult(Ok(patientsDTO));
         }
 
         [HttpGet("non-hospitalized")]
