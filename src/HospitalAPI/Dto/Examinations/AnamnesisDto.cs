@@ -14,7 +14,7 @@
 
         public AppointmentDto Appointment { get; set; }
 
-        public AnamnesisDto(){}
+        public AnamnesisDto() { }
 
         public AnamnesisDto(int id, string description, List<PrescriptionDto> prescriptions, List<SymptomDto> symptoms, AppointmentDto appointment)
         {

@@ -10,7 +10,7 @@
 
         public static PrescriptionDto EntityToEntityDto(Prescription prescription)
         {
-            return new PrescriptionDto(prescription.Id,MedicamentMapper.EntityToEntityDto(prescription.Medicament), prescription.Description, prescription.DateRange);
+            return new PrescriptionDto(prescription.Id, MedicamentMapper.EntityToEntityDto(prescription.Medicament), prescription.Description, prescription.DateRange);
         }
 
         public static List<PrescriptionDto> EntityListToEntityDtoList(List<Prescription> prescriptions)

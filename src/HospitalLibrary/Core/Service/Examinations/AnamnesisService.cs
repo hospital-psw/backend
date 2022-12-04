@@ -55,7 +55,7 @@
             {
                 return _unitOfWork.AnamnesisRepository.GetByDoctor(doctorId);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError($"Error in GetByDoctor in AnamnesisService {e.Message} in {e.StackTrace}");
                 return null;

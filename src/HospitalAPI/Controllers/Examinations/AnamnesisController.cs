@@ -1,16 +1,16 @@
 ﻿namespace HospitalAPI.Controllers.Examinations
 {
     using HospitalAPI.Dto.Examinations;
-    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalAPI.Mappers.Examinations;
+    using HospitalLibrary.Core.DTO.Examinations;
+    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using System.Linq;
-    using HospitalLibrary.Core.DTO.Examinations;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -54,11 +54,11 @@
                 {
                     prescriptions = _prescriptionService.AddMultiple(dto.NewPrescriptions);
                 }
-                
+
 
                 _anamnesisService.AddPrescriptions(anamnesis.Id, prescriptions);
 
-                return Ok(AnamnesisMapper.EntityToEntityDto(anamnesis));                
+                return Ok(AnamnesisMapper.EntityToEntityDto(anamnesis));
             }
             catch (Exception e)
             {

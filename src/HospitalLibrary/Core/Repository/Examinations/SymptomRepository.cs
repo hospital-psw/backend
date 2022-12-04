@@ -19,7 +19,7 @@
         {
             return HospitalDbContext.Symptoms.Where(x => x.Name == name).FirstOrDefault();
         }
-        
+
         public IEnumerable<Symptom> GetSelectedSymptoms(List<int> ids)
         {
             return HospitalDbContext.Symptoms.Where(x => ids.Contains(x.Id));
