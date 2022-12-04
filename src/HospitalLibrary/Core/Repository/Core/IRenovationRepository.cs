@@ -10,7 +10,7 @@
     public interface IRenovationRepository : IBaseRepository<RenovationRequest>
     {
         RenovationRequest Create(RenovationRequest request);
-        new List<RenovationRequest> GetAll();
+        public List<RenovationRequest> GetAll();
         public int Save();
     }
 }
