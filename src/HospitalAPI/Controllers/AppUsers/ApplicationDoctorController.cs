@@ -24,6 +24,7 @@
         private readonly IMapper _mapper;
 
         public ApplicationDoctorController(IApplicationDoctorService doctorService,
+
                                            IAuthService authService, IMapper mapper)
         {
             _doctorService = doctorService;
@@ -51,7 +52,7 @@
                 return NotFound();
 
             List<ApplicationDoctorDTO> doctorsDTO = new List<ApplicationDoctorDTO>();
-            doctors.ForEach(d => doctorsDTO.Add(_mapper.Map<ApplicationDoctorDTO>(d)));
+            doctors.ForEach(d => doctorsDTO.Add(ApplicationDoctorMapper.EntityToEntityDTO(d)));
             return Ok(doctorsDTO);
         }
 
