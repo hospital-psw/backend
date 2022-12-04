@@ -143,7 +143,7 @@
                 _unitOfWork.AppointmentRepository.Update(appointment);
                 _unitOfWork.Save();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
@@ -174,6 +174,17 @@
             {
                 return null;
             }
+        }
+
+        public List<Appointment> GetAllForRoom(int roomId)
+        {
+            List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAllForRoom(roomId);
+            List<Appointment> futureAppointments = new List<Appointment>();
+            foreach (Appointment appointment in appointments)
+            {
+                if (appointment.Date >= DateTime.Now) futureAppointments.Add(appointment);
+            }
+            return futureAppointments;
         }
     }
 }

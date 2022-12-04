@@ -6,6 +6,7 @@
     public class PrescriptionDto
     {
         public int Id { get; set; }
+
         public MedicamentDto Medicament { get; set; }
 
         public string Description { get; set; }

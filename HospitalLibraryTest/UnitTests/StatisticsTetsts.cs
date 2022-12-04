@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Util;
+    using HospitalLibraryTest.InMemoryRepositories;
     using Moq;
     using Newtonsoft.Json.Linq;
     using System;
@@ -112,6 +113,18 @@
             StatisticsService service = new StatisticsService(stub.Object);
             List<int> expected = ListFactory.CreateList(2, 1, 1, 0);
 
+        }
+
+        [Fact]
+        public void Get_Days_Of_Vacation_Per_Month()
+        {
+            StatisticsService statisticsService = new StatisticsService(new InMemoryUnitOfWork());
+            List<int> expected = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5);
+
+            List<int> s = (List<int>)statisticsService.GetNumberOfVacationDaysPerMonth(1);
+
+            Assert.NotNull(s);
+            Assert.Equal(expected, s);
         }
     }
 
