@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Examinations
 {
+    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Model.Medicament;
@@ -34,6 +35,21 @@
             catch (Exception e)
             {
                 _logger.LogError($"Error in PrescriptionService in Add {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public List<Prescription> AddMultiple(List<NewPrescriptionDto> dtos)
+        {
+            try
+            {
+                List<Prescription> prescriptions = new List<Prescription>();
+                dtos.ForEach(x => prescriptions.Add(Add(x.MedicamentId, x.Description, new DateRange(x.From, x.To))));
+                return prescriptions;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in PrescriptionService in AddMultiple {e.Message} in {e.StackTrace}");
                 return null;
             }
         }

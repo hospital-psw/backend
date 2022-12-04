@@ -8,6 +8,20 @@
 
     public class Anamnesis : Entity
     {
+        public Appointment Appointment { get; set; }
 
+        public string Description { get; set; }
+
+        public List<Symptom> Symptoms { get; set; }
+
+        public List<Prescription> Prescriptions { get; set; }
+
+        public Anamnesis() { }
+
+        public Anamnesis(Appointment appointment, string description)
+        {
+            Appointment = appointment;
+            Description = description;
+        }
     }
 }

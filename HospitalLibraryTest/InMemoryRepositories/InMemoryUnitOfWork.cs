@@ -69,6 +69,8 @@
 
         public ISymptomRepository SymptomRepository { get; set; }
 
+        public IAnamnesisRepository AnamnesisRepository { get; set; }
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

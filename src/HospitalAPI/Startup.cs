@@ -115,6 +115,7 @@ namespace HospitalAPI
             services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddScoped<ISymptomService, SymptomService>();
+            services.AddScoped<IAnamnesisService, AnamnesisService>();
 
 
             ProjectConfiguration config = new ProjectConfiguration();
