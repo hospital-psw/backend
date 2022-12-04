@@ -1,6 +1,5 @@
 ﻿namespace HospitalAPI.Controllers.Examinations
 {
-    using HospitalAPI.Dto.Examinations;
     using HospitalAPI.Mappers.Examinations;
     using HospitalLibrary.Core.DTO.Examinations;
 
