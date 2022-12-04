@@ -20,7 +20,7 @@
 
         public AnamnesisController SetupController(IServiceScope scope)
         {
-            return new AnamnesisController(scope.ServiceProvider.GetRequiredService<IAnamnesisService>());
+            return new AnamnesisController(scope.ServiceProvider.GetRequiredService<IAnamnesisService>(), scope.ServiceProvider.GetRequiredService<IPrescriptionService>());
         }
 
         [Fact]
