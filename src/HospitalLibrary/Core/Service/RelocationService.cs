@@ -27,7 +27,7 @@
                 //cupaj
                 //equipment.ReservedQuantity += entity.Quantity;
                 //*
-                Equipment changed = equipment.AddReservedQuantity(equipment, entity.Quantity);
+                Equipment changed = equipment.AddReservedQuantity(entity.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
                 //_unitOfWork.EquipmentRepository.Update(equipment);
                 return _unitOfWork.RelocationRepository.Create(entity);
@@ -63,7 +63,7 @@
                 //cupaj
                 //equipment.Quantity += request.Quantity;
                 //
-                Equipment changed = equipment.AddQuantity(equipment, request.Quantity);
+                Equipment changed = equipment.AddQuantity(request.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
                 //_unitOfWork.EquipmentRepository.Update(equipment);
                 _unitOfWork.EquipmentRepository.Save();
@@ -80,12 +80,15 @@
             //cupaj
             //request.Equipment.Quantity -= request.Quantity;
             //
-            Equipment changed = request.Equipment.SubstractQuantity(request.Equipment, request.Quantity);
+            Equipment changed = request.Equipment.SubstractQuantity(request.Quantity);
             //cupaj
             //if (request.Equipment.Quantity <= 0)
                 //request.Equipment.Deleted = true;
             //
-            request.Equipment.ReservedQuantity -= request.Quantity;
+            //cupaj
+            //request.Equipment.ReservedQuantity -= request.Quantity;
+            //
+            request.Equipment.SubstractReservedQuantity(request.Quantity);
         }
 
         public List<RelocationRequest> GetAllForRoom(int roomId)

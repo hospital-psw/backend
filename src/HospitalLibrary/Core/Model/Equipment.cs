@@ -9,10 +9,10 @@
 
     public class Equipment : Entity
     {
-        public EquipmentType EquipmentType { get; set; }
-        public int Quantity { get; set; }
-        public Room Room { get; set; }
-        public int ReservedQuantity { get; set; }
+        public EquipmentType EquipmentType { get; private set; }
+        public int Quantity { get; private set; }
+        public Room Room { get; private set; }
+        public int ReservedQuantity { get; private set; }
         public Equipment()
         {
         }
@@ -24,10 +24,24 @@
             Room = room;
         }
 
-        public Equipment AddReservedQuantity(Equipment equipment, int quantity)
+        public Equipment(EquipmentType equipmentType, int quantity, Room room, int id, int reservedQuantity)
         {
-            equipment.ReservedQuantity += quantity;
-            return equipment;
+            Id = id;
+            EquipmentType = equipmentType;
+            Quantity = quantity;
+            Room = room;
+            ReservedQuantity = reservedQuantity;
+        }
+
+        public Equipment AddReservedQuantity(int quantity)
+        {
+            this.ReservedQuantity += quantity;
+            return this;
+        }
+        public Equipment SubstractReservedQuantity(int quantity)
+        {
+            this.ReservedQuantity += quantity;
+            return this;
         }
 
         public static void Create(EquipmentType equipmentType, int quantity, Room room)
@@ -35,23 +49,23 @@
             Equipment equipment = new Equipment(equipmentType, quantity, room);
         }
 
-        public Equipment AddQuantity(Equipment equipment, int quantity)
+        public Equipment AddQuantity(int quantity)
         {
-            equipment.Quantity += quantity;
-            return equipment;
+            this.Quantity += quantity;
+            return this;
         }
 
-        public Equipment SubstractQuantity(Equipment equipment, int quantity)
+        public Equipment SubstractQuantity(int quantity)
         {
-            equipment.Quantity -= quantity;
-            return equipment;
+            this.Quantity -= quantity;
+            this.CheckForDelete();
+            return this;
         }
 
-        public bool CheckForDelete(Equipment equipment)
+        public void CheckForDelete()
         {
-            if (equipment.Quantity <= 0)
-                return true;
-            return false;
+            if (this.Quantity <= 0)
+                this.Deleted = true;
         }
     }
 }
