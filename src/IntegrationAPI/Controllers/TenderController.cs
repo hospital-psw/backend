@@ -1,11 +1,11 @@
 ﻿namespace IntegrationAPI.Controllers
 {
     using AutoMapper;
-    using IntegrationAPI.DTO.BloodBank;
     using IntegrationAPI.DTO.Tender;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
 
 
@@ -57,6 +57,12 @@
             var responseEntity = _tenderService.Update(originalTender);
 
             return Ok(responseEntity);
+        }
+
+        [HttpPut("MakeAnOffer/{tenderId}")]
+        public IActionResult MakeAnOffer(int tenderId, MakeTenderOfferDTO tender)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
