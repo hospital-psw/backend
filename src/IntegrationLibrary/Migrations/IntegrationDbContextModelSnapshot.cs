@@ -278,6 +278,50 @@ namespace IntegrationLibrary.Migrations
             modelBuilder.Entity("IntegrationLibrary.Tender.TenderOffer", b =>
                 {
                     b.Navigation("Items");
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBank.BloodBank", b =>
+                {
+                    b.OwnsOne("IntegrationLibrary.BloodBank.MonthlyTransfer", "MonthlyTransfer", b1 =>
+                        {
+                            b1.Property<int>("BloodBankId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("ABMinus")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("ABPlus")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("AMinus")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("APlus")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("BMinus")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("BPlus")
+                                .HasColumnType("int");
+
+                            b1.Property<DateTime>("DateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<int>("OMinus")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("OPlus")
+                                .HasColumnType("int");
+
+                            b1.HasKey("BloodBankId");
+
+                            b1.ToTable("BloodBanks");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BloodBankId");
+                        });
+
+                    b.Navigation("MonthlyTransfer");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using IntegrationServices;
+using IntegrationServices.MonhtlyTransferService;
 using IntegrationServices.ReportService;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,8 +23,9 @@ namespace PrimerServis
                 .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<MQSubscriberService>();
+                   // services.AddHostedService<MQSubscriberService>();
                     services.AddHostedService<ReportService>();
+                    services.AddHostedService<MonhtlyTransferService>();
                 });
     }
 }

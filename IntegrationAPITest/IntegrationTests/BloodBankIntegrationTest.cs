@@ -5,6 +5,7 @@
     using IntegrationAPI.DTO.BloodBank;
     using IntegrationAPITest.MockData;
     using IntegrationAPITest.Setup;
+    using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Settings;
     using IntegrationLibrary.Util.Interfaces;
@@ -67,8 +68,35 @@
             result.Frequently.Equals(80);
             result.ReportFrom.Equals(testTime);
             result.ReportTo.Equals(testTime);
+        }
+        [Fact]
+        public void Add_New_Monthly_Configuration()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            SetupContext(scope);
+            var testTime = DateTime.Now;
+            var dto = new MonthlyTransfer()
+            {
+                DateTime = testTime,
+                ABMinus = 2,
+                ABPlus = 1,
+                AMinus = 0,
+                APlus = 1,
+                BMinus = 2,
+                BPlus = 10,
+                OMinus = 0,
+                OPlus = 0,
+            };
 
+            var result = ((OkObjectResult)controller.SaveMonthlyTransferConfiguration(1,dto)).Value as GetBloodBankDTO;
 
+            result.ShouldNotBeNull();
+            result.MonthlyTransfer.APlus.Equals(1);
+            result.MonthlyTransfer.APlus.Equals(1);
+            result.MonthlyTransfer.ABPlus.Equals(1);
+            result.MonthlyTransfer.ABMinus.Equals(2);
+            result.MonthlyTransfer.OPlus.Equals(0);
         }
     }
 }

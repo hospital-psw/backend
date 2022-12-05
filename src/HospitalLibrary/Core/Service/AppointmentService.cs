@@ -143,7 +143,7 @@
                 _unitOfWork.AppointmentRepository.Update(appointment);
                 _unitOfWork.Save();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }

@@ -19,7 +19,7 @@
 
         private static RelocationController SetupController(IServiceScope serviceScope)
         {
-            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>());
+            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomScheduleService>());
         }
 
         [Fact]
@@ -59,6 +59,18 @@
 
             Assert.NotNull(result);
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public void Test_decline_relocation()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.Decline(1) as StatusCodeResult;
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+
+
         }
     }
 }

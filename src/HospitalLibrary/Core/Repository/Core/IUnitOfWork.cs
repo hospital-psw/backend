@@ -39,11 +39,15 @@
         public IApplicationUserRepository ApplicationUserRepository { get; }
         public IApplicationPatientRepository ApplicationPatientRepository { get; }
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; }
+        public IRenovationRepository RenovationRepository { get; }
         public IConsiliumRepository ConsiliumRepository { get; }
         public IDoctorScheduleRepository DoctorScheduleRepository { get; }
 
         public IPrescriptionRepository PrescriptionRepository { get; }
 
         public ISymptomRepository SymptomRepository { get; }
+
+        public IAnamnesisRepository AnamnesisRepository { get; }
+
     }
 }

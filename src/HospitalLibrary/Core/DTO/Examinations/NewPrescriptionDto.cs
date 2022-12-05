@@ -1,4 +1,4 @@
-﻿namespace HospitalAPI.Dto.Examinations
+﻿namespace HospitalLibrary.Core.DTO.Examinations
 {
     using System;
 

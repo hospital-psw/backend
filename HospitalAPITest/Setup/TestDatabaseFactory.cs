@@ -155,7 +155,7 @@
 
             context.ApplicationPatients.Add(appPat2);
 
-            context.Appointments.Add(new Appointment
+            Appointment appointment1 = new Appointment
             {
                 Date = new DateTime(2022, 11, 11, 14, 0, 0),
                 Doctor = appDoc,
@@ -164,7 +164,9 @@
                 IsDone = false,
                 ExamType = ExaminationType.OPERATION,
                 Duration = 30
-            });
+            };
+
+            context.Appointments.Add(appointment1);
 
             Medicament med = new Medicament
             {
@@ -429,6 +431,38 @@
                 ManagerComment = ""
             });
 
+            Prescription pres = new Prescription
+            {
+                Medicament = med,
+                Description = "Pacijent je dobio migrenu",
+                DateRange = new DateRange(DateTime.Now, DateTime.Now.AddDays(2))
+            };
+
+            context.Prescriptions.Add(pres);
+
+            Symptom symy = new Symptom
+            {
+                Name = "Glavobolja"
+            };
+
+            context.Symptoms.Add(symy);
+
+            List<Prescription> prescriptions = new List<Prescription>();
+            prescriptions.Add(pres);
+
+            List<Symptom> symptoms = new List<Symptom>();
+            symptoms.Add(symy);
+
+            Anamnesis anam = new Anamnesis()
+            {
+                Description = "Totalna blejica",
+                Appointment = appointment1,
+                Prescriptions = prescriptions,
+                Symptoms = symptoms
+            };
+
+            context.Anamneses.Add(anam);
+
             Room relocationFromRoom = new Room()
             {
                 Floor = new Floor()
@@ -509,6 +543,17 @@
             context.Symptoms.Add(new Symptom
             {
                 Name = "Glavobolja"
+            });
+            List<Room> roomsRenovation = new List<Room>();
+            roomsRenovation.Add(room);
+            List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
+            context.RenovationRequests.Add(new RenovationRequest
+            {
+                RenovationType = RenovationType.SPLIT,
+                Rooms = roomsRenovation,
+                StartTime = new DateTime(),
+                Duration = 2,
+                RenovationDetails = renovationDetails
             });
 
             context.SaveChanges();
