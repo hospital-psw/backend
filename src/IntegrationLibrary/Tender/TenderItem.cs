@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Tender
     public class TenderItem : Entity
     {
         public BloodType BloodType { get; set; }
-        public double Money { get; set; }
+        public Money Money { get; set; }
         public double Quantity { get; set; }
     }
 }

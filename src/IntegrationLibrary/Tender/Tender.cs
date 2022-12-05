@@ -14,5 +14,16 @@ namespace IntegrationLibrary.Tender
         public List<TenderOffer> Offers { get; set; }
         public TenderOffer TenderWinner { get; set;}
         public List<TenderItem> Items { get; set; }  
+
+        public Money TotalSum()
+        {
+            Money totalSum = new Money();
+
+            foreach(TenderItem i in Items)
+            {
+                totalSum.Add(i.Money);
+            }
+            return totalSum;
+        }
     }
 }

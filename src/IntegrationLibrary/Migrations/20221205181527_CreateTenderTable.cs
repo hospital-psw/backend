@@ -17,7 +17,8 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BloodType = table.Column<int>(type: "int", nullable: false),
-                    Money = table.Column<double>(type: "float", nullable: false),
+                    Money_Amount = table.Column<double>(type: "float", nullable: true),
+                    Money_Currency = table.Column<int>(type: "int", nullable: true),
                     Quantity = table.Column<double>(type: "float", nullable: false),
                     TenderId = table.Column<int>(type: "int", nullable: true),
                     TenderOfferId = table.Column<int>(type: "int", nullable: true),

@@ -164,9 +164,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Money")
-                        .HasColumnType("float");
-
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
@@ -235,6 +232,27 @@ namespace IntegrationLibrary.Migrations
                     b.HasOne("IntegrationLibrary.Tender.TenderOffer", null)
                         .WithMany("Items")
                         .HasForeignKey("TenderOfferId");
+
+                    b.OwnsOne("IntegrationLibrary.Tender.Money", "Money", b1 =>
+                        {
+                            b1.Property<int>("TenderItemId")
+                                .HasColumnType("int");
+
+                            b1.Property<double>("Amount")
+                                .HasColumnType("float");
+
+                            b1.Property<int>("Currency")
+                                .HasColumnType("int");
+
+                            b1.HasKey("TenderItemId");
+
+                            b1.ToTable("TenderItem");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TenderItemId");
+                        });
+
+                    b.Navigation("Money");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Tender.TenderOffer", b =>
