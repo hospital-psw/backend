@@ -23,5 +23,11 @@
             Quantity = quantity;
             Room = room;
         }
+
+        public Equipment ChangeReservedQuantity(Equipment equipment, int quantity)
+        {
+            equipment.ReservedQuantity += quantity;
+            return equipment;
+        }
     }
 }
