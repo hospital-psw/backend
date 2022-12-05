@@ -6,6 +6,8 @@ namespace IntegrationLibrary.Core
     using IntegrationLibrary.News;
     using IntegrationLibrary.News.Interfaces;
     using IntegrationLibrary.Settings;
+    using IntegrationLibrary.Tender;
+    using IntegrationLibrary.Tender.Interfaces;
 
     public class UnitOfWork : IUnitOfWork
     {
@@ -14,12 +16,15 @@ namespace IntegrationLibrary.Core
         public IBloodBankRepository BloodBankRepository { get; }
         public INewsRepository NewsRepository { get; }
 
+        public ITenderRepository TenderRepository { get; }
+
         public UnitOfWork(IntegrationDbContext context)
         {
             _context = context;
 
             BloodBankRepository = new BloodBankRepository(_context);
             NewsRepository = new NewsRepository(_context);
+            TenderRepository = new TenderRepository(_context);
         }
 
         public void Dispose()
