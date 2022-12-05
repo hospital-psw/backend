@@ -102,7 +102,7 @@
 
             var result = controller.Create(dto) as StatusCodeResult;
 
-            Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.Equal(StatusCodes.Status400BadRequest, result.StatusCode);
         }
         [Fact]
         public void Doctor_has_appointments_in_requested_daterange()
@@ -122,7 +122,7 @@
 
             var result = controller.Create(dto) as StatusCodeResult;
 
-            Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.Equal(StatusCodes.Status400BadRequest, result.StatusCode);
         }
         [Fact]
         public void Test_get_all_requests_for_doctor()
@@ -184,7 +184,7 @@
             int vacationRequestId = 1;
             var result = controller.Delete(vacationRequestId) as StatusCodeResult;
 
-            Assert.Equal(result.StatusCode, StatusCodes.Status200OK);
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }
 
         [Fact]
@@ -196,7 +196,7 @@
             int vacationRequestId = 100;
             var result = controller.Delete(vacationRequestId) as StatusCodeResult;
 
-            Assert.Equal(result.StatusCode, StatusCodes.Status404NotFound);
+            Assert.Equal(StatusCodes.Status404NotFound, result.StatusCode);
         }
 
         [Fact]
@@ -208,7 +208,7 @@
             int vacationRequestId = 6;
             var result = controller.Delete(vacationRequestId) as StatusCodeResult;
 
-            Assert.Equal(result.StatusCode, StatusCodes.Status400BadRequest);
+            Assert.Equal(StatusCodes.Status400BadRequest, result.StatusCode);
         }
     }
 }

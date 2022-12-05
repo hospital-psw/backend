@@ -16,5 +16,7 @@
         IEnumerable<VacationRequest> GetAllRequestsByDoctorsId(int doctorId);
         IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId);
         int Save();
+
+        public List<VacationRequest> GetAllDoctorId(int doctorId);
     }
 }

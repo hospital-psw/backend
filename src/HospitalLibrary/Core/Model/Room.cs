@@ -13,6 +13,8 @@ namespace HospitalLibrary.Core.Model
         public WorkingHours? WorkingHours { get; set; }
         public int Capacity { get; set; }
         public List<ApplicationPatient> Patients { get; set; } = new List<ApplicationPatient>();
+        public List<RenovationRequest> Renovations { get; set; }
+
 
         public Room() { }
 
