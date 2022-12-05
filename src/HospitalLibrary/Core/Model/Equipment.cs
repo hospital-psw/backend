@@ -46,5 +46,12 @@
             equipment.Quantity -= quantity;
             return equipment;
         }
+
+        public bool CheckForDelete(Equipment equipment)
+        {
+            if (equipment.Quantity <= 0)
+                return true;
+            return false;
+        }
     }
 }

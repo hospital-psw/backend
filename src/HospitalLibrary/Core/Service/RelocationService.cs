@@ -81,8 +81,10 @@
             //request.Equipment.Quantity -= request.Quantity;
             //
             Equipment changed = request.Equipment.SubstractQuantity(request.Equipment, request.Quantity);
-            if (request.Equipment.Quantity <= 0)
-                request.Equipment.Deleted = true;
+            //cupaj
+            //if (request.Equipment.Quantity <= 0)
+                //request.Equipment.Deleted = true;
+            //
             request.Equipment.ReservedQuantity -= request.Quantity;
         }
 
