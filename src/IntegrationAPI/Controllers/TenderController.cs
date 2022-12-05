@@ -2,7 +2,9 @@
 {
     using AutoMapper;
     using IntegrationAPI.DTO.BloodBank;
+    using IntegrationAPI.DTO.News;
     using IntegrationAPI.DTO.Tender;
+    using IntegrationLibrary.News;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Mvc;
@@ -39,6 +41,18 @@
             }
 
             return Ok(_mapper.Map<GetTenderDTO>(entity));
+        }
+
+        [HttpPost]
+        public virtual IActionResult Create([FromBody] CreateTenderDTO tender)
+        {
+            var entity = _tenderService.Create(_mapper.Map<Tender>(tender));
+
+            if (entity is null)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
 
         [HttpPut]

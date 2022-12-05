@@ -1,6 +1,7 @@
 ﻿namespace IntegrationLibrary.Tender
 {
     using IntegrationLibrary.Core;
+    using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender.Interfaces;
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
@@ -28,6 +29,9 @@
         {
             try
             {
+                TenderStatus Status = TenderStatus.OPEN;
+                List<TenderOffer> Offers = new List<TenderOffer>();
+                TenderOffer TenderWinner = null;
                 _unitOfWork.TenderRepository.Add(entity);
                 _unitOfWork.Save();
 

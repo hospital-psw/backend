@@ -13,7 +13,6 @@
         public List<TenderOffer> Offers { get; set; }
         public TenderOffer TenderWinner { get; set; }
         public List<TenderItem> Items { get; set; }
-        public TenderItem TenderItem { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
     }
