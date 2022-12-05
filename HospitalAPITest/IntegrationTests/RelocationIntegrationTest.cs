@@ -60,5 +60,17 @@
             Assert.NotNull(result);
             Assert.Empty(result);
         }
+
+        [Fact]
+        public void Test_decline_relocation()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.Decline(1) as StatusCodeResult;
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+
+
+        }
     }
 }

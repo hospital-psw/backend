@@ -1,9 +1,9 @@
 ﻿namespace HospitalAPI.Dto
 {
-    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model;
-    using System.Collections.Generic;
+    using HospitalLibrary.Core.Model.Enums;
     using System;
+    using System.Collections.Generic;
 
     public class RenovationRequestDto
     {

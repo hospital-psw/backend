@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,7 @@
         {
             return _context.SaveChanges();
         }
+
 
     }
 }

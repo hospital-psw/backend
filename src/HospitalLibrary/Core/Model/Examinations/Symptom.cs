@@ -10,6 +10,8 @@
     {
         public string Name { get; set; }
 
+        public List<Anamnesis> Anamneses { get; set; }
+
         public Symptom(string name)
         {
             Name = name;

@@ -64,6 +64,11 @@
             return Ok(relocationDtos);
         }
 
-
+        [HttpPost("decline")]
+        public IActionResult Decline([FromBody] int requestId)
+        {
+            _relocationService.Decline(requestId);
+            return Ok();
+        }
     }
 }

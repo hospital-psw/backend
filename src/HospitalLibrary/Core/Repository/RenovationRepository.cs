@@ -49,5 +49,9 @@
             return roomRenovations;
         }
 
+        public int Save()
+        {
+            return _context.SaveChanges();
+        }
     }
 }
