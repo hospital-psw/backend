@@ -38,5 +38,11 @@ namespace HospitalLibrary.Core.Model
             if (duration <= 0) throw new Exception("Duration must be greater than 0");
             return new RelocationRequest(fromRoom, toRoom, equipment, quantity, startTime, duration);
         }
+
+        public RelocationRequest Delete()
+        {
+            this.Deleted = true;
+            return this;
+        }
     }
 }
