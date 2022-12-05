@@ -29,5 +29,16 @@
             equipment.ReservedQuantity += quantity;
             return equipment;
         }
+
+        public static void Create(EquipmentType equipmentType, int quantity, Room room)
+        {
+            Equipment equipment = new Equipment(equipmentType, quantity, room);
+        }
+
+        public Equipment ChangeQuantity(Equipment equipment, int quantity)
+        {
+            equipment.Quantity += quantity;
+            return equipment;
+        }
     }
 }

@@ -24,8 +24,12 @@
             try
             {
                 Equipment equipment = _unitOfWork.EquipmentRepository.Get(entity.Equipment.Id);
-                equipment.ReservedQuantity += entity.Quantity;
-                _unitOfWork.EquipmentRepository.Update(equipment);
+                //cupaj
+                //equipment.ReservedQuantity += entity.Quantity;
+                //*
+                Equipment changed = equipment.ChangeReservedQuantity(equipment, entity.Quantity);
+                _unitOfWork.EquipmentRepository.Update(changed);
+                //_unitOfWork.EquipmentRepository.Update(equipment);
                 return _unitOfWork.RelocationRepository.Create(entity);
             }
             catch (Exception)
@@ -48,12 +52,20 @@
             Equipment equipment = _unitOfWork.EquipmentRepository.GetEquipment(request.Equipment.EquipmentType, request.ToRoom);
             if (equipment == null)
             {
+                //cupaj
                 _unitOfWork.EquipmentRepository.Create(new Equipment(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
+                //
+                Room room = _unitOfWork.RoomRepository.GetById(request.ToRoom.Id); //dobavi sobu
+                Equipment.Create(request.Equipment.EquipmentType, request.Quantity, room);
             }
             else
             {
-                equipment.Quantity += request.Quantity;
-                _unitOfWork.EquipmentRepository.Update(equipment);
+                //cupaj
+                //equipment.Quantity += request.Quantity;
+                //
+                Equipment changed = equipment.ChangeQuantity(equipment, request.Quantity);
+                _unitOfWork.EquipmentRepository.Update(changed);
+                //_unitOfWork.EquipmentRepository.Update(equipment);
                 _unitOfWork.EquipmentRepository.Save();
             }
             SubtractEquipmentFromSourceRoom(request);
