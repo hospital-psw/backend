@@ -89,7 +89,7 @@
                 OPlus = 0,
             };
 
-            var result = ((OkObjectResult)controller.SaveMonthlyTransferConfiguration(1,dto)).Value as GetBloodBankDTO;
+            var result = ((OkObjectResult)controller.SaveMonthlyTransferConfiguration(1, dto)).Value as GetBloodBankDTO;
 
             result.ShouldNotBeNull();
             result.MonthlyTransfer.APlus.Equals(1);

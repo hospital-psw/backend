@@ -8,6 +8,7 @@
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Settings;
+    using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,6 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using IntegrationLibrary.Tender.Enums;
 
     public class TenderIntegrationTest : BaseIntegrationTest
     {

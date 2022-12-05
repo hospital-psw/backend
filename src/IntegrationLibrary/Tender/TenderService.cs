@@ -1,7 +1,7 @@
 ﻿namespace IntegrationLibrary.Tender
 {
-    using IntegrationLibrary.Tender.Interfaces;
     using IntegrationLibrary.Core;
+    using IntegrationLibrary.Tender.Interfaces;
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;

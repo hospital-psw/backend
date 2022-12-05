@@ -1,13 +1,13 @@
 ﻿namespace IntegrationAPITest.MockData
 {
+    using IntegrationLibrary.Tender;
+    using IntegrationLibrary.Tender.Enums;
+    using Microsoft.VisualBasic;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using IntegrationLibrary.Tender;
-    using IntegrationLibrary.Tender.Enums;
-    using Microsoft.VisualBasic;
 
     public class TenderMockData
     {

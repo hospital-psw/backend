@@ -25,7 +25,7 @@
             MonthlyTransfer mt = new MonthlyTransfer();
             var url = "http://localhost:8081/api/monthlyTransfer";
             HttpClient httpClient = new HttpClient();
-            var payload = new StringContent(JsonConvert.SerializeObject(mt) ,Encoding.UTF8,"application/json");
+            var payload = new StringContent(JsonConvert.SerializeObject(mt), Encoding.UTF8, "application/json");
             var result = httpClient.PostAsync(url, payload).Result;
             Console.WriteLine(result);
 

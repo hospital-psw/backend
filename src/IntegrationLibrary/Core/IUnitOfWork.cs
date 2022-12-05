@@ -9,7 +9,7 @@
     {
         public IBloodBankRepository BloodBankRepository { get; }
         public INewsRepository NewsRepository { get; }
-        public ITenderRepository TenderRepository { get; }  
+        public ITenderRepository TenderRepository { get; }
         int Save();
     }
 }

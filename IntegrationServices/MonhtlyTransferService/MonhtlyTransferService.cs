@@ -25,7 +25,7 @@
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             collectTimer.Elapsed += new ElapsedEventHandler(CallBloodBank);
-            collectTimer.Interval = 5000; 
+            collectTimer.Interval = 5000;
             collectTimer.Enabled = true;
             return Task.CompletedTask;
         }

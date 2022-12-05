@@ -1,7 +1,7 @@
 ﻿namespace IntegrationAPI.DTO.Tender
 {
-    using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender;
+    using IntegrationLibrary.Tender.Enums;
     using System;
     using System.Collections.Generic;
 

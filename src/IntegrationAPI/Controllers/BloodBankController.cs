@@ -122,7 +122,7 @@
                 {
                     return BadRequest();
                 }
-                var retVal = _bloodBankService.SaveMonthlyTransferConfiguration(id,mt);
+                var retVal = _bloodBankService.SaveMonthlyTransferConfiguration(id, mt);
                 return Ok(_mapper.Map<GetBloodBankDTO>(retVal));
             }
             catch (Exception)
