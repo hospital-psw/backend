@@ -10,15 +10,7 @@
 
         public static RelocationRequest EntityDtoToEntity(RelocationRequestDto dto, Room fromRoom, Room toRoom, Equipment equipment)
         {
-            RelocationRequest relocationRequest = new RelocationRequest();
-
-            relocationRequest.FromRoom = fromRoom;
-            relocationRequest.ToRoom = toRoom;
-            relocationRequest.Equipment = equipment;
-            relocationRequest.Quantity = dto.Quantity;
-            relocationRequest.StartTime = dto.StartTime;
-            relocationRequest.Duration = dto.Duration;
-
+            RelocationRequest relocationRequest = RelocationRequest.Create(fromRoom, toRoom, equipment, dto.Quantity, dto.StartTime, dto.Duration);
             return relocationRequest;
         }
     }
