@@ -27,7 +27,7 @@
                 //cupaj
                 //equipment.ReservedQuantity += entity.Quantity;
                 //*
-                Equipment changed = equipment.ChangeReservedQuantity(equipment, entity.Quantity);
+                Equipment changed = equipment.AddReservedQuantity(equipment, entity.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
                 //_unitOfWork.EquipmentRepository.Update(equipment);
                 return _unitOfWork.RelocationRepository.Create(entity);
@@ -63,7 +63,7 @@
                 //cupaj
                 //equipment.Quantity += request.Quantity;
                 //
-                Equipment changed = equipment.ChangeQuantity(equipment, request.Quantity);
+                Equipment changed = equipment.AddQuantity(equipment, request.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
                 //_unitOfWork.EquipmentRepository.Update(equipment);
                 _unitOfWork.EquipmentRepository.Save();
@@ -77,7 +77,10 @@
 
         private void SubtractEquipmentFromSourceRoom(RelocationRequest request)
         {
-            request.Equipment.Quantity -= request.Quantity;
+            //cupaj
+            //request.Equipment.Quantity -= request.Quantity;
+            //
+            Equipment changed = request.Equipment.SubstractQuantity(request.Equipment, request.Quantity);
             if (request.Equipment.Quantity <= 0)
                 request.Equipment.Deleted = true;
             request.Equipment.ReservedQuantity -= request.Quantity;

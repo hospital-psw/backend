@@ -24,7 +24,7 @@
             Room = room;
         }
 
-        public Equipment ChangeReservedQuantity(Equipment equipment, int quantity)
+        public Equipment AddReservedQuantity(Equipment equipment, int quantity)
         {
             equipment.ReservedQuantity += quantity;
             return equipment;
@@ -35,9 +35,15 @@
             Equipment equipment = new Equipment(equipmentType, quantity, room);
         }
 
-        public Equipment ChangeQuantity(Equipment equipment, int quantity)
+        public Equipment AddQuantity(Equipment equipment, int quantity)
         {
             equipment.Quantity += quantity;
+            return equipment;
+        }
+
+        public Equipment SubstractQuantity(Equipment equipment, int quantity)
+        {
+            equipment.Quantity -= quantity;
             return equipment;
         }
     }
