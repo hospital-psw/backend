@@ -10,6 +10,7 @@ namespace HospitalLibrary.Core.Model
     {
         public string NewRoomName { get; set; }
         public string NewRoomPurpose { get; set; }
+        public int NewCapacity { get; set; }
 
         public RenovationDetails() { }
     }

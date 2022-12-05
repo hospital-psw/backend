@@ -11,6 +11,7 @@
 
             renovationDetails.NewRoomName = dto.NewRoomName;
             renovationDetails.NewRoomPurpose = dto.NewRoomPurpose;
+            renovationDetails.NewCapacity = dto.NewCapacity;
 
             return renovationDetails;
         }
