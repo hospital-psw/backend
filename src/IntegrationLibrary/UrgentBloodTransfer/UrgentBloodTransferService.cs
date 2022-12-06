@@ -79,6 +79,12 @@
             return response;
         }
 
+        private void SendBloodUnitRequest(BloodUnit bloodUnit)
+        {
+            // ovo samo unit testiras
+            return;
+        }
+
         public bool RequestBlood(UrgentBloodTransferRequest request)
         {
             try
@@ -88,7 +94,9 @@
                 if (response.HasBlood)
                 {
                     _integrationUnitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
-                    _hospitalUnitOfWork.BloodUnitRepository.Add(new BloodUnit((HospitalLibrary.Core.Model.Blood.Enums.BloodType)request.BloodType,(int)request.Amount));
+                    _integrationUnitOfWork.Save();
+
+                    SendBloodUnitRequest(new BloodUnit((HospitalLibrary.Core.Model.Blood.Enums.BloodType)request.BloodType, (int)request.Amount));
                     return true;
                 }
                 else

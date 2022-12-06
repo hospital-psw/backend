@@ -1,13 +1,14 @@
 ﻿namespace IntegrationLibrary.UrgentBloodTransfer
 {
     using grpcServices;
+    using IntegrationLibrary.Core;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
-    public class UrgentBloodTransfer
+    public class UrgentBloodTransfer : Entity
     {
         public BloodType BloodType { get; set; }
         public uint Amount { get; set; }

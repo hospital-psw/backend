@@ -2,6 +2,7 @@
 {
     using grpcServices;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
@@ -19,9 +20,9 @@
         public IActionResult RequestBlood([FromBody] UrgentBloodTransferRequest request)
         {
             if(_service.RequestBlood(request))
-                return Ok();
+                return StatusCode(StatusCodes.Status201Created);
             else
-                return BadRequest();
+                return NoContent();
         }
     }
 }

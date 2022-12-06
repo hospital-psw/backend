@@ -30,7 +30,7 @@
 
         public void Delete(UrgentBloodTransfer entity)
         {
-            throw new NotImplementedException();
+            _context.Remove(entity);
         }
 
         public UrgentBloodTransfer Get(int id)
