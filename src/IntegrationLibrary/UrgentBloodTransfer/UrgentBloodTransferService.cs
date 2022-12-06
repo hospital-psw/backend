@@ -4,14 +4,12 @@
     using grpcServices;
     using IntegrationLibrary.Core;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
-    using HospitalLibrary.Core.Repository.Core;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using HospitalLibrary.Core.Model.Blood;
 
     public class UrgentBloodTransferService : IUrgentBloodTransferService
     {
@@ -19,22 +17,20 @@
         private UrgentBloodTransferGrpcService.UrgentBloodTransferGrpcServiceClient _grpcClient;
 
         private readonly ILogger<UrgentBloodTransfer> _logger;
-        private readonly IntegrationLibrary.Core.IUnitOfWork _integrationUnitOfWork;
-        private readonly HospitalLibrary.Core.Repository.Core.IUnitOfWork _hospitalUnitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UrgentBloodTransferService(ILogger<UrgentBloodTransfer> logger, IntegrationLibrary.Core.IUnitOfWork integrationUnitOfWork, HospitalLibrary.Core.Repository.Core.IUnitOfWork hospitalUnitOfWork)
+        public UrgentBloodTransferService(ILogger<UrgentBloodTransfer> logger, IUnitOfWork integrationUnitOfWork)
         {
             _logger = logger;
-            _integrationUnitOfWork = integrationUnitOfWork;
-            _hospitalUnitOfWork = hospitalUnitOfWork;
+            _unitOfWork = integrationUnitOfWork;
         }
 
         public UrgentBloodTransfer Create(UrgentBloodTransfer entity)
         {
             try
             {
-                _integrationUnitOfWork.UrgentBloodTransferRepository.Add(entity);
-                _integrationUnitOfWork.Save();
+                _unitOfWork.UrgentBloodTransferRepository.Add(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }
@@ -59,7 +55,7 @@
         {
             try
             {
-                return _integrationUnitOfWork.UrgentBloodTransferRepository.GetAll();
+                return _unitOfWork.UrgentBloodTransferRepository.GetAll();
             }
             catch(Exception e)
             {
@@ -93,10 +89,10 @@
                 
                 if (response.HasBlood)
                 {
-                    _integrationUnitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
-                    _integrationUnitOfWork.Save();
+                    _unitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
+                    _unitOfWork.Save();
 
-                    SendBloodUnitRequest(new BloodUnit((HospitalLibrary.Core.Model.Blood.Enums.BloodType)request.BloodType, (int)request.Amount));
+                    SendBloodUnitRequest(new BloodUnit((IntegrationLibrary.UrgentBloodTransfer.BloodType)request.BloodType, (int)request.Amount));
                     return true;
                 }
                 else
@@ -120,7 +116,7 @@
         {
             try
             {
-                return _integrationUnitOfWork.UrgentBloodTransferRepository.Get(entity);
+                return _unitOfWork.UrgentBloodTransferRepository.Get(entity);
             }
             catch (Exception e)
             {

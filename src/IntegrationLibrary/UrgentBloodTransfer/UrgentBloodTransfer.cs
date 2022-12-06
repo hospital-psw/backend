@@ -10,10 +10,10 @@
 
     public class UrgentBloodTransfer : Entity
     {
-        public BloodType BloodType { get; set; }
+        public grpcServices.BloodType BloodType { get; set; }
         public uint Amount { get; set; }
 
-        public UrgentBloodTransfer(BloodType bloodType, uint amount)
+        public UrgentBloodTransfer(grpcServices.BloodType bloodType, uint amount)
         {
             if (Validate(amount))
             {

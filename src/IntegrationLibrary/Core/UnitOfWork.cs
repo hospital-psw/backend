@@ -8,6 +8,8 @@ namespace IntegrationLibrary.Core
     using IntegrationLibrary.Settings;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
+    using IntegrationLibrary.UrgentBloodTransfer;
+    using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
 
     public class UnitOfWork : IUnitOfWork
     {
@@ -15,8 +17,8 @@ namespace IntegrationLibrary.Core
         private readonly IntegrationDbContext _context;
         public IBloodBankRepository BloodBankRepository { get; }
         public INewsRepository NewsRepository { get; }
-
         public ITenderRepository TenderRepository { get; }
+        public IUrgentBloodTransferRepository UrgentBloodTransferRepository { get; }
 
         public UnitOfWork(IntegrationDbContext context)
         {
@@ -25,6 +27,7 @@ namespace IntegrationLibrary.Core
             BloodBankRepository = new BloodBankRepository(_context);
             NewsRepository = new NewsRepository(_context);
             TenderRepository = new TenderRepository(_context);
+            UrgentBloodTransferRepository = new UrgentBloodTransferRepository(_context);
         }
 
         public void Dispose()
