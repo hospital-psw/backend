@@ -19,11 +19,13 @@
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IEmailService _emailService;
+        private readonly IDoctorScheduleService _doctorScheduleService;
 
-        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService)
+        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService, IDoctorScheduleService doctorScheduleService)
         {
             _appointmentService = appointmentService;
             _emailService = emailService;
+            _doctorScheduleService = doctorScheduleService;
         }
 
         [HttpGet("{id}")]
@@ -75,7 +77,7 @@
         [Route("recommend")]
         public IActionResult RecommendAppointments(RecommendRequestDto dto)
         {
-            return Ok(_appointmentService.RecommendAppointments(dto));
+            return Ok(_doctorScheduleService.RecommendAppointments(dto));
         }
 
         [HttpPost]
