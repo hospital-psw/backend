@@ -87,11 +87,8 @@
                 
                 if (response.HasBlood)
                 {
-
                     _integrationUnitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
-                    
                     _hospitalUnitOfWork.BloodUnitRepository.Add(new BloodUnit((HospitalLibrary.Core.Model.Blood.Enums.BloodType)request.BloodType,(int)request.Amount));
-                    
                     return true;
                 }
                 else

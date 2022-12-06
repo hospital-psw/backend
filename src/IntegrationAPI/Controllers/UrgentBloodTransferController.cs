@@ -1,5 +1,6 @@
 ﻿namespace IntegrationAPI.Controllers
 {
+    using grpcServices;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
     using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +15,13 @@
             _service = service;
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        [HttpPost]
+        public IActionResult RequestBlood([FromBody] UrgentBloodTransferRequest request)
         {
-            _service.RequestBlood();
-
-            return Ok();
+            if(_service.RequestBlood(request))
+                return Ok();
+            else
+                return BadRequest();
         }
     }
 }
