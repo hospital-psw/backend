@@ -48,9 +48,7 @@
             Equipment equipment = _unitOfWork.EquipmentRepository.GetEquipment(request.Equipment.EquipmentType, request.ToRoom);
             if (equipment == null)
             {
-                _unitOfWork.EquipmentRepository.Create(new Equipment(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
-                Room room = _unitOfWork.RoomRepository.GetById(request.ToRoom.Id); //dobavi sobu
-                Equipment.Create(request.Equipment.EquipmentType, request.Quantity, room);
+                _unitOfWork.EquipmentRepository.Create(Equipment.Create(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
             }
             else
             {

@@ -40,13 +40,14 @@
         }
         public Equipment SubstractReservedQuantity(int quantity)
         {
-            this.ReservedQuantity += quantity;
+            this.ReservedQuantity -= quantity;
             return this;
         }
 
-        public static void Create(EquipmentType equipmentType, int quantity, Room room)
+        public static Equipment Create(EquipmentType equipmentType, int quantity, Room room)
         {
             Equipment equipment = new Equipment(equipmentType, quantity, room);
+            return equipment;
         }
 
         public Equipment AddQuantity(int quantity)
