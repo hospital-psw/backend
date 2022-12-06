@@ -39,7 +39,6 @@ namespace HospitalLibrary.Core.Model
             return new RelocationRequest(fromRoom, toRoom, equipment, quantity, startTime, duration);
         }
 
-        public RelocationRequest() { }
 
         public void DeleteRelocation() {
             Equipment.ReservedQuantity -= Quantity;
