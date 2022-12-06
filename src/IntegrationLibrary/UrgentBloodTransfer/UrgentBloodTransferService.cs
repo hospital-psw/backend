@@ -4,6 +4,7 @@
     using grpcServices;
     using IntegrationLibrary.Core;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -18,11 +19,13 @@
 
         private readonly ILogger<UrgentBloodTransfer> _logger;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IBBConnections _connections;
 
-        public UrgentBloodTransferService(ILogger<UrgentBloodTransfer> logger, IUnitOfWork integrationUnitOfWork)
+        public UrgentBloodTransferService(ILogger<UrgentBloodTransfer> logger, IUnitOfWork integrationUnitOfWork, IBBConnections connections)
         {
             _logger = logger;
             _unitOfWork = integrationUnitOfWork;
+            _connections = connections;
         }
 
         public UrgentBloodTransfer Create(UrgentBloodTransfer entity)
@@ -75,12 +78,6 @@
             return response;
         }
 
-        private void SendBloodUnitRequest(BloodUnit bloodUnit)
-        {
-            // ovo samo unit testiras
-            return;
-        }
-
         public bool RequestBlood(UrgentBloodTransferRequest request)
         {
             try
@@ -92,7 +89,7 @@
                     _unitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
                     _unitOfWork.Save();
 
-                    SendBloodUnitRequest(new BloodUnit((IntegrationLibrary.UrgentBloodTransfer.BloodType)request.BloodType, (int)request.Amount));
+                    _connections.SendBloodUnitToHospital(new BloodUnit((BloodType)request.BloodType, (int)request.Amount));
                     return true;
                 }
                 else
