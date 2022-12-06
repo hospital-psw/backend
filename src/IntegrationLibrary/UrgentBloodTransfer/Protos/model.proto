@@ -9,10 +9,10 @@ enum BloodType {
 	AMinus = 1;
 	BPlus = 2;
 	BMinus = 3;
-	OPlus = 4;
-	OMinus = 5;
-	ABPlus = 6;
-	ABMinus = 7;
+	ABPlus = 4;
+	ABMinus = 5;
+	OPlus = 6;
+	OMinus = 7;
 }
 
 message UrgentBloodTransferRequest {
