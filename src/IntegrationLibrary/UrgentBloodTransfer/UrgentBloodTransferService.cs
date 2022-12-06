@@ -90,11 +90,9 @@
                     _unitOfWork.Save();
 
                     _connections.SendBloodUnitToHospital(new BloodUnit((BloodType)request.BloodType, (int)request.Amount));
-                    return true;
                 }
-                else
-                    return false;
-
+                
+                return response.HasBlood;
             }
             catch(Exception e)
             {
