@@ -6,6 +6,7 @@ namespace IntegrationLibrary.Util
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
+    using System.Text;
     using System.Text.Json;
 
     public class BBConnections : IBBConnections
@@ -14,10 +15,11 @@ namespace IntegrationLibrary.Util
         {
             using (var client = new HttpClient())
             {
-                var body = JsonSerializer.Serialize(unit);
-             
+                var json = JsonSerializer.Serialize(unit);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
                 var endpoint = new Uri("http://localhost:16177/api/BloodUnit");
-                var response = await client.PostAsync(endpoint, new StringContent(body));
+                var response = await client.PostAsync(endpoint, content);
                 var resString = response.Content.ReadAsStringAsync();
             }
         }
