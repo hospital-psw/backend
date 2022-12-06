@@ -60,7 +60,7 @@
             {
                 return _unitOfWork.UrgentBloodTransferRepository.GetAll();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError($"Error in UrgentBloodTransfer in GetAll {e.Message} in {e.StackTrace}");
                 return null;
@@ -83,7 +83,7 @@
             try
             {
                 var response = GetResponse(request);
-                
+
                 if (response.HasBlood)
                 {
                     _unitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
@@ -91,15 +91,15 @@
 
                     _connections.SendBloodUnitToHospital(new BloodUnit((BloodType)request.BloodType, (int)request.Amount));
                 }
-                
+
                 return response.HasBlood;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError($"Error in UrgentBloodTransferService in RequestBlood {e.Message} in {e.StackTrace}");
                 return false;
             }
-            
+
         }
 
         public UrgentBloodTransfer Update(UrgentBloodTransfer entity)

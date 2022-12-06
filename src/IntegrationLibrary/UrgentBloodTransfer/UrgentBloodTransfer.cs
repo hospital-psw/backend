@@ -34,5 +34,10 @@
             var other = obj as UrgentBloodTransfer;
             return (this.Amount == other.Amount) && (this.BloodType == other.BloodType);
         }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
