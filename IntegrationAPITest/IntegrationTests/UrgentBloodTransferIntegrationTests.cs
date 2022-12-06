@@ -1,20 +1,20 @@
 ﻿namespace IntegrationAPITest.IntegrationTests
 {
+    using grpcServices;
+    using IntegrationAPI.Controllers;
+    using IntegrationAPITest.Setup;
+    using IntegrationLibrary.Settings;
+    using IntegrationLibrary.UrgentBloodTransfer;
+    using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.DependencyInjection;
+    using Shouldly;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Shouldly;
-    using IntegrationAPI.Controllers;
-    using IntegrationLibrary.Settings;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.DependencyInjection;
-    using IntegrationAPITest.Setup;
-    using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
-    using IntegrationLibrary.UrgentBloodTransfer;
-    using grpcServices;
 
     public class UrgentBloodTransferIntegrationTests : BaseIntegrationTest
     {
@@ -32,7 +32,7 @@
             context.Database.EnsureCreated();
 
             context.SaveChanges();
-            
+
             return context;
         }
 

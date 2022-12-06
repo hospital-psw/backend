@@ -16,7 +16,7 @@ namespace IntegrationLibrary.Util
         {
             using (var client = new HttpClient())
             {
-                
+
                 var getEndpoint = new Uri($"http://localhost:16177/api/BloodUnit/get/{unit.BloodType}");
                 var getResponse = await client.GetAsync(getEndpoint);
                 BloodUnit hospitalBloodUnit = await getResponse.Content.ReadFromJsonAsync<BloodUnit>();

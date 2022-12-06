@@ -87,7 +87,7 @@
                 if (response.HasBlood)
                 {
                     _connections.SendBloodUnitToHospital(new BloodUnit((BloodType)request.BloodType, (int)request.Amount));
-                    
+
                     _unitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
                     _unitOfWork.Save();
                 }
