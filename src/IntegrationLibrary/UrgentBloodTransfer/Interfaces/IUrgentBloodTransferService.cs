@@ -1,5 +1,6 @@
 ﻿namespace IntegrationLibrary.UrgentBloodTransfer.Interfaces
 {
+    using grpcServices;
     using IntegrationLibrary.Core;
     using System;
     using System.Collections.Generic;
@@ -10,6 +11,6 @@
     public interface IUrgentBloodTransferService : IService<UrgentBloodTransfer>
     {
         UrgentBloodTransfer Get(UrgentBloodTransfer entity);
-        void RequestBlood();
+        bool RequestBlood(UrgentBloodTransferRequest request);
     }
 }
