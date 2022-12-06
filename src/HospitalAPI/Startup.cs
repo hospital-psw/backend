@@ -46,7 +46,8 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+            options.UseSqlServer(Configuration.GetConnectionString("HospitalDb"),
+            providerOptions => providerOptions.EnableRetryOnFailure()));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -114,6 +115,7 @@ namespace HospitalAPI
             services.AddScoped<IDoctorScheduleService, DoctorScheduleService>();
             services.AddScoped<IPrescriptionService, PrescriptionService>();
             services.AddScoped<ISymptomService, SymptomService>();
+            services.AddScoped<IAnamnesisService, AnamnesisService>();
 
 
             ProjectConfiguration config = new ProjectConfiguration();

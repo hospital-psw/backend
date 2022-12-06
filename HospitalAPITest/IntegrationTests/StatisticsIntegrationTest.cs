@@ -54,5 +54,19 @@
 
             return expected;
         }
+
+        [Fact]
+        public void Gets_Correct_Vacation_Statistics()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetVacationStatistics(6)).Value as List<int>;
+
+            List<int> expected = ListFactory.CreateList(10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
     }
 }

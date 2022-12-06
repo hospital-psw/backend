@@ -42,5 +42,23 @@
         {
             return Ok(_roomScheduleService.GetAppointments(dto.RoomsId, dto.FromTime, dto.ToTime, dto.Duration));
         }
+
+        [HttpGet("{roomId}")]
+        public IActionResult GetAllForRoom(int roomId)
+        {
+            List<RenovationRequestDisplayDto> renovationsDto = new List<RenovationRequestDisplayDto>();
+            foreach (RenovationRequest renovationRequest in _renovationService.GetAllForRoom(roomId))
+            {
+                renovationsDto.Add(RenovationRequestDisplayMapper.EntityToEntityDto(renovationRequest));
+            }
+            return Ok(renovationsDto);
+        }
+
+        [HttpPost("decline")]
+        public StatusCodeResult Decline([FromBody] int requestId)
+        {
+            _renovationService.Decline(requestId);
+            return Ok();
+        }
     }
 }

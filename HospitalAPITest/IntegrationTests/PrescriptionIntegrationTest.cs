@@ -3,6 +3,7 @@
     using HospitalAPI.Controllers.Examinations;
     using HospitalAPI.Dto.Examinations;
     using HospitalAPITest.Setup;
+    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
