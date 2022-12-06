@@ -110,5 +110,9 @@
                                                .Distinct()
                                                .ToList();
         }
+
+        public void Save() {
+            HospitalDbContext.SaveChanges();
+        }
     }
 }

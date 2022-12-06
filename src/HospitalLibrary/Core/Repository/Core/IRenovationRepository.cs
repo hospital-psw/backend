@@ -11,5 +11,8 @@
     {
         RenovationRequest Create(RenovationRequest request);
         List<RenovationRequest> GetScheduledRenovationsForRoom(int roomId);
+        List<RenovationRequest> GetFinishedRenovations();
+
+        int Save();
     }
 }

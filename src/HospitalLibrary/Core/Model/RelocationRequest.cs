@@ -16,5 +16,10 @@ namespace HospitalLibrary.Core.Model
         public int Duration { get; set; }
 
         public RelocationRequest() { }
+
+        public void DeleteRelocation() {
+            Equipment.ReservedQuantity -= Quantity;
+            Deleted = true;
+        }
     }
 }

@@ -12,5 +12,20 @@
 
 
         public RoomMap() { }
+
+        public RoomMap(Room room, double x, double z, double width, double depth) {
+            Room = room;
+            X = x;
+            Z = z;
+            this.width = width;
+            this.depth = depth;
+        }
+        public static RoomMap Create(Room room, double x, double z, double width, double depth) {
+            return new RoomMap(room, x, z, width, depth);
+        }
+
+        public void Delete() {
+            Deleted = true;
+        }
     }
 }

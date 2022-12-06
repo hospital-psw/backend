@@ -7,9 +7,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class RenovationRepository : BaseRepository<RenovationRequest>, IRenovationRepository
     {
@@ -49,5 +46,20 @@
             return roomRenovations;
         }
 
+        public List<RenovationRequest> GetFinishedRenovations()
+        {
+            DateTime currentTime = DateTime.Now;
+            return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
+                                                        .ThenInclude((Room rm) => rm.Floor)
+                                                        //.ThenInclude(rooms => rooms.Select((room) => room.Floor))
+                                                        .Include(x => x.RenovationDetails)
+                                                        .Where(x => !x.Deleted && DateTime.Compare(x.StartTime.AddHours(x.Duration), currentTime) <= 0)
+                                                        .ToList();
+        }
+
+        public int Save()
+        {
+            return _context.SaveChanges();
+        }
     }
 }

@@ -23,5 +23,13 @@
             Quantity = quantity;
             Room = room;
         }
+
+        public void MoveEquipment(Room newRoom) {
+            Room = newRoom;
+        }
+
+        public void Delete() {
+            Deleted = true;
+        }
     }
 }

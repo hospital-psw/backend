@@ -16,5 +16,9 @@ namespace HospitalLibrary.Core.Model
         public List<RenovationDetails> RenovationDetails { get; set; }
 
         public RenovationRequest() { }
+
+        public void Delete() {
+            Deleted = true;
+        }
     }
 }
