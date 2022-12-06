@@ -6,6 +6,8 @@ using IntegrationLibrary.News.Interfaces;
 using IntegrationLibrary.Settings;
 using IntegrationLibrary.Tender;
 using IntegrationLibrary.Tender.Interfaces;
+using IntegrationLibrary.UrgentBloodTransfer;
+using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
 using IntegrationLibrary.Util;
 using IntegrationLibrary.Util.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -47,6 +49,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IUrgentBloodTransferService, UrgentBloodTransferService>();
 
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<IBBConnections, BBConnections>();
@@ -84,6 +87,7 @@ namespace IntegrationAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
