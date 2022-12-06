@@ -7,8 +7,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IUrgentBloodTransferService
+    public interface IUrgentBloodTransferService : IService<UrgentBloodTransfer>
     {
+        UrgentBloodTransfer Get(UrgentBloodTransfer entity);
         void RequestBlood();
     }
 }
