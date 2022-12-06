@@ -24,12 +24,8 @@
             try
             {
                 Equipment equipment = _unitOfWork.EquipmentRepository.Get(entity.Equipment.Id);
-                //cupaj
-                //equipment.ReservedQuantity += entity.Quantity;
-                //*
                 Equipment changed = equipment.AddReservedQuantity(entity.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
-                //_unitOfWork.EquipmentRepository.Update(equipment);
                 return _unitOfWork.RelocationRepository.Create(entity);
             }
             catch (Exception)
@@ -52,20 +48,14 @@
             Equipment equipment = _unitOfWork.EquipmentRepository.GetEquipment(request.Equipment.EquipmentType, request.ToRoom);
             if (equipment == null)
             {
-                //cupaj
                 _unitOfWork.EquipmentRepository.Create(new Equipment(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
-                //
                 Room room = _unitOfWork.RoomRepository.GetById(request.ToRoom.Id); //dobavi sobu
                 Equipment.Create(request.Equipment.EquipmentType, request.Quantity, room);
             }
             else
             {
-                //cupaj
-                //equipment.Quantity += request.Quantity;
-                //
                 Equipment changed = equipment.AddQuantity(request.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
-                //_unitOfWork.EquipmentRepository.Update(equipment);
                 _unitOfWork.EquipmentRepository.Save();
             }
             SubtractEquipmentFromSourceRoom(request);
@@ -77,17 +67,7 @@
 
         private void SubtractEquipmentFromSourceRoom(RelocationRequest request)
         {
-            //cupaj
-            //request.Equipment.Quantity -= request.Quantity;
-            //
             Equipment changed = request.Equipment.SubstractQuantity(request.Quantity);
-            //cupaj
-            //if (request.Equipment.Quantity <= 0)
-                //request.Equipment.Deleted = true;
-            //
-            //cupaj
-            //request.Equipment.ReservedQuantity -= request.Quantity;
-            //
             request.Equipment.SubstractReservedQuantity(request.Quantity);
         }
 
