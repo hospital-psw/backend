@@ -85,7 +85,7 @@ namespace HospitalAPI.Controllers
             return Ok(_roomService.GetAll());
         }
 
-        [HttpGet("workhour-rooms")]
+        [HttpGet("workhour-rooms/{workHourId}")]
         public IActionResult GetRoomsWithWorkingHour(int workHourId)
         {
             List<Room> rooms = _roomService.GetRoomsWithWorkingHour(workHourId).ToList();
