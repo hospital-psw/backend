@@ -53,7 +53,7 @@
                 return NotFound();
 
             List<ApplicationDoctorDTO> doctorsDTO = new List<ApplicationDoctorDTO>();
-            doctors.ForEach(d => doctorsDTO.Add(_mapper.Map<ApplicationDoctorDTO>(d)));
+            doctors.ForEach(d => doctorsDTO.Add(ApplicationDoctorMapper.EntityToEntityDTO(d)));
             return Ok(doctorsDTO);
         }
 

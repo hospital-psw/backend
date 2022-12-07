@@ -22,7 +22,7 @@
         }
         private static ApplicationPatientController SetupController(IServiceScope scope)
         {
-            return new ApplicationPatientController(scope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
+            return new ApplicationPatientController(scope.ServiceProvider.GetRequiredService<IApplicationPatientService>(), null, null);
         }
         [Fact]
         public async void Get_app_patient()

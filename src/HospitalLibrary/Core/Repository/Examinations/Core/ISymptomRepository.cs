@@ -11,5 +11,7 @@
     public interface ISymptomRepository : IBaseRepository<Symptom>
     {
         Symptom GetByName(string name);
+
+        IEnumerable<Symptom> GetSelectedSymptoms(List<int> ids);
     }
 }
