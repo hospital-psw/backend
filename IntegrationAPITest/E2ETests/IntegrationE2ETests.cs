@@ -13,7 +13,7 @@
     public class IntegrationE2ETests : BaseIntegrationTest
     {
         private ChromeDriver _chromeDriver;
-        public IntegrationE2ETests(TestDatabaseFactory factory) : base(factory) 
+        public IntegrationE2ETests(TestDatabaseFactory factory) : base(factory)
         {
             var driver = new DriverManager().SetUpDriver(new ChromeConfig());
             _chromeDriver = new ChromeDriver();
@@ -39,7 +39,7 @@
             page.Password.SendKeys("4321");
             page.SubmitButton.Click();
 
-            Assert.Equal(_chromeDriver.Url, "http://localhost:4200/changePassword");
+            Assert.Equal("http://localhost:4200/changePassword", _chromeDriver.Url);
         }
     }
 }
