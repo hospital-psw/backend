@@ -32,6 +32,8 @@
 
         private IWebElement SelectAppointmentButton;
 
+        private IWebElement TodaysDate => driver.FindElement(By.XPath("//button[@class='mat-calendar-body-cell mat-calendar-body-active']"));
+
 
 
 
@@ -79,6 +81,13 @@
             SelectAppointmentButton = SelectAppCard.FindElement(By.TagName("button"));
             SelectAppointmentButton.Click();
         }
+
+        public void SelectTodaysDate()
+        {
+            ViewDatesButton.Click();
+            TodaysDate.Click();
+        }
+
 
         public void EnsurePageIsDisplayed()
         {
