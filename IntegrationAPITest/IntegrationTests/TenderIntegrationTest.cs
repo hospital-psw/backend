@@ -50,9 +50,11 @@
 
             var result = ((OkObjectResult)controller.Get(1)).Value as GetTenderDTO;
 
+            DateTime dateTime = new DateTime(2022, 12, 01);
+
             result.ShouldNotBeNull();
             result.Status.ShouldBe(TenderStatus.OPEN);
-            result.DueDate.ShouldBe(DateTime.Now);
+            result.DueDate.ShouldBe(dateTime);
         }
     }
 }

@@ -5,6 +5,8 @@ namespace IntegrationLibrary.Core
     using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.News;
     using IntegrationLibrary.News.Interfaces;
+    using IntegrationLibrary.Notification;
+    using IntegrationLibrary.Notification.Interfaces;
     using IntegrationLibrary.Settings;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
@@ -17,6 +19,7 @@ namespace IntegrationLibrary.Core
         public INewsRepository NewsRepository { get; }
 
         public ITenderRepository TenderRepository { get; }
+        public INotificationRepository NotificationRepository { get; }
 
         public UnitOfWork(IntegrationDbContext context)
         {
@@ -25,6 +28,7 @@ namespace IntegrationLibrary.Core
             BloodBankRepository = new BloodBankRepository(_context);
             NewsRepository = new NewsRepository(_context);
             TenderRepository = new TenderRepository(_context);
+            NotificationRepository = new NotificationRepository(_context);
         }
 
         public void Dispose()

@@ -18,7 +18,7 @@
                 return new Tender()
                 {
                     Status = TenderStatus.OPEN,
-                    DueDate = DateTime.Now
+                    DueDate = new DateTime(2022, 12, 01)
                 };
             }
         }

@@ -3,6 +3,7 @@
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Core;
     using IntegrationLibrary.News;
+    using IntegrationLibrary.Notification;
     using IntegrationLibrary.Tender;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -15,6 +16,7 @@
         public DbSet<BloodBank> BloodBanks { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Tender> Tenders { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         public IntegrationDbContext() { }
 

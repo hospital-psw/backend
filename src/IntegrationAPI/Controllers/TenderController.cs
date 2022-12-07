@@ -4,7 +4,6 @@
     using IntegrationAPI.DTO.BloodBank;
     using IntegrationAPI.DTO.News;
     using IntegrationAPI.DTO.Tender;
-    using IntegrationLibrary.News;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Mvc;
