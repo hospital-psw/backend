@@ -20,9 +20,13 @@
         public IActionResult RequestBlood([FromBody] UrgentBloodTransferRequest request)
         {
             if (_service.RequestBlood(request))
+            {
                 return StatusCode(StatusCodes.Status201Created);
+            }
             else
+            {
                 return NoContent();
+            }
         }
     }
 }

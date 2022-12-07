@@ -21,7 +21,9 @@
                 Amount = amount;
             }
             else
+            {
                 throw new Exception("Cannot create Urgent Blood Transfer object. Amout passed is less than 1");
+            }
         }
 
         private bool Validate(uint amount)
