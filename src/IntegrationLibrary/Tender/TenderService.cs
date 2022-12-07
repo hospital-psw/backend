@@ -9,6 +9,7 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
 
     public class TenderService : ITenderService
@@ -139,9 +140,17 @@
             throw new NotImplementedException();
         }
 
-        public Tender GetActive()
+        public List<Tender> GetActive()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN).ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in TenderService in GetActive {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
     }
 }

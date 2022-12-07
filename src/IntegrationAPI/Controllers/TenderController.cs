@@ -31,7 +31,7 @@
         [HttpGet("active")]
         public IActionResult GetActive()
         {
-            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetAll()));
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
         }
 
         [HttpGet("{id}")]

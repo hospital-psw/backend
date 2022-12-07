@@ -42,6 +42,10 @@ namespace IntegrationLibrary.Tender
 
         private bool OfferMatchesTenderSpec(TenderOffer offer)
         {
+            if (offer == null)
+            {
+                return false;
+            }
             foreach(TenderItem item in Items)
             {
                 if (offer.Items.Find(x => x.BloodType == item.BloodType && item.Quantity <= x.Quantity) == null)
