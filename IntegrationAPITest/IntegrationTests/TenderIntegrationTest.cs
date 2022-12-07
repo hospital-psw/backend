@@ -50,7 +50,7 @@
 
             result.ShouldNotBeNull();
             result.Status.ShouldBe(TenderStatus.OPEN);
-            result.DueDate.ShouldBe(DateTime.Now);
+            result.DueDate.ShouldBe(new DateTime(2022, 1, 1));
         }
 
         [Fact]
@@ -94,7 +94,6 @@
             result.Items[0].Quantity.ShouldBe(5);
             result.Items[0].Money.Amount.ShouldBe(5);
             result.Items[0].Money.Currency.ShouldBe(Currency.EUR);
-
         }
 
         [Fact]

@@ -3,8 +3,10 @@
     using AutoMapper;
     using IntegrationAPI.DTO.BloodBank;
     using IntegrationAPI.DTO.News;
+    using IntegrationAPI.DTO.Tender;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.News;
+    using IntegrationLibrary.Tender;
 
     public class MappingProfile : Profile
     {
@@ -20,6 +22,8 @@
             CreateMap<News, ManagerNewsDTO>();
             CreateMap<News, UserNewsDTO>();
 
+            CreateMap<Tender, GetTenderDTO>();
+            CreateMap<TenderOffer, ViewTenderOfferDTO>();
         }
     }
 }

@@ -19,7 +19,20 @@
                 return new Tender()
                 {
                     Status = TenderStatus.OPEN,
-                    DueDate = DateTime.Now
+                    DueDate = new DateTime(2022, 1, 1),
+                    Items = new List<TenderItem>()
+                    {
+                        new TenderItem()
+                        {
+                            BloodType = BloodType.A_POSITIVE,
+                            Quantity = 5,
+                        },
+                        new TenderItem()
+                        {
+                            BloodType = BloodType.B_POSITIVE,
+                            Quantity = 5,
+                        },
+                    }
                 };
             }
         }

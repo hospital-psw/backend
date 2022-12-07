@@ -1,5 +1,6 @@
 ﻿namespace IntegrationLibrary.Tender
 {
+    using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Core;
     using IntegrationLibrary.Tender.Interfaces;
     using IntegrationLibrary.Util;
@@ -15,12 +16,10 @@
         private readonly ILogger<Tender> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMailSender _mailer;
-        private readonly IBBConnections _connections;
-        public TenderService(ILogger<Tender> logger, IUnitOfWork unitOfWork, IMailSender mailer, IBBConnections connections)
+        public TenderService(ILogger<Tender> logger, IUnitOfWork unitOfWork, IMailSender mailer)
         {
             _logger = logger;
             _mailer = mailer;
-            _connections = connections;
             _unitOfWork = unitOfWork;
         }
 
@@ -85,6 +84,32 @@
             }
         }
 
+        public TenderOffer MakeAnOffer(int tenderId, TenderOffer offer)
+        {
+            try
+            {
+                Tender tender = Get(tenderId);
+                if (tender == null)
+                {
+                    return null;
+                }
+                TenderOffer acceptedOffer = tender.MakeAnOffer(offer);
+                if (acceptedOffer == null)
+                {
+                    return null;
+                }
+                offer.Offeror = _unitOfWork.BloodBankRepository.Get(offer.Offeror.Id);
+                _unitOfWork.TenderRepository.Update(tender);
+                _unitOfWork.Save();
+                return acceptedOffer;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in TenderService in MakeAnOffer {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
         public Tender Update(Tender entity)
         {
             try
@@ -106,6 +131,11 @@
         }
 
         public double WinningOfferPrice()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Tender GetActive()
         {
             throw new NotImplementedException();
         }
