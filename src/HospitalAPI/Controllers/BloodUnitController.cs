@@ -42,5 +42,17 @@
             return Ok(bloodUnitService.GetByBloodType(bloodType));
         }
 
+        [HttpPut]
+        public IActionResult UpdateBloodUnit(BloodUnit bloodUnit)
+        {
+            return Ok(bloodUnitService.Update(bloodUnit));
+        }
+
+        [HttpDelete("delete/{id}")]
+        public IActionResult DeleteBloodUnit(int id)
+        {
+            return Ok(bloodUnitService.Delete(id));
+        }
+
     }
 }
