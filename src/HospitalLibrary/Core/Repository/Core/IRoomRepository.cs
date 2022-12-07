@@ -12,5 +12,6 @@ namespace HospitalLibrary.Core.Repository.Core
         void Delete(Room room);
 
         IEnumerable<Room> GetAvailableRooms();
+        IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId);
     }
 }

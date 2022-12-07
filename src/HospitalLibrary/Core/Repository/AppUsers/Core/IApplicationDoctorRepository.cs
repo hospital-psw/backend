@@ -16,5 +16,6 @@
         IEnumerable<ApplicationDoctor> GetSelectedDoctors(List<int> doctorsIds);
         IEnumerable<ApplicationDoctor> GetDoctorsWhoWorksInSameShift(int workHourId);
         IEnumerable<ApplicationDoctor> GetDoctorsOfSelectedSpecializations(List<Specialization> specializations, int workHourId);
+        IEnumerable<Specialization> GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId);
     }
 }

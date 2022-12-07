@@ -84,5 +84,18 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_roomService.GetAll());
         }
+
+        [HttpGet("workhour-rooms")]
+        public IActionResult GetRoomsWithWorkingHour(int workHourId)
+        {
+            List<Room> rooms = _roomService.GetRoomsWithWorkingHour(workHourId).ToList();
+            if (rooms.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            List<RoomDto> dtoList = new List<RoomDto>();
+            rooms.ForEach(r => dtoList.Add(RoomMapper.EntityToEntityDto(r)));
+            return Ok(dtoList);
+        }
     }
 }

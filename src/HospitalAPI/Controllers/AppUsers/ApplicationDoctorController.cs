@@ -10,6 +10,7 @@
     using HospitalLibrary.Core.Service.AppUsers;
     using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Linq;
@@ -91,6 +92,17 @@
             }
             doctors.ForEach(doc => dtoList.Add(ApplicationDoctorMapper.EntityToEntityDTO(doc)));
             return Ok(dtoList);
+        }
+
+        [HttpGet("specializations/{workHourId}")]
+        public IActionResult GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            List<Specialization> specializations = _doctorService.GetSpecializationsOfDoctorsWhoWorksInSameShift(workHourId).ToList();
+            if (specializations.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            return Ok(specializations);
         }
     }
 }
