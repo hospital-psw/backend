@@ -6,7 +6,6 @@
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Mvc;
-    using System;
     using System.Collections.Generic;
 
 
@@ -46,6 +45,18 @@
             }
 
             return Ok(_mapper.Map<GetTenderDTO>(entity));
+        }
+
+        [HttpPost]
+        public virtual IActionResult Create([FromBody] CreateTenderDTO tender)
+        {
+            var entity = _tenderService.Create(_mapper.Map<Tender>(tender));
+
+            if (entity is null)
+            {
+                return BadRequest();
+            }
+            return Ok();
         }
 
         [HttpPut]
