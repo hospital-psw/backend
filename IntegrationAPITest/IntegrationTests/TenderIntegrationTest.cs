@@ -50,7 +50,22 @@
 
             result.ShouldNotBeNull();
             result.Status.ShouldBe(TenderStatus.OPEN);
-            result.DueDate.ShouldBe(new DateTime(2022, 1, 1));
+            result.DueDate.ShouldBe(new DateTime(2050, 1, 1));
+        }
+
+        [Fact]
+        public void GetActive_ShouldReturnOne()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            SetupContext(scope);
+
+            var result = ((OkObjectResult)controller.GetActive()).Value as List<GetTenderDTO>;
+
+            result.ShouldNotBeNull();
+            result.Count.ShouldBe(1);
+            result[0].Status.ShouldBe(TenderStatus.OPEN);
+            result[0].DueDate.ShouldBe(new DateTime(2050, 1, 1));
         }
 
         [Fact]

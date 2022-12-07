@@ -19,7 +19,7 @@
                 return new Tender()
                 {
                     Status = TenderStatus.OPEN,
-                    DueDate = new DateTime(2022, 1, 1),
+                    DueDate = new DateTime(2050, 1, 1),
                     Items = new List<TenderItem>()
                     {
                         new TenderItem()
