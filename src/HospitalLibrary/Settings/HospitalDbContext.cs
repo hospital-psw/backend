@@ -3,10 +3,11 @@ using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.Blood;
 using HospitalLibrary.Core.Model.Blood.BloodManagment;
+using HospitalLibrary.Core.Model.Examinations;
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
 using HospitalLibrary.Core.Model.Therapy;
-using HospitalLibrary.Core.Model.VacationRequest;
+using HospitalLibrary.Core.Model.VacationRequests;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -22,15 +23,12 @@ namespace HospitalLibrary.Settings
         //private static ProjectConfiguration _configuration;
 
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<RoomMap> RoomsMap { get; set; }
         public DbSet<WorkingHours> WorkingHours { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
         public DbSet<Allergies> Allergies { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<MedicalTreatment> MedicalTreatments { get; set; }
@@ -46,6 +44,16 @@ namespace HospitalLibrary.Settings
         public DbSet<VacationRequest> VacationRequests { get; set; }
         public DbSet<ApplicationPatient> ApplicationPatients { get; set; }
         public DbSet<ApplicationDoctor> ApplicationDoctors { get; set; }
+        public DbSet<RenovationDetails> RenovationDetails { get; set; }
+        public DbSet<RenovationRequest> RenovationRequests { get; set; }
+        public DbSet<Consilium> Consiliums { get; set; }
+        public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
+
+        public DbSet<Prescription> Prescriptions { get; set; }
+
+        public DbSet<Symptom> Symptoms { get; set; }
+
+        public DbSet<Anamnesis> Anamneses { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 

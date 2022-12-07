@@ -1,9 +1,14 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Repository.AppUsers;
+    using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
+    using HospitalLibrary.Core.Repository.Examinations;
+    using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
@@ -28,10 +33,8 @@
             WorkingHoursRepository = new WorkingHoursRepository(_context);
             MapRepository = new MapRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
-            DoctorRepository = new DoctorRepository(_context);
             FeedbackRepository = new FeedbackRepository(_context);
             AppointmentRepository = new AppointmentRepository(_context);
-            PatientRepository = new PatientRepository(_context);
             AllergiesRepository = new AllergiesRepository(_context);
             MedicalTreatmentRepository = new MedicalTreatmentRepository(_context);
             TherapyRepository = new TherapyRepository(_context);
@@ -45,7 +48,15 @@
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
             ApplicationUserRepository = new ApplicationUserRepository(_context);
+            RenovationRepository = new RenovationRepository(_context);
+            ConsiliumRepository = new ConsiliumRepository(_context);
+            DoctorScheduleRepository = new DoctorScheduleRepository(_context);
+            PrescriptionRepository = new PrescriptionRepository(_context);
+            SymptomRepository = new SymptomRepository(_context);
+            AnamnesisRepository = new AnamnesisRepository(_context);
 
+            ApplicationPatientRepository = new ApplicationPatientRepository(_context);
+            ApplicationDoctorRepository = new ApplicationDoctorRepository(_context);
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -56,8 +67,6 @@
         public IMapRepository MapRepository { get; set; }
         public IWorkingHoursRepository WorkingHoursRepository { get; set; }
         public IAppointmentRepository AppointmentRepository { get; set; }
-        public IDoctorRepository DoctorRepository { get; set; }
-        public IPatientRepository PatientRepository { get; set; }
         public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
@@ -71,6 +80,17 @@
         public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }
         public IApplicationUserRepository ApplicationUserRepository { get; set; }
+        public IApplicationPatientRepository ApplicationPatientRepository { get; set; }
+        public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
+        public IRenovationRepository RenovationRepository { get; set; }
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
+
+        public IPrescriptionRepository PrescriptionRepository { get; set; }
+
+        public ISymptomRepository SymptomRepository { get; set; }
+
+        public IAnamnesisRepository AnamnesisRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

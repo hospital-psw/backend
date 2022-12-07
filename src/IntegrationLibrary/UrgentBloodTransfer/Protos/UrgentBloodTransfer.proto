@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package grpcServices;
+option csharp_namespace = "grpcServices";
+
+import "UrgentBloodTransfer/Protos/model.proto";
+
+service UrgentBloodTransferGrpcService {
+  rpc transfer (UrgentBloodTransferRequest) returns (UrgentBloodTransferResponse);
+}

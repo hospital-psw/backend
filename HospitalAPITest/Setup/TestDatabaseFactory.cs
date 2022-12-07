@@ -6,11 +6,13 @@
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
+    using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -82,43 +84,38 @@
             //    Start = DateTime.Now,
             //    Type = TherapyType.MEDICAMENT
             //});
-            Patient pat = new Patient()
+            ApplicationPatient appPat = new ApplicationPatient()
             {
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
-                Password = "mikica",
-                Role = Role.PATIENT,
                 Hospitalized = true
             };
 
-            Patient pat2 = new Patient
+            ApplicationPatient appPat2 = new ApplicationPatient
             {
                 FirstName = "Djura",
                 LastName = "Djuric",
                 Email = "djura@com",
-                Password = "djurica",
-                Role = Role.PATIENT,
                 Hospitalized = true,
             };
 
-            List<Patient> patients = new List<Patient>();
-            patients.Add(pat);
-            patients.Add(pat2);
+            List<ApplicationPatient> patients = new List<ApplicationPatient>();
+            patients.Add(appPat);
+            patients.Add(appPat2);
 
-            Doctor doc = new Doctor()
+            ApplicationDoctor appDoc = new ApplicationDoctor()
             {
                 FirstName = "Djankarlo",
                 LastName = "Rapacoti",
                 Email = "djankarlno@asd.com",
-                Password = "djani",
-                Role = Role.DOCTOR,
                 Specialization = Specialization.CARDIOLOGY,
                 WorkHours = new WorkingHours()
                 {
                     Start = new DateTime(1, 1, 1, 12, 0, 0),
                     End = new DateTime(1, 1, 1, 16, 0, 0)
-                }
+                },
+                Office = null
             };
 
             Room room = new Room()
@@ -146,7 +143,7 @@
 
             BloodExpenditure expenditure = new BloodExpenditure()
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 BloodType = BloodType.A_PLUS,
                 Amount = 7,
                 Reason = "blabla",
@@ -154,27 +151,31 @@
             };
 
             context.BloodExpenditures.Add(expenditure);
-            context.Patients.Add(pat);
+            context.ApplicationPatients.Add(appPat);
 
-            context.Patients.Add(pat2);
+            context.ApplicationPatients.Add(appPat2);
 
-            context.Appointments.Add(new Appointment
+            Appointment appointment1 = new Appointment
             {
                 Date = new DateTime(2022, 11, 11, 14, 0, 0),
-                Doctor = doc,
-                Patient = pat,
+                Doctor = appDoc,
+                Patient = appPat,
                 Room = room,
                 IsDone = false,
                 ExamType = ExaminationType.OPERATION,
                 Duration = 30
-            });
+            };
 
-            context.Medicaments.Add(new Medicament
+            context.Appointments.Add(appointment1);
+
+            Medicament med = new Medicament
             {
                 Name = "Aspirin",
                 Description = "Nesto protiv bolova",
                 Quantity = 15
-            });
+            };
+
+            context.Medicaments.Add(med);
 
             context.Medicaments.Add(new Medicament
             {
@@ -186,8 +187,8 @@
             context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
-                Doctor = doc,
-                Patient = pat,
+                Doctor = appDoc,
+                Patient = appPat,
                 MedicamentTherapies = new List<MedicamentTherapy>(),
                 BloodUnitTherapies = new List<BloodUnitTherapy>(),
                 Active = true,
@@ -199,8 +200,8 @@
             context.MedicalTreatments.Add(new MedicalTreatment
             {
                 Room = room,
-                Doctor = doc,
-                Patient = pat2,
+                Doctor = appDoc,
+                Patient = appPat2,
                 MedicamentTherapies = new List<MedicamentTherapy>(),
                 BloodUnitTherapies = new List<BloodUnitTherapy>(),
                 Active = false,
@@ -212,7 +213,7 @@
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2022, 11, 25, 0, 0, 0),
                 To = new DateTime(2022, 12, 11, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -224,7 +225,7 @@
             context.VacationRequests.Add(new VacationRequest
             {
                 Deleted = false,
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -355,7 +356,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -377,7 +378,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 1, 12, 0, 0, 0),
                 To = new DateTime(2023, 1, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
@@ -388,7 +389,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 2, 12, 0, 0, 0),
                 To = new DateTime(2023, 2, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
@@ -399,7 +400,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 3, 12, 0, 0, 0),
                 To = new DateTime(2023, 3, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
@@ -410,7 +411,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 4, 12, 0, 0, 0),
                 To = new DateTime(2023, 4, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
@@ -421,7 +422,7 @@
 
             context.VacationRequests.Add(new VacationRequest
             {
-                Doctor = doc,
+                Doctor = appDoc,
                 From = new DateTime(2023, 5, 12, 0, 0, 0),
                 To = new DateTime(2023, 5, 22, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
@@ -430,7 +431,130 @@
                 ManagerComment = ""
             });
 
+            Prescription pres = new Prescription
+            {
+                Medicament = med,
+                Description = "Pacijent je dobio migrenu",
+                DateRange = new DateRange(DateTime.Now, DateTime.Now.AddDays(2))
+            };
 
+            context.Prescriptions.Add(pres);
+
+            Symptom symy = new Symptom
+            {
+                Name = "Glavobolja"
+            };
+
+            context.Symptoms.Add(symy);
+
+            List<Prescription> prescriptions = new List<Prescription>();
+            prescriptions.Add(pres);
+
+            List<Symptom> symptoms = new List<Symptom>();
+            symptoms.Add(symy);
+
+            Anamnesis anam = new Anamnesis()
+            {
+                Description = "Totalna blejica",
+                Appointment = appointment1,
+                Prescriptions = prescriptions,
+                Symptoms = symptoms
+            };
+
+            context.Anamneses.Add(anam);
+
+            Room relocationFromRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+
+            Room relocationToRoom = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 14",
+                        Name = "Radosno detinjstvo"
+                    },
+                    Number = 69,
+                    Purpose = "Krematorijum"
+                },
+                Number = "6904",
+                Purpose = "Soba za kremiranje",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+
+            Equipment relocationEquipment = new Equipment
+            {
+                EquipmentType = EquipmentType.BED,
+                Quantity = 8,
+                Room = equipmentRoom
+            };
+
+            context.RelocationRequests.Add(new RelocationRequest
+            {
+                FromRoom = relocationFromRoom,
+                ToRoom = relocationToRoom,
+                Equipment = relocationEquipment,
+                StartTime = new DateTime(2022, 12, 10, 23, 0, 0),
+                Duration = 2
+            });
+
+            context.Appointments.Add(new Appointment
+            {
+                Date = new DateTime(2023, 12, 25, 12, 0, 0),
+                Duration = 5,
+                IsDone = false,
+                Room = relocationFromRoom,
+                Patient = appPat,
+                Doctor = appDoc
+            });
+
+
+            context.Prescriptions.Add(new Prescription
+            {
+                Medicament = med,
+                Description = "Pacijent je dobio migrenu",
+                DateRange = new DateRange(DateTime.Now, DateTime.Now.AddDays(2))
+            });
+
+
+            context.Symptoms.Add(new Symptom
+            {
+                Name = "Glavobolja"
+            });
+            List<Room> roomsRenovation = new List<Room>();
+            roomsRenovation.Add(room);
+            List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
+            context.RenovationRequests.Add(new RenovationRequest
+            {
+                RenovationType = RenovationType.SPLIT,
+                Rooms = roomsRenovation,
+                StartTime = new DateTime(),
+                Duration = 2,
+                RenovationDetails = renovationDetails
+            });
 
             context.SaveChanges();
 

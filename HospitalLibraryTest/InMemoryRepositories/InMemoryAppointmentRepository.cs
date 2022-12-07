@@ -3,6 +3,7 @@
 namespace HospitalLibraryTest.InMemoryRepositories
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
@@ -31,11 +32,12 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)
         {
-            Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, null, null);
+
+            ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
             doc1.Id = 1;
-            Doctor doc2 = new Doctor("Vuk", "Milanovic", "123", "ckepa@gmail.com", Specialization.GENERAL, null, null);
+            ApplicationDoctor doc2 = new ApplicationDoctor("Vuk", "Milanovic", "ckepa@gmail.com", Specialization.GENERAL, null, null);
             doc2.Id = 2;
-            Doctor doc4 = new Doctor("Ilija", "Galin", "123", "iki@gmail.com", Specialization.GENERAL, null, null);
+            ApplicationDoctor doc4 = new ApplicationDoctor("Ilija", "Galin", "iki@gmail.com", Specialization.GENERAL, null, null);
             doc4.Id = 4;
             Appointment app1 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc1);
             app1.Id = 1;
@@ -79,10 +81,10 @@ namespace HospitalLibraryTest.InMemoryRepositories
         public IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId)
         {
             List<Appointment> appointments = new List<Appointment>();
-            Patient patient = new Patient("ana", "vulin", "vulinana@gmail.com", "123", false, new List<Allergies>());
+            ApplicationPatient patient = new ApplicationPatient("ana", "vulin", "vulinana@gmail.com", false, new List<Allergies>());
             Room room = new Room(1, "001", null, null, null);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));
-            Doctor doctor = new Doctor("nikolina", "nikolic", "nina@gmail.com", "123", Specialization.GENERAL, doctorWorkingHours, room);
+            ApplicationDoctor doctor = new ApplicationDoctor("nikolina", "nikolic", "nina@gmail.com", Specialization.GENERAL, doctorWorkingHours, room);
             appointments.Add(new Appointment(new DateTime(2022, 12, 11, 13, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
 
             List<Appointment> retList = new List<Appointment>();
@@ -106,6 +108,11 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
 
         public void Update(Appointment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Appointment> GetAllForRoom(int roomId)
         {
             throw new NotImplementedException();
         }

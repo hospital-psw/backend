@@ -2,7 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using Microsoft.EntityFrameworkCore;
@@ -63,6 +63,13 @@
         public int Save()
         {
             return _context.SaveChanges();
+        }
+
+        public List<VacationRequest> GetAllDoctorId(int doctorId)
+        {
+            return _context.VacationRequests.Include(x => x.Doctor)
+                                           .Where(x => x.Doctor.Id == doctorId && x.Status == VacationRequestStatus.APPROVED)
+                                           .ToList();
         }
 
     }

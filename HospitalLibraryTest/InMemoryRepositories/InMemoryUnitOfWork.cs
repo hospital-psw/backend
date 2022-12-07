@@ -1,8 +1,10 @@
 ﻿namespace HospitalLibraryTest.InMemoryRepositories
 {
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
+    using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
@@ -20,8 +22,9 @@
             RoomRepository = new InMemoryRoomRepository();
             AppointmentRepository = new InMemoryAppointmentRepository();
             EquipmentRepository = new InMemoryEquipmentRepository();
-            DoctorRepository = new InMemoryDoctorRepository();
+            ApplicationDoctorRepository = new InMemoryDoctorRepository();
             ApplicationUserRepository = new InMemoryApplicationUserRepository();
+            VacationRequestsRepository = new InMemoryVacationRequestsRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -32,8 +35,6 @@
         public IMapRepository MapRepository { get; set; }
         public IWorkingHoursRepository WorkingHoursRepository { get; set; }
         public IAppointmentRepository AppointmentRepository { get; set; }
-        public IDoctorRepository DoctorRepository { get; set; }
-        public IPatientRepository PatientRepository { get; set; }
         public IAllergiesRepository AllergiesRepository { get; set; }
         public IMedicalTreatmentRepository MedicalTreatmentRepository { get; set; }
         public ITherapyRepository TherapyRepository { get; set; }
@@ -42,7 +43,7 @@
 
         public IMedicamentRepository MedicamentRepository => throw new NotImplementedException();
 
-        public IVacationRequestsRepository VacationRequestsRepository => throw new NotImplementedException();
+        public IVacationRequestsRepository VacationRequestsRepository { get; set; }
 
         public IEquipmentRepository EquipmentRepository { get; set; }
 
@@ -55,6 +56,20 @@
         public IBloodAcquisitionRepository BloodAcquisitionRepository => throw new NotImplementedException();
 
         public IApplicationUserRepository ApplicationUserRepository { get; set; }
+
+        public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
+
+        public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
+
+        public IRenovationRepository RenovationRepository => throw new NotImplementedException();
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
+
+        public IPrescriptionRepository PrescriptionRepository { get; set; }
+
+        public ISymptomRepository SymptomRepository { get; set; }
+
+        public IAnamnesisRepository AnamnesisRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

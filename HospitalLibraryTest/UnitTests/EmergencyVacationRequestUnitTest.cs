@@ -1,8 +1,9 @@
 ﻿namespace HospitalLibraryTest.UnitTests
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Service;
     using HospitalLibraryTest.InMemoryRepositories;
     using Microsoft.Extensions.Logging;
@@ -49,7 +50,7 @@
         {
             public AvailableSubstituteDoctorsData()
             {
-                Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, null, null);
+                ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
                 doc1.Id = 1;
                 Appointment app3 = new Appointment(new DateTime(2022, 11, 24, 12, 0, 0), ExaminationType.GENERAL, null, null, doc1);
                 app3.Id = 3;
@@ -64,7 +65,7 @@
         {
             public DoctorSubstitutionData()
             {
-                Doctor doc1 = new Doctor("Milos", "Gravara", "123", "gravara@gmail.com", Specialization.GENERAL, null, null);
+                ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
                 doc1.Id = 1;
                 Appointment app1 = new Appointment(new DateTime(2022, 11, 22, 10, 30, 0), ExaminationType.GENERAL, null, null, doc1);
                 app1.Id = 1;

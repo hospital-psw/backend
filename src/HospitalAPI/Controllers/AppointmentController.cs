@@ -1,6 +1,8 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using AutoMapper;
     using HospitalAPI.Dto;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.EmailServices;
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.DTO.Appointments;
@@ -15,13 +17,15 @@
     [Route("api/[controller]")]
     public class AppointmentController : BaseController<Appointment>
     {
-        private IAppointmentService _appointmentService;
-        private IEmailService _emailService;
+        private readonly IAppointmentService _appointmentService;
+        private readonly IEmailService _emailService;
+        private readonly IDoctorScheduleService _doctorScheduleService;
 
-        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService)
+        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService, IDoctorScheduleService doctorScheduleService)
         {
             _appointmentService = appointmentService;
             _emailService = emailService;
+            _doctorScheduleService = doctorScheduleService;
         }
 
         [HttpGet("{id}")]
@@ -32,8 +36,8 @@
             {
                 return NotFound();
             }
-            AppointmentDto dto = AppointmentMapper.EntityToEntityDto(appointment);
-            return Ok(dto);
+
+            return Ok(AppointmentMapper.EntityToEntityDto(appointment));
         }
 
         [HttpPut]
@@ -73,7 +77,7 @@
         [Route("recommend")]
         public IActionResult RecommendAppointments(RecommendRequestDto dto)
         {
-            return Ok(_appointmentService.RecommendAppointments(dto));
+            return Ok(_doctorScheduleService.RecommendAppointments(dto));
         }
 
         [HttpPost]
@@ -114,5 +118,16 @@
             return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
         }
 
+        [HttpGet]
+        [Route("room/{id}")]
+        public IActionResult GetAllForRoom(int id)
+        {
+            List<AppointmentDisplayDto> appointmentDtos = new List<AppointmentDisplayDto>();
+            foreach (Appointment appointment in _appointmentService.GetAllForRoom(id))
+            {
+                appointmentDtos.Add(AppointmentDisplayMapper.EntityToEntityDto(appointment));
+            }
+            return Ok(appointmentDtos);
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Repository.Core
 {
     using HospitalLibrary.Core.Model.Enums;
-    using HospitalLibrary.Core.Model.VacationRequest;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -16,5 +16,7 @@
         IEnumerable<VacationRequest> GetAllRequestsByDoctorsId(int doctorId);
         IEnumerable<VacationRequest> GetAllWaitingByDoctorId(int doctorId);
         int Save();
+
+        public List<VacationRequest> GetAllDoctorId(int doctorId);
     }
 }

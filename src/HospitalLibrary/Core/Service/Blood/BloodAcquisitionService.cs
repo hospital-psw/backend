@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
@@ -34,12 +35,11 @@
         {
             try
             {
-
                 return _unitOfWork.BloodAcquisitionRepository.GetAll();
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in BloodAcquisitionService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in BloodAcquisitionService in GetAll {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -57,7 +57,6 @@
         {
             try
             {
-
                 return _unitOfWork.BloodAcquisitionRepository.Get(id);
             }
             catch (Exception e)
@@ -71,8 +70,7 @@
         {
             try
             {
-
-                Doctor doctor = _unitOfWork.DoctorRepository.Get(acquisitionDTO.DoctorId);
+                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(acquisitionDTO.DoctorId);
                 DateTime date = acquisitionDTO.Date;
                 BloodType bloodType = acquisitionDTO.BloodType;
                 int amount = acquisitionDTO.Amount;
@@ -85,7 +83,7 @@
             }
             catch (Exception e)
             {
-                _logger.LogError($"Error in BloodAcquisitionService in Get {e.Message} in {e.StackTrace}");
+                _logger.LogError($"Error in BloodAcquisitionService in Create {e.Message} in {e.StackTrace}");
             }
         }
 
@@ -93,14 +91,13 @@
         {
             try
             {
-
                 bloodAcquisition.Deleted = true;
                 _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
                 _unitOfWork.Save();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                _logger.LogError($"Error in BloodAcquisitionService in Delete {e.Message} in {e.StackTrace}");
             }
         }
 
@@ -122,7 +119,6 @@
 
         public IEnumerable<BloodAcquisition> GetPendingAcquisitions()
         {
-
             return _unitOfWork.BloodAcquisitionRepository.GetPendingAcquisitions();
         }
 

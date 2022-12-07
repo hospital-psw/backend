@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.DTO;
+using HospitalLibrary.Core.Model.ApplicationUser;
 using System;
 using System.Collections.Generic;
 
@@ -11,7 +12,9 @@ namespace HospitalLibrary.Core.Model
         public string Purpose { get; set; }
         public WorkingHours? WorkingHours { get; set; }
         public int Capacity { get; set; }
-        public List<Patient> Patients { get; set; } = new List<Patient>();
+        public List<ApplicationPatient> Patients { get; set; } = new List<ApplicationPatient>();
+        public List<RenovationRequest> Renovations { get; set; }
+
 
         public Room() { }
 

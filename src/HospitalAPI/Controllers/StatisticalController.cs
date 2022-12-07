@@ -4,6 +4,7 @@
     using HospitalAPI.Dto.Statistics;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,6 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
-        private IDoctorService doctorService;
 
         public StatisticalController(IStatisticsService statisticsService)
         {
@@ -34,6 +34,13 @@
 
             if (dto.Chart1 is null || dto.Chart2Names is null || dto.Chart2Values is null || dto.Chart3Male is null || dto.Chart3Female is null || dto.Chart4 is null) return NotFound("Something went wrong :("); //TODO: better error handling
             return Ok(dto);
+        }
+
+        [HttpGet("getVacationStats/{doctorId}")]
+        public IActionResult GetVacationStatistics(int doctorId)
+        {
+            List<int> result = (List<int>)_statisticsService.GetNumberOfVacationDaysPerMonth(doctorId);
+            return Ok(result);
         }
     }
 }

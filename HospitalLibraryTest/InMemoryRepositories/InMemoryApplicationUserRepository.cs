@@ -51,15 +51,15 @@
             doc1.Id = 1;
             ApplicationDoctor doc2 = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
             doc2.Id = 2;
-            ApplicationPatient pat1 = new ApplicationPatient("Mitar", "Miric", new DateTime(), Gender.MALE, null, null, doc2, null);
+            ApplicationPatient pat1 = new ApplicationPatient("Mitar", "Miric", new DateTime(), Gender.MALE, doc2);
             pat1.Id = 1;
-            ApplicationPatient pat2 = new ApplicationPatient("Petar", "Petrovic", new DateTime(), Gender.MALE, null, null, doc1, null);
+            ApplicationPatient pat2 = new ApplicationPatient("Petar", "Petrovic", new DateTime(), Gender.MALE, doc1);
             pat2.Id = 2;
-            ApplicationPatient pat3 = new ApplicationPatient("Petar", "Pavlovic", new DateTime(), Gender.MALE, null, null, doc1, null);
+            ApplicationPatient pat3 = new ApplicationPatient("Petar", "Pavlovic", new DateTime(), Gender.MALE, doc1);
             pat3.Id = 3;
-            ApplicationPatient pat4 = new ApplicationPatient("Mila", "Maric", new DateTime(), Gender.MALE, null, null, doc1, null);
+            ApplicationPatient pat4 = new ApplicationPatient("Mila", "Maric", new DateTime(), Gender.MALE, doc1);
             pat4.Id = 4;
-            ApplicationPatient pat5 = new ApplicationPatient("Milan", "Maric", new DateTime(), Gender.MALE, null, null, doc1, null);
+            ApplicationPatient pat5 = new ApplicationPatient("Milan", "Maric", new DateTime(), Gender.MALE, doc1);
             pat5.Id = 5;
 
             List<ApplicationPatient> patients = new List<ApplicationPatient>();
