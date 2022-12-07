@@ -1,5 +1,6 @@
 ﻿namespace IntegrationAPITest.E2ETests
 {
+    using IntegrationAPITest.E2ETests.Pages;
     using IntegrationAPITest.MockData;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.Settings;
@@ -32,15 +33,11 @@
         {
             using var scope = Factory.Services.CreateScope();
             SetupContext(scope);
-            _chromeDriver.Navigate().GoToUrl("http://localhost:4200/changePassword");
-            var emailInput = _chromeDriver.FindElement(By.Id("email"));
-            var passwordInput = _chromeDriver.FindElement(By.Id("password"));
-            var submitButton = _chromeDriver.FindElement(By.Id("submit"));
+            var page = new RegisterPage(_chromeDriver);
 
-            emailInput.SendKeys("zika@hotmail.com");
-            passwordInput.SendKeys("4321");
-
-            submitButton.Click();
+            page.Email.SendKeys("zika@hotmail.com");
+            page.Password.SendKeys("4321");
+            page.SubmitButton.Click();
 
             Assert.Equal(_chromeDriver.Url, "http://localhost:4200/changePassword");
         }
