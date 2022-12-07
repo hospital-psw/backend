@@ -3,13 +3,17 @@
     using AutoMapper;
     using IntegrationAPI.Controllers;
     using IntegrationAPI.DTO.BloodBank;
+    using IntegrationAPI.DTO.Notification;
     using IntegrationAPI.DTO.Tender;
     using IntegrationAPITest.MockData;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.BloodBank.Interfaces;
+    using IntegrationLibrary.Notification.Enums;
     using IntegrationLibrary.Settings;
+    using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender.Interfaces;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Shouldly;
@@ -55,6 +59,35 @@
             result.ShouldNotBeNull();
             result.Status.ShouldBe(TenderStatus.OPEN);
             result.DueDate.ShouldBe(dateTime);
+        }
+
+        [Fact]
+        public void Create_Tender()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            var date = new DateTime(2022, 12, 12);
+            var money = new Money();
+            var item = new TenderItem()
+            {
+                BloodType = BloodType.A_NEGATIVE,
+                Money = new Money()
+                {
+                    Amount = 10.2,
+                    Currency = Currency.EUR
+                },
+                Quantity = 1
+            };
+            var items = new List<TenderItem>();
+            items.Add(item);
+            var tender = new CreateTenderDTO
+            {
+                DueDate = date,
+                Items = items
+            };
+            var result = (StatusCodeResult)controller.Create(tender);
+
+            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
         }
     }
 }
