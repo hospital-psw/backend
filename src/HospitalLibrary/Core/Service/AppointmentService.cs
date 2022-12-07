@@ -201,5 +201,76 @@
                 return null;
             }
         }
+
+        private IEnumerable<ReccomendedBySpecializationDTO> GenerateBySpecialization(Specialization specialization, ReccomendBySpecializationRequestDto dto, DateRange dateRange)
+        {
+            try
+            {
+                List<ReccomendedBySpecializationDTO> generatedAppointments = new List<ReccomendedBySpecializationDTO>();
+                ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
+                List<ApplicationDoctor> doctors = (List<ApplicationDoctor>)_unitOfWork.ApplicationDoctorRepository.GetBySpecialization(specialization);
+                Room room = _unitOfWork.RoomRepository.GetById(3);
+
+                foreach (ApplicationDoctor doctor in doctors)
+                {
+                    DateTime shiftIterator = doctor.WorkHours.Start;
+                    DateTime dayIterator = new DateTime(dateRange.From.Year, dateRange.From.Month, dateRange.From.Day);
+
+                    while (dayIterator <= dateRange.To)
+                    {
+                        DateTime startDate = new DateTime(dayIterator.Year, dayIterator.Month, dayIterator.Day, doctor.WorkHours.Start.Hour, doctor.WorkHours.Start.Minute, doctor.WorkHours.Start.Second);
+                        while (shiftIterator <= doctor.WorkHours.End)
+                        {
+                            ReccomendedBySpecializationDTO appointment = new ReccomendedBySpecializationDTO(doctor.Id, doctor.FirstName, doctor.LastName, dayIterator, 30, room.Number, room.Floor.Number, room.Floor.Building.Name);
+                            generatedAppointments.Add(appointment);
+                            shiftIterator =shiftIterator.AddMinutes(30);
+                            startDate.AddMinutes(30);
+                        }
+
+                        dayIterator.AddDays(1);
+                    }
+                }
+
+                return generatedAppointments;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+        }
+
+        private IEnumerable<ReccomendedBySpecializationDTO> SelectExistingBySpecializationToRemove(List<Appointment> scheduledAppointments, ReccomendedBySpecializationDTO generatedAppointment)
+        {
+            return from scheduledAppointment in scheduledAppointments where scheduledAppointment.Date.Equals(generatedAppointment.Date) select generatedAppointment;
+        }
+
+        private List<ReccomendedBySpecializationDTO> GetAllRemovableAppointmentsBySecialization(List<ReccomendedBySpecializationDTO> generatedAppointments, List<Appointment> scheduledAppointments)
+        {
+            List<ReccomendedBySpecializationDTO> appointmentsToRemove = new List<ReccomendedBySpecializationDTO>();
+            generatedAppointments.ForEach(appointment => appointmentsToRemove.AddRange(SelectExistingBySpecializationToRemove(scheduledAppointments, appointment)));
+            return appointmentsToRemove;
+        }
+
+        private List<ReccomendedBySpecializationDTO> RemoveScheduledAppointmentsBySpecialization(List<ReccomendedBySpecializationDTO> generatedAppointments, List<Appointment> scheduledAppointments)
+        {
+            GetAllRemovableAppointmentsBySecialization(generatedAppointments, scheduledAppointments).ForEach(appointment => generatedAppointments.Remove(appointment));
+
+            return generatedAppointments;
+        }
+
+        public IEnumerable<ReccomendedBySpecializationDTO> RecommendAppointmentsBySpecialization(ReccomendBySpecializationRequestDto dto, Specialization specialization)
+        {
+            try
+            {
+                DateRange dateRange = new DateRange(dto.DateRange.From, dto.DateRange.To);
+                List<ReccomendedBySpecializationDTO> generatedAppointments = GenerateBySpecialization(specialization, dto, dateRange).ToList();
+                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetAllBySpecialization(specialization, dateRange).ToList();
+                return RemoveScheduledAppointmentsBySpecialization(generatedAppointments, scheduledAppointments);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

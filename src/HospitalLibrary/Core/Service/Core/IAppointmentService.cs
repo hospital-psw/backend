@@ -29,6 +29,8 @@
         List<Appointment> GetAllForRoom(int roomId);
 
         IEnumerable<Appointment> GetAllBySpecialization(Specialization specialization, DateRange dateRange);
+
+        IEnumerable<ReccomendedBySpecializationDTO> RecommendAppointmentsBySpecialization(ReccomendBySpecializationRequestDto dto, Specialization specialization);
     }
      
 }

@@ -142,5 +142,12 @@
 
             return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
         }
+
+        [HttpPost]
+        [Route("recommendBySpecialization/{specialization}")]
+        public IActionResult RecommendAppointmentsBySpecialization(ReccomendBySpecializationRequestDto dto, Specialization specialization)
+        {
+            return Ok(_appointmentService.RecommendAppointmentsBySpecialization(dto, specialization));   
+        }
     }
 }

@@ -6,6 +6,7 @@
     using HospitalAPI.EmailServices;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.Appointments;
+    using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -86,6 +87,34 @@
             var result = controller.GetAllBySpecialization(spec, dateRangeDto);
 
             Assert.NotNull(result);
+            
+        }
+
+        [Fact]
+        public void Reccomend_appointments_by_specialization()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            Specialization spec = Specialization.CARDIOLOGY;
+            DateRangeDto dateRangeDto = new DateRangeDto();
+            dateRangeDto.From = new DateTime(2023, 1, 8);
+            dateRangeDto.To = new DateTime(2023, 1, 15);
+            ReccomendBySpecializationRequestDto reccomendRequestDTO = new ReccomendBySpecializationRequestDto()
+            { 
+                DoctorId = 6,
+                PatientId = 4,
+                DateRange = new DateRange()
+                {
+                    From = dateRangeDto.From,
+                    To = dateRangeDto.To
+                }
+            };
+
+            var result = ((OkObjectResult)controller.RecommendAppointmentsBySpecialization(reccomendRequestDTO, spec)).Value as IEnumerable<ReccomendedBySpecializationDTO>;
+
+            Assert.NotEmpty(result);
+            Assert.Equal(result.ElementAt(0).DoctorId, 6);
             
         }
 
