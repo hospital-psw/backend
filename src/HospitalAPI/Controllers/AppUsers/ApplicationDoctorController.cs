@@ -57,13 +57,28 @@
         }
 
         [HttpGet("specialization/{spec}")]
-        public IActionResult GetBySpecialization(Specialization specialization)
+        public IActionResult GetBySpecialization(Specialization specialization) //ne znam ko ovo koristi i gde ali nemojte vracati celog doktora <3
         {
             var doctor = _doctorService.GetBySpecialization(specialization);
             if (doctor == null)
                 return NotFound();
 
             return Ok(doctor);
+        }
+
+        [HttpGet("specializationDTO/{spec}")]
+        public IActionResult GetBySpecializationDTO(Specialization spec)
+        {
+            var doctors = _doctorService.GetBySpecialization(spec);
+            var DTOlist = new List<ApplicationDoctorDTO>();
+            foreach(ApplicationDoctor doctor in doctors)
+            {
+                DTOlist.Add(ApplicationDoctorMapper.EntityToEntityDTO(doctor));
+            }
+            if (doctors == null)
+                return NotFound();
+
+            return Ok(DTOlist);
         }
 
         [HttpGet("allrecommended")]
