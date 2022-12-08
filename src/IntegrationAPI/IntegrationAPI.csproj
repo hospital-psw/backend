@@ -24,4 +24,9 @@
     <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Protobuf Include="Protos\model.proto" GrpcServices="None" />
+    <Protobuf Include="Protos\UrgentBloodTransfer.proto" GrpcServices="Client" />
+  </ItemGroup>
+
 </Project>
