@@ -6,6 +6,7 @@
     using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
+    using OpenQA.Selenium.DevTools.V105.HeapProfiler;
     using System;
     using System.Collections.Generic;
     using System.Linq;

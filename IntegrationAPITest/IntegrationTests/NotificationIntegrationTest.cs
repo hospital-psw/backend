@@ -27,6 +27,7 @@
     {
         public NotificationIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
+
         }
 
         private static NotificationController SetupController(IServiceScope serviceScope)

@@ -14,5 +14,6 @@
         public string Message { get; set; }
         public BloodUnitStatus BloodUnitStatus { get; set; }
         public BloodType BloodType { get; set; }
+        public bool Seen { get; set; }
     }
 }
