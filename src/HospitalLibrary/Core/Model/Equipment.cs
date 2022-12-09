@@ -76,5 +76,10 @@
             if (this.Quantity <= 0)
                 this.Deleted = true;
         }
+
+        public void SetQuantity(int quantity)
+        {
+            this.Quantity = quantity;
+        }
     }
 }

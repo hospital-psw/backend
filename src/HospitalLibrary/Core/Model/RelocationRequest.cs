@@ -41,8 +41,9 @@ namespace HospitalLibrary.Core.Model
 
 
         public void DeleteRelocation() {
-            Equipment.ReservedQuantity -= Quantity;
-            Deleted = true;
+
+            Equipment.SubstractReservedQuantity(this.Quantity);
+            this.Deleted = true;
         }
     }
 }

@@ -206,8 +206,8 @@
                 if (sameEquipment.Count < 2) continue;
                 Equipment firstEquipment = sameEquipment[0];
                 Equipment secondEquipment = sameEquipment[1];
-                firstEquipment.Quantity += secondEquipment.Quantity;
-                secondEquipment.Quantity = 0;
+                firstEquipment.AddQuantity(secondEquipment.Quantity);
+                secondEquipment.SetQuantity(0);
                 secondEquipment.Delete();
                 _unitOfWork.EquipmentRepository.Update(firstEquipment);
                 _unitOfWork.EquipmentRepository.Update(secondEquipment);
