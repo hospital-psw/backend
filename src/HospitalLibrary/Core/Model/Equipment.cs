@@ -24,6 +24,14 @@
             Room = room;
         }
 
+        public Equipment(EquipmentType equipmentType, int quantity, Room room, int reservedQuantity)
+        {
+            EquipmentType = equipmentType;
+            Quantity = quantity;
+            Room = room;
+            ReservedQuantity = reservedQuantity;
+        }
+
         public Equipment(EquipmentType equipmentType, int quantity, Room room, int id, int reservedQuantity)
         {
             Id = id;
@@ -47,6 +55,12 @@
         public static Equipment Create(EquipmentType equipmentType, int quantity, Room room)
         {
             Equipment equipment = new Equipment(equipmentType, quantity, room);
+            return equipment;
+        }
+
+        public static Equipment CreateWithReservedQuantity(EquipmentType equipmentType, int quantity, Room room, int reservedQuantity)
+        {
+            Equipment equipment = new Equipment(equipmentType, quantity, room, reservedQuantity);
             return equipment;
         }
 
