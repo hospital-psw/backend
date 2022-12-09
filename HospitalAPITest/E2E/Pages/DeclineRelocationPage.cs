@@ -15,10 +15,7 @@
     {
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/display";
-        private IWebElement canvas => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-view-rooms/div/div/div[2]/canvas"));
-        private IWebElement button => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-view-rooms/div/div[2]/app-show-room-details/div/app-tabs-details/mat-tab-group/mat-tab[3]/app-relocations/div/table/ng-container[6]/button"));
         private IWebElement buildingField => driver.FindElement(By.XPath("//*[@id=\"buildingSelect\"]"));
-        private ReadOnlyCollection<IWebElement>  buildingFields => driver.FindElements(By.XPath("//*[@id=\"buildingSelect\"]/mat-option"));
         private IWebElement buildingFieldBuilding2 => driver.FindElement(By.XPath("//*[@id=\"mat-option-0\"]"));
         private IWebElement declineRelocationButton => driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]"));
         private IWebElement tabsRelocation;
@@ -62,7 +59,6 @@
         public void SelectBuilding()
         {
             buildingField.Click();
-            //_ = driver.Manage().Timeouts().ImplicitWait;
             buildingFieldBuilding2.Click();
         }
         public void SelectRoom()
@@ -71,7 +67,6 @@
             Thread.Sleep(1000);
             action.MoveByOffset(897, 415).Click().Perform(); //897 415, 539 260
             Thread.Sleep(1000);
-            //action.Click();
         }
         public void SelectTab()
         {

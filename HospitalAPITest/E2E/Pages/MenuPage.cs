@@ -26,11 +26,5 @@
         {
             managerTab.Click();
         }
-
-        public void WaitForTab()
-        {
-            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(DeclineRelocationPage.URI));
-        }
     }
 }
