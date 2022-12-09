@@ -241,20 +241,18 @@
                 Quantity = 20,
                 ReservedQuantity = 7
             };
-            var relocationRequest1 = new RelocationRequest()
-            {
-                Id = 1,
-                Deleted = false,
-                Quantity = 5,
-                Equipment = equipment
-            };
-            var relocationRequest2 = new RelocationRequest()
-            {
-                Id = 2,
-                Deleted = false,
-                Quantity = 2,
-                Equipment = equipment
-            };
+            Room fromRoom = Room.Create("101", null, "", null);
+            fromRoom.Id = 1;
+            Room toRoom = Room.Create("200", null, "", null);
+            fromRoom.Id = 2;
+
+
+            var relocationRequest1 = RelocationRequest.Create(fromRoom, toRoom, equipment, 5, DateTime.Now.AddDays(1), 1);
+            relocationRequest1.Deleted = false;
+
+            var relocationRequest2 = RelocationRequest.Create(fromRoom, toRoom, equipment, 2, DateTime.Now.AddDays(1), 1);
+            relocationRequest2.Deleted = false;
+         
             relocations.Add(relocationRequest1);
             relocations.Add(relocationRequest2);
             var renovationService = new RenovationService(unitOfWork.Object);

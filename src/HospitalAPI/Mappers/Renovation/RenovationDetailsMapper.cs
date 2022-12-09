@@ -7,11 +7,7 @@
     {
         public static RenovationDetails EntityDtoToEntity(RenovationDetailsDto dto)
         {
-            RenovationDetails renovationDetails = new RenovationDetails();
-
-            renovationDetails.NewRoomName = dto.NewRoomName;
-            renovationDetails.NewRoomPurpose = dto.NewRoomPurpose;
-            renovationDetails.NewCapacity = dto.NewCapacity;
+            RenovationDetails renovationDetails = RenovationDetails.Create(dto.NewRoomName, dto.NewRoomPurpose, dto.NewCapacity);
 
             return renovationDetails;
         }
