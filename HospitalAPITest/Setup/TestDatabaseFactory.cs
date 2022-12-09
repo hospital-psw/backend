@@ -256,30 +256,10 @@
                     End = new DateTime(1, 1, 1, 23, 0, 0)
                 },
             };
-            context.Equipments.Add(new Equipment
-            {
-                EquipmentType = EquipmentType.BED,
-                Quantity = 8,
-                Room = equipmentRoom
-            });
-            context.Equipments.Add(new Equipment
-            {
-                EquipmentType = EquipmentType.SCISSORS,
-                Quantity = 10,
-                Room = equipmentRoom
-            });
-            context.Equipments.Add(new Equipment
-            {
-                EquipmentType = EquipmentType.NEEDLE,
-                Quantity = 20,
-                Room = equipmentRoom
-            });
-            context.Equipments.Add(new Equipment
-            {
-                EquipmentType = EquipmentType.BANDAGE,
-                Quantity = 5,
-                Room = equipmentRoom
-            });
+            context.Equipments.Add(Equipment.Create(EquipmentType.BED, 8, equipmentRoom));
+            context.Equipments.Add(Equipment.Create(EquipmentType.SCISSORS, 10, equipmentRoom));
+            context.Equipments.Add(Equipment.Create(EquipmentType.NEEDLE, 20, equipmentRoom));
+            context.Equipments.Add(Equipment.Create(EquipmentType.BANDAGE, 5, equipmentRoom));
 
             BloodAcquisition aquisition1 = new BloodAcquisition
             {
@@ -505,12 +485,7 @@
                 },
             };
 
-            Equipment relocationEquipment = new Equipment
-            {
-                EquipmentType = EquipmentType.BED,
-                Quantity = 8,
-                Room = equipmentRoom
-            };
+            Equipment relocationEquipment = Equipment.Create(EquipmentType.BED, 8, equipmentRoom);
 
             context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 10, 23, 0, 0), 2));
             
