@@ -12,8 +12,11 @@
     public class DeclineRelocationTest
     {
         private readonly IWebDriver driver;
+        private Pages.LoginPage loginPage;
+        private Pages.MenuPage menuPage;
         private Pages.DeclineRelocationPage declineRelocationPage;
         private int requestsCount = 0;
+        private int newRequestsCount = 0;
         //public const string URI_APPOINTMENTS = "http://localhost:4200/appointments";
 
         public DeclineRelocationTest()
@@ -30,9 +33,23 @@
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
+            loginPage.Navigate();
+            Assert.True(loginPage.loginButtonDisplayed());
+            Assert.True(loginPage.emailInputDisplayed());
+            Assert.True(loginPage.passwordInputDisplayed());
+            loginPage.insertEmail("maroko@gmail.com");
+            loginPage.insertPassword("123.Auth");
+            loginPage.SubmitForm();
+            loginPage.WaitForFormSubmit();
 
-            declineRelocationPage = new Pages.DeclineRelocationPage(driver);      // create ProductsPage
-            declineRelocationPage.Navigate();                            // navigate to url
+            menuPage = new Pages.MenuPage(driver);
+            Assert.True(menuPage.managerTabDisplayed());
+            menuPage.managerTabClick();
+            //menuPage.WaitForTab();
+            declineRelocationPage = new Pages.DeclineRelocationPage(driver);      
+            Assert.True(declineRelocationPage.buildingDisplayed());
+            //declineRelocationPage.Navigate();                            
 
         }
 
@@ -40,8 +57,11 @@
         public void Test()
         {
             ChooseParameters();
+            //Assert.True(declineRelocationPage.declineRelocationButtonDisplayed());
             Decline();
-            requestsCount = declineRelocationPage.RequestsCount();
+            int newRequestsCount = declineRelocationPage.RequestsCount();
+            Assert.Equal(requestsCount - 1, newRequestsCount);
+            Assert.Equal(driver.Url, Pages.DeclineRelocationPage.URI);
             Dispose();
         }
 

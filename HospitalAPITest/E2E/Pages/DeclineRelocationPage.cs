@@ -15,7 +15,6 @@
     {
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/display";
-
         private IWebElement canvas => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-view-rooms/div/div/div[2]/canvas"));
         private IWebElement button => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-view-rooms/div/div[2]/app-show-room-details/div/app-tabs-details/mat-tab-group/mat-tab[3]/app-relocations/div/table/ng-container[6]/button"));
         private IWebElement buildingField => driver.FindElement(By.XPath("//*[@id=\"buildingSelect\"]"));
@@ -31,6 +30,15 @@
         }
 
         public void Navigate() => driver.Navigate().GoToUrl(URI);
+
+        public bool buildingDisplayed()
+        {
+            return buildingField.Displayed;
+        }
+        public bool declineRelocationButtonDisplayed()
+        {
+            return declineRelocationButton.Displayed;
+        }
         public void EnsureTabIsDisplayed()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 2000));
@@ -71,12 +79,14 @@
             tabRelocation =  driver.FindElement(By.XPath("//*[@id=\"mat-tab-label-0-2\"]/div"));//driver.FindElement(By.XPath("//*[@id=\"relocationsLabel\"]"));
             tabRelocation.Click();
             Thread.Sleep(1000);
+            
         }
 
         public void Decline()
         {
             declineButton = driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]/span[1]"));
             declineButton.Click();
+            Thread.Sleep(1000);
         }
 
         public int RequestsCount()
