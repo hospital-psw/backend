@@ -46,8 +46,8 @@
             menuPage = new Pages.MenuPage(driver);
             Assert.True(menuPage.managerTabDisplayed());
             menuPage.managerTabClick();
-            declineRelocationPage = new Pages.DeclineRelocationPage(driver);      
-            Assert.True(declineRelocationPage.buildingDisplayed());                        
+            declineRelocationPage = new Pages.DeclineRelocationPage(driver);
+            Assert.True(declineRelocationPage.buildingDisplayed());
 
         }
 
@@ -58,10 +58,11 @@
             Decline();
             int newRequestsCount = declineRelocationPage.RequestsCount();
             Assert.Equal(requestsCount - 1, newRequestsCount);
-            Assert.Equal(driver.Url, Pages.DeclineRelocationPage.URI);
+            Assert.Equal(Pages.DeclineRelocationPage.URI, driver.Url);
             Dispose();
         }
 
+        [Fact]
         public void Dispose()
         {
             driver.Quit();

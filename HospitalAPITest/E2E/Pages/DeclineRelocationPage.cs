@@ -71,10 +71,10 @@
         public void SelectTab()
         {
             tabsRelocation = driver.FindElement(By.XPath("//*[@id=\"tabs\"]"));
-            tabRelocation =  driver.FindElement(By.XPath("//*[@id=\"mat-tab-label-0-2\"]/div"));//driver.FindElement(By.XPath("//*[@id=\"relocationsLabel\"]"));
+            tabRelocation = driver.FindElement(By.XPath("//*[@id=\"mat-tab-label-0-2\"]/div"));//driver.FindElement(By.XPath("//*[@id=\"relocationsLabel\"]"));
             tabRelocation.Click();
             Thread.Sleep(1000);
-            
+
         }
 
         public void Decline()
