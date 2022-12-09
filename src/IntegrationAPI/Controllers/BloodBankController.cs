@@ -109,6 +109,27 @@
                 return BadRequest();
             }
         }
+        [HttpPatch("monthlyTransferConfiguration/{id}")]
+        public IActionResult SaveMonthlyTransferConfiguration(int id, MonthlyTransfer mt)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (mt == null)
+                {
+                    return BadRequest();
+                }
+                var retVal = _bloodBankService.SaveMonthlyTransferConfiguration(id, mt);
+                return Ok(_mapper.Map<GetBloodBankDTO>(retVal));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpPost("ChangePassword")]
         public IActionResult ChangePassword(ChangePasswordDTO credentials)
