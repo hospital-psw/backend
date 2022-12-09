@@ -83,7 +83,8 @@
                 Id = 2
             };
 
-            var equipment = new Equipment()
+            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
+            /*var equipment = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -92,9 +93,10 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 10,
                 Room = room
-            };
+            };*/
 
-            var equipment2 = new Equipment()
+            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
+            /*var equipment2 = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -103,7 +105,7 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 15,
                 Room = room
-            };
+            };*/
 
 
             RelocationRequest request = new RelocationRequest()
@@ -168,7 +170,8 @@
                 Id = 5,
             };
 
-            var equipment = new Equipment()
+            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
+            /*var equipment = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -177,18 +180,19 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 10,
                 Room = room
-            };
-
-            var createdEquipment = new Equipment()
+            };*/
+            var createdEquipment = Equipment.Create(EquipmentType.BED, 2, toRoom);
+            /*var createdEquipment = new Equipment()
             {
                 Id = 3,
                 Deleted = false,
                 EquipmentType = EquipmentType.BED,
                 Quantity = 2,
                 Room = toRoom
-            };
+            };*/
 
-            var equipment2 = new Equipment()
+            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
+            /*var equipment2 = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -197,7 +201,7 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 15,
                 Room = room
-            };
+            };*/
 
             RelocationRequest request = new RelocationRequest()
             {

@@ -6,6 +6,7 @@
 
   <ItemGroup>
 	<PackageReference Include="DataAnnotationsExtensions" Version="5.0.1.27" />
+	<PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
 	<PackageReference Include="Google.Protobuf" Version="3.21.10" />
 	<PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
 	<PackageReference Include="Grpc.AspNetCore.Server" Version="2.50.0" />
