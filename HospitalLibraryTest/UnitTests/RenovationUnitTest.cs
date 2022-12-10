@@ -235,12 +235,8 @@
             var unitOfWork = SetupUOW();
 
             List<RelocationRequest> relocations = new List<RelocationRequest>();
-            var equipment = new Equipment() {
-                Id = 1,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 20,
-                ReservedQuantity = 7
-            };
+            var equipment = Equipment.CreateWithReservedQuantity(EquipmentType.BED, 20, null, 7);
+            equipment.Id = 1;
             Room fromRoom = Room.Create("101", null, "", null);
             fromRoom.Id = 1;
             Room toRoom = Room.Create("200", null, "", null);
@@ -285,22 +281,10 @@
             {
                 Id = 3,
             };
-            var equipment1 = new Equipment()
-            {
-                Id = 1,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 20,
-                ReservedQuantity = 7,
-                Room = room1
-            };
-            var equipment2 = new Equipment()
-            {
-                Id = 2,
-                EquipmentType = EquipmentType.BANDAGE,
-                Quantity = 15,
-                ReservedQuantity = 7,
-                Room = room2
-            };
+            var equipment1 = Equipment.CreateWithReservedQuantity(EquipmentType.BED, 20, room1, 7);
+            equipment1.Id = 1;
+            var equipment2 = Equipment.CreateWithReservedQuantity(EquipmentType.BANDAGE, 15, room2, 7);
+            equipment2.Id = 2;
             List<Equipment> equipmentToMove = new List<Equipment>();
             equipmentToMove.Add(equipment1);
             equipmentToMove.Add(equipment2);
@@ -392,23 +376,10 @@
             List<Equipment> equipment = new List<Equipment>();
             List<Equipment> sameEquipment = new List<Equipment>();
 
-            Equipment e1 = new Equipment() { 
-                Room = room,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 10
-            };
-            Equipment e2 = new Equipment()
-            {
-                Room = room,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 5
-            };
-            Equipment e3 = new Equipment()
-            {
-                Room = room,
-                EquipmentType = EquipmentType.BANDAGE,
-                Quantity = 7
-            };
+            Equipment e1 = Equipment.CreateWithReservedQuantity(EquipmentType.BED, 10, room, 0);
+            Equipment e2 = Equipment.CreateWithReservedQuantity(EquipmentType.BED, 5, room, 0);
+            Equipment e3 = Equipment.CreateWithReservedQuantity(EquipmentType.BANDAGE, 7, room, 0);
+        
             equipment.Add(e1);
             equipment.Add(e2);
             equipment.Add(e3);
