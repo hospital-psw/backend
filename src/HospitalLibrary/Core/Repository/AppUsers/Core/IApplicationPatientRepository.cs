@@ -11,5 +11,7 @@
     public interface IApplicationPatientRepository : IBaseRepository<ApplicationPatient>
     {
         IEnumerable<ApplicationPatient> GetNonHospitalized();
+        IEnumerable<ApplicationPatient> GetBlocked();
+        IEnumerable<ApplicationPatient> GetMalicious();
     }
 }

@@ -20,9 +20,5 @@
         public EmailSendingIntegrationTests(TestDatabaseFactory factory) : base(factory)
         {
         }
-        private static ApplicationPatientController SetupController(IServiceScope serviceScope)
-        {
-            return new ApplicationPatientController(serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
-        }
     }
 }

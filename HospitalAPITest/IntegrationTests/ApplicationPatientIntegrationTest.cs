@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
+    using AutoMapper;
     using HospitalAPI.Controllers;
     using HospitalAPI.Controllers.AppUsers;
     using HospitalAPI.Dto;
@@ -22,18 +23,30 @@
         }
         private static ApplicationPatientController SetupController(IServiceScope scope)
         {
-            return new ApplicationPatientController(scope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
+            return new ApplicationPatientController(scope.ServiceProvider.GetRequiredService<IApplicationPatientService>(), scope.ServiceProvider.GetRequiredService<IAuthService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
         }
         [Fact]
-        public async void Get_app_patient()
+        public void Get_blocked_app_patients()
         {
-
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)await controller.Get(9)).Value as ApplicationPatientDTO;
+            var result = ((OkObjectResult)controller.GetBlocked()).Value as List<ApplicationPatientDTO>;
 
             Assert.NotNull(result);
+            Assert.Equal(3, result.Count);
+        }
+
+        [Fact]
+        public void Get_malicious_app_patients()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetMalicious()).Value as List<ApplicationPatientDTO>;
+
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);
         }
     }
 }

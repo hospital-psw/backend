@@ -1,8 +1,11 @@
 ﻿namespace HospitalLibrary.Core.Service.AppUsers
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.AppUsers.Core;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -13,10 +16,13 @@
     public class ApplicationPatientService : BaseService<ApplicationPatient>, IApplicationPatientService
     {
         private readonly ILogger<ApplicationPatient> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ApplicationPatientService(ILogger<ApplicationPatient> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public ApplicationPatientService(ILogger<ApplicationPatient> logger, IUnitOfWork unitOfWork, 
+            UserManager<ApplicationUser> userManager) : base(unitOfWork)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
         public ApplicationPatient Get(int id)
@@ -57,5 +63,71 @@
                 return null;
             }
         }
+        public IEnumerable<ApplicationPatient> GetBlocked()
+        {
+            try
+            {
+                return _unitOfWork.ApplicationPatientRepository.GetBlocked();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ApplicationPatientService in GetBlocked {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<ApplicationPatient> GetMalicious()
+        {
+            try
+            {
+                return _unitOfWork.ApplicationPatientRepository.GetMalicious();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ApplicationPatientService in GetMalicious {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public async Task<bool> BlockPatient(int id)
+        {
+            try
+            {
+                ApplicationPatient patient = (ApplicationPatient)await _userManager.FindByIdAsync(id.ToString());
+
+                if (patient == null)
+                    return false;
+
+                patient.Blocked = true;
+                var result = await _userManager.UpdateAsync(patient);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ApplicationPatientService in BlockPatient {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+
+        public async Task<bool> UnblockPatient(int id)
+        {
+            try
+            {
+                ApplicationPatient patient = (ApplicationPatient)await _userManager.FindByIdAsync(id.ToString());
+
+                if (patient == null)
+                    return false;
+
+                patient.Blocked = false;
+                var result = await _userManager.UpdateAsync(patient);
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ApplicationPatientService in UnblockPatient {e.Message} in {e.StackTrace}");
+                return false;
+            }
+        }
+
     }
 }

@@ -33,5 +33,17 @@
             return GetAll().Where(x => !x.Hospitalized)
                            .ToList();
         }
+
+        IEnumerable<ApplicationPatient> IApplicationPatientRepository.GetBlocked()
+        {
+            return GetAll().Where(x => x.Blocked)
+                           .ToList();
+        }
+
+        IEnumerable<ApplicationPatient> IApplicationPatientRepository.GetMalicious()
+        {
+            return GetAll().Where(x => x.Strikes > 2)
+                           .ToList();
+        }
     }
 }

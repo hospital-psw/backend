@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
+    using AutoMapper;
     using HospitalAPI.Controllers;
     using HospitalAPI.Controllers.AppUsers;
     using HospitalAPI.Dto;
@@ -20,7 +21,7 @@
 
         private static ApplicationPatientController SetupController(IServiceScope serviceScope)
         {
-            return new ApplicationPatientController(serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
+            return new ApplicationPatientController(serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>(), serviceScope.ServiceProvider.GetRequiredService<IAuthService>(), serviceScope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]
