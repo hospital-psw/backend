@@ -33,9 +33,9 @@
         [Fact]
         public void Is_First_Room_Available()
         {
-            RelocationService relocationService = new RelocationService(new InMemoryUnitOfWork());
+            RoomScheduleService roomScheduleService = new RoomScheduleService(new InMemoryUnitOfWork());
 
-            DateTime? dateTimes = relocationService.IsRoomAvailable(1, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0));
+            DateTime? dateTimes = roomScheduleService.IsRoomAvailable(1, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0));
 
             Assert.Null(dateTimes);
         }
@@ -43,7 +43,7 @@
         [Fact]
         public void Is_Second_Room_Available()
         {
-            RelocationService relocationService = new RelocationService(new InMemoryUnitOfWork());
+            RoomScheduleService relocationService = new RoomScheduleService(new InMemoryUnitOfWork());
 
             DateTime? dateTimes = relocationService.IsRoomAvailable(2, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0));
 
@@ -52,9 +52,9 @@
         [Fact]
         public void Find_Available_Appointments_For_Both_Rooms()
         {
-            RelocationService relocationService = new RelocationService(new InMemoryUnitOfWork());
+            RoomScheduleService roomScheduleService = new RoomScheduleService(new InMemoryUnitOfWork());
 
-            List<DateTime> dateTimes = relocationService.GetAvailableAppointments(1, 2, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0), 4);
+            List<DateTime> dateTimes = roomScheduleService.GetAvailableAppointments(new List<int>() { 1, 2 }, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0), 4);
 
             Assert.NotEmpty(dateTimes);
             Assert.Equal(dateTimes[0], new DateTime(2022, 12, 11, 14, 0, 0));
@@ -83,7 +83,8 @@
                 Id = 2
             };
 
-            var equipment = new Equipment()
+            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
+            /*var equipment = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -92,9 +93,10 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 10,
                 Room = room
-            };
+            };*/
 
-            var equipment2 = new Equipment()
+            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
+            /*var equipment2 = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -103,7 +105,7 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 15,
                 Room = room
-            };
+            };*/
 
 
             RelocationRequest request = new RelocationRequest()
@@ -168,7 +170,8 @@
                 Id = 5,
             };
 
-            var equipment = new Equipment()
+            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
+            /*var equipment = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -177,18 +180,19 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 10,
                 Room = room
-            };
-
-            var createdEquipment = new Equipment()
+            };*/
+            var createdEquipment = Equipment.Create(EquipmentType.BED, 2, toRoom);
+            /*var createdEquipment = new Equipment()
             {
                 Id = 3,
                 Deleted = false,
                 EquipmentType = EquipmentType.BED,
                 Quantity = 2,
                 Room = toRoom
-            };
+            };*/
 
-            var equipment2 = new Equipment()
+            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
+            /*var equipment2 = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -197,7 +201,7 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 15,
                 Room = room
-            };
+            };*/
 
             RelocationRequest request = new RelocationRequest()
             {

@@ -26,7 +26,7 @@
         public BloodAcquisitionController(IBloodAcquisitionService _bloodAcquisitionService, IApplicationDoctorService doctorService)
         {
             bloodAcquisitionService = _bloodAcquisitionService;
-
+            _doctorService = doctorService;
         }
 
         [HttpPatch("/handle")]
