@@ -227,12 +227,20 @@
         public double GetNewRoomX(Room room1, Room room2) {
             RoomMap firstRoomMap = _unitOfWork.MapRepository.GetRoomMapById(room1.Id);
             RoomMap secondRoomMap = _unitOfWork.MapRepository.GetRoomMapById(room2.Id);
-            if (firstRoomMap.X < secondRoomMap.X) {
-                if(firstRoomMap.width == 2 || secondRoomMap.width == 2)
+            if (firstRoomMap.X < secondRoomMap.X)
+            {
+                if (firstRoomMap.width == 2)
+                    return firstRoomMap.X + 0.5;
+                else if (secondRoomMap.width == 2)
                     return firstRoomMap.X + 1;
-                return firstRoomMap.X + 0.5;
             }
-            return firstRoomMap.width == 2 || secondRoomMap.width == 2 ? secondRoomMap.X + 1 : secondRoomMap.X + 0.5 ;
+            else {
+                if (firstRoomMap.width == 2)
+                    return secondRoomMap.X + 1;
+                else if (secondRoomMap.width == 2)
+                    return secondRoomMap.X + 0.5;
+            }
+            return 0;
         }
 
         public double GetNewRoomWidth(Room room1, Room room2) {
