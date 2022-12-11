@@ -23,6 +23,7 @@
             AppointmentRepository = new InMemoryAppointmentRepository();
             EquipmentRepository = new InMemoryEquipmentRepository();
             ApplicationDoctorRepository = new InMemoryDoctorRepository();
+            ApplicationPatientRepository = new InMemoryApplicationPatientRepository();
             ApplicationUserRepository = new InMemoryApplicationUserRepository();
             VacationRequestsRepository = new InMemoryVacationRequestsRepository();
         }
@@ -57,7 +58,7 @@
 
         public IApplicationUserRepository ApplicationUserRepository { get; set; }
 
-        public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
+        public IApplicationPatientRepository ApplicationPatientRepository { get; set; }
 
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
 

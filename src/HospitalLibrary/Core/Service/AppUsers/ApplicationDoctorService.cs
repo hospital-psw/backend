@@ -66,13 +66,13 @@
             List<ApplicationDoctor> result = new List<ApplicationDoctor>();
             List<int> numberOfPatients = new List<int>();
             int min;
-            foreach (ApplicationDoctor i in _unitOfWork.ApplicationUserRepository.GetAllGeneralDoctors())
+            foreach (ApplicationDoctor i in _unitOfWork.ApplicationDoctorRepository.GetAllGeneralDoctors())
             {
                 numberOfPatients.Add(GetNumberOfPatientsForDoctor(i));
             }
             min = numberOfPatients.Min();
 
-            foreach (ApplicationDoctor i in _unitOfWork.ApplicationUserRepository.GetAllGeneralDoctors())
+            foreach (ApplicationDoctor i in _unitOfWork.ApplicationDoctorRepository.GetAllGeneralDoctors())
             {
                 if (GetNumberOfPatientsForDoctor(i) <= min + 2)
                 {
@@ -85,9 +85,9 @@
         private int GetNumberOfPatientsForDoctor(ApplicationDoctor appDoctor)
         {
             List<ApplicationPatient> doctorsPatients = new List<ApplicationPatient>();
-            foreach (ApplicationPatient i in _unitOfWork.ApplicationUserRepository.GetAllPatients())
+            foreach (ApplicationPatient i in _unitOfWork.ApplicationPatientRepository.GetAll())
             {
-                if (i.applicationDoctor == appDoctor)
+                if (i.applicationDoctor.Id == appDoctor.Id)
                 {
                     doctorsPatients.Add(i);
                 }

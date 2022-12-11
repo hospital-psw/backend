@@ -22,9 +22,13 @@
             ApplicationDoctorService applicationDoctorService = new ApplicationDoctorService(null, new InMemoryUnitOfWork());
 
             IEnumerable<ApplicationDoctor> appDoctors = applicationDoctorService.RecommendDoctors();
-            ApplicationDoctor applicationDoctor = new ApplicationDoctor("Marko", "Markovic", new DateTime(), Gender.MALE, Specialization.GENERAL, null, null);
+
+            WorkingHours workingHours = new WorkingHours(5, new DateTime(), new DateTime(), false, new DateTime(2022, 11, 10, 10, 0, 0), new DateTime(2022, 11, 10, 16, 0, 0));
+            ApplicationDoctor applicationDoctor = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, workingHours, null);
             appDoctors.ShouldNotBeEmpty();
-            appDoctors.Contains(applicationDoctor);
+            appDoctors.Count().ShouldBe(1);
+            appDoctors.First().FirstName.ShouldBe(applicationDoctor.FirstName);
+
 
         }
     }

@@ -33,6 +33,10 @@
             var result = ((ObjectResult)controller.GetAll()).Value as List<AllergiesDto>;
 
             Assert.NotNull(result);
+            Assert.Equal(3, result.Count());
+            Assert.Equal("karfiol", result[2].Name);
+            Assert.Equal("kupus", result[0].Name);
+            Assert.Equal("cvekla", result[1].Name);
 
         }
 

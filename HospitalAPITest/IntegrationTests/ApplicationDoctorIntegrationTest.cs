@@ -36,7 +36,9 @@
             var result = ((ObjectResult)controller.GetAllRecomended()).Value as List<ApplicationDoctorDTO>;
 
             Assert.NotNull(result);
-            Assert.Equal("Galina", result.First().FirstName);
+            Assert.Equal("Galina", result[0].FirstName);
+            Assert.Equal("Marina", result[1].FirstName);
+            Assert.Equal(2, result.Count());
 
         }
     }

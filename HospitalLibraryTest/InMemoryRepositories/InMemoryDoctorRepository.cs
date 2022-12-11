@@ -47,6 +47,19 @@
             return doctors;
         }
 
+        public IEnumerable<ApplicationDoctor> GetAllGeneralDoctors()
+        {
+            WorkingHours workingHours = new WorkingHours(5, new DateTime(), new DateTime(), false, new DateTime(2022, 11, 10, 10, 0, 0), new DateTime(2022, 11, 10, 16, 0, 0));
+            ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, workingHours, null);
+            doc1.Id = 1;
+            ApplicationDoctor doc2 = new ApplicationDoctor("Vuk", "Milanovic", "ckepa@gmail.com", Specialization.GENERAL, workingHours, null);
+            doc2.Id = 2;
+            List<ApplicationDoctor> doctors = new List<ApplicationDoctor>();
+            doctors.Add(doc1);
+            doctors.Add(doc2);
+            return doctors;
+        }
+
         public IEnumerable<ApplicationDoctor> GetBySpecialization(Specialization specialization)
         {
             return GetAll().Where(x => x.Specialization == specialization);

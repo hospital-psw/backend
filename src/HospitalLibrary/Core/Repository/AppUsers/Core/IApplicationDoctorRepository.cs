@@ -13,5 +13,6 @@
     {
         IEnumerable<ApplicationDoctor> GetBySpecialization(Specialization specialization);
         IEnumerable<ApplicationDoctor> GetOtherSpecializationDoctors(Specialization specialization, int doctorId);
+        IEnumerable<ApplicationDoctor> GetAllGeneralDoctors();
     }
 }

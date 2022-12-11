@@ -23,11 +23,7 @@
         {
             return _context.ApplicationDoctors.ToList();
         }
-        public IEnumerable<ApplicationDoctor> GetAllGeneralDoctors()
-        {
-            return GetAllDoctors().Where(x => x.Specialization == Specialization.GENERAL).ToList();
-        }
-
+        
         public IEnumerable<ApplicationPatient> GetAllPatients()
         {
             return _context.ApplicationPatients.ToList();
