@@ -22,7 +22,7 @@
         }
         private static ApplicationPatientController SetupController(IServiceScope serviceScope)
         {
-            return new ApplicationPatientController(serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
+            return new ApplicationPatientController(serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>(), null, null);
         }
     }
 }

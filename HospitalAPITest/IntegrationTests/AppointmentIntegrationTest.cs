@@ -24,7 +24,8 @@
         private static AppointmentController SetupController(IServiceScope serviceScope)
         {
             return new AppointmentController(serviceScope.ServiceProvider.GetRequiredService<IAppointmentService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IEmailService>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IEmailService>(),
+                                             serviceScope.ServiceProvider.GetRequiredService<IDoctorScheduleService>());
         }
 
         [Fact]
@@ -45,5 +46,31 @@
             Assert.NotNull(result);
             Assert.Equal("Djankarlo", result.Doctor.FirstName);
         }
+
+        [Fact]
+        public void Get_appointments_for_room()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 4;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<AppointmentDisplayDto>;
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+        [Fact]
+        public void Get_appointments_for_room_empty()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 5;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<AppointmentDisplayDto>;
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
     }
 }

@@ -14,8 +14,6 @@
         Appointment Update(Appointment appointment);
         IEnumerable<Appointment> GetAll();
 
-        IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto);
-
         Appointment Create(NewAppointmentDto dto);
 
         void Delete(Appointment appointment);
@@ -23,5 +21,7 @@
         IEnumerable<Appointment> GetByDoctorsId(int doctorId);
 
         IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to);
+
+        List<Appointment> GetAllForRoom(int roomId);
     }
 }

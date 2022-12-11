@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
+    using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
@@ -23,6 +24,7 @@
             EquipmentRepository = new InMemoryEquipmentRepository();
             ApplicationDoctorRepository = new InMemoryDoctorRepository();
             ApplicationUserRepository = new InMemoryApplicationUserRepository();
+            VacationRequestsRepository = new InMemoryVacationRequestsRepository();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -41,7 +43,7 @@
 
         public IMedicamentRepository MedicamentRepository => throw new NotImplementedException();
 
-        public IVacationRequestsRepository VacationRequestsRepository => throw new NotImplementedException();
+        public IVacationRequestsRepository VacationRequestsRepository { get; set; }
 
         public IEquipmentRepository EquipmentRepository { get; set; }
 
@@ -58,6 +60,16 @@
         public IApplicationPatientRepository ApplicationPatientRepository => throw new NotImplementedException();
 
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
+
+        public IRenovationRepository RenovationRepository => throw new NotImplementedException();
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
+
+        public IPrescriptionRepository PrescriptionRepository { get; set; }
+
+        public ISymptomRepository SymptomRepository { get; set; }
+
+        public IAnamnesisRepository AnamnesisRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

@@ -3,11 +3,11 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Migrations;
     using System;
+    using System.Collections.Generic;
 
     public class RecommendRelocationRequestDto
     {
-        public int FromRoomId { get; set; }
-        public int ToRoomId { get; set; }
+        public List<int> RoomsId { get; set; }
         public DateTime FromTime { get; set; }
         public DateTime ToTime { get; set; }
         public int Duration { get; set; }

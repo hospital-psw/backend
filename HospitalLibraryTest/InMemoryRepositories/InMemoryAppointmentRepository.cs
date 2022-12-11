@@ -32,6 +32,7 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)
         {
+
             ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
             doc1.Id = 1;
             ApplicationDoctor doc2 = new ApplicationDoctor("Vuk", "Milanovic", "ckepa@gmail.com", Specialization.GENERAL, null, null);
@@ -107,6 +108,11 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
 
         public void Update(Appointment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Appointment> GetAllForRoom(int roomId)
         {
             throw new NotImplementedException();
         }
