@@ -7,13 +7,13 @@ namespace HospitalLibrary.Core.Model
 {
     public class Room : Entity
     {
-        public string Number { get; set; }
-        public Floor Floor { get; set; }
-        public string Purpose { get; set; }
-        public WorkingHours? WorkingHours { get; set; }
-        public int Capacity { get; set; }
-        public List<ApplicationPatient> Patients { get; set; } = new List<ApplicationPatient>();
-        public List<RenovationRequest> Renovations { get; set; }
+        public string Number { get; private set; }
+        public Floor Floor { get; private set; }
+        public string Purpose { get; private set; }
+        public WorkingHours? WorkingHours { get; private set; }
+        public int Capacity { get; private set; }
+        public List<ApplicationPatient> Patients { get; private set; } = new List<ApplicationPatient>();
+        public List<RenovationRequest> Renovations { get; private set; }
 
 
         public Room() { }
@@ -35,6 +35,35 @@ namespace HospitalLibrary.Core.Model
             Floor = floor;
             Purpose = purpose;
             WorkingHours = workingHours;
+        }
+
+        public void UpdatePurpose(string newPurpose)
+        {
+            this.Purpose = newPurpose;
+        }
+
+        public bool NumberStartsWithFloorNumber(string newNumber)
+        {
+            if (Floor.Number.ToString() == newNumber.Substring(0, 1))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateNumber(string newNumber)
+        {
+            if (NumberStartsWithFloorNumber(newNumber))
+            {
+                this.Number = newNumber;
+                return true;
+            }
+            return false;
+        }
+
+        public void AddPatient(ApplicationPatient patient)
+        {
+            Patients.Add(patient);
         }
     }
 }
