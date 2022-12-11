@@ -89,45 +89,65 @@
             }
         }
 
-        public async Task<bool> BlockPatient(int id)
+        public async Task<ApplicationPatient> BlockPatient(int id)
         {
             try
             {
                 ApplicationPatient patient = (ApplicationPatient)await _userManager.FindByIdAsync(id.ToString());
 
                 if (patient == null)
-                    return false;
+                    return null;
 
                 patient.Blocked = true;
+                patient.Strikes = 0;
                 var result = await _userManager.UpdateAsync(patient);
-                return true;
+                return patient;
             }
             catch (Exception e)
             {
                 _logger.LogError($"Error in ApplicationPatientService in BlockPatient {e.Message} in {e.StackTrace}");
-                return false;
+                return null;
             }
         }
 
-        public async Task<bool> UnblockPatient(int id)
+        public async Task<ApplicationPatient> UnblockPatient(int id)
         {
             try
             {
                 ApplicationPatient patient = (ApplicationPatient)await _userManager.FindByIdAsync(id.ToString());
 
                 if (patient == null)
-                    return false;
+                    return null;
 
                 patient.Blocked = false;
                 var result = await _userManager.UpdateAsync(patient);
-                return true;
+                return patient;
             }
             catch (Exception e)
             {
                 _logger.LogError($"Error in ApplicationPatientService in UnblockPatient {e.Message} in {e.StackTrace}");
-                return false;
+                return null;
             }
         }
 
+        public async Task<ApplicationPatient> SetStrikes(int id, int num)
+        {
+            try
+            {
+                ApplicationPatient patient = (ApplicationPatient)await _userManager.FindByIdAsync(id.ToString());
+
+                if (patient == null)
+                    return null;
+
+                patient.Strikes = num;
+                var result = await _userManager.UpdateAsync(patient);
+                return patient;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ApplicationPatientService in UnblockPatient {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
     }
 }

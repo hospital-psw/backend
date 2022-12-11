@@ -84,7 +84,7 @@
             patients.ForEach(p => patientDTOs.Add(_mapper.Map<ApplicationPatientDTO>(p)));
             return Ok(patientDTOs);
         }
-        [HttpPost("block/{id}")]
+        [HttpPut("block/{id}")]
         public async Task<IActionResult> BlockPatient(int id)
         {
             var patient = _appPatientService.Get(id);
@@ -94,7 +94,7 @@
             var result = await _appPatientService.BlockPatient(id);
             return Ok(result);
         }
-        [HttpPost("unblock/{id}")]
+        [HttpPut("unblock/{id}")]
         public async Task<IActionResult> UnblockPatient(int id)
         {
             var patient = _appPatientService.Get(id);
@@ -102,6 +102,16 @@
                 return NotFound();
 
             var result = await _appPatientService.UnblockPatient(id);
+            return Ok(result);
+        }
+        [HttpPut("setstrikes/{id}/{num}")]
+        public async Task<IActionResult> SetStrikes(int id, int num)
+        {
+            var patient = _appPatientService.Get(id);
+            if (patient == null)
+                return NotFound();
+
+            var result = await _appPatientService.SetStrikes(id, num);
             return Ok(result);
         }
     }
