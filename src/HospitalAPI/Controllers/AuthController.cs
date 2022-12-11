@@ -211,7 +211,7 @@
             {
                 return BadRequest("Invalid Email Confirmation Request");
             }
-            return Ok();
+            return Redirect("http://localhost:4200/login");
         }
 
     }
