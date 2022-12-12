@@ -13,6 +13,7 @@
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Model.VacationRequests;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -127,7 +128,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
@@ -245,7 +246,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
@@ -300,7 +301,7 @@
             Floor floor = new Floor()
             {
                 Building = building,
-                Number = 0,
+                Number = FloorNumber.Create(0),
                 Purpose = "ortopedija"
             };
 
@@ -452,7 +453,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
@@ -473,7 +474,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
