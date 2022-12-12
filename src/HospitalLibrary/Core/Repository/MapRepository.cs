@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -35,6 +36,23 @@
             return _context.RoomsMap.Include(x => x.Room).Include(x => x.Room.Floor.Building).Include(x => x.Room.Floor).Include(x => x.Room.WorkingHours)
                                    .Where(x => !x.Deleted).Where(x => x.Room.Floor.Building.Id == buildingId && x.Room.Floor.Number == floor)
                                    .ToList();
+        }
+
+        public RoomMap GetRoomMapById(int id)
+        {
+            return _context.RoomsMap.Include(x => x.Room).FirstOrDefault(x => !x.Deleted && x.Room.Id == id);
+        }
+
+        public RoomMap Create(RoomMap roomMap)
+        {
+            _context.RoomsMap.Add(roomMap);
+            _context.SaveChanges();
+            return roomMap;
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }
