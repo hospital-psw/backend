@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibraryTest.InMemoryRepositories
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using System;
@@ -27,7 +28,7 @@
 
             WorkingHours workingHours = new WorkingHours(5, new DateTime(), new DateTime(), false, new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0));
             Building building = new Building(4, new DateTime(), new DateTime(), false, "Hospital2", "Janka Cmelika 1");
-            Floor floor = new Floor(2, new DateTime(), new DateTime(), false, 0, "ortopedija", building);
+            Floor floor = new Floor(2, new DateTime(), new DateTime(), false, FloorNumber.Create(0), "ortopedija", building);
             Room room1 = new Room(14, "001", new DateTime(), new DateTime(), false, floor, "ordinacija", workingHours);
             Room room2 = new Room(16, "003", new DateTime(), new DateTime(), false, floor, "ordinacija", workingHours);
             rooms.Add(room1);
@@ -42,6 +43,11 @@
         }
 
         public Room GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
         {
             throw new NotImplementedException();
         }

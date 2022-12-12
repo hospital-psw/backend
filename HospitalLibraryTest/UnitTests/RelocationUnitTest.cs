@@ -83,7 +83,8 @@
                 Id = 2
             };
 
-            var equipment = new Equipment()
+            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
+            /*var equipment = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -92,9 +93,10 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 10,
                 Room = room
-            };
+            };*/
 
-            var equipment2 = new Equipment()
+            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
+            /*var equipment2 = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -103,18 +105,10 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 15,
                 Room = room
-            };
+            };*/
 
 
-            RelocationRequest request = new RelocationRequest()
-            {
-                Id = 1,
-                Quantity = 2,
-                Equipment = equipment2,
-                ToRoom = toRoom,
-                FromRoom = fromRoom
-            };
-
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment eqUpdate = null;
             RelocationRequest reqUpdate = null;
@@ -168,7 +162,8 @@
                 Id = 5,
             };
 
-            var equipment = new Equipment()
+            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
+            /*var equipment = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -177,18 +172,19 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 10,
                 Room = room
-            };
-
-            var createdEquipment = new Equipment()
+            };*/
+            var createdEquipment = Equipment.Create(EquipmentType.BED, 2, toRoom);
+            /*var createdEquipment = new Equipment()
             {
                 Id = 3,
                 Deleted = false,
                 EquipmentType = EquipmentType.BED,
                 Quantity = 2,
                 Room = toRoom
-            };
+            };*/
 
-            var equipment2 = new Equipment()
+            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
+            /*var equipment2 = new Equipment()
             {
                 Id = 1,
                 DateCreated = DateTime.Now,
@@ -197,17 +193,9 @@
                 EquipmentType = EquipmentType.BED,
                 Quantity = 15,
                 Room = room
-            };
+            };*/
 
-            RelocationRequest request = new RelocationRequest()
-            {
-                Id = 1,
-                Quantity = 2,
-                Equipment = equipment2,
-                ToRoom = toRoom,
-                FromRoom = fromRoom
-
-            };
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment retEq = null;
             RelocationRequest reqUpdate = null;

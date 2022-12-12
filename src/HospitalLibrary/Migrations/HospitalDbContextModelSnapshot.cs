@@ -640,9 +640,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)");
 
@@ -778,16 +775,10 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EquipmentId")
                         .HasColumnType("int");
 
                     b.Property<int?>("FromRoomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
@@ -823,6 +814,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("NewCapacity")
+                        .HasColumnType("int");
 
                     b.Property<string>("NewRoomName")
                         .HasColumnType("nvarchar(max)");
@@ -1459,7 +1453,25 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("BuildingId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FloorNumber", "Number", b1 =>
+                        {
+                            b1.Property<int>("FloorId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Number")
+                                .HasColumnType("int");
+
+                            b1.HasKey("FloorId");
+
+                            b1.ToTable("Floors");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FloorId");
+                        });
+
                     b.Navigation("Building");
+
+                    b.Navigation("Number");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
@@ -1497,9 +1509,45 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("ToRoomId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.RelocationDuration", "Duration", b1 =>
+                        {
+                            b1.Property<int>("RelocationRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Duration")
+                                .HasColumnType("int");
+
+                            b1.HasKey("RelocationRequestId");
+
+                            b1.ToTable("RelocationRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RelocationRequestId");
+                        });
+
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.RelocationQuantity", "Quantity", b1 =>
+                        {
+                            b1.Property<int>("RelocationRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Quantity")
+                                .HasColumnType("int");
+
+                            b1.HasKey("RelocationRequestId");
+
+                            b1.ToTable("RelocationRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RelocationRequestId");
+                        });
+
+                    b.Navigation("Duration");
+
                     b.Navigation("Equipment");
 
                     b.Navigation("FromRoom");
+
+                    b.Navigation("Quantity");
 
                     b.Navigation("ToRoom");
                 });

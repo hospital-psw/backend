@@ -55,7 +55,6 @@
                     prescriptions = _prescriptionService.AddMultiple(dto.NewPrescriptions);
                     _anamnesisService.AddPrescriptions(anamnesis.Id, prescriptions);
                 }
-
                 return Ok(AnamnesisMapper.EntityToEntityDto(anamnesis));
             }
             catch (Exception e)

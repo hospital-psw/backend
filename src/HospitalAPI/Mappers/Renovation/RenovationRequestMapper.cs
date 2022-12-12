@@ -8,18 +8,14 @@
     {
         public static RenovationRequest EntityDtoToEntity(RenovationRequestDto dto, List<Room> Rooms)
         {
-            RenovationRequest renovationRequest = new RenovationRequest();
 
-
-            renovationRequest.RenovationType = dto.RenovationType;
-            renovationRequest.Rooms = Rooms;
-            renovationRequest.StartTime = dto.StartTime;
-            renovationRequest.Duration = dto.Duration;
-            renovationRequest.RenovationDetails = new List<RenovationDetails>();
+            List<RenovationDetails> details = new List<RenovationDetails>();
             foreach (RenovationDetailsDto dto2 in dto.RenovationDetails)
             {
-                renovationRequest.RenovationDetails.Add(RenovationDetailsMapper.EntityDtoToEntity(dto2));
+                details.Add(RenovationDetailsMapper.EntityDtoToEntity(dto2));
             }
+
+            RenovationRequest renovationRequest = RenovationRequest.Create(dto.RenovationType, Rooms, dto.StartTime, dto.Duration, details);
 
             return renovationRequest;
         }
