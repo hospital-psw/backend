@@ -105,20 +105,6 @@
             patients.Add(appPat);
             patients.Add(appPat2);
 
-            ApplicationDoctor appDoc = new ApplicationDoctor()
-            {
-                FirstName = "Djankarlo",
-                LastName = "Rapacoti",
-                Email = "djankarlno@asd.com",
-                Specialization = Specialization.CARDIOLOGY,
-                WorkHours = new WorkingHours()
-                {
-                    Start = new DateTime(1, 1, 1, 12, 0, 0),
-                    End = new DateTime(1, 1, 1, 16, 0, 0)
-                },
-                Office = null
-            };
-
             Room room = new Room()
             {
                 Floor = new Floor()
@@ -140,6 +126,42 @@
                 },
                 Patients = patients
 
+            };
+
+
+            Room office = new Room()
+            {
+                Floor = new Floor()
+                {
+                    Building = new Building()
+                    {
+                        Address = "Jovana Piperovica 15",
+                        Name = "Decija bolnica"
+                    },
+                    Number = FloorNumber.Create(11),
+                    Purpose = "Kancelarija"
+                },
+                Number = "1511",
+                Purpose = "Kancelarija",
+                WorkingHours = new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                },
+            };
+
+            ApplicationDoctor appDoc = new ApplicationDoctor()
+            {
+                FirstName = "Djankarlo",
+                LastName = "Rapacoti",
+                Email = "djankarlno@asd.com",
+                Specialization = Specialization.CARDIOLOGY,
+                WorkHours = new WorkingHours()
+                {
+                    Start = new DateTime(1, 1, 1, 6, 0, 0),
+                    End = new DateTime(1, 1, 1, 14, 0, 0)
+                },
+                Office = office,
             };
 
             BloodExpenditure expenditure = new BloodExpenditure()
@@ -353,9 +375,18 @@
             context.ApplicationPatients.Add(new ApplicationPatient
                 ("Fosilka", "Fosilovic", new DateTime(1930, 11, 26), Gender.FEMALE, false, BloodType.O_PLUS));
             context.ApplicationDoctors.Add(new ApplicationDoctor
-                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null));
-            context.ApplicationDoctors.Add(new ApplicationDoctor
-                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, null, null));
+                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, room));
+
+            WorkingHours besonWH = new WorkingHours
+            {
+                Start = new DateTime(1, 1, 1, 6, 0, 0),
+                End = new DateTime(1, 1, 1, 14, 0, 0)
+            };
+
+            ApplicationDoctor docBeson = new ApplicationDoctor
+                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, besonWH, office);
+
+            context.ApplicationDoctors.Add(docBeson);
 
             context.VacationRequests.Add(new VacationRequest
             {
@@ -516,26 +547,68 @@
             List<Room> roomsRenovation = new List<Room>();
             roomsRenovation.Add(room);
             List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
-            context.RenovationRequests.Add(RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, new DateTime(), 2, renovationDetails));
+            context.RenovationRequests.Add(RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, DateTime.Now, 2, renovationDetails));
 
             ApplicationDoctor appDoc2 = new ApplicationDoctor
                 ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null);
 
             DoctorSchedule doctorSchedule = new DoctorSchedule(appDoc, new List<Appointment>(), new List<VacationRequest>(), new List<Consilium>());
-            DoctorSchedule doctorSchedule2 = new DoctorSchedule(appDoc2, new List<Appointment>(), new List<VacationRequest>(), new List<Consilium>());
+            DoctorSchedule doctorSchedule2 = new DoctorSchedule(docBeson, new List<Appointment>(), new List<VacationRequest>(), new List<Consilium>());
+
+            Appointment appointment2 = new Appointment
+            {
+                Date = new DateTime(2022, 12, 21, 6, 0, 0),
+                Doctor = appDoc,
+                Patient = appPat,
+                Room = office,
+                IsDone = false,
+                ExamType = ExaminationType.OPERATION,
+                Duration = 30
+            };
+
+            Appointment appointment3 = new Appointment
+            {
+                Date = new DateTime(2022, 12, 21, 7, 0, 0),
+                Doctor = docBeson,
+                Patient = appPat,
+                Room = office,
+                IsDone = false,
+                ExamType = ExaminationType.IMAGING,
+                Duration = 30
+            };
+
+            VacationRequest vacationRequest = new VacationRequest
+            {
+                Doctor = appDoc,
+                From = new DateTime(2022, 12, 17, 0, 0, 0),
+                To = new DateTime(2022, 12, 20, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = "",
+                ManagerComment = null,
+                Urgent = false,
+            };
+
+            doctorSchedule.VacationRequests.Add(vacationRequest);
+            doctorSchedule.Appointments.Add(appointment2);
+            doctorSchedule2.Appointments.Add(appointment3);
 
             List<DoctorSchedule> schedules = new List<DoctorSchedule>();
             schedules.Add(doctorSchedule);
             schedules.Add(doctorSchedule2);
 
-            context.Consiliums.Add(new Consilium
+            Consilium consilium = new Consilium
             {
-                DateTime = DateTime.Now,
+                DateTime = new DateTime(2022, 12, 21, 6, 30, 0),
                 Topic = "Tema",
                 Duration = 30,
                 DoctorsSchedule = schedules,
                 Room = room,
-            });
+            };
+
+            context.Consiliums.Add(consilium);
+
+            doctorSchedule.Consiliums.Add(consilium);
+            doctorSchedule2.Consiliums.Add(consilium);
 
             context.SaveChanges();
 

@@ -24,6 +24,12 @@
         {
             return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)
                                                .ThenInclude(x => x.Doctor)
+                                               .ThenInclude(x => x.Office)
+                                               .ThenInclude(x => x.Floor)
+                                               .ThenInclude(x => x.Building)
+                                               .Include(x => x.DoctorsSchedule)
+                                               .ThenInclude(x => x.Doctor)
+                                               .ThenInclude(x => x.WorkHours)
                                                .Include(x => x.Room)
                                                .ThenInclude(x => x.Floor)
                                                .ThenInclude(x => x.Building)

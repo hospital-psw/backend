@@ -331,7 +331,7 @@
                 List<RecommendedAppointmentDto> generatedAppointments = new List<RecommendedAppointmentDto>();
                 ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
                 ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
-                Room room = _unitOfWork.RoomRepository.GetById(16);
+                Room room = _unitOfWork.RoomRepository.GetById(doctor.Office.Id);
                 DateTime shiftIterator = doctor.WorkHours.Start;
                 DateTime startDate = new DateTime(dto.Date.Year, dto.Date.Month, dto.Date.Day, doctor.WorkHours.Start.Hour, doctor.WorkHours.Start.Minute, doctor.WorkHours.Start.Second);
 

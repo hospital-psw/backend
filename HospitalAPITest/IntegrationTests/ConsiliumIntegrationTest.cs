@@ -50,15 +50,15 @@
             var controller = SetupController(scope);
 
             List<int> selectedDoctors = new List<int>();
-            selectedDoctors.Add(1);
-            selectedDoctors.Add(2);
+            selectedDoctors.Add(4);
+            selectedDoctors.Add(6);
 
             ScheduleConsiliumDto dto = new ScheduleConsiliumDto
             {
-                DateRange = new DateRange(new DateTime(2022, 12, 28), new DateTime(2022, 12, 31)),
+                DateRange = new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)),
                 Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
                 Duration = 30,
-                DoctorId = 1,
+                DoctorId = 4,
                 SelectedDoctors = selectedDoctors,
                 SelectedSpecializations = null,
                 RoomId = 1
@@ -68,33 +68,34 @@
 
             Assert.NotNull(result);
             Assert.Equal("Hitan sastanak oko pacijenta Petra Petrovica.", result.Topic);
+            Assert.Equal(new DateTime(2022, 12, 21, 7, 30, 0), result.DateTime);
         }
 
         [Fact]
-        public void Schedule_consilium_by_selected_specializations()
+        public void Schedule_consilium_by_selected_doctors_fail()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            List<Specialization> selectedSpecializations = new List<Specialization>();
-            selectedSpecializations.Add(Specialization.GENERAL);
-            selectedSpecializations.Add(Specialization.CARDIOLOGY);
+            List<int> selectedDoctors = new List<int>();
+            selectedDoctors.Add(4);
+            selectedDoctors.Add(6);
 
             ScheduleConsiliumDto dto = new ScheduleConsiliumDto
             {
-                DateRange = new DateRange(new DateTime(2022, 12, 28), new DateTime(2022, 12, 31)),
+                DateRange = new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 19)),
                 Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
                 Duration = 30,
-                DoctorId = 1,
-                SelectedDoctors = null,
-                SelectedSpecializations = selectedSpecializations,
+                DoctorId = 4,
+                SelectedDoctors = selectedDoctors,
+                SelectedSpecializations = null,
                 RoomId = 1
             };
 
-            var result = ((OkObjectResult)controller.Schedule(dto)).Value as ConsiliumDto;
+            var result = ((BadRequestObjectResult)controller.Schedule(dto)).Value;
 
             Assert.NotNull(result);
-            Assert.Equal("Hitan sastanak oko pacijenta Petra Petrovica.", result.Topic);
+            Assert.Equal("One or more selected doctors are not able to attend the consilium in the given period.", result.ToString());
         }
     }
 }
