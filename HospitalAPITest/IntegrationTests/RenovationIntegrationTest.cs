@@ -31,7 +31,7 @@
 
             var renovationDetails = new List<RenovationDetailsDto>() { new RenovationDetailsDto("newR1", "ordinacija1", 1) };
             List<int> rooms = new() { 1, 2 };
-            RenovationRequestDto dto = new(RenovationType.MERGE, rooms, new DateTime(2022, 12, 12, 15, 0, 0), 4, renovationDetails);
+            RenovationRequestDto dto = new(RenovationType.MERGE, rooms, new DateTime(2023, 1, 20, 15, 0, 0), 4, renovationDetails);
 
             var result = (OkObjectResult)controller.Create(dto);
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);

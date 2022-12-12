@@ -82,7 +82,7 @@
 
         public void Decline(int requestId)
         {
-            RelocationRequest request = _unitOfWork.RelocationRepository.Get(requestId);
+            RelocationRequest request = _unitOfWork.RelocationRepository.GetById(requestId);
             request.DeleteRelocation();
             _unitOfWork.RelocationRepository.Update(request);
             _unitOfWork.RelocationRepository.Save();

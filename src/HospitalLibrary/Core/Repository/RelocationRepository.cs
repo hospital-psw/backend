@@ -52,6 +52,9 @@
             return _context.SaveChanges();
         }
 
-
+        public RelocationRequest GetById(int id)
+        {
+            return _context.RelocationRequests.Include(x => x.ToRoom).Include(x => x.FromRoom).Include(x => x.Equipment).FirstOrDefault(x => x.Id == id);
+        }
     }
 }

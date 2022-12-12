@@ -75,7 +75,7 @@
 
                 while (shiftIterator < doctor.WorkHours.End)
                 {
-                    RecommendedAppointmentDto appointment = new RecommendedAppointmentDto(startDate, room.Number, room.Floor.Number, room.Floor.Building.Name); ;
+                    RecommendedAppointmentDto appointment = new RecommendedAppointmentDto(startDate, room.Number, room.Floor.Number.Number, room.Floor.Building.Name); ;
                     generatedAppointments.Add(appointment);
                     shiftIterator = shiftIterator.AddMinutes(30);
                     startDate = startDate.AddMinutes(30);
