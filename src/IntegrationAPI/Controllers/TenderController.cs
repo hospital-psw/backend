@@ -1,10 +1,8 @@
 ﻿namespace IntegrationAPI.Controllers
 {
     using AutoMapper;
-    using IntegrationAPI.DTO.BloodBank;
-    using IntegrationAPI.DTO.News;
     using IntegrationAPI.DTO.Tender;
-    using IntegrationLibrary.News;
+    using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Mvc;
@@ -28,6 +26,12 @@
         public IActionResult GetAll()
         {
             return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetAll()));
+        }
+
+        [HttpGet("active")]
+        public IActionResult GetActive()
+        {
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
         }
 
         [HttpGet("{id}")]
@@ -71,6 +75,30 @@
             var responseEntity = _tenderService.Update(originalTender);
 
             return Ok(responseEntity);
+        }
+
+        [HttpPut("MakeAnOffer/{tenderId}")]
+        public IActionResult MakeAnOffer(int tenderId, MakeTenderOfferDTO tender)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            TenderOffer tenderOffer = new TenderOffer()
+            {
+                Offeror = new BloodBank()
+                {
+                    Id = 1
+                },
+                Items = tender.Items
+            };
+
+            TenderOffer validTenderOffer = _tenderService.MakeAnOffer(tenderId, tenderOffer);
+            if(validTenderOffer == null)
+            {
+                return BadRequest();
+            }
+            return Ok(_mapper.Map<ViewTenderOfferDTO>(validTenderOffer));
         }
 
         [HttpDelete("{id}")]
