@@ -47,20 +47,24 @@
                 return null;
             }
         }
-        public IEnumerable<RecommendAppointmentWithDoctorDto> RecommendAppointmentsInDateRange(int doctorId, int patientId, DateTime from, DateTime to)
+        public IEnumerable<RecommendAppointmentWithDoctorDto> RecommendAppointmentsInDateRange(List<int> doctorId, int patientId, DateTime from, DateTime to)
         {
             try
             {
                 List<RecommendAppointmentWithDoctorDto> recommendedAppointmentReturn = new List<RecommendAppointmentWithDoctorDto>();
                 List<RecommendedAppointmentDto> recommendedAppointmentHelp = new List<RecommendedAppointmentDto>();
-                for (DateTime date = from; date <= to; date = date.AddDays(1))
+                foreach (int IdDoc in doctorId)
                 {
-                    RecommendRequestDto dto = new RecommendRequestDto(date, patientId, doctorId);
-                    recommendedAppointmentHelp = (List<RecommendedAppointmentDto>)RecommendAppointments(dto);
-                    foreach (RecommendedAppointmentDto d in RecommendAppointments(dto))
-                    { ApplicationDoctor ad = _unitOfWork.ApplicationDoctorRepository.Get(doctorId);
-                        RecommendAppointmentWithDoctorDto appointmentWithDoctorDto = new RecommendAppointmentWithDoctorDto(d,ad.FirstName,ad.LastName);
-                        recommendedAppointmentReturn.Add(appointmentWithDoctorDto);
+                    for (DateTime date = from; date <= to; date = date.AddDays(1))
+                    {
+                        RecommendRequestDto dto = new RecommendRequestDto(date, patientId, IdDoc);
+                        recommendedAppointmentHelp = (List<RecommendedAppointmentDto>)RecommendAppointments(dto);
+                        foreach (RecommendedAppointmentDto d in RecommendAppointments(dto))
+                        {
+                            ApplicationDoctor ad = _unitOfWork.ApplicationDoctorRepository.Get(IdDoc);
+                            RecommendAppointmentWithDoctorDto appointmentWithDoctorDto = new RecommendAppointmentWithDoctorDto(d, ad.FirstName, ad.LastName);
+                            recommendedAppointmentReturn.Add(appointmentWithDoctorDto);
+                        }
                     }
                 }
               return recommendedAppointmentReturn;

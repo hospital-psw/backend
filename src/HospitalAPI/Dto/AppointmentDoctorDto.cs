@@ -1,15 +1,16 @@
 ﻿namespace HospitalAPI.Dto
 {
     using System;
+    using System.Collections.Generic;
 
     public class AppointmentDoctorDto
     {
-        public int DoctorId { get; set; }
+        public List<int> DoctorId { get; set; }
         public int PatientId { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
 
-        public AppointmentDoctorDto(int doctorId, int patientId, DateTime fromDate, DateTime toDate)
+        public AppointmentDoctorDto(List<int> doctorId, int patientId, DateTime fromDate, DateTime toDate)
         {
             DoctorId = doctorId;
             PatientId = patientId;
