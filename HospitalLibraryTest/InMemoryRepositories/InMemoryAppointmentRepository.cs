@@ -116,5 +116,10 @@ namespace HospitalLibraryTest.InMemoryRepositories
         {
             throw new NotImplementedException();
         }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

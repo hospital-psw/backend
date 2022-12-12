@@ -17,7 +17,7 @@
             relocationRequestDisplayDto.EquipmentType = relocationRequest.Equipment.EquipmentType;
             relocationRequestDisplayDto.Quantity = relocationRequest.Quantity;
             relocationRequestDisplayDto.StartTime = relocationRequest.StartTime;
-            relocationRequestDisplayDto.Duration = relocationRequest.Duration;
+            relocationRequestDisplayDto.Duration = relocationRequest.Duration.Duration;
 
             return relocationRequestDisplayDto;
         }

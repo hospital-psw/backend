@@ -24,6 +24,25 @@
             Room = room;
         }
 
+        public void MoveEquipment(Room newRoom)
+        {
+            Room = newRoom;
+        }
+
+        public void Delete()
+        {
+            Deleted = true;
+
+        }
+
+        public Equipment(EquipmentType equipmentType, int quantity, Room room, int reservedQuantity)
+        {
+            EquipmentType = equipmentType;
+            Quantity = quantity;
+            Room = room;
+            ReservedQuantity = reservedQuantity;
+        }
+
         public Equipment(EquipmentType equipmentType, int quantity, Room room, int id, int reservedQuantity)
         {
             Id = id;
@@ -50,6 +69,12 @@
             return equipment;
         }
 
+        public static Equipment CreateWithReservedQuantity(EquipmentType equipmentType, int quantity, Room room, int reservedQuantity)
+        {
+            Equipment equipment = new Equipment(equipmentType, quantity, room, reservedQuantity);
+            return equipment;
+        }
+
         public Equipment AddQuantity(int quantity)
         {
             this.Quantity += quantity;
@@ -67,6 +92,11 @@
         {
             if (this.Quantity <= 0)
                 this.Deleted = true;
+        }
+
+        public void SetQuantity(int quantity)
+        {
+            this.Quantity = quantity;
         }
     }
 }

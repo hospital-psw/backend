@@ -10,8 +10,8 @@ namespace HospitalLibrary.Core.Repository.Core
         void Create(Room room);
         void Update(Room room);
         void Delete(Room room);
-
         IEnumerable<Room> GetAvailableRooms();
+        void Save();
         IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId);
     }
 }
