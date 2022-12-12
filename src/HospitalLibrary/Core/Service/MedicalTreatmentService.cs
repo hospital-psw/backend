@@ -86,7 +86,7 @@
                 SetupTreatment(medicalTreatment);
 
                 _unitOfWork.Save();
-                return null;
+                return medicalTreatment;
             }
             catch (Exception e)
             {
