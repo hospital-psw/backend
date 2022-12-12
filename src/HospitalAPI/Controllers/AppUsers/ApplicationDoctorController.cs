@@ -56,7 +56,7 @@
             return Ok(doctorsDTO);
         }
 
-        [HttpGet("specialization/{spec}")]
+        [HttpGet("specialization/{specialization}")]
         public IActionResult GetBySpecialization(Specialization specialization)
         {
             var doctor = _doctorService.GetBySpecialization(specialization);

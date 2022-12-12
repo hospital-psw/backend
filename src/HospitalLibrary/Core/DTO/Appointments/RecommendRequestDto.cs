@@ -13,5 +13,13 @@
         public int PatientId { get; set; }
 
         public int DoctorId { get; set; }
+
+        public RecommendRequestDto(DateTime date, int patientId, int doctorId)
+        {
+            Date = date;
+            PatientId = patientId;
+            DoctorId = doctorId;
+        }
     }
+
 }

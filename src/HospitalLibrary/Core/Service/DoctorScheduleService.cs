@@ -8,6 +8,7 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -46,8 +47,31 @@
                 return null;
             }
         }
-
-        public IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto)
+        public IEnumerable<RecommendAppointmentWithDoctorDto> RecommendAppointmentsInDateRange(int doctorId, int patientId, DateTime from, DateTime to)
+        {
+            try
+            {
+                List<RecommendAppointmentWithDoctorDto> recommendedAppointmentReturn = new List<RecommendAppointmentWithDoctorDto>();
+                List<RecommendedAppointmentDto> recommendedAppointmentHelp = new List<RecommendedAppointmentDto>();
+                for (DateTime date = from; date <= to; date = date.AddDays(1))
+                {
+                    RecommendRequestDto dto = new RecommendRequestDto(date, patientId, doctorId);
+                    recommendedAppointmentHelp = (List<RecommendedAppointmentDto>)RecommendAppointments(dto);
+                    foreach (RecommendedAppointmentDto d in RecommendAppointments(dto))
+                    { ApplicationDoctor ad = _unitOfWork.ApplicationDoctorRepository.Get(doctorId);
+                        RecommendAppointmentWithDoctorDto appointmentWithDoctorDto = new RecommendAppointmentWithDoctorDto(d,ad.FirstName,ad.LastName);
+                        recommendedAppointmentReturn.Add(appointmentWithDoctorDto);
+                    }
+                }
+              return recommendedAppointmentReturn;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in Appointment service in GenerateFreeAppointments {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+            public IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto)
         {
             try
             {

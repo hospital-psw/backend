@@ -79,7 +79,14 @@
         {
             return Ok(_doctorScheduleService.RecommendAppointments(dto));
         }
+        [HttpPost]
+        [Route("recommendInDateRange")]
+        public IActionResult RecommendAppointmentsInDateRange(AppointmentDoctorDto dto)
+        {
 
+            return Ok(_doctorScheduleService.RecommendAppointmentsInDateRange(dto.DoctorId, dto.PatientId, dto.FromDate, dto.ToDate));
+        }
+         
         [HttpPost]
         [Route("create")]
         public IActionResult Create(NewAppointmentDto dto)

@@ -14,5 +14,6 @@
         IEnumerable<DoctorSchedule> GetAll();
 
         IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto);
+        IEnumerable<RecommendAppointmentWithDoctorDto> RecommendAppointmentsInDateRange(int doctorId, int patientId, DateTime fromDate, DateTime toDate);
     }
 }
