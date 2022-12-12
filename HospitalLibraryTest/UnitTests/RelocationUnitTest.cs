@@ -108,7 +108,7 @@
             };*/
 
 
-            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 0);
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment eqUpdate = null;
             RelocationRequest reqUpdate = null;
@@ -195,7 +195,7 @@
                 Room = room
             };*/
 
-            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 0);
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment retEq = null;
             RelocationRequest reqUpdate = null;

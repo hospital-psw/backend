@@ -24,7 +24,7 @@
             try
             {
                 Equipment equipment = _unitOfWork.EquipmentRepository.Get(entity.Equipment.Id);
-                Equipment changed = equipment.AddReservedQuantity(entity.Quantity);
+                Equipment changed = equipment.AddReservedQuantity(entity.Quantity.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
                 return _unitOfWork.RelocationRepository.Create(entity);
             }
@@ -48,11 +48,11 @@
             Equipment equipment = _unitOfWork.EquipmentRepository.GetEquipment(request.Equipment.EquipmentType, request.ToRoom);
             if (equipment == null)
             {
-                _unitOfWork.EquipmentRepository.Create(Equipment.Create(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
+                _unitOfWork.EquipmentRepository.Create(Equipment.Create(request.Equipment.EquipmentType, request.Quantity.Quantity, request.ToRoom));
             }
             else
             {
-                Equipment changed = equipment.AddQuantity(request.Quantity);
+                Equipment changed = equipment.AddQuantity(request.Quantity.Quantity);
                 _unitOfWork.EquipmentRepository.Update(changed);
                 _unitOfWork.EquipmentRepository.Save();
             }
@@ -65,8 +65,8 @@
 
         private void SubtractEquipmentFromSourceRoom(RelocationRequest request)
         {
-            Equipment changed = request.Equipment.SubstractQuantity(request.Quantity);
-            request.Equipment.SubstractReservedQuantity(request.Quantity);
+            Equipment changed = request.Equipment.SubstractQuantity(request.Quantity.Quantity);
+            request.Equipment.SubstractReservedQuantity(request.Quantity.Quantity);
         }
 
         public List<RelocationRequest> GetAllForRoom(int roomId)
@@ -82,7 +82,7 @@
 
         public void Decline(int requestId)
         {
-            RelocationRequest request = _unitOfWork.RelocationRepository.Get(requestId);
+            RelocationRequest request = _unitOfWork.RelocationRepository.GetById(requestId);
             request.DeleteRelocation();
             _unitOfWork.RelocationRepository.Update(request);
             _unitOfWork.RelocationRepository.Save();

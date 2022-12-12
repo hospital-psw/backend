@@ -12,14 +12,13 @@ namespace HospitalLibrary.Core.Model
         public Room FromRoom { get; private set; }
         public Room ToRoom { get; private set; }
         public Equipment Equipment { get; private set; }
-        public int Quantity { get; private set; }
+        public RelocationQuantity Quantity { get; private set; }
         public DateTime StartTime { get; private set; }
-        //public int Duration { get; private set; }
         public RelocationDuration Duration { get; private set; }
 
         private RelocationRequest() { }
 
-        private RelocationRequest(Room fromRoom, Room toRoom, Equipment equipment, int quantity, DateTime startTime, RelocationDuration duration)
+        private RelocationRequest(Room fromRoom, Room toRoom, Equipment equipment, RelocationQuantity quantity, DateTime startTime, RelocationDuration duration)
         {
             FromRoom = fromRoom;
             ToRoom = toRoom;
@@ -33,19 +32,17 @@ namespace HospitalLibrary.Core.Model
         {
             if (fromRoom == null) throw new Exception("FromRoom cannot be null");
             if (toRoom == null) throw new Exception("ToRoom cannot be null");
-            if (fromRoom.Id == toRoom.Id) throw new Exception("FromRoom and ToRoom cannot be the same");
             if (equipment == null) throw new Exception("Equipment cannot be null");
             if (quantity <= 0) throw new Exception("Quantity must be greater than 0");
-            if (startTime < DateTime.Now) throw new Exception("Start time cannot be in the past");
             if (duration <= 0) throw new Exception("Duration must be greater than 0");
-            return new RelocationRequest(fromRoom, toRoom, equipment, quantity, startTime, RelocationDuration.Create(duration));
+            return new RelocationRequest(fromRoom, toRoom, equipment, RelocationQuantity.Create(quantity), startTime, RelocationDuration.Create(duration));
         }
 
 
         public void DeleteRelocation()
         {
 
-            Equipment.SubstractReservedQuantity(this.Quantity);
+            Equipment.SubstractReservedQuantity(this.Quantity.Quantity);
             this.Deleted = true;
         }
     }

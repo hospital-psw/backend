@@ -15,7 +15,7 @@
             relocationRequestDisplayDto.FromRoomNumber = relocationRequest.FromRoom.Number;
             relocationRequestDisplayDto.ToRoomNumber = relocationRequest.ToRoom.Number;
             relocationRequestDisplayDto.EquipmentType = relocationRequest.Equipment.EquipmentType;
-            relocationRequestDisplayDto.Quantity = relocationRequest.Quantity;
+            relocationRequestDisplayDto.Quantity = relocationRequest.Quantity.Quantity;
             relocationRequestDisplayDto.StartTime = relocationRequest.StartTime;
             relocationRequestDisplayDto.Duration = relocationRequest.Duration.Duration;
 
