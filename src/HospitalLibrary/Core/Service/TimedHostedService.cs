@@ -35,6 +35,8 @@
             {
                 var _relocationService = scope.ServiceProvider.GetRequiredService<IRelocationService>();
                 _relocationService.FinishRelocation();
+                var _renovationService = scope.ServiceProvider.GetRequiredService<IRenovationService>();
+                _renovationService.FinishRenovation();
             }
         }
 

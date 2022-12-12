@@ -50,6 +50,11 @@
             throw new NotImplementedException();
         }
 
+        public List<Equipment> GetEquipmentForRoom(Room room)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Equipment> GetEquipments()
         {
             var equipments = new List<Equipment>();
@@ -67,6 +72,11 @@
             equipments.Add(equipment2);
 
             return equipments;
+        }
+
+        public List<Equipment> GetSameEquipmentInRoom(Room room, EquipmentType type)
+        {
+            throw new NotImplementedException();
         }
 
         public int Save()

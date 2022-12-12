@@ -47,11 +47,30 @@
             Dispose();
         }
 
+        [Fact]
+        public void ChooseFirstAvailableDate()
+        {
+            ChooseToday();
+            scheduleAppointmentPage.Sumbit();
+            ChooseAppointment();
+            EnsureURLChanged();
+            Assert.Equal(URI_APPOINTMENTS, driver.Url);
+            Dispose();
+
+        }
+
+        private void ChooseToday()
+        {
+            scheduleAppointmentPage.SelectTodaysDate();
+            scheduleAppointmentPage.SelectPatient();
+            scheduleAppointmentPage.SelectExaminationType();
+        }
+
+
 
 
         private void ChooseAppointmentParameters()
         {
-
             scheduleAppointmentPage.SelectDate();
             scheduleAppointmentPage.SelectPatient();
             scheduleAppointmentPage.SelectExaminationType();

@@ -36,5 +36,23 @@ namespace HospitalLibrary.Core.Model
             Purpose = purpose;
             WorkingHours = workingHours;
         }
+        internal Room(string number, Floor floor, string purpose, WorkingHours workingHours)
+        {
+            Number = number;
+            Floor = floor;
+            Purpose = purpose;
+            WorkingHours = workingHours;
+        }
+
+        public static Room Create(string number, Floor floor, string purpose, WorkingHours workingHours)
+        {
+            return new Room(number, floor, purpose, workingHours);
+        }
+
+
+        public void Delete()
+        {
+            Deleted = true;
+        }
     }
 }
