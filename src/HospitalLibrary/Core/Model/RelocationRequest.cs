@@ -14,7 +14,6 @@ namespace HospitalLibrary.Core.Model
         public Equipment Equipment { get; private set; }
         public RelocationQuantity Quantity { get; private set; }
         public DateTime StartTime { get; private set; }
-        //public int Duration { get; private set; }
         public RelocationDuration Duration { get; private set; }
 
         private RelocationRequest() { }
