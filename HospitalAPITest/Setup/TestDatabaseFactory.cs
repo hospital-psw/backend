@@ -489,7 +489,7 @@
             Equipment relocationEquipment = Equipment.Create(EquipmentType.BED, 8, equipmentRoom);
 
             context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 10, 23, 0, 0), 2));
-
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 15, 23, 0, 0), 2));
             context.Appointments.Add(new Appointment
             {
                 Date = new DateTime(2023, 12, 25, 12, 0, 0),
