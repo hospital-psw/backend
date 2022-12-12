@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,11 +14,12 @@ namespace HospitalLibrary.Core.Model
         public Equipment Equipment { get; private set; }
         public int Quantity { get; private set; }
         public DateTime StartTime { get; private set; }
-        public int Duration { get; private set; }
+        //public int Duration { get; private set; }
+        public RelocationDuration Duration { get; private set; }
 
         private RelocationRequest() { }
 
-        private RelocationRequest(Room fromRoom, Room toRoom, Equipment equipment, int quantity, DateTime startTime, int duration)
+        private RelocationRequest(Room fromRoom, Room toRoom, Equipment equipment, int quantity, DateTime startTime, RelocationDuration duration)
         {
             FromRoom = fromRoom;
             ToRoom = toRoom;
@@ -36,7 +38,7 @@ namespace HospitalLibrary.Core.Model
             if (quantity <= 0) throw new Exception("Quantity must be greater than 0");
             if (startTime < DateTime.Now) throw new Exception("Start time cannot be in the past");
             if (duration <= 0) throw new Exception("Duration must be greater than 0");
-            return new RelocationRequest(fromRoom, toRoom, equipment, quantity, startTime, duration);
+            return new RelocationRequest(fromRoom, toRoom, equipment, quantity, startTime, RelocationDuration.Create(duration));
         }
 
 
