@@ -106,7 +106,7 @@
         {
             RecommendRequestDto requestDto = new RecommendRequestDto(date, default(int), doctor.Id);
             List<DateTime> firstDoctorAvailableAppointments = GetDatesListOutOfDtoList(RecommendAppointments(requestDto).ToList());
-            List<DateTime> firstDoctorConsiliumAppointments = GetDoctorsConsiliumsDateTimes(doctor.Id);
+            List<DateTime> firstDoctorConsiliumAppointments = GetDoctorsConsiliumsDateTimes(doctor.Id, date);
             return RemoveConsiliumFromAvailableAppointment(firstDoctorAvailableAppointments, firstDoctorConsiliumAppointments);
         }
 
@@ -123,10 +123,10 @@
             return available;
         }
 
-        private List<DateTime> GetDoctorsConsiliumsDateTimes(int doctorId)
+        private List<DateTime> GetDoctorsConsiliumsDateTimes(int doctorId, DateTime date)
         {
             List<DateTime> firstDoctorConsiliumAppointments = new List<DateTime>();
-            _unitOfWork.ConsiliumRepository.GetConsiliumsByDoctorId(doctorId)
+            _unitOfWork.ConsiliumRepository.GetDoctorsConsiliumsOfPassedDate(doctorId, date)
                 .ToList()
                 .ForEach(con => firstDoctorConsiliumAppointments.Add(con.DateTime));
             return firstDoctorConsiliumAppointments;

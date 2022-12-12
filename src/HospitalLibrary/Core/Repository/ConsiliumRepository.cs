@@ -39,6 +39,11 @@
                            .ToList();
         }
 
+        public IEnumerable<Consilium> GetDoctorsConsiliumsOfPassedDate(int doctorId, DateTime date)
+        {
+            return GetConsiliumsByDoctorId(doctorId).Where(x => x.DateTime.Date == date.Date).ToList();
+        }
+
         public List<Consilium> GetScheduledConsiliumsForRoom(int roomId)
         {
             return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)
