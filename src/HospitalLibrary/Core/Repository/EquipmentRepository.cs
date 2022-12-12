@@ -25,7 +25,11 @@
 
         public Equipment GetEquipment(EquipmentType type, Room room)
         {
-            return GetEquipments().FirstOrDefault(x => (x.EquipmentType == type) && (x.Room.Id == room.Id));
+            return GetEquipments().FirstOrDefault(x => !x.Deleted && (x.EquipmentType == type) && (x.Room.Id == room.Id));
+        }
+
+        public List<Equipment> GetEquipmentForRoom(Room room) {
+            return GetEquipments().Where(x => !x.Deleted && x.Room.Id == room.Id).ToList();
         }
 
         public Equipment Create(Equipment equipment)
@@ -38,6 +42,11 @@
         public int Save()
         {
             return _context.SaveChanges();
+        }
+
+        public List<Equipment> GetSameEquipmentInRoom(Room room, EquipmentType type)
+        {
+            return GetEquipments().Where(x => !x.Deleted && x.Room.Id == room.Id && x.EquipmentType == type).ToList();
         }
     }
 }

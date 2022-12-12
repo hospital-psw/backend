@@ -29,7 +29,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var renovationDetails = new List<RenovationDetailsDto>() { new RenovationDetailsDto("newR1", "ordinacija1") };
+            var renovationDetails = new List<RenovationDetailsDto>() { new RenovationDetailsDto("newR1", "ordinacija1", 1) };
             List<int> rooms = new() { 1, 2 };
             RenovationRequestDto dto = new(RenovationType.MERGE, rooms, new DateTime(2022, 12, 12, 15, 0, 0), 4, renovationDetails);
 

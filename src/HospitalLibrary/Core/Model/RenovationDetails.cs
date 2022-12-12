@@ -8,9 +8,20 @@ namespace HospitalLibrary.Core.Model
 {
     public class RenovationDetails : Entity
     {
-        public string NewRoomName { get; set; }
-        public string NewRoomPurpose { get; set; }
+        public string NewRoomName { get; private set; }
+        public string NewRoomPurpose { get; private set; }
+        public int NewCapacity { get; private set; }
 
-        public RenovationDetails() { }
+        private RenovationDetails() { }
+
+        private RenovationDetails(string newRoomName, string newRoomPurpose, int newCapacity) {
+            NewRoomName = newRoomName;
+            NewRoomPurpose = newRoomPurpose;
+            NewCapacity = newCapacity;
+        }
+
+        public static RenovationDetails Create(string newRoomName, string newRoomPurpose, int newCapacity) {
+            return new RenovationDetails(newRoomName, newRoomPurpose, newCapacity);
+        } 
     }
 }
