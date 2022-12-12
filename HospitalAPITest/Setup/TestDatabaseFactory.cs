@@ -487,14 +487,7 @@
 
             Equipment relocationEquipment = Equipment.Create(EquipmentType.BED, 8, equipmentRoom);
 
-            context.RelocationRequests.Add(new RelocationRequest
-            {
-                FromRoom = relocationFromRoom,
-                ToRoom = relocationToRoom,
-                Equipment = relocationEquipment,
-                StartTime = new DateTime(2022, 12, 10, 23, 0, 0),
-                Duration = 2
-            });
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 10, 23, 0, 0), 2));
 
             context.Appointments.Add(new Appointment
             {
@@ -522,14 +515,7 @@
             List<Room> roomsRenovation = new List<Room>();
             roomsRenovation.Add(room);
             List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
-            context.RenovationRequests.Add(new RenovationRequest
-            {
-                RenovationType = RenovationType.SPLIT,
-                Rooms = roomsRenovation,
-                StartTime = new DateTime(),
-                Duration = 2,
-                RenovationDetails = renovationDetails
-            });
+            context.RenovationRequests.Add(RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, new DateTime(), 2, renovationDetails));
 
             context.SaveChanges();
 

@@ -108,15 +108,7 @@
             };*/
 
 
-            RelocationRequest request = new RelocationRequest()
-            {
-                Id = 1,
-                Quantity = 2,
-                Equipment = equipment2,
-                ToRoom = toRoom,
-                FromRoom = fromRoom
-            };
-
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 0);
 
             Equipment eqUpdate = null;
             RelocationRequest reqUpdate = null;
@@ -203,15 +195,7 @@
                 Room = room
             };*/
 
-            RelocationRequest request = new RelocationRequest()
-            {
-                Id = 1,
-                Quantity = 2,
-                Equipment = equipment2,
-                ToRoom = toRoom,
-                FromRoom = fromRoom
-
-            };
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 0);
 
             Equipment retEq = null;
             RelocationRequest reqUpdate = null;

@@ -46,6 +46,11 @@
             throw new NotImplementedException();
         }
 
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Room room)
         {
             throw new NotImplementedException();

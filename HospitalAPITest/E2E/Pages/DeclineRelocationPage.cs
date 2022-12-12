@@ -16,7 +16,7 @@
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/display";
         private IWebElement buildingField => driver.FindElement(By.XPath("//*[@id=\"buildingSelect\"]"));
-        private IWebElement buildingFieldBuilding2 => driver.FindElement(By.XPath("//*[@id=\"mat-option-0\"]"));
+        private IWebElement buildingFieldBuilding2 => driver.FindElement(By.XPath("//*[@id=\"mat-option-building\"]"));
         private IWebElement declineRelocationButton => driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]"));
         private IWebElement tabsRelocation;
         private IWebElement tabRelocation;
