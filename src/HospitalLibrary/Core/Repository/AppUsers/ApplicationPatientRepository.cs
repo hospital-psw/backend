@@ -34,6 +34,17 @@
                            .ToList();
         }
 
+        /// <summary>
+        /// NIJE ODRADJENO DO KRAJA UPDATE IZMENIO SAM SAMO ZA HOSPITALIZED POLJE
+        /// </summary>
+        /// GRAVARA MILOS 11.12.2022.
+        /// <param name="entity"></param>
+        public override void Update(ApplicationPatient entity)
+        {
+            ApplicationPatient patient = Get(entity.Id);
+            patient.Hospitalized = entity.Hospitalized;
+        }
+
         IEnumerable<ApplicationPatient> IApplicationPatientRepository.GetBlocked()
         {
             return GetAll().Where(x => x.Blocked)
