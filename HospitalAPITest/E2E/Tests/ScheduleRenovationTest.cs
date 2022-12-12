@@ -1,13 +1,13 @@
 ﻿namespace HospitalAPITest.E2E.Tests
 {
-    using OpenQA.Selenium.Chrome;
+    using HospitalAPITest.E2E.Pages;
     using OpenQA.Selenium;
+    using OpenQA.Selenium.Chrome;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using HospitalAPITest.E2E.Pages;
 
     public class ScheduleRenovationTest
     {
@@ -72,7 +72,7 @@
             scheduleRenovationPage.EnterDuration();
             scheduleRenovationPage.SelectStartTime();
             scheduleRenovationPage.EnterNewRoomDetails();
-  
+
         }
     }
 }

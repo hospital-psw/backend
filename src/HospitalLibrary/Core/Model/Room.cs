@@ -44,12 +44,14 @@ namespace HospitalLibrary.Core.Model
             WorkingHours = workingHours;
         }
 
-        public static Room Create(string number, Floor floor, string purpose, WorkingHours workingHours) {
+        public static Room Create(string number, Floor floor, string purpose, WorkingHours workingHours)
+        {
             return new Room(number, floor, purpose, workingHours);
         }
 
 
-        public void Delete() {
+        public void Delete()
+        {
             Deleted = true;
         }
     }

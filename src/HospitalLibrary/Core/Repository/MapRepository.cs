@@ -40,7 +40,7 @@
 
         public RoomMap GetRoomMapById(int id)
         {
-            return _context.RoomsMap.Include(x => x.Room).FirstOrDefault(x => !x.Deleted && x.Room.Id == id); 
+            return _context.RoomsMap.Include(x => x.Room).FirstOrDefault(x => !x.Deleted && x.Room.Id == id);
         }
 
         public RoomMap Create(RoomMap roomMap)

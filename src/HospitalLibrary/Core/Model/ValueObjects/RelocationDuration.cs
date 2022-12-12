@@ -10,7 +10,7 @@
     using System.Threading.Tasks;
 
     [Owned]
-    public class RelocationDuration:ValueObject
+    public class RelocationDuration : ValueObject
     {
         public int Duration { get; private set; }
 

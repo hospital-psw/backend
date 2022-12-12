@@ -15,11 +15,11 @@
                 RelocationRequest relocationRequest = RelocationRequest.Create(fromRoom, toRoom, equipment, dto.Quantity, dto.StartTime, dto.Duration);
                 return relocationRequest;
             }
-            catch(Exception e) 
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
-          
+
         }
     }
 }

@@ -34,11 +34,13 @@
             return renovationRequestDisplayDto;
         }
 
-        public static List<RenovationDetails> RenovationDetailsDtoToEntity(List<RenovationDetailsDto> renovationDetailsDto) {
+        public static List<RenovationDetails> RenovationDetailsDtoToEntity(List<RenovationDetailsDto> renovationDetailsDto)
+        {
             try
             {
                 List<RenovationDetails> details = new List<RenovationDetails>();
-                foreach (RenovationDetailsDto detail in renovationDetailsDto) {
+                foreach (RenovationDetailsDto detail in renovationDetailsDto)
+                {
                     details.Add(RenovationDetails.Create(detail.NewRoomName, detail.NewRoomPurpose, detail.NewCapacity));
                 }
                 return details;

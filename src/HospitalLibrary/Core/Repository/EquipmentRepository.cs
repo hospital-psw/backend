@@ -28,7 +28,8 @@
             return GetEquipments().FirstOrDefault(x => !x.Deleted && (x.EquipmentType == type) && (x.Room.Id == room.Id));
         }
 
-        public List<Equipment> GetEquipmentForRoom(Room room) {
+        public List<Equipment> GetEquipmentForRoom(Room room)
+        {
             return GetEquipments().Where(x => !x.Deleted && x.Room.Id == room.Id).ToList();
         }
 

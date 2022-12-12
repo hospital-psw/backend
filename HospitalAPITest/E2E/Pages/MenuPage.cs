@@ -29,11 +29,13 @@
             managerTab.Click();
         }
 
-        public bool managerVacationRequestsTabDisplayed() {
+        public bool managerVacationRequestsTabDisplayed()
+        {
             return managerVacationRequestsTab.Displayed;
         }
 
-        public void managerVacationRequestsTabClick() {
+        public void managerVacationRequestsTabClick()
+        {
             managerVacationRequestsTab.Click();
         }
     }

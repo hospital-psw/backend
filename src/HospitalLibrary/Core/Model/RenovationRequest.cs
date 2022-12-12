@@ -25,12 +25,14 @@ namespace HospitalLibrary.Core.Model
             RenovationDetails = renovationDetails;
         }
 
-        public static RenovationRequest Create(RenovationType type, List<Room> rooms, DateTime startTime, int duration, List<RenovationDetails> details) {
+        public static RenovationRequest Create(RenovationType type, List<Room> rooms, DateTime startTime, int duration, List<RenovationDetails> details)
+        {
             if (startTime < DateTime.Now) throw new Exception("Start time cannot be in the past");
             return new RenovationRequest(type, rooms, startTime, duration, details);
         }
 
-        public void Delete() {
+        public void Delete()
+        {
             Deleted = true;
         }
     }

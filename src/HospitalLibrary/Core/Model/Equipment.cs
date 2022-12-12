@@ -24,11 +24,13 @@
             Room = room;
         }
 
-        public void MoveEquipment(Room newRoom) {
+        public void MoveEquipment(Room newRoom)
+        {
             Room = newRoom;
         }
 
-        public void Delete() {
+        public void Delete()
+        {
             Deleted = true;
 
         }

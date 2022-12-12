@@ -14,14 +14,16 @@
         private IWebElement expander => driver.FindElement(By.XPath("//*[@id=\"vacation-request0\"]"));
         private IWebElement expanderWrapper => driver.FindElement(By.ClassName("users-wrapper"));
 
-        public DisplayVacationRequestsPage(IWebDriver driver) {
+        public DisplayVacationRequestsPage(IWebDriver driver)
+        {
             this.driver = driver;
         }
         public void Navigate() => driver.Navigate().GoToUrl(URI);
 
 
 
-        public int GetExpanderCount() {
+        public int GetExpanderCount()
+        {
             Thread.Sleep(6000);
             var childs = expanderWrapper.FindElements(By.XPath("./child::*"));
             return childs.Count();

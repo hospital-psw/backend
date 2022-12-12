@@ -14,14 +14,16 @@ namespace HospitalLibrary.Core.Model
 
         private RenovationDetails() { }
 
-        private RenovationDetails(string newRoomName, string newRoomPurpose, int newCapacity) {
+        private RenovationDetails(string newRoomName, string newRoomPurpose, int newCapacity)
+        {
             NewRoomName = newRoomName;
             NewRoomPurpose = newRoomPurpose;
             NewCapacity = newCapacity;
         }
 
-        public static RenovationDetails Create(string newRoomName, string newRoomPurpose, int newCapacity) {
+        public static RenovationDetails Create(string newRoomName, string newRoomPurpose, int newCapacity)
+        {
             return new RenovationDetails(newRoomName, newRoomPurpose, newCapacity);
-        } 
+        }
     }
 }

@@ -56,7 +56,8 @@
 
             List<RenovationRequest> finishedRenovations = _unitOfWork.RenovationRepository.GetFinishedRenovations();
             Console.WriteLine(finishedRenovations.Count);
-            foreach (RenovationRequest req in finishedRenovations) {
+            foreach (RenovationRequest req in finishedRenovations)
+            {
                 if (req.RenovationType == Model.Enums.RenovationType.MERGE)
                     FinishMergeRenovation(req);
                 else if (req.RenovationType == Model.Enums.RenovationType.SPLIT)
@@ -66,8 +67,9 @@
             }
         }
 
-        public void FinishMergeRenovation(RenovationRequest request) {
-            
+        public void FinishMergeRenovation(RenovationRequest request)
+        {
+
             Room room1 = request.Rooms[0];
             Room room2 = request.Rooms[1];
 
@@ -129,7 +131,8 @@
             _unitOfWork.RoomRepository.Save();
         }
 
-        public List<RoomMap> CreateNewRoomMap(RoomMap roomToBeSplit, Room firstRoom, Room secondRoom) {
+        public List<RoomMap> CreateNewRoomMap(RoomMap roomToBeSplit, Room firstRoom, Room secondRoom)
+        {
             List<RoomMap> newRoomMaps = new List<RoomMap>();
             RoomMap firstRoomMap;
             RoomMap secondRoomMap;
@@ -139,7 +142,8 @@
                 firstRoomMap = RoomMap.Create(firstRoom, roomToBeSplit.X - 1, roomToBeSplit.Z, 1, roomToBeSplit.depth);
                 secondRoomMap = RoomMap.Create(secondRoom, firstRoomMap.X + firstRoomMap.width + 0.5, roomToBeSplit.Z, 2, roomToBeSplit.depth);
             }
-            else {
+            else
+            {
                 firstRoomMap = RoomMap.Create(firstRoom, roomToBeSplit.X - 0.5, roomToBeSplit.Z, 1, roomToBeSplit.depth);
                 secondRoomMap = RoomMap.Create(secondRoom, firstRoomMap.X + firstRoomMap.width, roomToBeSplit.Z, 1, roomToBeSplit.depth);
             }
@@ -157,7 +161,8 @@
             return newRoomMaps;
         }
 
-        public List<Room> CreateNewRooms(RoomMap roomToBeSplit, RenovationRequest request) {
+        public List<Room> CreateNewRooms(RoomMap roomToBeSplit, RenovationRequest request)
+        {
             List<Room> newRooms = new List<Room>();
 
             Room firstRoom = Room.Create(request.RenovationDetails[0].NewRoomName, roomToBeSplit.Room.Floor, request.RenovationDetails[0].NewRoomPurpose, null);
@@ -174,13 +179,15 @@
             return newRooms;
         }
 
-        public List<Equipment> GetEquipmentForMoveInMerge(Room room1, Room room2) {
+        public List<Equipment> GetEquipmentForMoveInMerge(Room room1, Room room2)
+        {
             List<Equipment> equipmentToMove = _unitOfWork.EquipmentRepository.GetEquipmentForRoom(room1);
             equipmentToMove.AddRange(_unitOfWork.EquipmentRepository.GetEquipmentForRoom(room2));
             return equipmentToMove;
         }
 
-        public void DeleteRelocationsAfterRenovation(List<RelocationRequest> relocations) {
+        public void DeleteRelocationsAfterRenovation(List<RelocationRequest> relocations)
+        {
             foreach (RelocationRequest req in relocations)
             {
                 req.DeleteRelocation();
@@ -189,7 +196,8 @@
             }
         }
 
-        public void MoveEquipmentToNewRoom(List<Equipment> equipmentToMove, Room newRoom) {
+        public void MoveEquipmentToNewRoom(List<Equipment> equipmentToMove, Room newRoom)
+        {
             foreach (Equipment e in equipmentToMove)
             {
                 e.MoveEquipment(newRoom);
@@ -198,9 +206,11 @@
             }
         }
 
-        public void FilterEquipmentForMove(Room newRoom) {
+        public void FilterEquipmentForMove(Room newRoom)
+        {
             List<Equipment> equipment = _unitOfWork.EquipmentRepository.GetEquipmentForRoom(newRoom);
-            foreach (Equipment e in equipment) {
+            foreach (Equipment e in equipment)
+            {
                 if (e.Deleted) continue;
                 List<Equipment> sameEquipment = _unitOfWork.EquipmentRepository.GetSameEquipmentInRoom(newRoom, e.EquipmentType);
                 if (sameEquipment.Count < 2) continue;
@@ -215,7 +225,8 @@
             }
         }
 
-        public void DeleteAppointmentsAfterRenovation(List<Appointment> appointments) {
+        public void DeleteAppointmentsAfterRenovation(List<Appointment> appointments)
+        {
             foreach (Appointment app in appointments)
             {
                 app.DeleteAppointment();
@@ -224,7 +235,8 @@
             }
         }
 
-        public double GetNewRoomX(Room room1, Room room2) {
+        public double GetNewRoomX(Room room1, Room room2)
+        {
             RoomMap firstRoomMap = _unitOfWork.MapRepository.GetRoomMapById(room1.Id);
             RoomMap secondRoomMap = _unitOfWork.MapRepository.GetRoomMapById(room2.Id);
             if (firstRoomMap.X < secondRoomMap.X)
@@ -234,7 +246,8 @@
                 else if (secondRoomMap.width == 2)
                     return firstRoomMap.X + 1;
             }
-            else {
+            else
+            {
                 if (firstRoomMap.width == 2)
                     return secondRoomMap.X + 1;
                 else if (secondRoomMap.width == 2)
@@ -243,7 +256,8 @@
             return 0;
         }
 
-        public double GetNewRoomWidth(Room room1, Room room2) {
+        public double GetNewRoomWidth(Room room1, Room room2)
+        {
             return _unitOfWork.MapRepository.GetRoomMapById(room1.Id).width + _unitOfWork.MapRepository.GetRoomMapById(room2.Id).width;
         }
 

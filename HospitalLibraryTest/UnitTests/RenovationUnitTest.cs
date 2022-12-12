@@ -110,7 +110,8 @@
         //}
 
         [Fact]
-        public void Test_x_coordinate_when_merge_bigger_rooms() {
+        public void Test_x_coordinate_when_merge_bigger_rooms()
+        {
 
             var unitOfWork = SetupUOW();
 
@@ -201,11 +202,13 @@
         }
 
         [Fact]
-        public void Test_delete_appointments_after_renovation() {
+        public void Test_delete_appointments_after_renovation()
+        {
             var unitOfWork = SetupUOW();
 
             List<Appointment> appointments = new List<Appointment>();
-            var appointment1 = new Appointment() { 
+            var appointment1 = new Appointment()
+            {
                 Id = 1,
                 Deleted = false,
             };
@@ -248,7 +251,7 @@
 
             var relocationRequest2 = RelocationRequest.Create(fromRoom, toRoom, equipment, 2, DateTime.Now.AddDays(1), 1);
             relocationRequest2.Deleted = false;
-         
+
             relocations.Add(relocationRequest1);
             relocations.Add(relocationRequest2);
             var renovationService = new RenovationService(unitOfWork.Object);
@@ -266,7 +269,8 @@
         }
 
         [Fact]
-        public void Test_move_equipment_to_new_room() {
+        public void Test_move_equipment_to_new_room()
+        {
             var unitOfWork = SetupUOW();
 
             var room1 = new Room()
@@ -302,7 +306,8 @@
         }
 
         [Fact]
-        public void Test_creating_rooms_when_splitting_big_room() {
+        public void Test_creating_rooms_when_splitting_big_room()
+        {
             var unitOfWork = SetupUOW();
 
             RoomMap roomMap = new RoomMap()
@@ -364,7 +369,8 @@
         }
 
         [Fact]
-        public void Test_filter_equipment_when_moved() {
+        public void Test_filter_equipment_when_moved()
+        {
 
             var unitOfWork = SetupUOW();
 
@@ -379,7 +385,7 @@
             Equipment e1 = Equipment.CreateWithReservedQuantity(EquipmentType.BED, 10, room, 0);
             Equipment e2 = Equipment.CreateWithReservedQuantity(EquipmentType.BED, 5, room, 0);
             Equipment e3 = Equipment.CreateWithReservedQuantity(EquipmentType.BANDAGE, 7, room, 0);
-        
+
             equipment.Add(e1);
             equipment.Add(e2);
             equipment.Add(e3);

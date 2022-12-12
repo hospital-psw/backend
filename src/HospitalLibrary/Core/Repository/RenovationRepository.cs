@@ -36,7 +36,7 @@
         public List<RenovationRequest> GetScheduledRenovationsForRoom(int roomId)
         {
             List<RenovationRequest> roomRenovations = new();
-            foreach(var request in GetAll())
+            foreach (var request in GetAll())
             {
                 foreach (var room in request.Rooms)
                 {

@@ -47,7 +47,8 @@
             throw new NotImplementedException();
         }
 
-        public void DeleteAppointment() {
+        public void DeleteAppointment()
+        {
             Deleted = true;
         }
     }

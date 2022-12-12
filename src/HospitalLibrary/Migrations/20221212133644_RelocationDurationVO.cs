@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 #nullable disable
 
@@ -22,12 +22,12 @@ namespace HospitalLibrary.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
-           
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            
+
 
             migrationBuilder.RenameColumn(
                 name: "Duration_Duration",

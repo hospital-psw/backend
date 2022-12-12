@@ -111,7 +111,8 @@
                                                .ToList();
         }
 
-        public void Save() {
+        public void Save()
+        {
             HospitalDbContext.SaveChanges();
         }
     }
