@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221212143708_RelocationQuantityVO")]
+    partial class RelocationQuantityVO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -639,6 +641,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)");
@@ -1453,25 +1458,7 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("BuildingId");
 
-                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FloorNumber", "Number", b1 =>
-                        {
-                            b1.Property<int>("FloorId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Number")
-                                .HasColumnType("int");
-
-                            b1.HasKey("FloorId");
-
-                            b1.ToTable("Floors");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FloorId");
-                        });
-
                     b.Navigation("Building");
-
-                    b.Navigation("Number");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
