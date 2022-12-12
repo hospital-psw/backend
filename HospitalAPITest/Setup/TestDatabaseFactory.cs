@@ -13,6 +13,7 @@
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Model.VacationRequests;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -127,7 +128,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
@@ -245,7 +246,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
@@ -300,7 +301,7 @@
             Floor floor = new Floor()
             {
                 Building = building,
-                Number = 0,
+                Number = FloorNumber.Create(0),
                 Purpose = "ortopedija"
             };
 
@@ -464,7 +465,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
@@ -485,7 +486,7 @@
                         Address = "Jovana Piperovica 14",
                         Name = "Radosno detinjstvo"
                     },
-                    Number = 69,
+                    Number = FloorNumber.Create(69),
                     Purpose = "Krematorijum"
                 },
                 Number = "6904",
@@ -499,15 +500,8 @@
 
             Equipment relocationEquipment = Equipment.Create(EquipmentType.BED, 8, equipmentRoom);
 
-            context.RelocationRequests.Add(new RelocationRequest
-            {
-                FromRoom = relocationFromRoom,
-                ToRoom = relocationToRoom,
-                Equipment = relocationEquipment,
-                StartTime = new DateTime(2022, 12, 10, 23, 0, 0),
-                Duration = 2
-            });
-
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 10, 23, 0, 0), 2));
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 15, 23, 0, 0), 2));
             context.Appointments.Add(new Appointment
             {
                 Date = new DateTime(2023, 12, 25, 12, 0, 0),
@@ -534,14 +528,7 @@
             List<Room> roomsRenovation = new List<Room>();
             roomsRenovation.Add(room);
             List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
-            context.RenovationRequests.Add(new RenovationRequest
-            {
-                RenovationType = RenovationType.SPLIT,
-                Rooms = roomsRenovation,
-                StartTime = new DateTime(),
-                Duration = 2,
-                RenovationDetails = renovationDetails
-            });
+            context.RenovationRequests.Add(RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, new DateTime(), 2, renovationDetails));
 
             context.SaveChanges();
 

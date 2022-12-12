@@ -43,7 +43,7 @@
             return HospitalDbContext.RelocationRequests.Include(x => x.FromRoom)
                                                         .Include(x => x.ToRoom)
                                                         .Include(x => x.Equipment)
-                                                        .Where(x => !x.Deleted && DateTime.Compare(x.StartTime.AddHours(x.Duration), currentTime) <= 0)
+                                                        .Where(x => !x.Deleted && DateTime.Compare(x.StartTime.AddHours(x.Duration.Duration), currentTime) <= 0)
                                                         .ToList();
         }
 
@@ -52,6 +52,9 @@
             return _context.SaveChanges();
         }
 
-
+        public RelocationRequest GetById(int id)
+        {
+            return _context.RelocationRequests.Include(x => x.ToRoom).Include(x => x.FromRoom).Include(x => x.Equipment).FirstOrDefault(x => x.Id == id);
+        }
     }
 }
