@@ -33,10 +33,8 @@ namespace HospitalLibrary.Core.Model
         {
             if (fromRoom == null) throw new Exception("FromRoom cannot be null");
             if (toRoom == null) throw new Exception("ToRoom cannot be null");
-            if (fromRoom.Id == toRoom.Id) throw new Exception("FromRoom and ToRoom cannot be the same");
             if (equipment == null) throw new Exception("Equipment cannot be null");
             if (quantity <= 0) throw new Exception("Quantity must be greater than 0");
-            if (startTime < DateTime.Now) throw new Exception("Start time cannot be in the past");
             if (duration <= 0) throw new Exception("Duration must be greater than 0");
             return new RelocationRequest(fromRoom, toRoom, equipment, RelocationQuantity.Create(quantity), startTime, RelocationDuration.Create(duration));
         }
