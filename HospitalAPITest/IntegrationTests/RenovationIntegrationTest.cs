@@ -42,7 +42,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 1;
+            int roomId = 2;
 
             var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RenovationRequestDisplayDto>;
 
@@ -64,7 +64,7 @@
         }
 
         [Fact]
-        public void Test_decline_relocation()
+        public void Test_decline_renovation()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);

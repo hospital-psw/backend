@@ -3,23 +3,22 @@
     using HospitalAPITest.E2E.Pages;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
+    using OpenQA.Selenium.Support.UI;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DeclineRelocationTest
+    public class ManagerFeedbackTests : IDisposable
     {
         private readonly IWebDriver driver;
+        private Pages.ManagerFeedbackPage managerFeedbackPage;
         private Pages.LoginPage loginPage;
         private Pages.MenuPage menuPage;
-        private Pages.DeclineRelocationPage declineRelocationPage;
-        private int requestsCount = 0;
-        private int newRequestsCount = 0;
-        //public const string URI_APPOINTMENTS = "http://localhost:4200/appointments";
+        public const string URI_APPOINTMENTS = "http://localhost:4200/feedback";
 
-        public DeclineRelocationTest()
+        public ManagerFeedbackTests()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");            // open Browser in maximized mode
@@ -30,55 +29,37 @@
             options.AddArguments("--no-sandbox");               // Bypass OS security model
             options.AddArguments("--disable-notifications");
 
-
             driver = new ChromeDriver(options);
 
             loginPage = new Pages.LoginPage(driver);
             loginPage.Navigate();
-            Assert.True(loginPage.loginButtonDisplayed());
-            Assert.True(loginPage.emailInputDisplayed());
-            Assert.True(loginPage.passwordInputDisplayed());
-            loginPage.insertEmail("maroko@gmail.com");
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.insertEmail("mitraja@gmail.com");
             loginPage.insertPassword("123.Auth");
             loginPage.SubmitForm();
             loginPage.WaitForFormSubmit();
 
             menuPage = new Pages.MenuPage(driver);
-            Assert.True(menuPage.managerTabDisplayed());
-            menuPage.managerTabClick();
-            declineRelocationPage = new Pages.DeclineRelocationPage(driver);
-            Assert.True(declineRelocationPage.buildingDisplayed());
+            menuPage.feedbackTabClick();
 
+            managerFeedbackPage = new Pages.ManagerFeedbackPage(driver);
+            managerFeedbackPage.EnsurePageIsDisplayed();
+            managerFeedbackPage.EnsureDataIsFetched();
         }
-
-        [Fact]
-        public void Test()
-        {
-            ChooseParameters();
-            Decline();
-            Assert.Equal(requestsCount - 1, newRequestsCount);
-            Assert.Equal(Pages.DeclineRelocationPage.URI, driver.Url);
-            Dispose();
-        }
-
-        [Fact]
         public void Dispose()
         {
             driver.Quit();
             driver.Dispose();
         }
-        private void ChooseParameters()
+
+        [Fact]
+        private void Approves_Feedback()
         {
-            declineRelocationPage.SelectBuilding();
-            declineRelocationPage.SelectRoom();
-            declineRelocationPage.EnsureTabIsDisplayed();
-            declineRelocationPage.SelectTab();
-            requestsCount = declineRelocationPage.RequestsCount();
-        }
-        private void Decline()
-        {
-            declineRelocationPage.Decline();
-            newRequestsCount = declineRelocationPage.RequestsCount();
+            string id = managerFeedbackPage.AcceptFeedback();
+            bool success = managerFeedbackPage.CheckIfApproved(id);
+            managerFeedbackPage.UndoChanges(id);
+            Assert.True(success);
+            Dispose();
         }
     }
 }

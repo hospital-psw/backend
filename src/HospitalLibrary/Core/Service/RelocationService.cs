@@ -79,13 +79,24 @@
             }
             return futureRequests;
         }
-
         public void Decline(int requestId)
         {
             RelocationRequest request = _unitOfWork.RelocationRepository.GetById(requestId);
             request.DeleteRelocation();
             _unitOfWork.RelocationRepository.Update(request);
             _unitOfWork.RelocationRepository.Save();
+        }
+
+        public RelocationRequest GetById(int id)
+        {
+            try
+            {
+                return _unitOfWork.RelocationRepository.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
