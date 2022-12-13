@@ -14,6 +14,7 @@
         List<RenovationRequest> GetFinishedRenovations();
 
         int Save();
+        public RenovationRequest GetById(int id);
         List<RenovationRequest> GetAll();
     }
 }

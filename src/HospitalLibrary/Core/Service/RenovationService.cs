@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using System;
@@ -258,5 +259,16 @@
             return _unitOfWork.MapRepository.GetRoomMapById(room1.Id).width + _unitOfWork.MapRepository.GetRoomMapById(room2.Id).width;
         }
 
+        public RenovationRequest GetById(int id)
+        {
+            try
+            {
+                return _unitOfWork.RenovationRepository.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
