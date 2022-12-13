@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using System;
     using System.Collections.Generic;
     using System.Linq;

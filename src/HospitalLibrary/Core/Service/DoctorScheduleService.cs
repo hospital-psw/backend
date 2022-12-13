@@ -7,6 +7,7 @@
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequests;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Exceptions;
@@ -204,7 +205,7 @@
             DateTime dateTime = new DateTime(date.Year, date.Month, date.Day, appointment.Hour, appointment.Minute, appointment.Second);
             List<DoctorSchedule> schedules = _unitOfWork.DoctorScheduleRepository.GetDoctorSchedulesByDoctorList(doctors).ToList();
             Room room = _unitOfWork.RoomRepository.GetById(dto.RoomId);
-            Consilium consilium = new Consilium(dateTime, dto.Topic, dto.Duration, schedules, room);
+            Consilium consilium = new Consilium(dateTime, ConsiliumTopic.Enter(dto.Topic), dto.Duration, schedules, room);
             return consilium;
         }
 

@@ -599,7 +599,7 @@
             Consilium consilium = new Consilium
             {
                 DateTime = new DateTime(2022, 12, 21, 6, 30, 0),
-                Topic = "Tema",
+                Topic = ConsiliumTopic.Enter("Tema"),
                 Duration = 30,
                 DoctorsSchedule = schedules,
                 Room = room,
