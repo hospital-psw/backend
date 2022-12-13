@@ -101,6 +101,19 @@
             }
         }
 
+        public IEnumerable<Appointment> GetByPatientsId(int patientId) 
+        {
+            try
+            {
+                return _unitOfWork.AppointmentRepository.GetAppointmentsForPatient(patientId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in Appointment service in GetByPatientsId appointment {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
         public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to)
         {
             try

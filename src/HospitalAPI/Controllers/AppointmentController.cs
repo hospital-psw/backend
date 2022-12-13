@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -117,6 +118,21 @@
 
             return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
         }
+
+        [HttpGet]
+        [Route("patient/{id}")]
+        public IActionResult GetPatientAppointments(int id)
+        {
+            var appointments = _appointmentService.GetByPatientsId(id).ToList();
+
+            if (appointments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
+        }
+
 
         [HttpGet]
         [Route("room/{id}")]
