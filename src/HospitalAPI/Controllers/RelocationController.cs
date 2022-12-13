@@ -67,6 +67,7 @@
         [HttpPost("decline")]
         public IActionResult Decline([FromBody] int requestId)
         {
+            if (_relocationService.GetById(requestId) == null) return NotFound();
             _relocationService.Decline(requestId);
             return Ok();
         }
