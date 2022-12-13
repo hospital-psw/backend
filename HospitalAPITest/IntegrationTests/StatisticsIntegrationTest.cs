@@ -47,10 +47,10 @@
         {
             StatisticsDTO expected = new StatisticsDTO();
             expected.Chart1 = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
-            expected.Chart2Names = ListFactory.CreateList("Galina Gavanski", "Lik Beson");
-            expected.Chart3Male = ListFactory.CreateList(0, 2, 0, 0, 0, 0);
+            expected.Chart2Names = ListFactory.CreateList("Galina Gavanski", "Lik Beson", "Djankarlo Rapacoti");
+            expected.Chart3Male = ListFactory.CreateList(0, 2, 0, 0, 0, 2);
             expected.Chart3Female = ListFactory.CreateList(0, 0, 0, 0, 0, 1);
-            expected.Chart4 = ListFactory.CreateList(3, 1, 1, 0);
+            expected.Chart4 = ListFactory.CreateList(5, 1, 1, 1);
 
             return expected;
         }
