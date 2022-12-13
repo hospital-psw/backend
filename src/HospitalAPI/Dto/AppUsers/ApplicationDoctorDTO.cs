@@ -7,13 +7,7 @@
     {
         public Specialization Specialization { get; set; }
 
-        //public ApplicationDoctorDTO(ApplicationDoctor doctor)
-        //{
-        //    Id = doctor.Id;
-        //    Specialization = doctor.Specialization;
-        //    FirstName = doctor.FirstName;
-        //    LastName = doctor.LastName;
-        //    Email = doctor.Email;
-        //}
+        public WorkingHoursDto WorkingHours { get; set; }
+        public RoomDto Office { get; set; }
     }
 }

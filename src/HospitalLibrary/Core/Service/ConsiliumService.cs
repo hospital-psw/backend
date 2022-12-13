@@ -21,7 +21,18 @@
 
         public Consilium Schedule(Consilium consilium)
         {
-            throw new NotImplementedException();
+            try
+            {
+                consilium.DoctorsSchedule.ForEach(ds => ds.Consiliums.Add(consilium));
+                _unitOfWork.ConsiliumRepository.Add(consilium);
+                _unitOfWork.Save();
+                return consilium;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ConsiliumService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public override Consilium Get(int id)

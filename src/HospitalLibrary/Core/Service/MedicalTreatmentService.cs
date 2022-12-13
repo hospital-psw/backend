@@ -108,7 +108,7 @@
 
         private void AddPatientToRoom(Room room, ApplicationPatient patient)
         {
-            room.Patients.Add(patient);
+            room.AddPatient(patient);
             _unitOfWork.RoomRepository.Update(room);
         }
 
