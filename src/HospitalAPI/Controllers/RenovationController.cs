@@ -57,6 +57,7 @@
         [HttpPost("decline")]
         public StatusCodeResult Decline([FromBody] int requestId)
         {
+            if (_renovationService.GetById(requestId) == null) return NotFound();
             _renovationService.Decline(requestId);
             return Ok();
         }

@@ -33,6 +33,7 @@
                                                         .ToList();
         }
 
+
         public List<RenovationRequest> GetScheduledRenovationsForRoom(int roomId)
         {
             List<RenovationRequest> roomRenovations = new();
@@ -60,6 +61,11 @@
         public int Save()
         {
             return _context.SaveChanges();
+        }
+
+        public RenovationRequest GetById(int id)
+        {
+            return _context.RenovationRequests.Include(x => x.Rooms).FirstOrDefault(x => x.Id == id);
         }
     }
 }
