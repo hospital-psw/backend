@@ -23,9 +23,9 @@
         public List<DateTime> GetAppointments(List<int> rooms, DateTime from, DateTime to, int duration)
         {
             DateTime startTime = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
-            DateTime toTime = new DateTime(to.Year, to.Month, to.Day + 1, 0, 0, 0);
+            DateTime toTime = startTime.AddDays(1);
             DateTime currentDateTime = DateTime.Now;
-            if (startTime.Day == currentDateTime.Day) startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, currentDateTime.Hour + 1, 0, 0);
+            if (startTime.Day == currentDateTime.Day) startTime = startTime.AddHours(1);
             return GetAvailableAppointments(rooms, startTime, toTime, duration);
         }
 
