@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
     using HospitalAPI.Controllers;
+    using HospitalAPI.Dto;
     using HospitalAPI.Dto.Consilium;
     using HospitalAPI.Dto.Examinations;
     using HospitalAPITest.Setup;
@@ -96,6 +97,32 @@
 
             Assert.NotNull(result);
             Assert.Equal("One or more selected doctors are not able to attend the consilium in the given period.", result.ToString());
+        }
+
+        [Fact]
+        public void Test_get_consiliums_for_room()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 2;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<ConsiliumDto>;
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_get_consiliums_for_room_empty()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 4;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<ConsiliumDto>;
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
         }
     }
 }

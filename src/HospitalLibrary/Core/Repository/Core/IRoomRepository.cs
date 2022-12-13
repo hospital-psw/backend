@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Repository.Core
         IEnumerable<Room> GetAll();
         Room GetById(int id);
         void Create(Room room);
-        void Update(Room room);
+        bool Update(Room room);
         void Delete(Room room);
         IEnumerable<Room> GetAvailableRooms();
         void Save();
