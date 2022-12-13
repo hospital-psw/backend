@@ -16,6 +16,7 @@ using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Core.Service.Examinations;
 using HospitalLibrary.Core.Service.Examinations.Core;
 using HospitalLibrary.Settings;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +31,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace HospitalAPI
 {
@@ -59,21 +61,30 @@ namespace HospitalAPI
                 .AddEntityFrameworkStores<HospitalDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = false;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+                        ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+                    };
+                });
+
+            services.ConfigureApplicationCookie(options =>
             {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = false;
-                options.TokenValidationParameters = new TokenValidationParameters()
+                options.Events.OnRedirectToLogin = context =>
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
-                    ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
                 };
             });
+
             services.AddDistributedMemoryCache();
 
             services.AddAutoMapper(typeof(Startup));

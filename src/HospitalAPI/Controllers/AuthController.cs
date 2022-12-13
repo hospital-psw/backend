@@ -126,7 +126,7 @@
                 {
                     var user = await _authService.FindByEmailAsync(dto.Email);
                     var role = await _authService.GetUserRole(user.Id);
-                    var token = _tokenService.BuildToken(user, role);
+                    var token = await _tokenService.BuildToken(user, role);
                     var result = _mapper.Map<LoginResponseDTO>(user);
                     result.Token = token;
                     result.ExpiresIn = _tokenService.GetExpireInDate();

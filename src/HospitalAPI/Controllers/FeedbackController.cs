@@ -9,6 +9,7 @@
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -133,8 +134,8 @@
             return feedback is null ? NotFound() : Ok(feedback);
         }
 
-        [Authorize(Roles = "Patient")]
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         public IActionResult Add(NewFeedbackDTO dto)
         {
             if (ModelState.IsValid)
