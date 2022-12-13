@@ -41,5 +41,23 @@
 
             Assert.Equal("http://localhost:4200/changePassword", _chromeDriver.Url);
         }
+
+        [Fact]
+        public void CheckBloobAmount_PublicApp()
+        {
+            using var scope = Factory.Services.CreateScope();
+            SetupContext(scope);
+            var page = new CheckBloodAmountPage(_chromeDriver);
+
+            page.Email.SendKeys("asdasd@sad.cs");
+            page.Url.SendKeys("string");
+            page.ApiKey.SendKeys("3954ED262A0BA55F204CF62C4A4C8BE7");
+            page.BloodType.SendKeys("aPlus");
+            page.BloodAmount.SendKeys("4");
+            page.CheckButton.Click();
+
+            Assert.Equal("http://localhost:4200/bloodbank/46/detail", _chromeDriver.Url);
+        }
+
     }
 }
