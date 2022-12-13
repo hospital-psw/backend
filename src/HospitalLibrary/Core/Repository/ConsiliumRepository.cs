@@ -52,8 +52,7 @@
 
         public List<Consilium> GetScheduledConsiliumsForRoom(int roomId)
         {
-            return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)
-                                               .Where(x => !x.Deleted && x.Room.Id == roomId)
+            return GetAll().Where(x => !x.Deleted && x.Room.Id == roomId)
                                                .OrderBy(x => x.DateTime)
                                                .Distinct()
                                                .ToList();
