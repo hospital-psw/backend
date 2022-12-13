@@ -14,6 +14,8 @@
     {
         private readonly IWebDriver driver;
         private Pages.ManagerFeedbackPage managerFeedbackPage;
+        private Pages.LoginPage loginPage;
+        private Pages.MenuPage menuPage;
         public const string URI_APPOINTMENTS = "http://localhost:4200/feedback";
 
         public ManagerFeedbackTests()
@@ -26,10 +28,21 @@
             options.AddArguments("--disable-dev-shm-usage");    // overcome limited resource problems
             options.AddArguments("--no-sandbox");               // Bypass OS security model
             options.AddArguments("--disable-notifications");
+
             driver = new ChromeDriver(options);
 
-            managerFeedbackPage = new Pages.ManagerFeedbackPage(driver);      // create ProductsPage
-            managerFeedbackPage.Navigate();                            // navigate to url
+            loginPage = new Pages.LoginPage(driver);
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.insertEmail("mitraja@gmail.com");
+            loginPage.insertPassword("123.Auth");
+            loginPage.SubmitForm();
+            loginPage.WaitForFormSubmit();
+
+            menuPage = new Pages.MenuPage(driver);
+            menuPage.feedbackTabClick();
+
+            managerFeedbackPage = new Pages.ManagerFeedbackPage(driver);
             managerFeedbackPage.EnsurePageIsDisplayed();
             managerFeedbackPage.EnsureDataIsFetched();
         }
@@ -42,10 +55,9 @@
         [Fact]
         private void Approves_Feedback()
         {
-            managerFeedbackPage.GoToPendingFeedbacks();
-            managerFeedbackPage.AcceptFeedback();
-            bool success = managerFeedbackPage.CheckIfApproved();
-            managerFeedbackPage.UndoChanges();
+            string id = managerFeedbackPage.AcceptFeedback();
+            bool success = managerFeedbackPage.CheckIfApproved(id);
+            managerFeedbackPage.UndoChanges(id);
             Assert.True(success);
             Dispose();
         }

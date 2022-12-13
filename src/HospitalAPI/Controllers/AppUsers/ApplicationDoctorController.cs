@@ -71,7 +71,7 @@
         {
             var doctors = _doctorService.GetBySpecialization(spec);
             var DTOlist = new List<ApplicationDoctorDTO>();
-            foreach(ApplicationDoctor doctor in doctors)
+            foreach (ApplicationDoctor doctor in doctors)
             {
                 DTOlist.Add(ApplicationDoctorMapper.EntityToEntityDTO(doctor));
             }

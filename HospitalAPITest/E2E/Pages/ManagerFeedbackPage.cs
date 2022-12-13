@@ -15,10 +15,9 @@
         public const string URL = "http://localhost:4200/feedback";
 
         private IWebElement PublishedButton => driver.FindElement(By.Id("show_published_button"));
-        private IWebElement PendingButton => driver.FindElement(By.Id("show_pending_button"));
         public IWebElement Table;
-        public IList<WebElement> TableRows;
-        public IWebElement Row => driver.FindElement(By.TagName("tr"));
+        public IWebElement WantedRow;
+        public IWebElement Row;
         public IWebElement PublishButton;
         public IWebElement UnpublishButton;
 
@@ -26,8 +25,6 @@
         {
             this.driver = driver;
         }
-
-        public void Navigate() => driver.Navigate().GoToUrl(URL);
         public void EnsurePageIsDisplayed()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
@@ -54,6 +51,7 @@
             {
                 try
                 {
+                    Row = driver.FindElement(By.TagName("tr"));
                     return Row != null;
                 }
                 catch (StaleElementReferenceException)
@@ -66,7 +64,7 @@
                 }
             });
         }
-        public void EnsurePageSwapped()
+        public void EnsureOnPublishedTab()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(condition =>
@@ -86,32 +84,26 @@
                 }
             });
         }
-
-        public void GoToPublishedFeedbacks()
+        public string AcceptFeedback()
         {
-            PublishedButton.Click();
-        }
-        public void GoToPendingFeedbacks()
-        {
-            PendingButton.Click();
-        }
-        public void AcceptFeedback()
-        {
+            string id;
             Table = driver.FindElement(By.TagName("table"));
-            IWebElement wantedRow = Table.FindElement(By.Id("8"));
-            PublishButton = wantedRow.FindElement(By.Id("publish"));
+            PublishButton = Table.FindElement(By.Id("publish"));
+            WantedRow = PublishButton.FindElement(By.XPath("./../../..")); //find parent element to get id so that i can undo changes
+            id = WantedRow.GetAttribute("id");
             PublishButton.Click();
+            return id;
         }
-        public bool CheckIfApproved()
+        public bool CheckIfApproved(string id)
         {
-            IWebElement found = driver.FindElement(By.Id("8"));
-            if(found is not null) return true;
+            EnsureOnPublishedTab();
+            IWebElement found = driver.FindElement(By.Id(id));
+            if (found is not null) return true;
             else return false;
         }
-        public void UndoChanges()
+        public void UndoChanges(string id)
         {
-            EnsurePageSwapped();
-            IWebElement row = driver.FindElement(By.Id("8"));
+            IWebElement row = driver.FindElement(By.Id(id));
             UnpublishButton = row.FindElement(By.Id("unpublish"));
             UnpublishButton.Click();
         }
