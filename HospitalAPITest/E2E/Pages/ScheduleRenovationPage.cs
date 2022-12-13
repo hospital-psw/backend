@@ -11,7 +11,7 @@
     public class ScheduleRenovationPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/display";
+        public const string URI = "http://localhost:4200/app/display";
         private IWebElement buildingField => driver.FindElement(By.XPath("//*[@id=\"buildingSelect\"]"));
         private IWebElement buildingFieldBuilding2 => driver.FindElement(By.XPath("//*[@id=\"mat-option-building\"]"));
         private IWebElement floorField => driver.FindElement(By.XPath("//*[@id=\"floorSelect\"]"));
@@ -61,8 +61,8 @@
 
         public void SelectDates()
         {
-            driver.FindElement(By.XPath("//*[@id=\"datePicker1\"]")).SendKeys("12/29/2022");
-            driver.FindElement(By.XPath("//*[@id=\"datePicker2\"]")).SendKeys("12/30/2022");
+            driver.FindElement(By.XPath("//*[@id=\"datePicker1\"]")).SendKeys("01/15/2022");
+            driver.FindElement(By.XPath("//*[@id=\"datePicker2\"]")).SendKeys("01/16/2022");
             driver.FindElement(By.XPath("//*[@id=\"next3\"]")).Click();
         }
 
