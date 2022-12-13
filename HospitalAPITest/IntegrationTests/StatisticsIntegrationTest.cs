@@ -36,7 +36,6 @@
 
             Assert.Equal(expected.Chart1, result.Chart1);
             Assert.Equal(expected.Chart2Names, result.Chart2Names);
-            //Assert.Equal(expected.Chart2Values, result.Chart2Values);
             Assert.NotNull(result.Chart2Values);
             Assert.Equal(expected.Chart3Male, result.Chart3Male);
             Assert.Equal(expected.Chart3Female, result.Chart3Female);
