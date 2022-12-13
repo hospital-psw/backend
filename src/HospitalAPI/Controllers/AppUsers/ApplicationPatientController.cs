@@ -41,26 +41,26 @@
 
 
         [HttpGet("getprofile/{id}")]
-        public async Task<IActionResult> GetForProfile(int id)
+        public Task<IActionResult> GetForProfile(int id)
         {
             var patient = _appPatientService.Get(id);
             if (patient == null)
-                return NotFound();
+                return Task.FromResult(NotFound());
 
             var result = AppPatientProfileMapper.EntityToEntityDTO(patient);
-            return Ok(result);
+            return Task.FromResult(Ok(result));
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public Task<IActionResult> GetAll()
         {
             List<ApplicationPatientDTO> patientsDTO = new List<ApplicationPatientDTO>();
             var patients = _appPatientService.GetAll().ToList();
             if (patients == null)
-                return NotFound();
+                return Task.FromResult(NotFound());
 
             patients.ForEach(p => patientsDTO.Add(_mapper.Map<ApplicationPatientDTO>(p)));
-            return Ok(patientsDTO);
+            return Task.FromResult(Ok(patientsDTO));
         }
 
         [HttpGet("non-hospitalized")]

@@ -251,7 +251,7 @@
                 End = new DateTime(1, 1, 1, 23, 0, 0)
             };
             Room equipmentRoom = Room.Create("6904", floor1, "Soba za kremiranje", wh1);
-            
+
             context.Equipments.Add(Equipment.Create(EquipmentType.BED, 8, equipmentRoom));
             context.Equipments.Add(Equipment.Create(EquipmentType.SCISSORS, 10, equipmentRoom));
             context.Equipments.Add(Equipment.Create(EquipmentType.NEEDLE, 20, equipmentRoom));
