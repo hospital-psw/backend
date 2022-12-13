@@ -12,7 +12,7 @@
 
             consiliumDto.Id = consilium.Id;
             consiliumDto.Duration = consilium.Duration;
-            consiliumDto.Topic = consilium.Topic;
+            consiliumDto.Topic = consilium.Topic.Content;
             consiliumDto.DateTime = consilium.DateTime;
             consiliumDto.Room = RoomMapper.EntityToEntityDto(consilium.Room);
             consilium.DoctorsSchedule.ForEach(ds => consiliumDto.Doctors.Add(ApplicationDoctorMapper.EntityToEntityDTO(ds.Doctor)));
