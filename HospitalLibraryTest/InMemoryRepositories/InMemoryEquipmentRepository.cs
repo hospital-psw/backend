@@ -39,8 +39,8 @@
             Room room2 = Room.Create("003", floor, "ordinacija", workingHours);
             room1.SetId(16);
 
-            Equipment equipment1 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.BED, 10, room2);
-            Equipment equipment2 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.SCISSORS, 7, room2);
+            Equipment equipment1 = Equipment.Create(HospitalLibrary.Core.Model.Enums.EquipmentType.BED, 10, room2);
+            Equipment equipment2 = Equipment.Create(HospitalLibrary.Core.Model.Enums.EquipmentType.SCISSORS, 7, room2);
 
             equipments.Add(equipment1);
             equipments.Add(equipment2);
@@ -70,8 +70,8 @@
             Room room2 = Room.Create("003", floor, "ordinacija", workingHours);
             room1.SetId(16);
 
-            Equipment equipment1 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.BED, 10, room2);
-            Equipment equipment2 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.SCISSORS, 7, room2);
+            Equipment equipment1 = Equipment.Create(HospitalLibrary.Core.Model.Enums.EquipmentType.BED, 10, room2);
+            Equipment equipment2 = Equipment.Create(HospitalLibrary.Core.Model.Enums.EquipmentType.SCISSORS, 7, room2);
 
             equipments.Add(equipment1);
             equipments.Add(equipment2);
