@@ -13,7 +13,7 @@
     {
         public string Content { get; private set; }
 
-        private ConsiliumTopic(string content) 
+        private ConsiliumTopic(string content)
         {
             Content = content;
         }
