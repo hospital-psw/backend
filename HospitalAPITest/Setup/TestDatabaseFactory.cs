@@ -236,7 +236,7 @@
                 From = new DateTime(2022, 11, 25, 0, 0, 0),
                 To = new DateTime(2022, 12, 11, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
@@ -248,7 +248,7 @@
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
@@ -351,7 +351,7 @@
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
@@ -382,7 +382,7 @@
                 From = new DateTime(2023, 1, 12, 0, 0, 0),
                 To = new DateTime(2023, 1, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
@@ -393,7 +393,7 @@
                 From = new DateTime(2023, 2, 12, 0, 0, 0),
                 To = new DateTime(2023, 2, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = false,
                 ManagerComment = ""
             });
@@ -404,7 +404,7 @@
                 From = new DateTime(2023, 3, 12, 0, 0, 0),
                 To = new DateTime(2023, 3, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = false,
                 ManagerComment = "Mnogo trazis baca"
             });
@@ -415,7 +415,7 @@
                 From = new DateTime(2023, 4, 12, 0, 0, 0),
                 To = new DateTime(2023, 4, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = "Ti ga bas pretera"
             });
@@ -426,7 +426,7 @@
                 From = new DateTime(2023, 5, 12, 0, 0, 0),
                 To = new DateTime(2023, 5, 22, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = false,
                 ManagerComment = ""
             });
@@ -567,7 +567,7 @@
                 From = new DateTime(2022, 12, 17, 0, 0, 0),
                 To = new DateTime(2022, 12, 20, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 ManagerComment = null,
                 Urgent = false,
             };
