@@ -3,6 +3,7 @@
     using AutoMapper;
     using IntegrationAPI.Controllers;
     using IntegrationAPI.DTO.BloodBank;
+    using IntegrationAPI.Token;
     using IntegrationAPITest.MockData;
     using IntegrationAPITest.Setup;
     using IntegrationLibrary.BloodBank;
@@ -20,7 +21,8 @@
         private static BloodBankController SetupController(IServiceScope serviceScope)
         {
             return new BloodBankController(serviceScope.ServiceProvider.GetRequiredService<IBloodBankService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>(),
+                                             serviceScope.ServiceProvider.GetRequiredService<ITokenHelper>());
         }
 
         private IntegrationDbContext SetupContext(IServiceScope scope)
