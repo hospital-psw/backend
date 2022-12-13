@@ -2,9 +2,12 @@
 {
     using AutoMapper;
     using IntegrationAPI.DTO.BloodBank;
+    using IntegrationAPI.Token;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
 
@@ -14,11 +17,13 @@
     {
         private readonly IBloodBankService _bloodBankService;
         private readonly IMapper _mapper;
+        private readonly ITokenHelper _tokenHelper;
 
-        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper)
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, ITokenHelper tokenHelper)
         {
             _bloodBankService = bloodBankService;
             _mapper = mapper;
+            _tokenHelper = tokenHelper;
         }
 
         [HttpGet("all")]
@@ -26,7 +31,7 @@
         {
             return Ok(_mapper.Map<IEnumerable<GetBloodBankDTO>>(_bloodBankService.GetAll()));
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public virtual IActionResult Get(int id)
         {
@@ -59,6 +64,7 @@
         }
 
         [HttpPost("Login")]
+        [AllowAnonymous]
         public IActionResult Login(BloodBankManagerLoginDTO credentials)
         {
             try
@@ -78,7 +84,11 @@
                 }
                 if (bloodBank.AdminPassword.Equals(credentials.Password))
                 {
-                    return Ok(bloodBank.IsDummyPassword);
+                    if (!bloodBank.IsDummyPassword)
+                    {
+                        return Ok(_tokenHelper.GenerateToken(bloodBank.Id, bloodBank.Email));
+                    }
+                    return Ok();
                 }
                 return Unauthorized();
             }

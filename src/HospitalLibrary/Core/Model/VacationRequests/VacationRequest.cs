@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,7 +15,7 @@
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public VacationRequestStatus Status { get; set; }
-        public string Comment { get; set; }
+        public VacationRequestComment Comment { get; set; }
         public bool Urgent { get; set; }
         public string ManagerComment { get; set; }
 
@@ -26,7 +27,7 @@
             From = from;
             To = to;
             Status = status;
-            Comment = comment;
+            Comment = VacationRequestComment.Create(comment);
             Urgent = urgent;
             ManagerComment = managerComment;
         }
