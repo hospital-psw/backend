@@ -105,50 +105,46 @@
             patients.Add(appPat);
             patients.Add(appPat2);
 
-            Room room = new Room()
-            {
-                Floor = new Floor()
-                {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = FloorNumber.Create(69),
-                    Purpose = "Krematorijum"
-                },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
-                Patients = patients
 
+            Floor floor = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-
-            Room office = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Floor = new Floor()
-                {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 15",
-                        Name = "Decija bolnica"
-                    },
-                    Number = FloorNumber.Create(11),
-                    Purpose = "Kancelarija"
-                },
-                Number = "1511",
-                Purpose = "Kancelarija",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+
+            Room room = Room.Create("6904", floor, "Soba za kremiranje", wh);
+            room.SetPatients(patients);
+
+
+            Floor floorOffice = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 15",
+                    Name = "Decija bolnica"
+                },
+                Number = FloorNumber.Create(11),
+                Purpose = "Kancelarija"
+            };
+
+            WorkingHours whOffice = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+
+            Room office = Room.Create("1511", floorOffice, "Kancelarija", whOffice);
 
             ApplicationDoctor appDoc = new ApplicationDoctor()
             {
@@ -259,26 +255,24 @@
 
 
             //for equipment controller
-            Room equipmentRoom = new Room()
+            Floor floor1 = new Floor()
             {
-                Floor = new Floor()
+                Building = new Building()
                 {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = FloorNumber.Create(69),
-                    Purpose = "Krematorijum"
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
                 },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
+
+            WorkingHours wh1 = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+            Room equipmentRoom = Room.Create("6904", floor1, "Soba za kremiranje", wh1);
+
             context.Equipments.Add(Equipment.Create(EquipmentType.BED, 8, equipmentRoom));
             context.Equipments.Add(Equipment.Create(EquipmentType.SCISSORS, 10, equipmentRoom));
             context.Equipments.Add(Equipment.Create(EquipmentType.NEEDLE, 20, equipmentRoom));
@@ -320,14 +314,14 @@
 
             context.Buildings.Add(building);
 
-            Floor floor = new Floor()
+            Floor floor2 = new Floor()
             {
                 Building = building,
                 Number = FloorNumber.Create(0),
                 Purpose = "ortopedija"
             };
 
-            context.Floors.Add(floor);
+            context.Floors.Add(floor1);
 
             WorkingHours workingHours = new WorkingHours()
             {
@@ -337,13 +331,7 @@
 
             context.WorkingHours.Add(workingHours);
 
-            context.Rooms.Add(new Room
-            {
-                Floor = floor,
-                Number = "003",
-                Purpose = "ordinacija",
-                WorkingHours = workingHours
-            });
+            context.Rooms.Add(Room.Create("003", floor2, "ordinacija", workingHours));
 
             context.BloodUnits.Add(new BloodUnit
             {
@@ -475,47 +463,43 @@
 
             context.Anamneses.Add(anam);
 
-            Room relocationFromRoom = new Room()
+            Floor floor3 = new Floor()
             {
-                Floor = new Floor()
+                Building = new Building()
                 {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = FloorNumber.Create(69),
-                    Purpose = "Krematorijum"
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
                 },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            Room relocationToRoom = new Room()
+            WorkingHours wh3 = new WorkingHours()
             {
-                Floor = new Floor()
-                {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = FloorNumber.Create(69),
-                    Purpose = "Krematorijum"
-                },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+
+            Room relocationFromRoom = Room.Create("6904", floor3, "Soba za kremiranje", wh3);
+
+            Floor floor4 = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
+            };
+
+            WorkingHours wh4 = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+
+            Room relocationToRoom = Room.Create("6904", floor4, "Soba za kremiranje", wh4);
 
             Equipment relocationEquipment = Equipment.Create(EquipmentType.BED, 8, equipmentRoom);
 

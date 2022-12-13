@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
@@ -115,16 +116,28 @@
 
             var unitOfWork = SetupUOW();
 
-            var room1 = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
-                Capacity = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            var room2 = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 2,
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+            var room1 = Room.Create("001", floor, "ordinacija", wh);
+            room1.SetId(1);
+            room1.SetCapacity(1);
+
+            var room2 = Room.Create("001", floor, "ordinacija", wh);
+            room2.SetId(2);
 
             var roomMap1 = new RoomMap()
             {
@@ -161,16 +174,28 @@
 
             var unitOfWork = SetupUOW();
 
-            var room1 = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
-                Capacity = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            var room2 = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 2,
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+            var room1 = Room.Create("001", floor, "ordinacija", wh);
+            room1.SetId(1);
+            room1.SetCapacity(1);
+
+            var room2 = Room.Create("001", floor, "ordinacija", wh);
+            room2.SetId(2);
 
             var roomMap1 = new RoomMap()
             {
@@ -273,18 +298,31 @@
         {
             var unitOfWork = SetupUOW();
 
-            var room1 = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
-            var room2 = new Room()
+
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 2,
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
-            var newRoom = new Room()
-            {
-                Id = 3,
-            };
+            var room1 = Room.Create("001", floor, "ordinacija", wh);
+            room1.SetId(1);
+
+            var room2 = Room.Create("001", floor, "ordinacija", wh);
+            room2.SetId(2);
+
+            var newRoom = Room.Create("001", floor, "ordinacija", wh);
+            newRoom.SetId(3);
+
             var equipment1 = Equipment.CreateWithReservedQuantity(EquipmentType.BED, 20, room1, 7);
             equipment1.Id = 1;
             var equipment2 = Equipment.CreateWithReservedQuantity(EquipmentType.BANDAGE, 15, room2, 7);
@@ -339,16 +377,27 @@
                 depth = 1
             };
 
-
-            Room newRoom1 = new Room()
+            Floor floor = new Floor()
             {
-                Id = 2,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            Room newRoom2 = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 3,
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+            var newRoom1 = Room.Create("001", floor, "ordinacija", wh);
+            newRoom1.SetId(2);
+
+            var newRoom2 = Room.Create("001", floor, "ordinacija", wh);
+            newRoom2.SetId(3);
 
 
             var queue = new Queue<RoomMap>();
@@ -374,10 +423,25 @@
 
             var unitOfWork = SetupUOW();
 
-            Room room = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
+
+            WorkingHours wh = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+            var room = Room.Create("001", floor, "ordinacija", wh);
+            room.SetId(1);
+
 
             List<Equipment> equipment = new List<Equipment>();
             List<Equipment> sameEquipment = new List<Equipment>();
