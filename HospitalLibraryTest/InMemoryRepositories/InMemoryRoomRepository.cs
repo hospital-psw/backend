@@ -47,6 +47,11 @@
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Save()
         {
             throw new NotImplementedException();

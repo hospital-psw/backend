@@ -72,6 +72,11 @@
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Specialization> GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(ApplicationDoctor entity)
         {
             throw new NotImplementedException();
