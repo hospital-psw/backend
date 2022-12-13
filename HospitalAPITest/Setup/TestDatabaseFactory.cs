@@ -146,7 +146,6 @@
 
             Room office = Room.Create("1511", floorOffice, "Kancelarija", whOffice);
 
-
             ApplicationDoctor appDoc = new ApplicationDoctor()
             {
                 FirstName = "Djankarlo",
