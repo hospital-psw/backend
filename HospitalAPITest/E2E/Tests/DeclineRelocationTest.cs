@@ -56,13 +56,10 @@
         {
             ChooseParameters();
             Decline();
-            int newRequestsCount = declineRelocationPage.RequestsCount();
             Assert.Equal(requestsCount - 1, newRequestsCount);
             Assert.Equal(Pages.DeclineRelocationPage.URI, driver.Url);
             Dispose();
         }
-
-        [Fact]
         public void Dispose()
         {
             driver.Quit();
@@ -79,6 +76,7 @@
         private void Decline()
         {
             declineRelocationPage.Decline();
+            newRequestsCount = declineRelocationPage.RequestsCount();
         }
     }
 }

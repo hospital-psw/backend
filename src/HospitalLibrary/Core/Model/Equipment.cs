@@ -66,7 +66,7 @@
 
         public static Equipment Create(EquipmentType equipmentType, int quantity, Room room)
         {
-            if(quantity < 0) throw new Exception("Quantity must be greater than 0");
+            if (quantity < 0) throw new Exception("Quantity must be greater than 0");
             Equipment equipment = new Equipment(equipmentType, quantity, room);
             return equipment;
         }
