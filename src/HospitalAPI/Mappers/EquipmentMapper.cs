@@ -19,7 +19,7 @@
 
         public static Equipment EntityDtoToEntity(EquipmentDto dto)
         {
-            Equipment equipment = new Equipment(dto.EquipmentType, dto.Quantity, RoomMapper.EntityDtoToEntity(dto.Room), dto.Id, dto.ReservedQuantity);
+            Equipment equipment = Equipment.CreateWithId(dto.EquipmentType, dto.Quantity, RoomMapper.EntityDtoToEntity(dto.Room), dto.Id, dto.ReservedQuantity);
             return equipment;
         }
     }

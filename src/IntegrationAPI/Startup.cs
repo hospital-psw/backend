@@ -1,3 +1,4 @@
+using IntegrationAPI.Token;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.BloodBank.Interfaces;
 using IntegrationLibrary.Core;
@@ -10,14 +11,18 @@ using IntegrationLibrary.UrgentBloodTransfer;
 using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
 using IntegrationLibrary.Util;
 using IntegrationLibrary.Util.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mjml.AspNetCore;
+using System.Collections.Generic;
+using System.Text;
 
 namespace IntegrationAPI
 {
@@ -41,7 +46,56 @@ namespace IntegrationAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
                 c.CustomSchemaIds(x => x.FullName);
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                  {
+                    {
+                      new OpenApiSecurityScheme
+                      {
+                        Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
+                      }
+                    });
             });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey
+                    (Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true
+                };
+            });
+            services.AddAuthorization();
             services.AddAutoMapper(typeof(Startup));
             services.AddLogging();
 
@@ -52,6 +106,7 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IUrgentBloodTransferService, UrgentBloodTransferService>();
 
+            services.AddScoped<ITokenHelper, TokenHelper>();
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<IBBConnections, BBConnections>();
             services.AddMjmlServices(o =>
@@ -87,6 +142,7 @@ namespace IntegrationAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
