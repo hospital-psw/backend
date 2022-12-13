@@ -63,6 +63,21 @@
             }
         }
 
+        public void FinishTender(int tenderId,int offerIndex)
+        {
+            try
+            {
+                var entity = _unitOfWork.TenderRepository.Get(tenderId);
+                entity.Status = TenderStatus.CLOSED;
+                entity.TenderWinner = entity.Offers[offerIndex];
+                _unitOfWork.TenderRepository.Update(entity);
+                _unitOfWork.Save();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in TenderService in Delete {e.Message} in {e.StackTrace}");
+            }
+        }
         public Tender Get(int id)
         {
             try
@@ -144,7 +159,7 @@
         {
             try
             {
-                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN).ToList();
+                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN && (x.DueDate > DateTime.Now || x.DueDate.ToString().Equals("0001-01-01T00:00:00"))).ToList();
             }
             catch (Exception e)
             {

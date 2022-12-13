@@ -28,7 +28,7 @@ namespace IntegrationLibrary.Tender
 
         public TenderOffer MakeAnOffer(TenderOffer offer)
         {
-            if (offer.Offeror == null || offer.Items == null || offer.Items.Count == 0 || Status == TenderStatus.CLOSED || DueDate < DateTime.Now || !OfferMatchesTenderSpec(offer))
+            if (offer.Offeror == null || offer.Items == null || offer.Items.Count == 0 || Status == TenderStatus.CLOSED || !OfferMatchesTenderSpec(offer))
             {
                 return null;
             }

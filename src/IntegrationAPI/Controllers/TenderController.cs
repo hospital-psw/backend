@@ -46,6 +46,12 @@
 
             return Ok(_mapper.Map<GetTenderDTO>(entity));
         }
+        [HttpGet("finish/{tenderId}/{offerId}")]
+        public IActionResult FinishTender(int tenderId,int offerId)
+        {
+            _tenderService.FinishTender(tenderId,offerId);
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
+        }
 
         [HttpPost]
         public virtual IActionResult Create([FromBody] CreateTenderDTO tender)
@@ -88,7 +94,7 @@
             {
                 Offeror = new BloodBank()
                 {
-                    Id = 1
+                    Id = 46
                 },
                 Items = tender.Items
             };

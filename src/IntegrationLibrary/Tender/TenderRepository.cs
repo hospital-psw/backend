@@ -27,12 +27,15 @@ namespace IntegrationLibrary.Tender
 
         public Tender Get(int id)
         {
-            return _context.Set<Tender>().Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
+            return GetAll().Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
         }
 
         public IEnumerable<Tender> GetAll()
         {
-            return _context.Set<Tender>().Where(x => !x.Deleted).ToList();
+            return _context.Set<Tender>()
+                .Include(x => x.Items)
+                .Include(x => x.Offers).ThenInclude(x => x.Items)
+                .Where(x => !x.Deleted).ToList();
         }
 
         public void Add(Tender entity)
