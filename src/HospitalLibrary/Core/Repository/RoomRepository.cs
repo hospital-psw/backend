@@ -72,5 +72,10 @@ namespace HospitalLibrary.Core.Repository
             _context.Rooms.Remove(room);
             _context.SaveChanges();
         }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

@@ -13,6 +13,7 @@
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Model.VacationRequests;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -118,28 +119,25 @@
                 Office = null
             };
 
-            Room room = new Room()
+            Floor floor = new Floor()
             {
-                Floor = new Floor()
+                Building = new Building()
                 {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
                 },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
-                Patients = patients
-
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
+
+            WorkingHours wh = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+
+            Room room = Room.Create("6904", floor, "Soba za kremiranje", wh);
+            room.SetPatients(patients);
 
             BloodExpenditure expenditure = new BloodExpenditure()
             {
@@ -236,26 +234,24 @@
 
 
             //for equipment controller
-            Room equipmentRoom = new Room()
+            Floor floor1 = new Floor()
             {
-                Floor = new Floor()
+                Building = new Building()
                 {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
                 },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
+
+            WorkingHours wh1 = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+            Room equipmentRoom = Room.Create("6904", floor1, "Soba za kremiranje", wh1);
+            
             context.Equipments.Add(Equipment.Create(EquipmentType.BED, 8, equipmentRoom));
             context.Equipments.Add(Equipment.Create(EquipmentType.SCISSORS, 10, equipmentRoom));
             context.Equipments.Add(Equipment.Create(EquipmentType.NEEDLE, 20, equipmentRoom));
@@ -297,14 +293,14 @@
 
             context.Buildings.Add(building);
 
-            Floor floor = new Floor()
+            Floor floor2 = new Floor()
             {
                 Building = building,
-                Number = 0,
+                Number = FloorNumber.Create(0),
                 Purpose = "ortopedija"
             };
 
-            context.Floors.Add(floor);
+            context.Floors.Add(floor1);
 
             WorkingHours workingHours = new WorkingHours()
             {
@@ -314,13 +310,7 @@
 
             context.WorkingHours.Add(workingHours);
 
-            context.Rooms.Add(new Room
-            {
-                Floor = floor,
-                Number = "003",
-                Purpose = "ordinacija",
-                WorkingHours = workingHours
-            });
+            context.Rooms.Add(Room.Create("003", floor2, "ordinacija", workingHours));
 
             context.BloodUnits.Add(new BloodUnit
             {
@@ -443,59 +433,48 @@
 
             context.Anamneses.Add(anam);
 
-            Room relocationFromRoom = new Room()
+            Floor floor3 = new Floor()
             {
-                Floor = new Floor()
+                Building = new Building()
                 {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
                 },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            Room relocationToRoom = new Room()
+            WorkingHours wh3 = new WorkingHours()
             {
-                Floor = new Floor()
-                {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
-                },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+
+            Room relocationFromRoom = Room.Create("6904", floor3, "Soba za kremiranje", wh3);
+
+            Floor floor4 = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
+            };
+
+            WorkingHours wh4 = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+
+            Room relocationToRoom = Room.Create("6904", floor4, "Soba za kremiranje", wh4);
 
             Equipment relocationEquipment = Equipment.Create(EquipmentType.BED, 8, equipmentRoom);
 
-            context.RelocationRequests.Add(new RelocationRequest
-            {
-                FromRoom = relocationFromRoom,
-                ToRoom = relocationToRoom,
-                Equipment = relocationEquipment,
-                StartTime = new DateTime(2022, 12, 10, 23, 0, 0),
-                Duration = 2
-            });
-
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 10, 23, 0, 0), 2));
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 15, 23, 0, 0), 2));
             context.Appointments.Add(new Appointment
             {
                 Date = new DateTime(2023, 12, 25, 12, 0, 0),
@@ -522,14 +501,7 @@
             List<Room> roomsRenovation = new List<Room>();
             roomsRenovation.Add(room);
             List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
-            context.RenovationRequests.Add(new RenovationRequest
-            {
-                RenovationType = RenovationType.SPLIT,
-                Rooms = roomsRenovation,
-                StartTime = new DateTime(),
-                Duration = 2,
-                RenovationDetails = renovationDetails
-            });
+            context.RenovationRequests.Add(RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, new DateTime(), 2, renovationDetails));
 
             context.SaveChanges();
 

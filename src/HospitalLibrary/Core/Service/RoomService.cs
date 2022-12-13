@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Room room in allRooms)
             {
-                if (room.Floor.Building.Id == buildingId && (floorNumber == -1 || room.Floor.Number == floorNumber) && room.Number.Contains(roomNumber) && room.Purpose.Contains(purpose))
+                if (room.Floor.Building.Id == buildingId && (floorNumber == -1 || room.Floor.Number.Number == floorNumber) && room.Number.Contains(roomNumber) && room.Purpose.Contains(purpose))
                 {
                     if (this.CheckWorkingHours(room, start, end))
                     {

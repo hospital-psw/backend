@@ -28,7 +28,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            RelocationRequestDto dto = new RelocationRequestDto(1, 1, 4, 1, new DateTime(2022, 12, 12, 15, 0, 0), 2);
+            RelocationRequestDto dto = new RelocationRequestDto(1, 2, 4, 1, new DateTime(2023, 2, 20, 15, 0, 0), 2);
             var result = (OkObjectResult)controller.Create(dto);
 
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
@@ -40,7 +40,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 5;
+            int roomId = 4;
 
             var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
 
