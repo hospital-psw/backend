@@ -73,7 +73,7 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.SaveChanges();
         }
-        
+
         public IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId)
         {
             return _context.Rooms.Include(x => x.WorkingHours)

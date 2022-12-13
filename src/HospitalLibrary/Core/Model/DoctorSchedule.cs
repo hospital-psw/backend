@@ -35,7 +35,7 @@
             if (IsDoctorOnVacation(date) || DoctorHasAppointment(date) || DoctorHasConsilium(date))
             {
                 return false;
-            } 
+            }
             return true;
         }
 
