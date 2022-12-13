@@ -67,14 +67,14 @@ namespace HospitalLibrary.Core.Service
 
         public bool Update(Room room)
         {
-            if (this.NumberStartsWithFloorNumber(room) && this.NumberIsUnique(room) && this.WorkingHoursIsValid(room.WorkingHours))
+            if (this.NumberIsUnique(room) && this.WorkingHoursIsValid(room.WorkingHours))
             {
-                _unitOfWork.RoomRepository.Update(room);
-                _unitOfWork.WorkingHoursRepository.Update(room.WorkingHours);
-                _unitOfWork.Save();
-                //unitOfWork.BuildingRepository.Update(room.Floor.Building);
-                //unitOfWork.FloorRepository.Update(room.Floor);
-                return true;
+                if (_unitOfWork.RoomRepository.Update(room))
+                {
+                    _unitOfWork.WorkingHoursRepository.Update(room.WorkingHours);
+                    _unitOfWork.Save();
+                    return true;
+                }
             }
             return false;
         }
@@ -85,14 +85,14 @@ namespace HospitalLibrary.Core.Service
             _unitOfWork.Save();
         }
 
-        private bool NumberStartsWithFloorNumber(Room room)
+        /*private bool NumberStartsWithFloorNumber(Room room)
         {
             if (room.Floor.Number.ToString() == room.Number.Substring(0, 1))
             {
                 return true;
             }
             return false;
-        }
+        }*/
 
         private bool NumberIsUnique(Room room)
         {

@@ -34,8 +34,10 @@
             WorkingHours workingHours = new WorkingHours(5, new DateTime(), new DateTime(), false, new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0));
             Building building = new Building(4, new DateTime(), new DateTime(), false, "Hospital2", "Janka Cmelika 1");
             Floor floor = new Floor(2, new DateTime(), new DateTime(), false, FloorNumber.Create(0), "ortopedija", building);
-            Room room1 = new Room(14, "001", new DateTime(), new DateTime(), false, floor, "ordinacija", workingHours);
-            Room room2 = new Room(16, "003", new DateTime(), new DateTime(), false, floor, "ordinacija", workingHours);
+            Room room1 = Room.Create("001", floor, "ordinacija", workingHours);
+            room1.SetId(14);
+            Room room2 = Room.Create("003", floor, "ordinacija", workingHours);
+            room1.SetId(16);
 
             Equipment equipment1 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.BED, 10, room2);
             Equipment equipment2 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.SCISSORS, 7, room2);
@@ -63,8 +65,10 @@
             WorkingHours workingHours = new WorkingHours(5, new DateTime(), new DateTime(), false, new DateTime(2022, 11, 10, 4, 0, 0), new DateTime(2022, 11, 10, 7, 0, 0));
             Building building = new Building(4, new DateTime(), new DateTime(), false, "Hospital2", "Janka Cmelika 1");
             Floor floor = new Floor(2, new DateTime(), new DateTime(), false, FloorNumber.Create(0), "ortopedija", building);
-            Room room1 = new Room(14, "001", new DateTime(), new DateTime(), false, floor, "ordinacija", workingHours);
-            Room room2 = new Room(16, "003", new DateTime(), new DateTime(), false, floor, "ordinacija", workingHours);
+            Room room1 = Room.Create("001", floor, "ordinacija", workingHours);
+            room1.SetId(14);
+            Room room2 = Room.Create("003", floor, "ordinacija", workingHours);
+            room1.SetId(16);
 
             Equipment equipment1 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.BED, 10, room2);
             Equipment equipment2 = new Equipment(HospitalLibrary.Core.Model.Enums.EquipmentType.SCISSORS, 7, room2);
