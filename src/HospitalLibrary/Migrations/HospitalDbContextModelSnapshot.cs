@@ -418,9 +418,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Topic")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
@@ -639,9 +636,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
 
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)");
@@ -1377,7 +1371,25 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("RoomId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.ConsiliumTopic", "Topic", b1 =>
+                        {
+                            b1.Property<int>("ConsiliumId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Content")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ConsiliumId");
+
+                            b1.ToTable("Consiliums");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ConsiliumId");
+                        });
+
                     b.Navigation("Room");
+
+                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorSchedule", b =>
@@ -1456,7 +1468,25 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("BuildingId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FloorNumber", "Number", b1 =>
+                        {
+                            b1.Property<int>("FloorId")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Number")
+                                .HasColumnType("int");
+
+                            b1.HasKey("FloorId");
+
+                            b1.ToTable("Floors");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FloorId");
+                        });
+
                     b.Navigation("Building");
+
+                    b.Navigation("Number");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>

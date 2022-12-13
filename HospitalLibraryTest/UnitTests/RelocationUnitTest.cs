@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
     using HospitalLibraryTest.InMemoryRepositories;
@@ -67,21 +68,31 @@
             //Arrange
             var unitOfWork = SetupUOW();
 
-            var room = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
-                Capacity = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            var fromRoom = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 5,
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+            var room = Room.Create("001", floor, "ordinacija", wh);
+            room.SetId(1);
+            room.SetCapacity(1);
 
-            var toRoom = new Room()
-            {
-                Id = 2
-            };
+            var fromRoom = Room.Create("002", floor, "ordinacija", wh);
+            fromRoom.SetId(5);
+
+            var toRoom = Room.Create("003", floor, "ordinacija", wh);
+            toRoom.SetId(2);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
             /*var equipment = new Equipment()
@@ -108,7 +119,7 @@
             };*/
 
 
-            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 0);
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment eqUpdate = null;
             RelocationRequest reqUpdate = null;
@@ -146,21 +157,31 @@
             //Arrange
             var unitOfWork = SetupUOW();
 
-            var room = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
-                Capacity = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            var toRoom = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 2
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+            var room = Room.Create("001", floor, "ordinacija", wh);
+            room.SetId(1);
+            room.SetCapacity(1);
 
-            var fromRoom = new Room()
-            {
-                Id = 5,
-            };
+            var fromRoom = Room.Create("002", floor, "ordinacija", wh);
+            fromRoom.SetId(5);
+
+            var toRoom = Room.Create("003", floor, "ordinacija", wh);
+            toRoom.SetId(2);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
             /*var equipment = new Equipment()
@@ -195,7 +216,7 @@
                 Room = room
             };*/
 
-            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 0);
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment retEq = null;
             RelocationRequest reqUpdate = null;

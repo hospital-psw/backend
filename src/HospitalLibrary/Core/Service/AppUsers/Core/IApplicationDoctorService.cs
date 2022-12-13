@@ -14,5 +14,7 @@
         IEnumerable<ApplicationDoctor> GetAll();
         IEnumerable<ApplicationDoctor> GetBySpecialization(Specialization specialization);
         IEnumerable<ApplicationDoctor> RecommendDoctors();
+        IEnumerable<ApplicationDoctor> GetDoctorsWhoWorksInSameShift(int workHourId);
+        IEnumerable<Specialization> GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId);
     }
 }

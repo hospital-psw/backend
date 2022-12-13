@@ -16,6 +16,7 @@
         List<RelocationRequest> GetFinishedRelocations();
 
         int Save();
+        public RelocationRequest GetById(int id);
 
 
     }

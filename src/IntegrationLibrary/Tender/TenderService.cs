@@ -29,9 +29,7 @@
         {
             try
             {
-                TenderStatus Status = TenderStatus.OPEN;
                 List<TenderOffer> Offers = new List<TenderOffer>();
-                TenderOffer TenderWinner = null;
                 _unitOfWork.TenderRepository.Add(entity);
                 _unitOfWork.Save();
 

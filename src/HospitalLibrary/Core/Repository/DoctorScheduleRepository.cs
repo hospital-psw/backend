@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Repository
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
     using Microsoft.EntityFrameworkCore;
@@ -23,11 +24,23 @@
 
         public override IEnumerable<DoctorSchedule> GetAll()
         {
-            return HospitalDbContext.DoctorSchedules.Include(x => x.Consiliums)
+            return HospitalDbContext.DoctorSchedules.Include(x => x.Doctor)
+                                                    .Include(x => x.Consiliums)
                                                     .Include(x => x.Appointments)
                                                     .Include(x => x.VacationRequests)
                                                     .Where(x => !x.Deleted)
                                                     .ToList();
+        }
+
+        public IEnumerable<DoctorSchedule> GetDoctorSchedulesByDoctorList(List<ApplicationDoctor> doctorList)
+        {
+            return GetAll().Where(x => doctorList.Contains(x.Doctor))
+                            .ToList();
+        }
+
+        public DoctorSchedule GetDoctorScheduleByDoctorId(int doctorId)
+        {
+            return GetAll().FirstOrDefault(x => x.Doctor.Id == doctorId);
         }
     }
 }

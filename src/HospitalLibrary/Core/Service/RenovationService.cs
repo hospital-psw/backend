@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using System;
@@ -77,7 +78,7 @@
             RoomMap roomMap2 = _unitOfWork.MapRepository.GetRoomMapById(room2.Id);
 
             Room newRoom = Room.Create(request.RenovationDetails[0].NewRoomName, room1.Floor, request.RenovationDetails[0].NewRoomPurpose, room1.WorkingHours);
-            newRoom.Capacity = request.RenovationDetails[0].NewCapacity;
+            newRoom.SetCapacity(request.RenovationDetails[0].NewCapacity);
             _unitOfWork.RoomRepository.Create(newRoom);
             RoomMap newRoomMap = RoomMap.Create(newRoom, GetNewRoomX(room1, room2), roomMap1.Z, GetNewRoomWidth(room1, room2), roomMap1.depth);
             _unitOfWork.MapRepository.Create(newRoomMap);
@@ -166,11 +167,11 @@
             List<Room> newRooms = new List<Room>();
 
             Room firstRoom = Room.Create(request.RenovationDetails[0].NewRoomName, roomToBeSplit.Room.Floor, request.RenovationDetails[0].NewRoomPurpose, null);
-            firstRoom.Capacity = request.RenovationDetails[0].NewCapacity;
+            firstRoom.SetCapacity(request.RenovationDetails[0].NewCapacity);
             newRooms.Add(firstRoom);
 
             Room secondRoom = Room.Create(request.RenovationDetails[1].NewRoomName, roomToBeSplit.Room.Floor, request.RenovationDetails[1].NewRoomPurpose, null);
-            secondRoom.Capacity = request.RenovationDetails[1].NewCapacity;
+            secondRoom.SetCapacity(request.RenovationDetails[1].NewCapacity);
             newRooms.Add(secondRoom);
             _unitOfWork.RoomRepository.Create(firstRoom);
             _unitOfWork.RoomRepository.Create(secondRoom);
@@ -241,19 +242,16 @@
             RoomMap secondRoomMap = _unitOfWork.MapRepository.GetRoomMapById(room2.Id);
             if (firstRoomMap.X < secondRoomMap.X)
             {
-                if (firstRoomMap.width == 2)
-                    return firstRoomMap.X + 0.5;
-                else if (secondRoomMap.width == 2)
+                if (secondRoomMap.width == 2)
                     return firstRoomMap.X + 1;
+                return firstRoomMap.X + 0.5;
             }
             else
             {
                 if (firstRoomMap.width == 2)
                     return secondRoomMap.X + 1;
-                else if (secondRoomMap.width == 2)
-                    return secondRoomMap.X + 0.5;
+                return secondRoomMap.X + 0.5;
             }
-            return 0;
         }
 
         public double GetNewRoomWidth(Room room1, Room room2)
@@ -261,5 +259,16 @@
             return _unitOfWork.MapRepository.GetRoomMapById(room1.Id).width + _unitOfWork.MapRepository.GetRoomMapById(room2.Id).width;
         }
 
+        public RenovationRequest GetById(int id)
+        {
+            try
+            {
+                return _unitOfWork.RenovationRepository.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

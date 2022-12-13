@@ -32,7 +32,7 @@
             throw new NotImplementedException();
         }
 
-        public IEnumerable<VacationRequest> GetAllDoctorId(int doctorId)
+        public List<VacationRequest> GetAllDoctorId(int doctorId)
         {
             List<VacationRequest> vacationRequests = new List<VacationRequest>();
 
@@ -76,11 +76,6 @@
         }
 
         public void Update(VacationRequest entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<VacationRequest> IVacationRequestsRepository.GetAllDoctorId(int doctorId)
         {
             throw new NotImplementedException();
         }
