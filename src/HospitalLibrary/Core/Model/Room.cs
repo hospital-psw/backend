@@ -16,26 +16,7 @@ namespace HospitalLibrary.Core.Model
         public List<RenovationRequest> Renovations { get; private set; }
 
 
-        public Room() { }
-
-        public Room(int id, string number, DateTime dateCreated, DateTime dateUpdated, bool deleted, Floor floor, string purpose, WorkingHours workingHours)
-        {
-            this.Id = id;
-            this.DateCreated = dateCreated;
-            this.DateUpdated = dateUpdated;
-            this.Deleted = deleted;
-            this.Number = number;
-            this.Floor = floor;
-            this.WorkingHours = workingHours;
-            this.Purpose = purpose;
-        }
-        public Room(int id, string number, Floor floor, string purpose, WorkingHours workingHours) : base(id)
-        {
-            Number = number;
-            Floor = floor;
-            Purpose = purpose;
-            WorkingHours = workingHours;
-        }
+        private Room() { }
 
         public void UpdatePurpose(string newPurpose)
         {
@@ -92,6 +73,11 @@ namespace HospitalLibrary.Core.Model
         public void SetPatients(List<ApplicationPatient> newPatients)
         {
             Patients = newPatients;
+        }
+
+        public void SetId(int newId)
+        {
+            Id = newId;
         }
     }
 }
