@@ -1,5 +1,6 @@
 ﻿namespace IntegrationAPI.DTO.BloodBank
 {
+    using IntegrationLibrary.BloodBank;
     using System;
 
     public class GetBloodBankDTO
@@ -18,5 +19,6 @@
         public int Frequently { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+        public MonthlyTransfer MonthlyTransfer { get; set; }
     }
 }

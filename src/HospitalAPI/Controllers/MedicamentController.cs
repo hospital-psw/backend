@@ -28,7 +28,7 @@
             return Ok(MedicamentMapper.EntityToEntityDtoList(medicaments));
         }
 
-        [HttpGet("/acceptable/{id}")]
+        [HttpGet("acceptable/{id}")]
         public IActionResult GetAcceptableMedicaments(int id)
         {
             List<Medicament> medicaments = _medicamentService.GetAcceptableMedicaments(id).ToList();

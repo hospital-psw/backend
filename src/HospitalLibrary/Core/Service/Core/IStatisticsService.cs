@@ -14,5 +14,7 @@
         public (IEnumerable<string>, IEnumerable<int>) GetPatientsPerDoctor();
         public (List<int>, List<int>) GetNumberOfPatientsByAgeGroup();
         public List<int> GetUsersByType();
+
+        public List<int> GetNumberOfVacationDaysPerMonth(int doctorId);
     }
 }

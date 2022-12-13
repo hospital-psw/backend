@@ -52,9 +52,29 @@
             return GetAll().Where(x => x.Specialization == specialization);
         }
 
+        public IEnumerable<ApplicationDoctor> GetDoctorsOfSelectedSpecializations(List<Specialization> specializations, int workHourId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ApplicationDoctor> GetDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<ApplicationDoctor> GetOtherSpecializationDoctors(Specialization specialization, int doctorId)
         {
             return GetBySpecialization(specialization).Where(x => x.Id != doctorId);
+        }
+
+        public IEnumerable<ApplicationDoctor> GetSelectedDoctors(List<int> doctorsIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Specialization> GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(ApplicationDoctor entity)

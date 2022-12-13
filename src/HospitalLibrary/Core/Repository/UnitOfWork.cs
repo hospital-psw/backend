@@ -7,6 +7,8 @@
     using HospitalLibrary.Core.Repository.Blood;
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
+    using HospitalLibrary.Core.Repository.Examinations;
+    using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
@@ -46,8 +48,12 @@
             BloodExpenditureRepository = new BloodExpenditureRepository(_context);
             BloodAcquisitionRepository = new BloodAcquisitionRepository(_context);
             ApplicationUserRepository = new ApplicationUserRepository(_context);
+            RenovationRepository = new RenovationRepository(_context);
             ConsiliumRepository = new ConsiliumRepository(_context);
             DoctorScheduleRepository = new DoctorScheduleRepository(_context);
+            PrescriptionRepository = new PrescriptionRepository(_context);
+            SymptomRepository = new SymptomRepository(_context);
+            AnamnesisRepository = new AnamnesisRepository(_context);
 
             ApplicationPatientRepository = new ApplicationPatientRepository(_context);
             ApplicationDoctorRepository = new ApplicationDoctorRepository(_context);
@@ -74,10 +80,18 @@
         public IBloodExpenditureRepository BloodExpenditureRepository { get; set; }
         public IBloodAcquisitionRepository BloodAcquisitionRepository { get; set; }
         public IApplicationUserRepository ApplicationUserRepository { get; set; }
-        public IConsiliumRepository ConsiliumRepository { get; set; }
-        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
         public IApplicationPatientRepository ApplicationPatientRepository { get; set; }
         public IApplicationDoctorRepository ApplicationDoctorRepository { get; set; }
+        public IRenovationRepository RenovationRepository { get; set; }
+        public IConsiliumRepository ConsiliumRepository { get; set; }
+        public IDoctorScheduleRepository DoctorScheduleRepository { get; set; }
+
+        public IPrescriptionRepository PrescriptionRepository { get; set; }
+
+        public ISymptomRepository SymptomRepository { get; set; }
+
+        public IAnamnesisRepository AnamnesisRepository { get; set; }
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

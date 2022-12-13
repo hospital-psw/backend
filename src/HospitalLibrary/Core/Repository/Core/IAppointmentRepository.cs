@@ -19,5 +19,9 @@
         public IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to);
 
         bool IsDoctorAvailable(int doctorId, DateTime date);
+
+        public List<Appointment> GetAllForRoom(int roomId);
+
+        void Save();
     }
 }

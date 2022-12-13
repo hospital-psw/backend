@@ -46,27 +46,45 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
-        public void Update(Room room)
+        public bool Update(Room room)
         {
             Room roomFromBase = _context.Rooms.Find(room.Id);
-            roomFromBase.Purpose = room.Purpose;
-            roomFromBase.Number = room.Number;
-            _context.Entry(roomFromBase).State = EntityState.Modified;
+            roomFromBase.UpdatePurpose(room.Purpose);
+            if (roomFromBase.UpdateNumber(room.Number))
+            {
+                _context.Entry(roomFromBase).State = EntityState.Modified;
 
-            try
-            {
-                _context.SaveChanges();
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return true;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw;
-            }
+            return false;
         }
 
         public void Delete(Room room)
         {
             _context.Rooms.Remove(room);
             _context.SaveChanges();
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId)
+        {
+            return _context.Rooms.Include(x => x.WorkingHours)
+                .Include(x => x.Floor)
+                .ThenInclude(x => x.Building)
+                .Where(x => x.WorkingHours.Id == workHourId && x.Purpose.Equals("sala za sastanke"))
+                .ToList();
         }
     }
 }

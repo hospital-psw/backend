@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
@@ -123,6 +124,23 @@
                 if (patient.applicationDoctor == doctor) counter++;
             }
             return counter;
+        }
+        public List<int> GetNumberOfVacationDaysPerMonth(int doctorId)
+        {
+            try
+            {
+                List<int> retrunList = ListFactory.CreateList<int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                foreach (VacationRequest v in _unitOfWork.VacationRequestsRepository.GetAllDoctorId(doctorId))
+                {
+                    int numberOfDays = (v.To - v.From).Days;
+                    retrunList[v.From.Month - 1] = retrunList[v.From.Month - 1] + numberOfDays;
+                }
+                return retrunList;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

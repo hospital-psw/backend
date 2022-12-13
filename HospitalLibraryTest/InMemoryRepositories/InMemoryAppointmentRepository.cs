@@ -32,6 +32,7 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)
         {
+
             ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, null, null);
             doc1.Id = 1;
             ApplicationDoctor doc2 = new ApplicationDoctor("Vuk", "Milanovic", "ckepa@gmail.com", Specialization.GENERAL, null, null);
@@ -81,7 +82,8 @@ namespace HospitalLibraryTest.InMemoryRepositories
         {
             List<Appointment> appointments = new List<Appointment>();
             ApplicationPatient patient = new ApplicationPatient("ana", "vulin", "vulinana@gmail.com", false, new List<Allergies>());
-            Room room = new Room(1, "001", null, null, null);
+            Room room = Room.Create("001", null, null, null);
+            room.SetId(1);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));
             ApplicationDoctor doctor = new ApplicationDoctor("nikolina", "nikolic", "nina@gmail.com", Specialization.GENERAL, doctorWorkingHours, room);
             appointments.Add(new Appointment(new DateTime(2022, 12, 11, 13, 0, 0), ExaminationType.OPERATION, room, patient, doctor));
@@ -107,6 +109,16 @@ namespace HospitalLibraryTest.InMemoryRepositories
 
 
         public void Update(Appointment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Appointment> GetAllForRoom(int roomId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
         {
             throw new NotImplementedException();
         }

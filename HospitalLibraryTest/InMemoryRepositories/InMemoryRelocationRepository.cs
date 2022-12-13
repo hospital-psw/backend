@@ -30,6 +30,11 @@
             throw new NotImplementedException();
         }
 
+        public RelocationRequest GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<RelocationRequest> GetFinishedRelocations()
         {
             throw new NotImplementedException();

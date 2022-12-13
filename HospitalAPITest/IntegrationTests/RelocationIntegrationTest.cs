@@ -19,7 +19,7 @@
 
         private static RelocationController SetupController(IServiceScope serviceScope)
         {
-            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>());
+            return new RelocationController(serviceScope.ServiceProvider.GetRequiredService<IRelocationService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomService>(), serviceScope.ServiceProvider.GetRequiredService<IEquipmentService>(), serviceScope.ServiceProvider.GetRequiredService<IRoomScheduleService>());
         }
 
         [Fact]
@@ -28,10 +28,48 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            RelocationRequestDto dto = new RelocationRequestDto(1, 1, 4, 1, new DateTime(2022, 12, 12, 15, 0, 0), 2);
+            RelocationRequestDto dto = new RelocationRequestDto(1, 2, 4, 1, new DateTime(2023, 2, 20, 15, 0, 0), 2);
             var result = (OkObjectResult)controller.Create(dto);
 
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+
+        }
+
+        [Fact]
+        public void Test_get_relocations_for_room()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 4;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Test_get_relocations_for_room_empty()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int roomId = 1;
+
+            var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<RelocationRequestDisplayDto>;
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void Test_decline_relocation()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.Decline(1) as StatusCodeResult;
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+
 
         }
     }
