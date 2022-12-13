@@ -16,7 +16,7 @@
             dto.From = vacationRequest.From;
             dto.To = vacationRequest.To;
             dto.Status = vacationRequest.Status;
-            dto.Comment = vacationRequest.Comment;
+            dto.Comment = vacationRequest.Comment.Comment;
             dto.Urgent = vacationRequest.Urgent;
             dto.ManagerComment = vacationRequest.ManagerComment;
             dto.Doctor = ApplicationDoctorMapper.EntityToEntityDTO(vacationRequest.Doctor);
