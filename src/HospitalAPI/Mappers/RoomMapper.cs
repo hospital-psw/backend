@@ -20,14 +20,8 @@
 
         public static Room EntityDtoToEntity(RoomDto dto)
         {
-            Room room = new Room();
-
-            room.Id = dto.Id;
-            room.Floor = FloorMapper.EntityDtoToEntity(dto.Floor);
-            room.Number = dto.Number;
-            room.Purpose = dto.Purpose;
-            room.WorkingHours = WorkingHoursMapper.EntityDtoToEntity(dto.WorkingHours);
-
+            Room room = Room.Create(dto.Number, FloorMapper.EntityDtoToEntity(dto.Floor), dto.Purpose, WorkingHoursMapper.EntityDtoToEntity(dto.WorkingHours));
+            room.SetId(dto.Id);
             return room;
         }
     }
