@@ -77,5 +77,14 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.SaveChanges();
         }
+
+        public IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId)
+        {
+            return _context.Rooms.Include(x => x.WorkingHours)
+                .Include(x => x.Floor)
+                .ThenInclude(x => x.Building)
+                .Where(x => x.WorkingHours.Id == workHourId && x.Purpose.Equals("sala za sastanke"))
+                .ToList();
+        }
     }
 }

@@ -140,5 +140,18 @@ namespace HospitalLibrary.Core.Service
             }
             return true;
         }
+
+        public IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId)
+        {
+            try
+            {
+                return _unitOfWork.RoomRepository.GetRoomsWithWorkingHour(workHourId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in RoomService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
     }
 }
