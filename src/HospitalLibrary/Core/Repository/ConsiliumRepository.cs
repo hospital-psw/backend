@@ -6,6 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -22,8 +23,31 @@
         public override IEnumerable<Consilium> GetAll()
         {
             return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)
+                                               .ThenInclude(x => x.Doctor)
+                                               .ThenInclude(x => x.Office)
+                                               .ThenInclude(x => x.Floor)
+                                               .ThenInclude(x => x.Building)
+                                               .Include(x => x.DoctorsSchedule)
+                                               .ThenInclude(x => x.Doctor)
+                                               .ThenInclude(x => x.WorkHours)
+                                               .Include(x => x.Room)
+                                               .ThenInclude(x => x.Floor)
+                                               .ThenInclude(x => x.Building)
+                                               .Include(x => x.Room)
+                                               .ThenInclude(x => x.WorkingHours)
                                                .Where(x => !x.Deleted)
                                                .ToList();
+        }
+
+        public IEnumerable<Consilium> GetConsiliumsByDoctorId(int doctorId)
+        {
+            return GetAll().Where(x => x.DoctorsSchedule.Exists(x => x.Doctor.Id == doctorId))
+                           .ToList();
+        }
+
+        public IEnumerable<Consilium> GetDoctorsConsiliumsOfPassedDate(int doctorId, DateTime date)
+        {
+            return GetConsiliumsByDoctorId(doctorId).Where(x => x.DateTime.Date == date.Date).ToList();
         }
 
         public List<Consilium> GetScheduledConsiliumsForRoom(int roomId)

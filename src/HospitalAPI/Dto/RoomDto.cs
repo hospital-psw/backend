@@ -11,7 +11,7 @@
         public WorkingHoursDto WorkingHours { get; set; }
         public FloorDto Floor { get; set; }
         public int Capacity { get; set; }
-        public List<ApplicationPatientDTO> Patients { get; set; }
+        public List<ApplicationPatientDTO> Patients { get; set; } = new List<ApplicationPatientDTO>();
 
         public RoomDto() { }
         public RoomDto(int id, string number, string purpose, WorkingHoursDto workingHours, FloorDto floor)
