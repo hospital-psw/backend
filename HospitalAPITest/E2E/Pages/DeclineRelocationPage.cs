@@ -14,7 +14,7 @@
     public class DeclineRelocationPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/display";
+        public const string URI = "http://localhost:4200/app/display";
         private IWebElement buildingField => driver.FindElement(By.XPath("//*[@id=\"buildingSelect\"]"));
         private IWebElement buildingFieldBuilding2 => driver.FindElement(By.XPath("//*[@id=\"mat-option-building\"]"));
         private IWebElement declineRelocationButton => driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]"));
