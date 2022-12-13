@@ -61,8 +61,8 @@
 
         public void SelectDates()
         {
-            driver.FindElement(By.XPath("//*[@id=\"datePicker1\"]")).SendKeys("12/26/2022");
-            driver.FindElement(By.XPath("//*[@id=\"datePicker2\"]")).SendKeys("12/27/2022");
+            driver.FindElement(By.XPath("//*[@id=\"datePicker1\"]")).SendKeys("12/29/2022");
+            driver.FindElement(By.XPath("//*[@id=\"datePicker2\"]")).SendKeys("12/30/2022");
             driver.FindElement(By.XPath("//*[@id=\"next3\"]")).Click();
         }
 
