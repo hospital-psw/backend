@@ -38,7 +38,7 @@
             loginPage.insertEmail("andrija@example.com");
             loginPage.insertPassword("123.Auth");
             loginPage.SubmitForm();
-            loginPage.WaitForFormSubmitForDoctor();
+            loginPage.WaitToRedirectToDoctorsApp();
 
 
 
