@@ -16,7 +16,7 @@
         public ApplicationDoctor applicationDoctor { get; set; }
         public List<Allergies> Allergies { get; set; }
         public bool Blocked { get; set; }
-        public int Strikes  { get; set; }
+        public int Strikes { get; set; }
 
         public ApplicationPatient() : base() { }
         public ApplicationPatient(string firstName, string lastName, DateTime dateOfBirth, Gender gender, bool hospitalized, BloodType type)

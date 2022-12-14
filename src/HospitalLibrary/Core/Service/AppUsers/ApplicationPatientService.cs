@@ -18,7 +18,7 @@
         private readonly ILogger<ApplicationPatient> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ApplicationPatientService(ILogger<ApplicationPatient> logger, IUnitOfWork unitOfWork, 
+        public ApplicationPatientService(ILogger<ApplicationPatient> logger, IUnitOfWork unitOfWork,
             UserManager<ApplicationUser> userManager) : base(unitOfWork)
         {
             _logger = logger;

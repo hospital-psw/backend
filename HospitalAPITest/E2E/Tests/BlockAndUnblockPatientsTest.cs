@@ -58,6 +58,8 @@
             Assert.Equal(rowsMal - 1, blockAndUnblockPatientsPage.MaliciousPatientsCount());
             Dispose();
         }
+
+        [Fact]
         public void UnblockPatientTest()
         {
             UnblockPatient();
