@@ -11,11 +11,13 @@
     public class MenuPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/appointments";
+        public const string URI = "http://localhost:4200/app";
 
         IWebElement managerTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[3]/a"));
-        IWebElement managerVacationRequestsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[5]/a"));
+        IWebElement blockedPatientsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[4]/a"));
+        IWebElement managerVacationRequestsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[6]/a"));
         IWebElement feedbackTab => driver.FindElement(By.Id("feedback"));
+        IWebElement consiliumTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[9]"));
         public MenuPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -27,6 +29,14 @@
         public void managerTabClick()
         {
             managerTab.Click();
+        }
+        public bool blockedPatientsTabDisplayed()
+        {
+            return blockedPatientsTab.Displayed;
+        }
+        public void blockedPatientsTabClick()
+        {
+            blockedPatientsTab.Click();
         }
 
         public bool managerVacationRequestsTabDisplayed()
@@ -41,6 +51,36 @@
         public void feedbackTabClick()
         {
             feedbackTab.Click();
+        }
+
+        public bool consiliumTabDisplayed()
+        {
+            return consiliumTab.Displayed;
+        }
+
+        public void consiliumTabClick()
+        {
+            consiliumTab.Click();
+        }
+
+        public void EnsurePageIsDisplayed()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 45));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return consiliumTab.Displayed == true;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
         }
     }
 }

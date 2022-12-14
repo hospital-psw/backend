@@ -601,9 +601,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Public")
                         .HasColumnType("bit");
 
@@ -1199,6 +1196,9 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.ApplicationUser.ApplicationUser");
 
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("bit");
+
                     b.Property<int>("BloodType")
                         .HasColumnType("int");
 
@@ -1206,6 +1206,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Strikes")
                         .HasColumnType("int");
 
                     b.Property<int?>("applicationDoctorId")
@@ -1456,7 +1459,25 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FeedbackMessage", "Message", b1 =>
+                        {
+                            b1.Property<int>("FeedbackId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Message")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("FeedbackId");
+
+                            b1.ToTable("Feedback");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FeedbackId");
+                        });
+
                     b.Navigation("Creator");
+
+                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>

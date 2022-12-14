@@ -9,6 +9,7 @@
         public static FloorDto EntityToEntityDto(Floor floor)
         {
             FloorDto dto = new FloorDto();
+            if (floor == null) return null;
 
             dto.Id = floor.Id;
             dto.Number = floor.Number.Number;

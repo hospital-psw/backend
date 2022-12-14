@@ -7,9 +7,7 @@
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
     using System.Collections.Generic;
-    using System.Security.Claims;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -47,6 +45,12 @@
             }
 
             return Ok(_mapper.Map<GetTenderDTO>(entity));
+        }
+        [HttpGet("finish/{tenderId}/{offerId}")]
+        public IActionResult FinishTender(int tenderId, int offerId)
+        {
+            _tenderService.FinishTender(tenderId, offerId);
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
         }
 
         [HttpPost]
@@ -97,7 +101,7 @@
             };
 
             TenderOffer validTenderOffer = _tenderService.MakeAnOffer(tenderId, tenderOffer);
-            if(validTenderOffer == null)
+            if (validTenderOffer == null)
             {
                 return BadRequest();
             }

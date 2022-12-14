@@ -90,7 +90,9 @@
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
-                Hospitalized = true
+                Hospitalized = true,
+                Blocked = true,
+                Strikes = 3,
             };
 
             ApplicationPatient appPat2 = new ApplicationPatient
@@ -99,11 +101,40 @@
                 LastName = "Djuric",
                 Email = "djura@com",
                 Hospitalized = true,
+                Blocked = false,
+                Strikes = 0,
+            };
+            ApplicationPatient appPat3 = new ApplicationPatient
+            {
+                FirstName = "Pera",
+                LastName = "Peric",
+                Email = "pera@com",
+                Blocked = true,
+                Strikes = 0,
+            };
+            ApplicationPatient appPat4 = new ApplicationPatient
+            {
+                FirstName = "Tara",
+                LastName = "Taric",
+                Email = "tara@com",
+                Blocked = true,
+                Strikes = 1,
+            };
+            ApplicationPatient appPat5 = new ApplicationPatient
+            {
+                FirstName = "Aleksa",
+                LastName = "Aleksic",
+                Email = "aca@com",
+                Blocked = false,
+                Strikes = 4,
             };
 
             List<ApplicationPatient> patients = new List<ApplicationPatient>();
             patients.Add(appPat);
             patients.Add(appPat2);
+            patients.Add(appPat3);
+            patients.Add(appPat4);
+            patients.Add(appPat5);
 
 
             Floor floor = new Floor()

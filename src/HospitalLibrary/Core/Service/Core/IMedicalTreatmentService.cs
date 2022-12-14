@@ -17,8 +17,8 @@
         MedicalTreatment Add(NewMedicalTreatmentDto dto);
         void Delete(MedicalTreatment medicalTreatment);
         MedicalTreatment ReleasePatient(MedicalTreatment medicalTreatment, string description);
-        IEnumerable<MedicalTreatment> GetActive();
-        IEnumerable<MedicalTreatment> GetInactive();
+        IEnumerable<MedicalTreatment> GetDoctorsActiveTreatments(int doctorId);
+        IEnumerable<MedicalTreatment> GetDoctorsInactiveTreatments(int doctorId);
         void GeneratePdf(int id);
     }
 }

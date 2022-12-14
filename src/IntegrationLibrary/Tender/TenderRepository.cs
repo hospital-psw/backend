@@ -1,11 +1,8 @@
 ﻿using IntegrationLibrary.Settings;
 using IntegrationLibrary.Tender.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Tender
 {
@@ -32,7 +29,10 @@ namespace IntegrationLibrary.Tender
 
         public IEnumerable<Tender> GetAll()
         {
-            return _context.Set<Tender>().Where(x => !x.Deleted).Include(x => x.Items).Include(x => x.Offers).ThenInclude(x => x.Offeror).ToList();
+            return _context.Set<Tender>()
+                .Include(x => x.Items)
+                .Include(x => x.Offers).ThenInclude(x => x.Items)
+                .Where(x => !x.Deleted).ToList();
         }
 
         public void Add(Tender entity)

@@ -28,7 +28,7 @@ namespace IntegrationLibrary.Tender
 
         public TenderOffer MakeAnOffer(TenderOffer offer)
         {
-            if (offer.Offeror == null || offer.Items == null || offer.Items.Count == 0 || Status == TenderStatus.CLOSED || DueDate < DateTime.Now || !OfferMatchesTenderSpec(offer))
+            if (offer.Offeror == null || offer.Items == null || offer.Items.Count == 0 || Status == TenderStatus.CLOSED || !OfferMatchesTenderSpec(offer))
             {
                 return null;
             }
@@ -46,7 +46,7 @@ namespace IntegrationLibrary.Tender
             {
                 return false;
             }
-            foreach(TenderItem item in Items)
+            foreach (TenderItem item in Items)
             {
                 if (offer.Items.Find(x => x.BloodType == item.BloodType && item.Quantity <= x.Quantity) == null)
                 {
