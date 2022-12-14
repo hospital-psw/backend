@@ -21,5 +21,7 @@
         bool IsDoctorAvailable(int doctorId, DateTime date);
 
         public List<Appointment> GetAllForRoom(int roomId);
+
+        void Save();
     }
 }

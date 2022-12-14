@@ -19,6 +19,8 @@
         public override IEnumerable<ApplicationDoctor> GetAll()
         {
             return HospitalDbContext.ApplicationDoctors.Include(x => x.Office)
+                                                       .ThenInclude(x => x.Floor)
+                                                       .ThenInclude(x => x.Building)
                                                        .Include(x => x.WorkHours);
         }
 
@@ -36,5 +38,27 @@
         {
             return GetBySpecialization(specialization).Where(x => x.Id != doctorId).ToList();
         }
+
+        public IEnumerable<ApplicationDoctor> GetSelectedDoctors(List<int> doctorsIds)
+        {
+            return GetAll().Where(x => doctorsIds.Contains(x.Id))
+                            .ToList();
+        }
+
+        public IEnumerable<ApplicationDoctor> GetDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            return GetAll().Where(x => x.WorkHours.Id == workHourId).ToList();
+        }
+
+        public IEnumerable<Specialization> GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            return GetDoctorsWhoWorksInSameShift(workHourId).Select(x => x.Specialization).Distinct().ToList();
+        }
+
+        public IEnumerable<ApplicationDoctor> GetDoctorsOfSelectedSpecializations(List<Specialization> specializations, int workHourId)
+        {
+            return GetAll().Where(x => specializations.Contains(x.Specialization) && x.WorkHours.Id == workHourId).ToList();
+        }
+
     }
 }

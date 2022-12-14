@@ -5,16 +5,10 @@
     using HospitalAPI.TokenServices;
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
-    using HospitalLibrary.Core.Model.Enums;
-    using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
-    using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.InteropServices;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -133,7 +127,7 @@
             return feedback is null ? NotFound() : Ok(feedback);
         }
 
-        [Authorize(Roles = "Patient")]
+        [Authorize]
         [HttpPost("add")]
         public IActionResult Add(NewFeedbackDTO dto)
         {

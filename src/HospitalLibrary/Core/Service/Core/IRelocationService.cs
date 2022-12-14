@@ -13,7 +13,7 @@
         void FinishRelocation();
         void RelocateEquipment(RelocationRequest request);
         List<RelocationRequest> GetAllForRoom(int roomId);
-
+        RelocationRequest GetById(int id);
         void Decline(int requestId);
     }
 }

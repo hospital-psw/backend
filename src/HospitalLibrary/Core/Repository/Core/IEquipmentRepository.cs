@@ -14,5 +14,8 @@
         Equipment GetEquipment(EquipmentType type, Room room);
         Equipment Create(Equipment equipment);
         int Save();
+        List<Equipment> GetEquipmentForRoom(Room room);
+
+        List<Equipment> GetSameEquipmentInRoom(Room room, EquipmentType type);
     }
 }

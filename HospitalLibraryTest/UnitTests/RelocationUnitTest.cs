@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
     using HospitalLibraryTest.InMemoryRepositories;
@@ -35,7 +36,7 @@
         {
             RoomScheduleService roomScheduleService = new RoomScheduleService(new InMemoryUnitOfWork());
 
-            DateTime? dateTimes = roomScheduleService.IsRoomAvailable(1, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0));
+            DateTime? dateTimes = roomScheduleService.IsRoomAvailable(1, new DateTime(2023, 3, 11, 14, 0, 0, 0), new DateTime(2023, 3, 11, 18, 0, 0));
 
             Assert.Null(dateTimes);
         }
@@ -45,7 +46,7 @@
         {
             RoomScheduleService relocationService = new RoomScheduleService(new InMemoryUnitOfWork());
 
-            DateTime? dateTimes = relocationService.IsRoomAvailable(2, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0));
+            DateTime? dateTimes = relocationService.IsRoomAvailable(2, new DateTime(2023, 3, 11, 14, 0, 0, 0), new DateTime(2023, 3, 11, 18, 0, 0));
 
             Assert.Null(dateTimes);
         }
@@ -54,10 +55,10 @@
         {
             RoomScheduleService roomScheduleService = new RoomScheduleService(new InMemoryUnitOfWork());
 
-            List<DateTime> dateTimes = roomScheduleService.GetAvailableAppointments(new List<int>() { 1, 2 }, new DateTime(2022, 12, 11, 14, 0, 0, 0), new DateTime(2022, 12, 11, 18, 0, 0), 4);
+            List<DateTime> dateTimes = roomScheduleService.GetAvailableAppointments(new List<int>() { 1, 2 }, new DateTime(2023, 3, 11, 14, 0, 0, 0), new DateTime(2023, 3, 11, 18, 0, 0), 4);
 
             Assert.NotEmpty(dateTimes);
-            Assert.Equal(dateTimes[0], new DateTime(2022, 12, 11, 14, 0, 0));
+            Assert.Equal(dateTimes[0], new DateTime(2023, 3, 11, 14, 0, 0));
         }
 
 
@@ -67,21 +68,31 @@
             //Arrange
             var unitOfWork = SetupUOW();
 
-            var room = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
-                Capacity = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            var fromRoom = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 5,
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+            var room = Room.Create("001", floor, "ordinacija", wh);
+            room.SetId(1);
+            room.SetCapacity(1);
 
-            var toRoom = new Room()
-            {
-                Id = 2
-            };
+            var fromRoom = Room.Create("002", floor, "ordinacija", wh);
+            fromRoom.SetId(5);
+
+            var toRoom = Room.Create("003", floor, "ordinacija", wh);
+            toRoom.SetId(2);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
             /*var equipment = new Equipment()
@@ -108,15 +119,7 @@
             };*/
 
 
-            RelocationRequest request = new RelocationRequest()
-            {
-                Id = 1,
-                Quantity = 2,
-                Equipment = equipment2,
-                ToRoom = toRoom,
-                FromRoom = fromRoom
-            };
-
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment eqUpdate = null;
             RelocationRequest reqUpdate = null;
@@ -154,21 +157,31 @@
             //Arrange
             var unitOfWork = SetupUOW();
 
-            var room = new Room()
+            Floor floor = new Floor()
             {
-                Id = 1,
-                Capacity = 1,
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            var toRoom = new Room()
+            WorkingHours wh = new WorkingHours()
             {
-                Id = 2
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
+            var room = Room.Create("001", floor, "ordinacija", wh);
+            room.SetId(1);
+            room.SetCapacity(1);
 
-            var fromRoom = new Room()
-            {
-                Id = 5,
-            };
+            var fromRoom = Room.Create("002", floor, "ordinacija", wh);
+            fromRoom.SetId(5);
+
+            var toRoom = Room.Create("003", floor, "ordinacija", wh);
+            toRoom.SetId(2);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
             /*var equipment = new Equipment()
@@ -203,15 +216,7 @@
                 Room = room
             };*/
 
-            RelocationRequest request = new RelocationRequest()
-            {
-                Id = 1,
-                Quantity = 2,
-                Equipment = equipment2,
-                ToRoom = toRoom,
-                FromRoom = fromRoom
-
-            };
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
             Equipment retEq = null;
             RelocationRequest reqUpdate = null;

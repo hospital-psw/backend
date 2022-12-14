@@ -23,9 +23,9 @@
         public List<DateTime> GetAppointments(List<int> rooms, DateTime from, DateTime to, int duration)
         {
             DateTime startTime = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
-            DateTime toTime = new DateTime(to.Year, to.Month, to.Day + 1, 0, 0, 0);
+            DateTime toTime = startTime.AddDays(1);
             DateTime currentDateTime = DateTime.Now;
-            if (startTime.Day == currentDateTime.Day) startTime = new DateTime(startTime.Year, startTime.Month, startTime.Day, currentDateTime.Hour + 1, 0, 0);
+            if (startTime.Day == currentDateTime.Day) startTime = startTime.AddHours(1);
             return GetAvailableAppointments(rooms, startTime, toTime, duration);
         }
 
@@ -73,6 +73,7 @@
             {
                 if (CheckAppointments(roomId, startTime, endTime) != null) return CheckAppointments(roomId, startTime, endTime);
                 else if (CheckRelocationRequests(roomId, startTime, endTime) != null) return CheckRelocationRequests(roomId, startTime, endTime);
+                else if (CheckRenovationRequests(roomId, startTime, endTime) != null) return CheckRenovationRequests(roomId, startTime, endTime);
                 else return null;
             }
             catch (Exception)
@@ -94,6 +95,15 @@
         private DateTime? CheckRelocationRequests(int roomId, DateTime startTime, DateTime endTime)
         {
             foreach (RelocationRequest request in _unitOfWork.RelocationRepository.GetScheduledRelocationsForRoom(roomId).ToList())
+            {
+                if (StartsBeforeEndsDuringScheduled(startTime, endTime, request.StartTime) || StartsAndEndsDuringScheduled(startTime, endTime, request.StartTime, request.StartTime.AddHours(request.Duration.Duration)) || StartsDuringAndEndsAfterScheduled(startTime, endTime, request.StartTime.AddHours(request.Duration.Duration))) return request.StartTime.AddHours(request.Duration.Duration);
+            }
+            return null;
+        }
+
+        private DateTime? CheckRenovationRequests(int roomId, DateTime startTime, DateTime endTime)
+        {
+            foreach (RenovationRequest request in _unitOfWork.RenovationRepository.GetScheduledRenovationsForRoom(roomId).ToList())
             {
                 if (StartsBeforeEndsDuringScheduled(startTime, endTime, request.StartTime) || StartsAndEndsDuringScheduled(startTime, endTime, request.StartTime, request.StartTime.AddHours(request.Duration)) || StartsDuringAndEndsAfterScheduled(startTime, endTime, request.StartTime.AddHours(request.Duration))) return request.StartTime.AddHours(request.Duration);
             }

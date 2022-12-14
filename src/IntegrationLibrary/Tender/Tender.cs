@@ -25,5 +25,35 @@ namespace IntegrationLibrary.Tender
             }
             return totalSum;
         }
+
+        public TenderOffer MakeAnOffer(TenderOffer offer)
+        {
+            if (offer.Offeror == null || offer.Items == null || offer.Items.Count == 0 || Status == TenderStatus.CLOSED || !OfferMatchesTenderSpec(offer))
+            {
+                return null;
+            }
+            if (Offers == null)
+            {
+                Offers = new List<TenderOffer>();
+            }
+            Offers.Add(offer);
+            return offer;
+        }
+
+        private bool OfferMatchesTenderSpec(TenderOffer offer)
+        {
+            if (offer == null)
+            {
+                return false;
+            }
+            foreach(TenderItem item in Items)
+            {
+                if (offer.Items.Find(x => x.BloodType == item.BloodType && item.Quantity <= x.Quantity) == null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
