@@ -1,5 +1,6 @@
 ﻿namespace IntegrationLibrary.Util
 {
+    using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Util.Interfaces;
     using Mailjet.Client;
     using Mailjet.Client.Resources;
@@ -9,6 +10,7 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using static IdentityServer4.Models.IdentityResources;
 
     public class MailSender : IMailSender
     {
@@ -39,6 +41,30 @@
                 "</mj-text>" +
                 "<mj-include path=\"" + Path.Combine(new string[] { basePath, "attach_to_queue.mjml" }) + "\" />" +
                 "<mj-include path=\"" + Path.Combine(new string[] { basePath, "news_sending.mjml" }) + "\" />" +
+                "</mj-column>" +
+                "</mj-section>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "</mj-body>" +
+                "</mjml>";
+
+            return template;
+        }
+
+        public static string MakeBloodTransferTemplate(string bloodType, double amount)
+        {
+            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+
+            string template = "<mjml>" +
+                "<mj-body>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
+                "<mj-column width=\"500px\">" +
+                "<mj-text font-size=\"16px\" align=\"left\">" +
+                "<p>" + amount + " units of</p>" +
+                "<p>blood type " + bloodType + "</p>" +
+                //"<p>" + isAvaliable + " in our stocks.</p><br/>" +
+                "</mj-text>" +
                 "</mj-column>" +
                 "</mj-section>" +
                 "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +

@@ -144,6 +144,7 @@
                 _unitOfWork.BloodUnitRepository.Update(bloodUnit);
                 _unitOfWork.BloodAcquisitionRepository.Update(bloodAcquisition);
                 _unitOfWork.Save();
+
                 return bloodAcquisition;
             }
             catch (Exception e)
