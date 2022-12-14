@@ -31,7 +31,7 @@
         {
             return Ok(_mapper.Map<IEnumerable<GetBloodBankDTO>>(_bloodBankService.GetAll()));
         }
-        
+
         [HttpGet("{id}")]
         public virtual IActionResult Get(int id)
         {
