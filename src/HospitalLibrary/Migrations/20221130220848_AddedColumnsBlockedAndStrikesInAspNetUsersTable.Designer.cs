@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221130220848_AddedColumnsBlockedAndStrikesInAspNetUsersTable")]
+    partial class AddedColumnsBlockedAndStrikesInAspNetUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,36 +52,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("MedicamentsId");
 
                     b.ToTable("AllergiesMedicament");
-                });
-
-            modelBuilder.Entity("AnamnesisSymptom", b =>
-                {
-                    b.Property<int>("AnamnesesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SymptomsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AnamnesesId", "SymptomsId");
-
-                    b.HasIndex("SymptomsId");
-
-                    b.ToTable("AnamnesisSymptom");
-                });
-
-            modelBuilder.Entity("ConsiliumDoctorSchedule", b =>
-                {
-                    b.Property<int>("ConsiliumsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorsScheduleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ConsiliumsId", "DoctorsScheduleId");
-
-                    b.HasIndex("DoctorsScheduleId");
-
-                    b.ToTable("ConsiliumDoctorSchedule");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationRole", b =>
@@ -221,9 +193,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DoctorScheduleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
@@ -242,8 +211,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
-
-                    b.HasIndex("DoctorScheduleId");
 
                     b.HasIndex("PatientId");
 
@@ -392,66 +359,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Buildings");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Consilium", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Consiliums");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorSchedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("DoctorSchedules");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
                 {
                     b.Property<int>("Id")
@@ -488,96 +395,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Equipment");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Examinations.Anamnesis", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
-
-                    b.ToTable("Anamneses");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Examinations.Prescription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("AnamnesisId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MedicamentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnamnesisId");
-
-                    b.HasIndex("MedicamentId");
-
-                    b.ToTable("Prescriptions");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Examinations.Symptom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Symptoms");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
                 {
                     b.Property<int>("Id")
@@ -600,6 +417,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Public")
                         .HasColumnType("bit");
@@ -633,6 +453,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
 
                     b.Property<string>("Purpose")
                         .HasColumnType("nvarchar(max)");
@@ -769,10 +592,16 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EquipmentId")
                         .HasColumnType("int");
 
                     b.Property<int?>("FromRoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
@@ -790,73 +619,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("ToRoomId");
 
                     b.ToTable("RelocationRequests");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("NewCapacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NewRoomName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NewRoomPurpose")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("RenovationRequestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RenovationRequestId");
-
-                    b.ToTable("RenovationDetails");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RenovationType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RenovationRequests");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -979,13 +741,16 @@ namespace HospitalLibrary.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Therapy");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequests.VacationRequest", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequest.VacationRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -997,9 +762,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DoctorScheduleId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("From")
@@ -1020,8 +782,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
-
-                    b.HasIndex("DoctorScheduleId");
 
                     b.ToTable("VacationRequests");
                 });
@@ -1157,21 +917,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("RenovationRequestRoom", b =>
-                {
-                    b.Property<int>("RenovationsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RenovationsId", "RoomsId");
-
-                    b.HasIndex("RoomsId");
-
-                    b.ToTable("RenovationRequestRoom");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.ApplicationUser.ApplicationUser");
@@ -1292,45 +1037,11 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AnamnesisSymptom", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Examinations.Anamnesis", null)
-                        .WithMany()
-                        .HasForeignKey("AnamnesesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.Examinations.Symptom", null)
-                        .WithMany()
-                        .HasForeignKey("SymptomsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ConsiliumDoctorSchedule", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Consilium", null)
-                        .WithMany()
-                        .HasForeignKey("ConsiliumsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.DoctorSchedule", null)
-                        .WithMany()
-                        .HasForeignKey("DoctorsScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.DoctorSchedule", null)
-                        .WithMany("Appointments")
-                        .HasForeignKey("DoctorScheduleId");
 
                     b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", "Patient")
                         .WithMany()
@@ -1365,42 +1076,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Consilium", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
-
-                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.ConsiliumTopic", "Topic", b1 =>
-                        {
-                            b1.Property<int>("ConsiliumId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Content")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("ConsiliumId");
-
-                            b1.ToTable("Consiliums");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ConsiliumId");
-                        });
-
-                    b.Navigation("Room");
-
-                    b.Navigation("Topic");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorSchedule", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
-
-                    b.Navigation("Doctor");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
@@ -1410,74 +1085,13 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Examinations.Anamnesis", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Appointment", "Appointment")
-                        .WithMany()
-                        .HasForeignKey("AppointmentId");
-
-                    b.Navigation("Appointment");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Examinations.Prescription", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Examinations.Anamnesis", null)
-                        .WithMany("Prescriptions")
-                        .HasForeignKey("AnamnesisId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.Medicament.Medicament", "Medicament")
-                        .WithMany()
-                        .HasForeignKey("MedicamentId");
-
-                    b.OwnsOne("HospitalLibrary.Core.Model.Domain.DateRange", "DateRange", b1 =>
-                        {
-                            b1.Property<int>("PrescriptionId")
-                                .HasColumnType("int");
-
-                            b1.Property<DateTime>("From")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<DateTime>("To")
-                                .HasColumnType("datetime2");
-
-                            b1.HasKey("PrescriptionId");
-
-                            b1.ToTable("Prescriptions");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PrescriptionId");
-                        });
-
-                    b.Navigation("DateRange");
-
-                    b.Navigation("Medicament");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationPatient", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
-                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FeedbackMessage", "Message", b1 =>
-                        {
-                            b1.Property<int>("FeedbackId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Message")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("FeedbackId");
-
-                            b1.ToTable("Feedback");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FeedbackId");
-                        });
-
                     b.Navigation("Creator");
-
-                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
@@ -1486,25 +1100,7 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("BuildingId");
 
-                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FloorNumber", "Number", b1 =>
-                        {
-                            b1.Property<int>("FloorId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Number")
-                                .HasColumnType("int");
-
-                            b1.HasKey("FloorId");
-
-                            b1.ToTable("Floors");
-
-                            b1.WithOwner()
-                                .HasForeignKey("FloorId");
-                        });
-
                     b.Navigation("Building");
-
-                    b.Navigation("Number");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
@@ -1542,54 +1138,11 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("ToRoomId");
 
-                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.RelocationDuration", "Duration", b1 =>
-                        {
-                            b1.Property<int>("RelocationRequestId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Duration")
-                                .HasColumnType("int");
-
-                            b1.HasKey("RelocationRequestId");
-
-                            b1.ToTable("RelocationRequests");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RelocationRequestId");
-                        });
-
-                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.RelocationQuantity", "Quantity", b1 =>
-                        {
-                            b1.Property<int>("RelocationRequestId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Quantity")
-                                .HasColumnType("int");
-
-                            b1.HasKey("RelocationRequestId");
-
-                            b1.ToTable("RelocationRequests");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RelocationRequestId");
-                        });
-
-                    b.Navigation("Duration");
-
                     b.Navigation("Equipment");
 
                     b.Navigation("FromRoom");
 
-                    b.Navigation("Quantity");
-
                     b.Navigation("ToRoom");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationDetails", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.RenovationRequest", null)
-                        .WithMany("RenovationDetails")
-                        .HasForeignKey("RenovationRequestId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -1616,33 +1169,11 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequests.VacationRequest", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Model.VacationRequest.VacationRequest", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationDoctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.DoctorSchedule", null)
-                        .WithMany("VacationRequests")
-                        .HasForeignKey("DoctorScheduleId");
-
-                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.VacationRequestComment", "Comment", b1 =>
-                        {
-                            b1.Property<int>("VacationRequestId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Comment")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("VacationRequestId");
-
-                            b1.ToTable("VacationRequests");
-
-                            b1.WithOwner()
-                                .HasForeignKey("VacationRequestId");
-                        });
-
-                    b.Navigation("Comment");
 
                     b.Navigation("Doctor");
                 });
@@ -1694,21 +1225,6 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.ApplicationUser.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RenovationRequestRoom", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.RenovationRequest", null)
-                        .WithMany()
-                        .HasForeignKey("RenovationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
-                        .WithMany()
-                        .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1767,28 +1283,11 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Medicament");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorSchedule", b =>
-                {
-                    b.Navigation("Appointments");
-
-                    b.Navigation("VacationRequests");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Examinations.Anamnesis", b =>
-                {
-                    b.Navigation("Prescriptions");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.MedicalTreatment.MedicalTreatment", b =>
                 {
                     b.Navigation("BloodUnitTherapies");
 
                     b.Navigation("MedicamentTherapies");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationRequest", b =>
-                {
-                    b.Navigation("RenovationDetails");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>

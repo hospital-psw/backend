@@ -53,14 +53,19 @@
             doc2.Id = 2;
             ApplicationPatient pat1 = new ApplicationPatient("Mitar", "Miric", new DateTime(), Gender.MALE, doc2);
             pat1.Id = 1;
+            pat1.Blocked = false;
             ApplicationPatient pat2 = new ApplicationPatient("Petar", "Petrovic", new DateTime(), Gender.MALE, doc1);
             pat2.Id = 2;
+            pat2.Blocked = true;
             ApplicationPatient pat3 = new ApplicationPatient("Petar", "Pavlovic", new DateTime(), Gender.MALE, doc1);
             pat3.Id = 3;
+            pat3.Blocked = true;
             ApplicationPatient pat4 = new ApplicationPatient("Mila", "Maric", new DateTime(), Gender.MALE, doc1);
             pat4.Id = 4;
+            pat4.Blocked = true;
             ApplicationPatient pat5 = new ApplicationPatient("Milan", "Maric", new DateTime(), Gender.MALE, doc1);
             pat5.Id = 5;
+            pat5.Blocked = false;
 
             List<ApplicationPatient> patients = new List<ApplicationPatient>();
             patients.Add(pat1);

@@ -3,6 +3,7 @@
     using HospitalAPI.Dto.AppUsers;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using System.Diagnostics;
 
     public class ApplicationPatientMapper
     {
@@ -17,6 +18,8 @@
             dto.Role = Role.PATIENT.ToString();
             dto.Hospitalized = patient.Hospitalized;
             dto.BloodType = patient.BloodType;
+            dto.Blocked = patient.Blocked;
+            dto.Strikes = patient.Strikes;
 
             return dto;
         }
