@@ -54,6 +54,7 @@
 
         public void SelectFirstRoom()
         {
+            Thread.Sleep(2000);
             driver.FindElement(By.XPath("//*[@id=\"selectFirstRoom\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"room0\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"next2\"]")).Click();
@@ -61,8 +62,8 @@
 
         public void SelectDates()
         {
-            driver.FindElement(By.XPath("//*[@id=\"datePicker1\"]")).SendKeys("01/15/2022");
-            driver.FindElement(By.XPath("//*[@id=\"datePicker2\"]")).SendKeys("01/16/2022");
+            driver.FindElement(By.XPath("//*[@id=\"datePicker1\"]")).SendKeys("01/15/2023");
+            driver.FindElement(By.XPath("//*[@id=\"datePicker2\"]")).SendKeys("01/16/2023");
             driver.FindElement(By.XPath("//*[@id=\"next3\"]")).Click();
         }
 
@@ -81,10 +82,10 @@
 
         public void EnterNewRoomDetails()
         {
-            driver.FindElement(By.XPath("//*[@id=\"newName1\"]")).SendKeys("020");
+            driver.FindElement(By.XPath("//*[@id=\"newName1\"]")).SendKeys("025");
             driver.FindElement(By.XPath("//*[@id=\"newPurpose1\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"newPurpose1Option\"]")).Click();
-            driver.FindElement(By.XPath("//*[@id=\"newName2\"]")).SendKeys("021");
+            driver.FindElement(By.XPath("//*[@id=\"newName2\"]")).SendKeys("026");
             driver.FindElement(By.XPath("//*[@id=\"newPurpose2\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"newPurpose2Option\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"schedule\"]")).Click();
