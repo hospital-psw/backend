@@ -20,5 +20,6 @@
         public DateTime ReportTo { get; set; }
         public DateTime ReportFrom { get; set; }
         public int Frequently { get; set; }
+        public MonthlyTransfer MonthlyTransfer { get; set; }
     }
 }
