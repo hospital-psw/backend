@@ -73,6 +73,7 @@
         [HttpPost("pdf")]
         public IActionResult FetchPdf(AnamnesisPdfDTO dto)
         {
+           
             _anamnesisService.GeneratePdf(dto);
 
             var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/anamnesis.pdf", FileMode.Open);
@@ -89,7 +90,17 @@
         }
 
 
+        private bool CheckIfAppointmentIsDone(int appointmentId)
+        {
+            Anamnesis anamnesis = _anamnesisService.GetByAppointment(appointmentId);
 
+
+            if (anamnesis == null)
+            {
+                return false;
+            }
+            return true;
+        }
         
     }
 }

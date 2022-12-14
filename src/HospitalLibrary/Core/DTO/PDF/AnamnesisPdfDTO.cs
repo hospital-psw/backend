@@ -8,16 +8,16 @@
 
     public class AnamnesisPdfDTO
     {
-        public int AnamnesisId { get; set; }
-        public Boolean AreSymptomsSelected { get; set; }
-        public Boolean AreRecepiesSelected { get; set; }
-        public Boolean IsDescriptionSelected { get; set; }
+        public int AppointmentId { get; set; }
+        public bool AreSymptomsSelected { get; set; }
+        public bool AreRecepiesSelected { get; set; }
+        public bool IsDescriptionSelected { get; set; }
 
         public AnamnesisPdfDTO() { }
 
-        public AnamnesisPdfDTO(int anamnesisId, bool areSymptomsSelected, bool areRecepiesSelected, bool isDescriptionSelected)
+        public AnamnesisPdfDTO(int appointmentId, bool areSymptomsSelected, bool areRecepiesSelected, bool isDescriptionSelected)
         {
-            AnamnesisId = anamnesisId;
+            AppointmentId = appointmentId;
             AreSymptomsSelected = areSymptomsSelected;
             AreRecepiesSelected = areRecepiesSelected;
             IsDescriptionSelected = isDescriptionSelected;

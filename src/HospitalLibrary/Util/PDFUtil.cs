@@ -78,14 +78,25 @@
             {
                 text = text.Replace("ANAMNESIS_DESCRIPTION", anamnesis.Description);
             }
+            else {
+                text = text.Replace("ANAMNESIS_DESCRIPTION", "/");
+            }
             if (dto.AreSymptomsSelected) {
                 text = text.Replace("SYMPTOMS", GenerateSymptomsList(anamnesis));
+            }
+            else
+            {
+                text = text.Replace("SYMPTOMS", "/");
             }
             if (dto.AreRecepiesSelected)
             {
                 text = text.Replace("PRESCRIPTIONS_LIST", GeneratePrescriptionsList(anamnesis));
             }
-            
+            else
+            {
+                text = text.Replace("PRESCRIPTIONS_LIST", "/");
+            }
+
 
             PdfDocument PDF = Renderer.RenderHtmlAsPdf(text);
             PDF.SaveAs("./../HospitalLibrary/Resources/PDF/anamnesis.pdf");

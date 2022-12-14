@@ -130,7 +130,7 @@
 
         public void GeneratePdf(AnamnesisPdfDTO dto)
         {
-            Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.Get(dto.AnamnesisId);
+            Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.GetByAppointment(dto.AppointmentId);
             PDFUtil.GenerateAnamnesisPDF(anamnesis,dto);
         }
     }
