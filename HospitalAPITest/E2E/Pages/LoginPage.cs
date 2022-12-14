@@ -13,7 +13,7 @@
     public class LoginPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/display";
+        public const string URI = "http://localhost:4200/";
 
         private IWebElement emailInput => driver.FindElement(By.XPath("//*[@id=\"mat-input-0\"]"));
         private IWebElement passwordInput => driver.FindElement(By.XPath("//*[@id=\"mat-input-1\"]"));
