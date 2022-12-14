@@ -89,14 +89,14 @@
         [HttpGet("doctor/{doctorId}")]
         public IActionResult GetAllForDoctor(int doctorId)
         {
-            List<ConsiliumDto> consiliumDtoList = new List<ConsiliumDto>();
+            List<DisplayConsiliumDto> consiliumDtoList = new List<DisplayConsiliumDto>();
             List<Consilium> consiliumList = _consiliumService.GetAllForDoctor(doctorId).ToList();
 
             if (consiliumList.IsNullOrEmpty())
             {
                 return NotFound();
             }
-            consiliumList.ForEach(consilium => consiliumDtoList.Add(ConsiliumMapper.EntityToDto(consilium)));
+            consiliumList.ForEach(consilium => consiliumDtoList.Add(DisplayConsiliumMapper.EntityToEntityDto(consilium)));
             return Ok(consiliumDtoList);
         }
     }

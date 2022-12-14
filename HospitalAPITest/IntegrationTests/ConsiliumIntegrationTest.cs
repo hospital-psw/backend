@@ -133,7 +133,7 @@
             var controller = SetupController(scope);
 
             int doctorId = 6;
-            var result = ((OkObjectResult)controller.GetAllForDoctor(doctorId)).Value as IEnumerable<ConsiliumDto>;
+            var result = ((OkObjectResult)controller.GetAllForDoctor(doctorId)).Value as IEnumerable<DisplayConsiliumDto>;
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);
