@@ -44,5 +44,17 @@
             ApplicationPatient patient = Get(entity.Id);
             patient.Hospitalized = entity.Hospitalized;
         }
+
+        IEnumerable<ApplicationPatient> IApplicationPatientRepository.GetBlocked()
+        {
+            return GetAll().Where(x => x.Blocked)
+                           .ToList();
+        }
+
+        IEnumerable<ApplicationPatient> IApplicationPatientRepository.GetMalicious()
+        {
+            return GetAll().Where(x => x.Strikes > 2)
+                           .ToList();
+        }
     }
 }

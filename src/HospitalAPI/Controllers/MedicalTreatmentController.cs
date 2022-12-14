@@ -99,15 +99,15 @@
             return Ok(MedicalTreatmentMapper.EntityToEntityDto(finishedTreatment));
         }
 
-        [HttpGet("active/{pageSize}/{pageNumber}")]
-        public IActionResult GetActive(int pageSize, int pageNumber)
+        [HttpGet("active/{doctorId}/{pageSize}/{pageNumber}")]
+        public IActionResult GetDoctorsActiveTreatments(int doctorId, int pageSize, int pageNumber)
         {
             if (pageNumber == 0)
             {
                 pageNumber = 1;
             }
 
-            List<MedicalTreatment> activeTreatments = _medicalTreatmentService.GetActive().ToList();
+            List<MedicalTreatment> activeTreatments = _medicalTreatmentService.GetDoctorsActiveTreatments(doctorId).ToList();
             List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
 
             if (activeTreatments.IsNullOrEmpty())
@@ -119,15 +119,15 @@
             return Ok(dtoList.ToPagedList(pageNumber, pageSize));
         }
 
-        [HttpGet("inactive/{pageSize}/{pageNumber}")]
-        public IActionResult GetInactive(int pageSize, int pageNumber)
+        [HttpGet("inactive/{doctorId}/{pageSize}/{pageNumber}")]
+        public IActionResult GetDoctorsInactiveTreamtents(int doctorId, int pageSize, int pageNumber)
         {
             if (pageNumber == 0)
             {
                 pageNumber = 1;
             }
 
-            List<MedicalTreatment> inactiveTreatments = _medicalTreatmentService.GetInactive().ToList();
+            List<MedicalTreatment> inactiveTreatments = _medicalTreatmentService.GetDoctorsInactiveTreatments(doctorId).ToList();
             List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
 
             if (inactiveTreatments.IsNullOrEmpty())
