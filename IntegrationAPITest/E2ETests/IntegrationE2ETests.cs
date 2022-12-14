@@ -43,6 +43,36 @@
         }
 
         [Fact]
+        public void Check_APositive_BloodType_Amount_1()
+        {
+            // login
+            using var scope = Factory.Services.CreateScope();
+            SetupContext(scope);
+            var login = new LoginPage(_chromeDriver);
+            var menu = new MenuPage(_chromeDriver);
+            var bloodbanks = new BloodBanksPage(_chromeDriver);
+            var bloodbankdetails = new BloodBankDetailsPage(_chromeDriver);
+
+            login.Email.SendKeys("maroko@gmail.com");
+            login.Password.SendKeys("123.Auth");
+            login.SubmitButton.Click();
+            Thread.Sleep(3000);
+
+            // move to blood banks tab
+            menu.BloodBanksTab.Click();
+            Thread.Sleep(3000);
+
+            // move to first blood bank
+            bloodbanks.FirstBloodBank.Click();
+            Thread.Sleep(3000);
+
+            // fill in form and send
+            bloodbankdetails.BloodType.Click();
+            bloodbankdetails.APositive.Click();
+            bloodbankdetails.BloodAmount.SendKeys("1");
+        }
+
+        [Fact]
         public void CheckBloobAmount_PublicApp()
         {
             using var scope = Factory.Services.CreateScope();
@@ -58,6 +88,5 @@
 
             Assert.Equal("http://localhost:4200/bloodbank/46/detail", _chromeDriver.Url);
         }
-
     }
 }
