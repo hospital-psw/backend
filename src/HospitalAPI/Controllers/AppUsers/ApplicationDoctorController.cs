@@ -119,5 +119,11 @@
             }
             return Ok(specializations);
         }
+
+        [HttpGet("work-hours/{doctorId}")]
+        public IActionResult GetDoctorsWorkHours(int doctorId)
+        {
+            return Ok(_doctorService.Get(doctorId).WorkHours);
+        }
     }
 }
