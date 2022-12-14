@@ -11,7 +11,11 @@
 
         private readonly IWebDriver driver;
         private Pages.ScheduleAppointmentPage scheduleAppointmentPage;
-        public const string URI_APPOINTMENTS = "http://localhost:4200/appointments";
+        private Pages.LoginPage loginPage;
+        private Pages.MenuPage menuPage;
+        private Pages.AppointmentsCalendarPage appointmentsCalendarPage;
+        public const string URI_APPOINTMENTS = "http://localhost:4200/app/appointments";
+        
 
 
         public ScheduleAppointmentTest()
@@ -28,31 +32,46 @@
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.insertEmail("andrija@example.com");
+            loginPage.insertPassword("123.Auth");
+            loginPage.SubmitForm();
+            loginPage.WaitForFormSubmit();
+
+            menuPage = new Pages.MenuPage(driver);
+            menuPage.GoToAppointmentsPage();
+
+            appointmentsCalendarPage = new Pages.AppointmentsCalendarPage(driver);
+            appointmentsCalendarPage.EnsurePageIsDisplayed();
+            appointmentsCalendarPage.GoToScheduling();
 
             scheduleAppointmentPage = new Pages.ScheduleAppointmentPage(driver);      // create ProductsPage
-            scheduleAppointmentPage.Navigate();                            // navigate to url
             scheduleAppointmentPage.EnsurePageIsDisplayed();
 
 
         }
 
         [Fact]
-        public void Test()
+        public void Choose_specific_date()
         {
             ChooseAppointmentParameters();
             scheduleAppointmentPage.Sumbit();
             ChooseAppointment();
+            //scheduleAppointmentPage.EnsureToastNotificationAppeared();
             EnsureURLChanged();
             Assert.Equal(URI_APPOINTMENTS, driver.Url);
             Dispose();
         }
 
         [Fact]
-        public void ChooseFirstAvailableDate()
+        public void Choose_today()
         {
             ChooseToday();
             scheduleAppointmentPage.Sumbit();
             ChooseAppointment();
+            //scheduleAppointmentPage.EnsureToastNotificationAppeared();
             EnsureURLChanged();
             Assert.Equal(URI_APPOINTMENTS, driver.Url);
             Dispose();
