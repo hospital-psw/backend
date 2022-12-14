@@ -1,14 +1,14 @@
 ﻿namespace IntegrationLibrary.UrgentBloodTransfer.Senders
 {
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
-    using System.Text.Json;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
     using System.Text;
+    using System.Text.Json;
     using System.Threading.Tasks;
-    using IntegrationLibrary.UrgentBloodTransfer.Model;
 
     public class HTTPUrgentBloodTransferSender : IUrgentBloodTransferSender
     {

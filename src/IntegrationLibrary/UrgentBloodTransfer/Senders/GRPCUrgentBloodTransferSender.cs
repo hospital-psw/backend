@@ -18,7 +18,7 @@
         public bool SendUrgentBloodRequest(UrgentBloodTransfer urgentBloodRequest)
         {
 
-            UrgentBloodTransferRequest grpcUrgentBloodRequest = new UrgentBloodTransferRequest { BloodType = urgentBloodRequest.BloodType, Amount = urgentBloodRequest.Amount};
+            UrgentBloodTransferRequest grpcUrgentBloodRequest = new UrgentBloodTransferRequest { BloodType = urgentBloodRequest.BloodType, Amount = urgentBloodRequest.Amount };
 
             _channel = new Channel("localhost:9090", ChannelCredentials.Insecure);
             _grpcClient = new UrgentBloodTransferGrpcService.UrgentBloodTransferGrpcServiceClient(_channel);

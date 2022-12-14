@@ -47,9 +47,9 @@
             return Ok(_mapper.Map<GetTenderDTO>(entity));
         }
         [HttpGet("finish/{tenderId}/{offerId}")]
-        public IActionResult FinishTender(int tenderId,int offerId)
+        public IActionResult FinishTender(int tenderId, int offerId)
         {
-            _tenderService.FinishTender(tenderId,offerId);
+            _tenderService.FinishTender(tenderId, offerId);
             return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
         }
 
@@ -100,7 +100,7 @@
             };
 
             TenderOffer validTenderOffer = _tenderService.MakeAnOffer(tenderId, tenderOffer);
-            if(validTenderOffer == null)
+            if (validTenderOffer == null)
             {
                 return BadRequest();
             }
