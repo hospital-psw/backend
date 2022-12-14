@@ -2,6 +2,7 @@
 {
     using grpcServices;
     using IntegrationLibrary.Core;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,6 +12,6 @@
     public interface IUrgentBloodTransferService : IService<UrgentBloodTransfer>
     {
         UrgentBloodTransfer Get(UrgentBloodTransfer entity);
-        bool RequestBlood(UrgentBloodTransferRequest request);
+        bool RequestBlood(UrgentBloodTransfer request);
     }
 }

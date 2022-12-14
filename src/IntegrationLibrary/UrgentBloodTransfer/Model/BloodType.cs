@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.UrgentBloodTransfer
+﻿namespace IntegrationLibrary.UrgentBloodTransfer.Model
 {
     using System;
     using System.Collections.Generic;

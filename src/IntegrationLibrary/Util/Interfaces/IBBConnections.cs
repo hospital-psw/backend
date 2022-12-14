@@ -1,7 +1,7 @@
 namespace IntegrationLibrary.Util.Interfaces
 {
     using IntegrationLibrary.BloodBank;
-    using IntegrationLibrary.UrgentBloodTransfer;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
 
     public interface IBBConnections
     {
