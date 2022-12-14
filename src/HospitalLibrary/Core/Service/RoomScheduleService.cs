@@ -23,7 +23,8 @@
         public List<DateTime> GetAppointments(List<int> rooms, DateTime from, DateTime to, int duration)
         {
             DateTime startTime = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
-            DateTime toTime = startTime.AddDays(1);
+            DateTime toTime = new DateTime(to.Year, to.Month, to.Day, 0, 0, 0);
+            toTime = toTime.AddDays(1);
             DateTime currentDateTime = DateTime.Now;
             if (startTime.Day == currentDateTime.Day) startTime = startTime.AddHours(1);
             return GetAvailableAppointments(rooms, startTime, toTime, duration);
