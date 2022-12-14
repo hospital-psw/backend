@@ -6,7 +6,6 @@
     using IntegrationLibrary.Settings;
     using IntegrationLibrary.UrgentBloodTransfer;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
-    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +42,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             SetupContext(scope);
-            var request = new UrgentBloodTransfer(grpcServices.BloodType.Aplus, 5, false);
+            var request = new UrgentBloodTransferRequest { BloodType = grpcServices.BloodType.Aplus, Amount = 5 };
 
             var result = controller.RequestBlood(request);
 
@@ -57,7 +56,7 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             SetupContext(scope);
-            var request = new UrgentBloodTransfer((grpcServices.BloodType)9, 5, false);
+            var request = new UrgentBloodTransferRequest { BloodType = (grpcServices.BloodType)9, Amount = 5 };
 
             var result = controller.RequestBlood(request);
 
