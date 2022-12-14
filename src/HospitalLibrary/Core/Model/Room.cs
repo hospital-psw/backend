@@ -25,7 +25,7 @@ namespace HospitalLibrary.Core.Model
 
         public bool NumberStartsWithFloorNumber(string newNumber)
         {
-            if (Floor.Number.ToString() == newNumber.Substring(0, 1))
+            if (Floor.Number.Number.ToString().Equals(newNumber.Substring(0, 1)))
             {
                 return true;
             }

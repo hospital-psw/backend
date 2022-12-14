@@ -1,6 +1,5 @@
 ﻿namespace HospitalAPITest.E2E.Tests
 {
-    using HospitalAPITest.E2E.Pages;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
     using System;
@@ -9,17 +8,14 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DeclineRelocationTest
+    public class UpdateRoomTests
     {
         private readonly IWebDriver driver;
         private Pages.LoginPage loginPage;
         private Pages.MenuPage menuPage;
-        private Pages.DeclineRelocationPage declineRelocationPage;
-        private int requestsCount = 0;
-        private int newRequestsCount = 0;
-        //public const string URI_APPOINTMENTS = "http://localhost:4200/appointments";
-
-        public DeclineRelocationTest()
+        private Pages.UpdateRoomPage updateRoomPage;
+    
+        public UpdateRoomTests()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");            // open Browser in maximized mode
@@ -46,38 +42,37 @@
             menuPage = new Pages.MenuPage(driver);
             Assert.True(menuPage.managerTabDisplayed());
             menuPage.managerTabClick();
-            declineRelocationPage = new Pages.DeclineRelocationPage(driver);
-            Assert.True(declineRelocationPage.buildingDisplayed());
-
+            updateRoomPage = new Pages.UpdateRoomPage(driver);
+            Assert.True(updateRoomPage.buildingDisplayed());
         }
 
         [Fact]
-        public void Test()
+        public void TestSuccessfulSubmit()
         {
             ChooseParameters();
-            Decline();
-            Assert.Equal(requestsCount - 1, newRequestsCount);
-            Assert.Equal(Pages.DeclineRelocationPage.URI, driver.Url);
+            updateRoomPage.UpdateRoom();
+            Thread.Sleep(1000);
+            Assert.Equal(Pages.UpdateRoomPage.URI, driver.Url);
             Dispose();
+        }
+
+        private void ChooseParameters()
+        {
+            updateRoomPage.SelectBuilding();
+            updateRoomPage.SelectRoom();
+            updateRoomPage.EnsureFormIsDisplayed();
+            //updateRoomPage.ZoomOut();
+            updateRoomPage.EnableFields();
+            //updateRoomPage.insertNumber("009");
+            updateRoomPage.insertPurpose("1");
+            Thread.Sleep(200);
+            
         }
 
         public void Dispose()
         {
             driver.Quit();
             driver.Dispose();
-        }
-        private void ChooseParameters()
-        {
-            declineRelocationPage.SelectBuilding();
-            declineRelocationPage.SelectRoom();
-            declineRelocationPage.EnsureTabIsDisplayed();
-            declineRelocationPage.SelectTab();
-            requestsCount = declineRelocationPage.RequestsCount();
-        }
-        private void Decline()
-        {
-            declineRelocationPage.Decline();
-            newRequestsCount = declineRelocationPage.RequestsCount();
         }
     }
 }

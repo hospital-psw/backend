@@ -65,7 +65,7 @@
         {
             Actions action = new Actions(driver);
             Thread.Sleep(1000);
-            action.MoveByOffset(897, 415).Click().Perform(); //897 415, 539 260
+            action.MoveByOffset(788, 402).Click().Perform(); //897 415, 539 260
             Thread.Sleep(1000);
         }
         public void SelectTab()
