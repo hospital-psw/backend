@@ -34,5 +34,12 @@
                                                .Distinct()
                                                .ToList();
         }
+
+        public List<Consilium> GetConsiliumsByDoctorId(int doctorId)
+        {
+            return HospitalDbContext.Consiliums.Include(x => x.DoctorsSchedule)                                              
+                                               .Where(x => !x.Deleted && x.DoctorsSchedule.Exists(x => x.Doctor.Id == doctorId))
+                                               .ToList();
+        }
     }
 }

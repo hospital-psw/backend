@@ -59,5 +59,17 @@
             }
             return futureRequests;
         }
+
+        public List<Consilium> GetConsiliumsByDoctorId(int doctorId)
+        {
+            try
+            {
+                return _unitOfWork.ConsiliumRepository.GetConsiliumsByDoctorId(doctorId);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

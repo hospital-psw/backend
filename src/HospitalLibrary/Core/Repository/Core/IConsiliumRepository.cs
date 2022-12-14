@@ -10,5 +10,7 @@
     public interface IConsiliumRepository : IBaseRepository<Consilium>
     {
         List<Consilium> GetScheduledConsiliumsForRoom(int roomId);
+
+        List<Consilium> GetConsiliumsByDoctorId(int doctorId);
     }
 }

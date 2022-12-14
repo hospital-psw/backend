@@ -61,5 +61,20 @@
             return Ok(consiliumDtos);
         }
 
+        [HttpGet("doctor/{doctorId}")]
+        public IActionResult GetAllByDoctorId(int doctorId)
+        {
+            List<Consilium> consiliums = _consiliumService.GetConsiliumsByDoctorId(doctorId);
+            if (consiliums.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+
+            List<ConsiliumDisplayDto> dtos = new List<ConsiliumDisplayDto>();
+
+            consiliums.ForEach(c => dtos.Add(ConsiliumDisplayMapper.EntityToEntityDto(c)));
+
+            return Ok(dtos);
+        }
     }
 }
