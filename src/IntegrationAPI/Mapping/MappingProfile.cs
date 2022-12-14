@@ -23,12 +23,15 @@
             CreateMap<News, UserNewsDTO>();
 
             CreateMap<Tender, GetTenderDTO>();
-            CreateMap<TenderOffer, ViewTenderOfferDTO>();
             CreateMap<GetTenderDTO, Tender>();
+            CreateMap<TenderOffer, ViewTenderOfferDTO>();
+            CreateMap<ViewTenderOfferDTO, TenderOffer>();
             CreateMap<Tender, CreateTenderDTO>();
             CreateMap<CreateTenderDTO, Tender>();
             CreateMap<Tender, UpdateTenderDTO>();
             CreateMap<UpdateTenderDTO, Tender>();
+            CreateMap<ViewTenderItemDTO, TenderItem>();
+            CreateMap<TenderItem, ViewTenderItemDTO>();
         }
     }
 }

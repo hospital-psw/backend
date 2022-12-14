@@ -157,7 +157,7 @@
         {
             try
             {
-                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN && (x.DueDate > DateTime.Now || x.DueDate.ToString().Equals("0001-01-01T00:00:00"))).ToList();
+                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN && (x.DueDate > DateTime.Now || x.DueDate == DateTime.MinValue)).ToList();
             }
             catch (Exception e)
             {

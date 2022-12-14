@@ -5,9 +5,9 @@
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
-
 
     [ApiController]
     [Route("api/[controller]")]
@@ -84,17 +84,18 @@
         }
 
         [HttpPut("MakeAnOffer/{tenderId}")]
+        [Authorize]
         public IActionResult MakeAnOffer(int tenderId, MakeTenderOfferDTO tender)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            TenderOffer tenderOffer = new TenderOffer()
+            TenderOffer tenderOffer = new()
             {
                 Offeror = new BloodBank()
                 {
-                    Id = 46
+                    Id = int.Parse(User.FindFirst(x => x.Type == "Id")?.Value)
                 },
                 Items = tender.Items
             };
