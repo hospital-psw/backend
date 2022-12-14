@@ -33,15 +33,18 @@
 
             driver = new ChromeDriver(options);
 
-            loginPage = new Pages.LoginPage(driver);
+            loginPage = new LoginPage(driver);
             loginPage.Navigate();
-            loginPage.EnsurePageIsDisplayed();
+            Assert.True(loginPage.loginButtonDisplayed());
+            Assert.True(loginPage.emailInputDisplayed());
+            Assert.True(loginPage.passwordInputDisplayed());
             loginPage.insertEmail("andrija@example.com");
             loginPage.insertPassword("123.Auth");
             loginPage.SubmitForm();
             loginPage.WaitForFormSubmit();
 
             menuPage = new MenuPage(driver);
+            menuPage.EnsurePageIsDisplayed();
             menuPage.consiliumTabClick();
 
             consiliumsPage = new ConsiliumsPage(driver);
@@ -64,6 +67,7 @@
             FillScheduleForm();
             SelectDoctorListElements();
             scheduleConisliumPage.Submit();
+            consiliumsPage.EnsurePageIsDisplayed();
             Assert.Equal(consiliumsURI, driver.Url);
             Assert.True(consiliumsPage.ButtonDisplayed());
             Dispose();
@@ -75,6 +79,7 @@
             FillScheduleForm();
             SelectSpecializationListElements();
             scheduleConisliumPage.Submit();
+            consiliumsPage.EnsurePageIsDisplayed();
             Assert.Equal(consiliumsURI, driver.Url);
             Assert.True(consiliumsPage.ButtonDisplayed());
             Dispose();
@@ -84,10 +89,10 @@
         public void FailToScheduleConsilium()
         {
             FailToFillScheduleForm();
-            SelectSpecializationListElements();
+            SelectDoctorListElements();
             scheduleConisliumPage.Submit();
+            scheduleConisliumPage.EnsurePageIsDisplayed();
             Assert.NotEqual(consiliumsURI, driver.Url);
-            Assert.False(consiliumsPage.ButtonDisplayed());
             Dispose();
         }
 
