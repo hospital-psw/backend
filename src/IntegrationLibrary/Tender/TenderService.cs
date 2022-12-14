@@ -142,7 +142,7 @@
         {
             try
             {
-                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN).ToList();
+                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN && x.DueDate > DateTime.Now).ToList();
             }
             catch (Exception e)
             {

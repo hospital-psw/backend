@@ -7,7 +7,6 @@
     using IntegrationLibrary.BloodBank.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
 
@@ -86,7 +85,14 @@
                 {
                     if (!bloodBank.IsDummyPassword)
                     {
-                        return Ok(_tokenHelper.GenerateToken(bloodBank.Id, bloodBank.Email));
+                        return Ok(
+                            new LoginResponseDTO()
+                            {
+                                Id = bloodBank.Id,
+                                Email = bloodBank.Email,
+                                Token = _tokenHelper.GenerateToken(bloodBank.Id, bloodBank.Email),
+                                ExpiresIn = 60
+                            });
                     }
                     return Ok();
                 }
