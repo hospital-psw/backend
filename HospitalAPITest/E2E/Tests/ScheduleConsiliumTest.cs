@@ -38,7 +38,7 @@
             Assert.True(loginPage.loginButtonDisplayed());
             Assert.True(loginPage.emailInputDisplayed());
             Assert.True(loginPage.passwordInputDisplayed());
-            loginPage.insertEmail("andrija@example.com");
+            loginPage.insertEmail("ckepa@gmail.com");
             loginPage.insertPassword("123.Auth");
             loginPage.SubmitForm();
             loginPage.WaitToRedirectToDoctorsApp();
