@@ -148,7 +148,7 @@
 
             var result = controller.GetAllForDoctor(doctorId) as StatusCodeResult;
 
-            Assert.Equal(result.StatusCode, StatusCodes.Status404NotFound);
+            Assert.Equal(StatusCodes.Status404NotFound, result.StatusCode);
         }
     }
 }

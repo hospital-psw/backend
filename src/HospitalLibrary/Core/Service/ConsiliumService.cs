@@ -74,7 +74,7 @@
         public List<Consilium> GetAllForDoctor(int doctorId)
         {
             List<Consilium> consiliums = _unitOfWork.ConsiliumRepository.GetConsiliumsByDoctorId(doctorId).ToList();
-            if(consiliums == null)
+            if (consiliums == null)
             {
                 consiliums = new List<Consilium>();
             }
