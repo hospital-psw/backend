@@ -8,6 +8,6 @@
     {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
-        public List<TenderItem> Items { get; set; }
+        public List<ViewTenderItemDTO> Items { get; set; }
     }
 }
