@@ -13,7 +13,7 @@ namespace IntegrationLibrary.Tender
         public Money TotalSum()
         {
             Money totalSum = new Money();
-            foreach(TenderItem item in Items)
+            foreach (TenderItem item in Items)
             {
                 totalSum.Add(item.Money);
             }

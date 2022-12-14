@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.UrgentBloodTransfer
+﻿namespace IntegrationLibrary.UrgentBloodTransfer.Model
 {
     using grpcServices;
     using IntegrationLibrary.Core;
@@ -12,13 +12,15 @@
     {
         public grpcServices.BloodType BloodType { get; set; }
         public uint Amount { get; set; }
+        public bool HTTP { get; set; }
 
-        public UrgentBloodTransfer(grpcServices.BloodType bloodType, uint amount)
+        public UrgentBloodTransfer(grpcServices.BloodType bloodType, uint amount, bool hTTP)
         {
             if (Validate(amount))
             {
                 BloodType = bloodType;
                 Amount = amount;
+                HTTP = hTTP;
             }
             else
             {
@@ -34,7 +36,7 @@
         public override bool Equals(object obj)
         {
             var other = obj as UrgentBloodTransfer;
-            return (this.Amount == other.Amount) && (this.BloodType == other.BloodType);
+            return Amount == other.Amount && BloodType == other.BloodType && HTTP == other.HTTP;
         }
 
         public override int GetHashCode()

@@ -61,7 +61,7 @@
             }
         }
 
-        public void FinishTender(int tenderId,int offerIndex)
+        public void FinishTender(int tenderId, int offerIndex)
         {
             try
             {
