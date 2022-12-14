@@ -49,7 +49,7 @@
 
             treatmentsPage.OpenDialog();
             treatmentsPage.EnsureDialogIsDisplayed();
-            
+
         }
 
         [Fact]
@@ -67,7 +67,7 @@
         {
             FailToFill();
             treatmentsPage.Finish();
-            Assert.Equal(false, treatmentsPage.DialogClosed());
+            Assert.False(treatmentsPage.DialogClosed());
         }
 
         public void Dispose()

@@ -62,7 +62,7 @@
             StartStationaryTreatment.Click();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             Dialog = wait.Until(e => e.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]")));
-            
+
             CreateButton = wait.Until(e => e.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div/app-dialog-content-component/div/div[2]/div[2]")));
             BackButton = driver.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div/app-dialog-content-component/div/div[2]/div[1]"));
         }
