@@ -28,7 +28,7 @@
 
         public Feedback(NewFeedbackDTO dto)
         {
-            Message = dto.Message;
+            Message = FeedbackMessage.Create(dto.Message);
             Anonymous = dto.Anonymous;
             Public = dto.Public;
         }
