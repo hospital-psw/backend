@@ -25,8 +25,8 @@
             DateTime startTime = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
             DateTime toTime = new DateTime(to.Year, to.Month, to.Day, 0, 0, 0);
             toTime = toTime.AddDays(1);
-            DateTime currentDateTime = DateTime.Now;
-            if (startTime.Day == currentDateTime.Day) startTime = startTime.AddHours(1);
+            DateTime now = DateTime.Now;
+            if (startTime.Day == now.Day && startTime.Month == now.Month && startTime.Year == now.Year) startTime = startTime.AddHours(now.Hour + 1);
             return GetAvailableAppointments(rooms, startTime, toTime, duration);
         }
 

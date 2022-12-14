@@ -68,7 +68,6 @@
 
         private IUrgentBloodTransferSender InstantiateSender(bool Http)
         {
-            IUrgentBloodTransferSender sender;
             if (Http)
             {
                 return new HTTPUrgentBloodTransferSender();
