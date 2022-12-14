@@ -61,6 +61,7 @@
             Dispose();
         }
 
+        [Fact]
         public void Dispose()
         {
             driver.Quit();

@@ -14,7 +14,7 @@
         private Pages.LoginPage loginPage;
         private Pages.MenuPage menuPage;
         private Pages.UpdateRoomPage updateRoomPage;
-    
+
         public UpdateRoomTests()
         {
             ChromeOptions options = new ChromeOptions();
@@ -66,9 +66,10 @@
             //updateRoomPage.insertNumber("009");
             updateRoomPage.insertPurpose("1");
             Thread.Sleep(200);
-            
+
         }
 
+        [Fact]
         public void Dispose()
         {
             driver.Quit();
