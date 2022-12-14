@@ -11,6 +11,7 @@
     using HospitalLibrary.Exceptions;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -85,5 +86,18 @@
             return Ok(consiliumDtos);
         }
 
+        [HttpGet("doctor/{doctorId}")]
+        public IActionResult GetAllForDoctor(int doctorId)
+        {
+            List<ConsiliumDto> consiliumDtoList = new List<ConsiliumDto>();
+            List<Consilium> consiliumList = _consiliumService.GetAllForDoctor(doctorId).ToList();
+
+            if (consiliumList.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            consiliumList.ForEach(consilium => consiliumDtoList.Add(ConsiliumMapper.EntityToDto(consilium)));
+            return Ok(consiliumDtoList);
+        }
     }
 }
