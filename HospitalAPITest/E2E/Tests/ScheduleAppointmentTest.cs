@@ -40,8 +40,8 @@
             loginPage.SubmitForm();
             loginPage.WaitForFormSubmit();
 
-            menuPage = new Pages.MenuPage(driver);
-            menuPage.GoToAppointmentsPage();
+            //menuPage = new Pages.MenuPage(driver);
+            //menuPage.GoToAppointmentsPage();
 
             appointmentsCalendarPage = new Pages.AppointmentsCalendarPage(driver);
             appointmentsCalendarPage.EnsurePageIsDisplayed();
