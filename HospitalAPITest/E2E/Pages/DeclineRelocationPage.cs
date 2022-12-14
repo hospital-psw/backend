@@ -79,7 +79,7 @@
 
         public void Decline()
         {
-            declineButton = driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]/span[1]"));
+            declineButton = driver.FindElement(By.XPath("//*[@id=\"decline - relocation\"]/span[1]"));
             declineButton.Click();
             Thread.Sleep(1000);
         }

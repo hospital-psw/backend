@@ -74,17 +74,17 @@
 
         public void SelectStartTime()
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(8000);
             driver.FindElement(By.XPath("//*[@id=\"startTime0\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"next5\"]")).Click();
         }
 
         public void EnterNewRoomDetails()
         {
-            driver.FindElement(By.XPath("//*[@id=\"newName1\"]")).SendKeys("015");
+            driver.FindElement(By.XPath("//*[@id=\"newName1\"]")).SendKeys("020");
             driver.FindElement(By.XPath("//*[@id=\"newPurpose1\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"newPurpose1Option\"]")).Click();
-            driver.FindElement(By.XPath("//*[@id=\"newName2\"]")).SendKeys("016");
+            driver.FindElement(By.XPath("//*[@id=\"newName2\"]")).SendKeys("021");
             driver.FindElement(By.XPath("//*[@id=\"newPurpose2\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"newPurpose2Option\"]")).Click();
             driver.FindElement(By.XPath("//*[@id=\"schedule\"]")).Click();
