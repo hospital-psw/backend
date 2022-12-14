@@ -22,12 +22,12 @@
         public ScheduleConsiliumTest()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArguments("start-maximized"); 
-            options.AddArguments("disable-infobars"); 
-            options.AddArguments("--disable-extensions");   
-            options.AddArguments("--disable-gpu");          
-            options.AddArguments("--disable-dev-shm-usage");  
-            options.AddArguments("--no-sandbox");    
+            options.AddArguments("start-maximized");
+            options.AddArguments("disable-infobars");
+            options.AddArguments("--disable-extensions");
+            options.AddArguments("--disable-gpu");
+            options.AddArguments("--disable-dev-shm-usage");
+            options.AddArguments("--no-sandbox");
             options.AddArguments("--disable-notifications");
 
 

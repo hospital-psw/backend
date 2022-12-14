@@ -57,7 +57,7 @@
 
         public void Submit()
         {
-            ScheduleButton.Click();   
+            ScheduleButton.Click();
         }
 
         public void SelectRoom()
@@ -87,7 +87,7 @@
 
         public void SelectSpecializations()
         {
-            foreach(IWebElement el in SelectedSpecializations)
+            foreach (IWebElement el in SelectedSpecializations)
             {
                 el.Click();
             }
