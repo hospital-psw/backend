@@ -107,7 +107,7 @@
                 pageNumber = 1;
             }
 
-            List<MedicalTreatment> activeTreatments = _medicalTreatmentService.GetDoctorsActiveTreatments(doctorId).ToList();
+            IEnumerable<MedicalTreatment> activeTreatments = _medicalTreatmentService.GetDoctorsActiveTreatments(doctorId);
             List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
 
             if (activeTreatments.IsNullOrEmpty())
@@ -115,7 +115,7 @@
                 return NotFound();
             }
 
-            activeTreatments.ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
+            activeTreatments.ToList().ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
             return Ok(dtoList.ToPagedList(pageNumber, pageSize));
         }
 
@@ -127,7 +127,7 @@
                 pageNumber = 1;
             }
 
-            List<MedicalTreatment> inactiveTreatments = _medicalTreatmentService.GetDoctorsInactiveTreatments(doctorId).ToList();
+            IEnumerable<MedicalTreatment> inactiveTreatments = _medicalTreatmentService.GetDoctorsInactiveTreatments(doctorId);
             List<MedicalTreatmentDto> dtoList = new List<MedicalTreatmentDto>();
 
             if (inactiveTreatments.IsNullOrEmpty())
@@ -135,7 +135,7 @@
                 return NotFound();
             }
 
-            inactiveTreatments.ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
+            inactiveTreatments.ToList().ForEach(t => dtoList.Add(MedicalTreatmentMapper.EntityToEntityDto(t)));
             return Ok(dtoList.ToPagedList(pageNumber, pageSize));
         }
 
