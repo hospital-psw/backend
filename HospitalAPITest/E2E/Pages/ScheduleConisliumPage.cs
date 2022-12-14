@@ -19,12 +19,9 @@
 
         private IWebElement SelectedRoom => driver.FindElement(By.XPath("//*[@id=\"mat-option-2\"]"));
 
-        private IWebElement DateRangeSelectionOption => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-schedule-consilium/div/div[1]/app-other-info/div/div[2]/div[2]/mat-form-field/div/div[1]/div/div/mat-datepicker-toggle/button"));
+        private IWebElement SelectedFromDate;
 
-        private IWebElement SelectedFromDate => driver.FindElement(By.XPath("//*[@id=\"mat-datepicker-1\"]/div/mat-month-view/table/tbody/tr[2]/td[1]/button"));
-
-        private IWebElement SelectedToDate => driver.FindElement(By.XPath("//*[@id=\"mat-datepicker-0\"]/div/mat-month-view/table/tbody/tr[2]/td[3]/button"));
-
+        private IWebElement SelectedToDate;
         private IWebElement TopicTextArea => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-schedule-consilium/div/div[1]/app-other-info/div/div[2]/textarea"));
 
         private IEnumerable<IWebElement> SelectedDoctors => driver.FindElements(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-schedule-consilium/div/div[2]/app-doctors-list/div/div[2]/mat-selection-list"));
@@ -68,15 +65,15 @@
 
         public void SelectDateRange()
         {
-            Actions action = new Actions(driver);
-            action.MoveToElement(DateRangeSelectionOption).Click();
-            SelectedFromDate.Click();
-            SelectedToDate.Click();
+            SelectedFromDate = driver.FindElement(By.Id("date1"));
+            SelectedToDate = driver.FindElement(By.Id("date2"));
+            SelectedFromDate.SendKeys("01/01/2023");
+            SelectedToDate.SendKeys("03/01/2023");
         }
 
         public void TypeTopic()
         {
-            TopicTextArea.Click();
+            TopicTextArea.SendKeys("Hitan sastanak za pacijenta sa pulmologije.");
         }
 
         public void SelectDoctors()

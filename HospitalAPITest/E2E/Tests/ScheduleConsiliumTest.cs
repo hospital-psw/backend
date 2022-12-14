@@ -15,6 +15,8 @@
         private readonly IWebDriver driver;
         private ScheduleConisliumPage scheduleConisliumPage;
         private ConsiliumsPage consiliumsPage;
+        private LoginPage loginPage;
+        private Pages.MenuPage menuPage;
         private const string consiliumsURI = "http://localhost:4200/app/consiliums";
 
         public ScheduleConsiliumTest()
@@ -31,13 +33,24 @@
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.insertEmail("andrija@example.com");
+            loginPage.insertPassword("123.Auth");
+            loginPage.SubmitForm();
+            loginPage.WaitForFormSubmit();
+
+            menuPage = new MenuPage(driver);
+            menuPage.consiliumTabClick();
+
             consiliumsPage = new ConsiliumsPage(driver);
-            consiliumsPage.Navigate();
             consiliumsPage.EnsurePageIsDisplayed();
             Assert.True(consiliumsPage.ButtonDisplayed());
             consiliumsPage.ButtonClick();
 
             scheduleConisliumPage = new ScheduleConisliumPage(driver);
+            scheduleConisliumPage.EnsurePageIsDisplayed();
             Assert.Equal(ScheduleConisliumPage.URI, driver.Url);
             Assert.True(scheduleConisliumPage.RoomSelectionDisplayed());
             Assert.True(scheduleConisliumPage.TextAreaDisplayed());

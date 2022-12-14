@@ -16,6 +16,7 @@
         IWebElement managerTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[3]/a"));
         IWebElement managerVacationRequestsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[5]/a"));
         IWebElement feedbackTab => driver.FindElement(By.Id("feedback"));
+        IWebElement consiliumTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[8]/a"));
         public MenuPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -41,6 +42,11 @@
         public void feedbackTabClick()
         {
             feedbackTab.Click();
+        }
+
+        public void consiliumTabClick()
+        {
+            consiliumTab.Click();
         }
     }
 }
