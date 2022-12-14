@@ -27,7 +27,7 @@
         {
             foreach (BloodBank bank in bloodBanks)
             {
-                if(bank.MonthlyTransfer!=null)
+                if (bank.MonthlyTransfer != null)
                     if (bank.MonthlyTransfer.DateTime.AddMonths(1) < DateTime.Now)
                     {
                         currentBloodBank = bank;

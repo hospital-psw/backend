@@ -8,16 +8,16 @@
 
     public class BloodUnit
     {
-            public BloodType BloodType { get; set; }
-            public int Amount { get; set; }
+        public BloodType BloodType { get; set; }
+        public int Amount { get; set; }
 
-            public BloodUnit() { }
+        public BloodUnit() { }
 
-            public BloodUnit(BloodType bloodType, int amount)
-            {
-                BloodType = bloodType;
-                Amount = amount;
-            }
+        public BloodUnit(BloodType bloodType, int amount)
+        {
+            BloodType = bloodType;
+            Amount = amount;
+        }
     }
 }
 

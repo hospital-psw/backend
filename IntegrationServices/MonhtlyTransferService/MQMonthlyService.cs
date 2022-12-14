@@ -34,8 +34,8 @@
 
                 //salji na HospitalAPI APLUS:{BROJ}-BPLUS:{BROJ}...
                 Connections.UpdateBloodUnit(message);
-                Console.WriteLine(message); 
-               
+                Console.WriteLine(message);
+
             };
 
             channel.BasicConsume(queue: "monthly",
