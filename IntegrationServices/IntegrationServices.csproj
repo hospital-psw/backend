@@ -210,6 +210,7 @@
   <ItemGroup>
     <Compile Include="MonhtlyTransferService\Connections.cs" />
     <Compile Include="MonhtlyTransferService\MonhtlyTransferService.cs" />
+    <Compile Include="MonhtlyTransferService\MQMonthlyService.cs" />
     <Compile Include="RabbitMQServices\MessageDecoder.cs" />
     <Compile Include="RabbitMQServices\MQSubscriberService.cs" />
     <Compile Include="Program.cs" />
@@ -221,6 +222,8 @@
     <Compile Include="ReportService\DTO\DateRangeDTO.cs" />
     <Compile Include="ReportService\GeneratePDF.cs" />
     <Compile Include="ReportService\Model\BloodBank.cs" />
+    <Compile Include="ReportService\Model\BloodType.cs" />
+    <Compile Include="ReportService\Model\BloodUnit.cs" />
     <Compile Include="ReportService\Model\Entity.cs" />
     <Compile Include="ReportService\Model\MonthlyTransfer.cs" />
     <Compile Include="ReportService\ReportService.cs" />

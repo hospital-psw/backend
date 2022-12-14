@@ -16,7 +16,7 @@
         private ScheduleConisliumPage scheduleConisliumPage;
         private ConsiliumsPage consiliumsPage;
         private LoginPage loginPage;
-        private Pages.MenuPage menuPage;
+        private MenuDoctorPage menuDoctorPage;
         private const string consiliumsURI = "http://localhost:4200/app/consiliums";
 
         public ScheduleConsiliumTest()
@@ -38,14 +38,14 @@
             Assert.True(loginPage.loginButtonDisplayed());
             Assert.True(loginPage.emailInputDisplayed());
             Assert.True(loginPage.passwordInputDisplayed());
-            loginPage.insertEmail("andrija@example.com");
+            loginPage.insertEmail("ckepa@gmail.com");
             loginPage.insertPassword("123.Auth");
             loginPage.SubmitForm();
-            loginPage.WaitForFormSubmit();
+            loginPage.WaitToRedirectToDoctorsApp();
 
-            menuPage = new MenuPage(driver);
-            menuPage.EnsurePageIsDisplayed();
-            menuPage.consiliumTabClick();
+            menuDoctorPage = new MenuDoctorPage(driver);
+            menuDoctorPage.EnsurePageIsDisplayed();
+            menuDoctorPage.consiliumTabClick();
 
             consiliumsPage = new ConsiliumsPage(driver);
             consiliumsPage.EnsurePageIsDisplayed();

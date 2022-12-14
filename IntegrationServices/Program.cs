@@ -26,6 +26,7 @@ namespace PrimerServis
                     // services.AddHostedService<MQSubscriberService>();
                     services.AddHostedService<ReportService>();
                     services.AddHostedService<MonhtlyTransferService>();
+                    services.AddHostedService<MQMonthlyService>();
                 });
     }
 }

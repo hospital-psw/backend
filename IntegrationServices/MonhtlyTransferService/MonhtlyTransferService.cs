@@ -14,6 +14,7 @@
     public class MonhtlyTransferService : BackgroundService
     {
         BloodBank[] bloodBanks;
+        BloodBank currentBloodBank;
         System.Timers.Timer collectTimer = new System.Timers.Timer();
         public override Task StartAsync(CancellationToken cancellationToken)
         {
@@ -24,9 +25,17 @@
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            collectTimer.Elapsed += new ElapsedEventHandler(CallBloodBank);
-            collectTimer.Interval = 5000;
-            collectTimer.Enabled = true;
+            foreach (BloodBank bank in bloodBanks)
+            {
+                if (bank.MonthlyTransfer != null)
+                    if (bank.MonthlyTransfer.DateTime.AddMonths(1) < DateTime.Now)
+                    {
+                        currentBloodBank = bank;
+                        collectTimer.Elapsed += new ElapsedEventHandler(CallBloodBank);
+                        collectTimer.Interval = 10000;
+                        collectTimer.Enabled = true;
+                    }
+            }
             return Task.CompletedTask;
         }
         public override Task StopAsync(CancellationToken cancellationToken)
@@ -36,7 +45,7 @@
 
         public void CallBloodBank(object source, ElapsedEventArgs e)
         {
-            Connections.GetMonthlyBlood();
+            Connections.GetMonthlyBlood(currentBloodBank.MonthlyTransfer);
         }
     }
 }

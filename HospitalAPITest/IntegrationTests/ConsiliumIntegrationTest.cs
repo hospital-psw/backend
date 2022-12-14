@@ -9,6 +9,7 @@
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -123,6 +124,31 @@
 
             Assert.NotNull(result);
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public void Get_all_consiliums_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            int doctorId = 6;
+            var result = ((OkObjectResult)controller.GetAllForDoctor(doctorId)).Value as IEnumerable<DisplayConsiliumDto>;
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Doctor_has_never_been_to_any_consilium()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            int doctorId = 5;
+
+            var result = controller.GetAllForDoctor(doctorId) as StatusCodeResult;
+
+            Assert.Equal(StatusCodes.Status404NotFound, result.StatusCode);
         }
     }
 }
