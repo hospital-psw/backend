@@ -18,6 +18,7 @@
         private IWebElement buildingField => driver.FindElement(By.XPath("//*[@id=\"buildingSelect\"]"));
         private IWebElement buildingFieldBuilding2 => driver.FindElement(By.XPath("//*[@id=\"mat-option-building\"]"));
         private IWebElement declineRelocationButton => driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]"));
+        private IWebElement declineRow;
         private IWebElement tabsRelocation;
         private IWebElement tabRelocation;
         private IWebElement declineButton;
@@ -79,7 +80,8 @@
 
         public void Decline()
         {
-            declineButton = driver.FindElement(By.XPath("//*[@id=\"decline - relocation\"]/span[1]"));
+            //driver.FindElement(By.XPath("//*[@id=\"mat-tab-content-0-2\"]/div/app-relocations/div/table/tbody/tr[last()]/td[6]"));
+            declineButton = driver.FindElement(By.XPath("//*[@id=\"mat-tab-content-0-2\"]/div/app-relocations/div/table/tbody/tr[last()]/td[6]")); //driver.FindElement(By.XPath("//*[@id=\"decline - relocation\"]/span[1]"));
             declineButton.Click();
             Thread.Sleep(1000);
         }
