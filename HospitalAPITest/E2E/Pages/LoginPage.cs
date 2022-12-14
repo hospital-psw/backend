@@ -76,5 +76,11 @@
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(MenuPage.URI));
         }
 
+        public void WaitToRedirectToDoctorsApp()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(MenuDoctorPage.URI));
+        }
+
     }
 }
