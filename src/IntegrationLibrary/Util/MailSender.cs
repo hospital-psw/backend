@@ -48,6 +48,50 @@
             return template;
         }
 
+        public static string MakeWinningTemplate(int tendId)
+        {
+            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+
+            string template = "<mjml>" +
+                "<mj-body>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
+                "<mj-column width=\"500px\">" +
+                "<mj-text font-size=\"16px\" align=\"left\">" +
+                "<p>Congratulations, you have received a tender with a number <b>" + tendId + "</b></p>" +
+                "</mj-text>" +
+                "</mj-column>" +
+                "</mj-section>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "</mj-body>" +
+                "</mjml>";
+
+            return template;
+        }
+
+        public static string MakeLoseTemplate(int tendId)
+        {
+            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+
+            string template = "<mjml>" +
+                "<mj-body>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
+                "<mj-column width=\"500px\">" +
+                "<mj-text font-size=\"16px\" align=\"left\">" +
+                "<p>Tender number <b>" + tendId + "</b> has ended, unfortunately you did not receive it.</p>" +
+                "</mj-text>" +
+                "</mj-column>" +
+                "</mj-section>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "</mj-body>" +
+                "</mjml>";
+
+            return template;
+        }
+
         public async Task RunAsync(string template, string subject, string destinationEmail)
         {
             MailjetClient client = new MailjetClient(

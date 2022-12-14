@@ -68,6 +68,20 @@
                 var entity = _unitOfWork.TenderRepository.Get(tenderId);
                 entity.Status = TenderStatus.CLOSED;
                 entity.TenderWinner = entity.Offers[offerIndex];
+
+                string templateWin = MailSender.MakeWinningTemplate(tenderId);
+                string templateLose = MailSender.MakeLoseTemplate(tenderId);
+                _mailer.SendEmail(templateWin, "You won a tender", entity.Offers[offerIndex].Offeror.Email);
+
+                int i = 0;
+                foreach(var offer in entity.Offers)
+                {
+                    if(i != offerIndex)
+                    {
+                        _mailer.SendEmail(templateLose, "Tender finished", offer.Offeror.Email);
+                    }
+                    i++;
+                }
                 _unitOfWork.TenderRepository.Update(entity);
                 _unitOfWork.Save();
             }
