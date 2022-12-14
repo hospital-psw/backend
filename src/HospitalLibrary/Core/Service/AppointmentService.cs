@@ -59,7 +59,7 @@
             {
                 ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
                 ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
-                Room room = _unitOfWork.RoomRepository.GetById(16);
+                Room room = _unitOfWork.RoomRepository.GetById(26);
                 Appointment newAppointment = new Appointment(dto.Date, dto.ExamType, null, patient, doctor);
                 newAppointment.Room = room;
                 DoctorSchedule doctorSchedule = _unitOfWork.DoctorScheduleRepository.GetDoctorScheduleByDoctorId(dto.DoctorId);

@@ -65,7 +65,8 @@
             return txt;
         }
 
-        public static void GenerateAnamnesisPDF(Anamnesis anamnesis, AnamnesisPdfDTO dto) {
+        public static void GenerateAnamnesisPDF(Anamnesis anamnesis, AnamnesisPdfDTO dto)
+        {
 
             var Renderer = new IronPdf.ChromePdfRenderer();
             string text = System.IO.File.ReadAllText(@"./../HospitalLibrary/Resources/PDF/AnamnesisPdfTemplate.html");
@@ -78,10 +79,12 @@
             {
                 text = text.Replace("ANAMNESIS_DESCRIPTION", anamnesis.Description);
             }
-            else {
+            else
+            {
                 text = text.Replace("ANAMNESIS_DESCRIPTION", "/");
             }
-            if (dto.AreSymptomsSelected) {
+            if (dto.AreSymptomsSelected)
+            {
                 text = text.Replace("SYMPTOMS", GenerateSymptomsList(anamnesis));
             }
             else

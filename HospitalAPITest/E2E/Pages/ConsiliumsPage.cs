@@ -8,29 +8,38 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class AppointmentsCalendarPage
+    public class ConsiliumsPage
     {
-
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/app/appointments";
+        public const string URI = "http://localhost:4200/app/consiliums";
 
-        IWebElement scheduleButton => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-appointments/div[1]/div[3]/button[1]"));
+        private IWebElement ScheduleFormButton => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-all-consiliums/div/div"));
 
-        public AppointmentsCalendarPage(IWebDriver driver)
+        public ConsiliumsPage(IWebDriver driver)
         {
             this.driver = driver;
         }
 
+        public void Navigate() => driver.Navigate().GoToUrl(URI);
 
+        public bool ButtonDisplayed()
+        {
+            return ScheduleFormButton.Displayed;
+        }
+
+        public void ButtonClick()
+        {
+            ScheduleFormButton.Click();
+        }
 
         public void EnsurePageIsDisplayed()
         {
-            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 5, 0));
             wait.Until(condition =>
             {
                 try
                 {
-                    return scheduleButton != null;
+                    return ScheduleFormButton != null;
                 }
                 catch (StaleElementReferenceException)
                 {
@@ -42,11 +51,6 @@
                 }
             });
         }
-
-        public void GoToScheduling()
-        {
-            scheduleButton.Click();
-        }
-
     }
+
 }

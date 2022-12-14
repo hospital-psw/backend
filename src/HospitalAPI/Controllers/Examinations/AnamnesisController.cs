@@ -66,14 +66,15 @@
         }
 
         [HttpGet("byAppointment/{id}")]
-        public IActionResult GetByAppointment(int id) {
+        public IActionResult GetByAppointment(int id)
+        {
             return Ok(_anamnesisService.GetByAppointment(id));
         }
 
         [HttpPost("pdf")]
         public IActionResult FetchPdf(AnamnesisPdfDTO dto)
         {
-           
+
             _anamnesisService.GeneratePdf(dto);
 
             var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/anamnesis.pdf", FileMode.Open);
@@ -82,7 +83,8 @@
         }
 
         [HttpPost("edit")]
-        public IActionResult Edit(Anamnesis anamnesis) { 
+        public IActionResult Edit(Anamnesis anamnesis)
+        {
             Anamnesis addAnamnesis = _anamnesisService.Get(anamnesis.Id);
             addAnamnesis.Symptoms = anamnesis.Symptoms;
             _anamnesisService.Update(addAnamnesis);
@@ -101,6 +103,6 @@
             }
             return true;
         }
-        
+
     }
 }

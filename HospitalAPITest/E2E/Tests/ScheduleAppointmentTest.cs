@@ -15,7 +15,7 @@
         private Pages.MenuPage menuPage;
         private Pages.AppointmentsCalendarPage appointmentsCalendarPage;
         public const string URI_APPOINTMENTS = "http://localhost:4200/app/appointments";
-        
+
 
 
         public ScheduleAppointmentTest()
@@ -38,10 +38,9 @@
             loginPage.insertEmail("andrija@example.com");
             loginPage.insertPassword("123.Auth");
             loginPage.SubmitForm();
-            loginPage.WaitForFormSubmit();
+            loginPage.WaitForFormSubmitForDoctor();
 
-            //menuPage = new Pages.MenuPage(driver);
-            //menuPage.GoToAppointmentsPage();
+
 
             appointmentsCalendarPage = new Pages.AppointmentsCalendarPage(driver);
             appointmentsCalendarPage.EnsurePageIsDisplayed();
@@ -60,7 +59,7 @@
             scheduleAppointmentPage.Sumbit();
             ChooseAppointment();
             //scheduleAppointmentPage.EnsureToastNotificationAppeared();
-            EnsureURLChanged();
+            scheduleAppointmentPage.EnsureURLChanged();
             Assert.Equal(URI_APPOINTMENTS, driver.Url);
             Dispose();
         }
@@ -72,7 +71,7 @@
             scheduleAppointmentPage.Sumbit();
             ChooseAppointment();
             //scheduleAppointmentPage.EnsureToastNotificationAppeared();
-            EnsureURLChanged();
+            scheduleAppointmentPage.EnsureURLChanged();
             Assert.Equal(URI_APPOINTMENTS, driver.Url);
             Dispose();
 
@@ -101,25 +100,7 @@
             scheduleAppointmentPage.SelectAppointmentCard();
         }
 
-        private void EnsureURLChanged()
-        {
-            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
-            wait.Until(condition =>
-            {
-                try
-                {
-                    return driver.Url == URI_APPOINTMENTS;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    return false;
-                }
-                catch (NoSuchElementException)
-                {
-                    return false;
-                }
-            });
-        }
+
 
         public void Dispose()
         {

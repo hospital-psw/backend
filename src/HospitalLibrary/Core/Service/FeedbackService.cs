@@ -240,12 +240,12 @@
                 {
                     if (feedback.Anonymous)
                     {
-                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO("Anonymous", feedback.Message);
+                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO("Anonymous", feedback.Message.Message);
                         feedbacks.Add(dto);
                     }
                     else
                     {
-                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO(feedback.Creator.FirstName + " " + feedback.Creator.LastName, feedback.Message);
+                        WelcomePageFeedbackDTO dto = new WelcomePageFeedbackDTO(feedback.Creator.FirstName + " " + feedback.Creator.LastName, feedback.Message.Message);
                         feedbacks.Add(dto);
                     }
                 }

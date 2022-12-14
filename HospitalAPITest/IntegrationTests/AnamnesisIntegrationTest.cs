@@ -39,17 +39,17 @@
         }
 
         [Fact]
-        public void Generate_anamnesis_pdf() 
+        public void Generate_anamnesis_pdf()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
 
-            AnamnesisPdfDTO dto = new AnamnesisPdfDTO(1,true,true,true);
+            AnamnesisPdfDTO dto = new AnamnesisPdfDTO(1, true, true, true);
 
             var result = ((OkObjectResult)controller.FetchPdf(dto)).Value as AnamnesisPdfDTO;
 
-            Assert.Equal(result.GetType(),(new OkObjectResult(1)).GetType());
+            Assert.Equal(result.GetType(), (new OkObjectResult(1)).GetType());
         }
 
     }

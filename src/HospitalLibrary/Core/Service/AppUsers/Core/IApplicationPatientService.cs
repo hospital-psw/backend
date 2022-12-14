@@ -12,5 +12,10 @@
         ApplicationPatient Get(int id);
         IEnumerable<ApplicationPatient> GetAll();
         IEnumerable<ApplicationPatient> GetNonHospitalized();
+        IEnumerable<ApplicationPatient> GetBlocked();
+        IEnumerable<ApplicationPatient> GetMalicious();
+        Task<ApplicationPatient> BlockPatient(int id);
+        Task<ApplicationPatient> UnblockPatient(int id);
+        Task<ApplicationPatient> SetStrikes(int id, int num);
     }
 }

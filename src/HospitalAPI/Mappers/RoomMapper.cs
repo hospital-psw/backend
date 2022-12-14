@@ -8,6 +8,7 @@
         public static RoomDto EntityToEntityDto(Room room)
         {
             RoomDto dto = new RoomDto();
+            if (room == null) return null;
 
             dto.Id = room.Id;
             dto.Number = room.Number;

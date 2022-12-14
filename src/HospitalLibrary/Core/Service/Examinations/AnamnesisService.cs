@@ -124,14 +124,15 @@
             return anamnesis;
         }
 
-        public Anamnesis GetByAppointment(int id) {
+        public Anamnesis GetByAppointment(int id)
+        {
             return _unitOfWork.AnamnesisRepository.GetByAppointment(id);
         }
 
         public void GeneratePdf(AnamnesisPdfDTO dto)
         {
             Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.GetByAppointment(dto.AppointmentId);
-            PDFUtil.GenerateAnamnesisPDF(anamnesis,dto);
+            PDFUtil.GenerateAnamnesisPDF(anamnesis, dto);
         }
     }
 }
