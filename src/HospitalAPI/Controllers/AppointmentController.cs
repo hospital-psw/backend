@@ -7,6 +7,7 @@
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
@@ -21,12 +22,17 @@
         private readonly IAppointmentService _appointmentService;
         private readonly IEmailService _emailService;
         private readonly IDoctorScheduleService _doctorScheduleService;
+        private readonly IApplicationPatientService _patientService;
 
-        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService, IDoctorScheduleService doctorScheduleService)
+        public AppointmentController(IAppointmentService appointmentService,
+            IEmailService emailService, 
+            IDoctorScheduleService doctorScheduleService,
+            IApplicationPatientService patientService)
         {
             _appointmentService = appointmentService;
             _emailService = emailService;
             _doctorScheduleService = doctorScheduleService;
+            _patientService = patientService;
         }
 
         [HttpGet("{id}")]
@@ -120,21 +126,6 @@
         }
 
         [HttpGet]
-        [Route("patient/{id}")]
-        public IActionResult GetPatientAppointments(int id)
-        {
-            var appointments = _appointmentService.GetByPatientsId(id).ToList();
-
-            if (appointments.IsNullOrEmpty())
-            {
-                return NotFound();
-            }
-
-            return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
-        }
-
-
-        [HttpGet]
         [Route("room/{id}")]
         public IActionResult GetAllForRoom(int id)
         {
@@ -145,5 +136,21 @@
             }
             return Ok(appointmentDtos);
         }
+
+        [HttpGet("patient/{id}")]
+        public IActionResult GetPatientAppointments(int id)
+        {
+            var patient = _patientService.Get(id);
+            if (patient == null)
+                return NotFound("Patient with this id, doesn't exists in our system.");
+
+            var appointments = _appointmentService.GetByPatientsId(id).ToList();
+            if (appointments == null)
+                return Ok("There are no appointments for this patient.");
+
+            return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
+        }
+
+
     }
 }
