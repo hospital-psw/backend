@@ -126,6 +126,14 @@
                 {
                     var user = await _authService.FindByEmailAsync(dto.Email);
                     var role = await _authService.GetUserRole(user.Id);
+                    if (role.Equals("Patient"))
+                    {
+                        ApplicationPatient patient = (ApplicationPatient)await _authService.FindByEmailAsync(dto.Email);
+                        if (patient.Blocked)
+                        {
+                            return BadRequest("You are blocked from entering our site!");
+                        }
+                    }
                     var token = _tokenService.BuildToken(user, role);
                     var result = _mapper.Map<LoginResponseDTO>(user);
                     result.Token = token;
