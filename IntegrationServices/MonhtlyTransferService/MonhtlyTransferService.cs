@@ -32,7 +32,7 @@
                     {
                         currentBloodBank = bank;
                         collectTimer.Elapsed += new ElapsedEventHandler(CallBloodBank);
-                        collectTimer.Interval = 5000;
+                        collectTimer.Interval = 10000;
                         collectTimer.Enabled = true;
                     }
             }
