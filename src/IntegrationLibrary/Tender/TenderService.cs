@@ -74,9 +74,9 @@
                 _mailer.SendEmail(templateWin, "You won a tender", entity.Offers[offerIndex].Offeror.Email);
 
                 int i = 0;
-                foreach(var offer in entity.Offers)
+                foreach (var offer in entity.Offers)
                 {
-                    if(i != offerIndex)
+                    if (i != offerIndex)
                     {
                         _mailer.SendEmail(templateLose, "Tender finished", offer.Offeror.Email);
                     }
