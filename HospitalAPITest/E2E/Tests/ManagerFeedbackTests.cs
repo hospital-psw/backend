@@ -34,7 +34,7 @@
             loginPage = new Pages.LoginPage(driver);
             loginPage.Navigate();
             loginPage.EnsurePageIsDisplayed();
-            loginPage.insertEmail("mitraja@gmail.com");
+            loginPage.insertEmail("maroko@gmail.com");
             loginPage.insertPassword("123.Auth");
             loginPage.SubmitForm();
             loginPage.WaitForFormSubmit();
