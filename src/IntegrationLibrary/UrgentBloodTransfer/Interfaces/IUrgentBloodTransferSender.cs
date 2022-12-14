@@ -1,6 +1,5 @@
 ﻿namespace IntegrationLibrary.UrgentBloodTransfer.Interfaces
 {
-    using IntegrationLibrary.Core;
     using IntegrationLibrary.UrgentBloodTransfer.Model;
     using System;
     using System.Collections.Generic;
@@ -8,9 +7,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IUrgentBloodTransferRepository : IRepository<UrgentBloodTransfer>
+    public interface IUrgentBloodTransferSender
     {
-        UrgentBloodTransfer Get(UrgentBloodTransfer entity);
-        void Delete(UrgentBloodTransfer entity);
+        bool SendUrgentBloodRequest(UrgentBloodTransfer urgentBloodRequest);
     }
 }

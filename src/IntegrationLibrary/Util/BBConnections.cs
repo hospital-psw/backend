@@ -1,7 +1,7 @@
 namespace IntegrationLibrary.Util
 {
     using IntegrationLibrary.BloodBank;
-    using IntegrationLibrary.UrgentBloodTransfer;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using IntegrationLibrary.Util.Interfaces;
     using System;
     using System.Collections.Generic;

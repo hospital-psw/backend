@@ -1,5 +1,6 @@
 ﻿namespace IntegrationLibrary.Tender
 {
+    using IntegrationLibrary.BloodBank.Interfaces;
     using IntegrationLibrary.Core;
     using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender.Interfaces;
@@ -8,6 +9,7 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
 
     public class TenderService : ITenderService
@@ -16,12 +18,10 @@
         private readonly ILogger<Tender> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMailSender _mailer;
-        private readonly IBBConnections _connections;
-        public TenderService(ILogger<Tender> logger, IUnitOfWork unitOfWork, IMailSender mailer, IBBConnections connections)
+        public TenderService(ILogger<Tender> logger, IUnitOfWork unitOfWork, IMailSender mailer)
         {
             _logger = logger;
             _mailer = mailer;
-            _connections = connections;
             _unitOfWork = unitOfWork;
         }
 
@@ -61,6 +61,21 @@
             }
         }
 
+        public void FinishTender(int tenderId, int offerIndex)
+        {
+            try
+            {
+                var entity = _unitOfWork.TenderRepository.Get(tenderId);
+                entity.Status = TenderStatus.CLOSED;
+                entity.TenderWinner = entity.Offers[offerIndex];
+                _unitOfWork.TenderRepository.Update(entity);
+                _unitOfWork.Save();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in TenderService in Delete {e.Message} in {e.StackTrace}");
+            }
+        }
         public Tender Get(int id)
         {
             try
@@ -83,6 +98,32 @@
             catch (Exception e)
             {
                 _logger.LogError($"Error in TenderService in GetAll {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public TenderOffer MakeAnOffer(int tenderId, TenderOffer offer)
+        {
+            try
+            {
+                Tender tender = Get(tenderId);
+                if (tender == null)
+                {
+                    return null;
+                }
+                TenderOffer acceptedOffer = tender.MakeAnOffer(offer);
+                if (acceptedOffer == null)
+                {
+                    return null;
+                }
+                offer.Offeror = _unitOfWork.BloodBankRepository.Get(offer.Offeror.Id);
+                _unitOfWork.TenderRepository.Update(tender);
+                _unitOfWork.Save();
+                return acceptedOffer;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in TenderService in MakeAnOffer {e.Message} in {e.StackTrace}");
                 return null;
             }
         }
@@ -110,6 +151,19 @@
         public double WinningOfferPrice()
         {
             throw new NotImplementedException();
+        }
+
+        public List<Tender> GetActive()
+        {
+            try
+            {
+                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.OPEN && (x.DueDate > DateTime.Now || x.DueDate.ToString().Equals("0001-01-01T00:00:00"))).ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in TenderService in GetActive {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
     }
 }

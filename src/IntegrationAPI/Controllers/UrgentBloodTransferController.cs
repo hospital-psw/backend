@@ -2,6 +2,7 @@
 {
     using grpcServices;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@
         }
 
         [HttpPost]
-        public IActionResult RequestBlood([FromBody] UrgentBloodTransferRequest request)
+        public IActionResult RequestBlood([FromBody] UrgentBloodTransfer request)
         {
             if (_service.RequestBlood(request))
             {

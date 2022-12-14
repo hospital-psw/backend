@@ -11,7 +11,7 @@
     public class MenuPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/appointments";
+        public const string URI = "http://localhost:4200/app";
 
         IWebElement managerTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[3]/a"));
         IWebElement managerVacationRequestsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[5]/a"));
