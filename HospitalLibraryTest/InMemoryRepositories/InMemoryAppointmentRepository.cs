@@ -81,7 +81,7 @@ namespace HospitalLibraryTest.InMemoryRepositories
         public IEnumerable<Appointment> GetScheduledAppointmentsForRoom(int roomId)
         {
             List<Appointment> appointments = new List<Appointment>();
-            ApplicationPatient patient = new ApplicationPatient("ana", "vulin", "vulinana@gmail.com", false, new List<Allergies>());
+            ApplicationPatient patient = new ApplicationPatient("ana", "vulin", "vulinana@gmail.com", false, false, new List<Allergies>());
             Room room = Room.Create("001", null, null, null);
             room.SetId(1);
             WorkingHours doctorWorkingHours = new WorkingHours(new DateTime(2022, 12, 12, 7, 0, 0), new DateTime(2022, 12, 12, 15, 0, 0));

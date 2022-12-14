@@ -11,7 +11,7 @@
 
             dto.Creator = feedback.Creator.FirstName + " " + feedback.Creator.LastName;
             dto.FeedbackId = feedback.Id;
-            dto.Message = feedback.Message;
+            dto.Message = feedback.Message.Message;
             dto.Status = feedback.Status;
             dto.Anonymous = feedback.Anonymous;
             dto.Public = feedback.Public;
