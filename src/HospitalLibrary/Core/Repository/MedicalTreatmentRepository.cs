@@ -51,5 +51,15 @@
         {
             return GetAll().Where(x => !x.Active).ToList();
         }
+
+        public IEnumerable<MedicalTreatment> GetDoctorsActiveTreatments(int doctorId)
+        {
+            return GetActive().Where(x => x.Doctor.Id == doctorId).ToList();
+        }
+
+        public IEnumerable<MedicalTreatment> GetDoctorsInactiveTreatments(int doctorId)
+        {
+            return GetInactive().Where(x => x.Doctor.Id == doctorId).ToList();
+        }
     }
 }
