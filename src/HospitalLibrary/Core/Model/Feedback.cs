@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,7 +14,7 @@
     {
         public ApplicationPatient Creator { get; set; }
 
-        public string Message { get; set; }
+        public FeedbackMessage Message { get; set; }
 
         public bool Anonymous { get; set; }
 

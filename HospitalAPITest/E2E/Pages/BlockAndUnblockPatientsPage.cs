@@ -13,7 +13,7 @@
     public class BlockAndUnblockPatientsPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/blockpatients";
+        public const string URI = "http://localhost:4200/app/blockpatients";
 
         //private IWebElement TabMalicious => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-block-patients-view/div/mat-tab-group/mat-tab"));
         //private IWebElement TabBlocked => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-block-patients-view/div/mat-tab-group/mat-tab[2]"));
