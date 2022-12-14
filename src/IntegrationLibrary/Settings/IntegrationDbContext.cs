@@ -4,7 +4,7 @@
     using IntegrationLibrary.Core;
     using IntegrationLibrary.News;
     using IntegrationLibrary.Tender;
-    using IntegrationLibrary.UrgentBloodTransfer;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using System;

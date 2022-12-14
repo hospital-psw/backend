@@ -10,7 +10,7 @@
         List<Tender> GetActive();
         double AvgTotalPrice();
         double WinningOfferPrice();
-        
-        void FinishTender(int tenderId,int offerIndex);
+
+        void FinishTender(int tenderId, int offerIndex);
     }
 }
