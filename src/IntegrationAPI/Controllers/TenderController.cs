@@ -56,6 +56,7 @@
         [HttpPost]
         public virtual IActionResult Create([FromBody] CreateTenderDTO tender)
         {
+            tender.DueDate = new System.DateTime(2023, 05, 09, 9, 15, 0);
             var entity = _tenderService.Create(_mapper.Map<Tender>(tender));
 
             if (entity is null)
