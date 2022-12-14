@@ -2,6 +2,7 @@
 {
     using IntegrationLibrary.Settings;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;

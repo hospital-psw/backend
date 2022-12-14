@@ -418,9 +418,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Topic")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
@@ -993,9 +990,6 @@ namespace HospitalLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -1374,7 +1368,25 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("RoomId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.ConsiliumTopic", "Topic", b1 =>
+                        {
+                            b1.Property<int>("ConsiliumId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Content")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ConsiliumId");
+
+                            b1.ToTable("Consiliums");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ConsiliumId");
+                        });
+
                     b.Navigation("Room");
+
+                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorSchedule", b =>
@@ -1592,6 +1604,24 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.DoctorSchedule", null)
                         .WithMany("VacationRequests")
                         .HasForeignKey("DoctorScheduleId");
+
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.VacationRequestComment", "Comment", b1 =>
+                        {
+                            b1.Property<int>("VacationRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Comment")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("VacationRequestId");
+
+                            b1.ToTable("VacationRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VacationRequestId");
+                        });
+
+                    b.Navigation("Comment");
 
                     b.Navigation("Doctor");
                 });

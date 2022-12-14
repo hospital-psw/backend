@@ -1,6 +1,7 @@
 ﻿namespace IntegrationLibrary.UrgentBloodTransfer.Interfaces
 {
     using IntegrationLibrary.Core;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
     using System;
     using System.Collections.Generic;
     using System.Linq;
