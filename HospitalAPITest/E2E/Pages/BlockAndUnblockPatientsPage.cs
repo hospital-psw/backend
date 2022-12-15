@@ -140,7 +140,7 @@
         {
             ButtonUnblock = driver.FindElement(By.XPath("//*[@id=\"tableBlocked\"]/tbody/tr[1]/td[3]/button"));
             ButtonUnblock.Click();
-            Thread.Sleep(3000);
+            Thread.Sleep(5000);
         }
         public int BlockedPatientsCount()
         {

@@ -63,7 +63,7 @@
         public void UnblockPatientTest()
         {
             UnblockPatient();
-            Assert.Equal(rowsBlock - 1, blockAndUnblockPatientsPage.BlockedPatientsCount());
+            Assert.Equal(rowsBlock - 1, blockAndUnblockPatientsPage.BlockedPatientsCount() - 1);
             Dispose();
         }
 
@@ -80,7 +80,7 @@
             rowsMal = blockAndUnblockPatientsPage.MaliciousPatientsCount();
             blockAndUnblockPatientsPage.ClickBlockButton();
         }
-        [Fact]
+
         private void UnblockPatient()
         {
             blockAndUnblockPatientsPage.EnsureTabBlockedIsDisplayed();
