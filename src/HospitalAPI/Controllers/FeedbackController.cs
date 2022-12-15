@@ -127,13 +127,27 @@
             return feedback is null ? NotFound() : Ok(feedback);
         }
 
+
        
         [HttpPost("add")]
+
+      
+
         public IActionResult Add(NewFeedbackDTO dto)
         {
 
                 return Ok(_feedbackService.Add(dto));
             
+        }
+
+        [HttpPost("add/{num}/{mess}/{b}/{t}")]
+        public IActionResult Add(int num, string mess, bool b, bool t)
+        {
+
+            NewFeedbackDTO dto = new NewFeedbackDTO(num, mess, b, t);
+
+            return Ok(_feedbackService.Add(dto));
+
         }
 
         [HttpPut("make/public/{id}")]

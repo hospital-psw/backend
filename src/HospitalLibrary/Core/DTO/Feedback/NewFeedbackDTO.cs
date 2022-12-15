@@ -10,6 +10,19 @@
 
     public class NewFeedbackDTO
     {
+        private int num;
+        private string mess;
+        private bool b;
+        private bool t;
+
+        public NewFeedbackDTO(int num, string mess, bool b, bool t)
+        {
+            this.num = num;
+            this.mess = mess;
+            this.b = b;
+            this.t = t;
+        }
+
         [Required(ErrorMessage = "Required")]
         public int CreatorId { get; set; }
 
