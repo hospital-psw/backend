@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service.Examinations.Core
 {
     using HospitalLibrary.Core.DTO.Examinations;
+    using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Core;
@@ -21,5 +22,9 @@
         Anamnesis Add(NewAnamnesisDto dto);
 
         Anamnesis AddPrescriptions(int anamnesisId, List<Prescription> prescriptions);
+
+        Anamnesis GetByAppointment(int id);
+
+        void GeneratePdf(AnamnesisPdfDTO dto);
     }
 }

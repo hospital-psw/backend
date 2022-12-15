@@ -88,5 +88,21 @@
 
             Assert.Equal("http://localhost:4200/bloodbank/46/detail", _chromeDriver.Url);
         }
+
+        [Fact]
+        public void Check_Report()
+        {
+            using var scope = Factory.Services.CreateScope();
+            SetupContext(scope);
+            var page = new CheckBloodAmountPage(_chromeDriver);
+
+
+            page.ShowConfig.Click();
+            page.Freq.Clear();
+            page.Freq.SendKeys("666");
+            page.SaveReport.Click();
+            Thread.Sleep(500);
+            Assert.True(page.GetToast());
+        }
     }
 }

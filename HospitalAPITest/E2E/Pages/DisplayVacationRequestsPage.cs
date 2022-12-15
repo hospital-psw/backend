@@ -10,7 +10,7 @@
     public class DisplayVacationRequestsPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/vacation-requests-display";
+        public const string URI = "http://localhost:4200/app/vacation-requests-display";
         private IWebElement expander => driver.FindElement(By.XPath("//*[@id=\"vacation-request0\"]"));
         private IWebElement expanderWrapper => driver.FindElement(By.ClassName("users-wrapper"));
 

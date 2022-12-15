@@ -10,9 +10,9 @@
         public int Id { get; set; }
         public TenderStatus Status { get; set; }
         public DateTime DueDate { get; set; }
-        public List<TenderOffer> Offers { get; set; }
-        public TenderOffer TenderWinner { get; set; }
-        public List<TenderItem> Items { get; set; }
+        public List<ViewTenderOfferDTO> Offers { get; set; }
+        public ViewTenderOfferDTO TenderWinner { get; set; }
+        public List<ViewTenderItemDTO> Items { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
     }
