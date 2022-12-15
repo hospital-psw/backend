@@ -20,6 +20,7 @@
     using Microsoft.Net.Http.Headers;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
     [ApiController]
@@ -149,56 +150,44 @@
 
         [HttpPost("reset/password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDTO dto)
-        {
-            if (ModelState.IsValid)
+        {   
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var user = await _authService.FindByEmailAsync(dto.Email);
+            if (user == null)
+                return BadRequest("There is no user with entered email.");
+            var result = await _authService.ResetPasswordAsync(user, dto.Token, dto.Password);
+            if (!result.Succeeded)
             {
-                var user = await _authService.FindByEmailAsync(dto.Email);
-
-                if (user == null)
-                    return BadRequest("Something went wrong...");
-
-                var token = await _authService.GenerateEmailConfirmationTokenAsync(user);
-                var result = await _authService.ResetPasswordAsync(user, token, dto.Password);
-
-                if (result.Succeeded)
-                {
-                    await _authService.SignInAsync(user);
-                    return Ok(result);
-                }
+                var errors = result.Errors.Select(e => e.Description);
+                return BadRequest(new { Errors = errors });
             }
 
-            return BadRequest("Something went wrong...");
+            //ovo srediti
+            var message = "Your password has been successfully changed.";
+            return Ok(JsonSerializer.Serialize(message));
         }
-
 
         [HttpPost("forgot/password")]
-        public async Task<IActionResult> ForgetPassword(ResetPasswordDTO dto)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO dto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid Request");
+            var user = await _authService.FindByEmailAsync(dto.Email);
+            if (user == null)
+                return BadRequest("No user with entered email found");
+            var token = await _authService.GeneratePasswordResetTokenAsync(user);
+            var param = new Dictionary<string, string?>
             {
-                var user = await _authService.FindByEmailAsync(dto.Email);
+                {"token", token },
+                {"email", dto.Email }
+            };
+            var callback = QueryHelpers.AddQueryString(dto.ClientURI, param);
+            await _emailService.SendPasswordResetEmail("andrija.d.stanisic@gmail.com", callback);
 
-                if (user == null || !(await _authService.IsEmailConfirmedAsync(user)))
-                {
-                    return BadRequest("You must confirm your password through email...");
-                }
-            }
-
-            return BadRequest("Something went wrong...");
-        }
-
-
-        [Authorize(Roles = "Patient")]
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            string token = Request.Headers["Authorization"];
-            if (token == null || !_tokenService.IsTokenValid(token))
-            {
-                return BadRequest("Error");
-            }
-
-            return Ok("Success");
+            //ovo srediti
+            var message = "Email has been sent.";
+            return Ok(JsonSerializer.Serialize(message));
         }
 
         [HttpGet("ConfirmEmail")]

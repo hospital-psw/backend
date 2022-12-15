@@ -23,5 +23,6 @@
         Task<bool> IsEmailConfirmedAsync(ApplicationUser user);
         Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
         Task<IdentityResult> ConfirmEmailAsync(ApplicationUser user, string token);
+        Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user);
     }
 }

@@ -8,5 +8,6 @@
     {
         Task Send(Appointment appointment);
         Task SendActivationEmail(ApplicationUser identityUser, string url);
+        Task SendPasswordResetEmail(string email, string callback);
     }
 }
