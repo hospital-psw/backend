@@ -96,13 +96,13 @@
             SetupContext(scope);
             var page = new CheckBloodAmountPage(_chromeDriver);
 
-            
+
             page.ShowConfig.Click();
             page.Freq.Clear();
             page.Freq.SendKeys("666");
             page.SaveReport.Click();
             Thread.Sleep(500);
-            Assert.Equal(true, page.GetToast());
+            Assert.True(page.GetToast());
         }
     }
 }
