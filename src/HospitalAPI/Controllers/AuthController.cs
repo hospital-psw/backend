@@ -101,7 +101,6 @@
                     var callback = QueryHelpers.AddQueryString("http://localhost:16177/api/Auth/ConfirmEmail", param);
                     await _emailService.SendActivationEmail(identityUser, callback);
                     return Ok(result);
-                    //return Ok(_mapper.Map<ApplicationUserDTO>(identityUser));
                 }
                 else
                 {

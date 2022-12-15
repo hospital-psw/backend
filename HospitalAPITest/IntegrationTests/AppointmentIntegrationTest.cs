@@ -6,6 +6,7 @@
     using HospitalAPI.EmailServices;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.Appointments;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,8 @@
         {
             return new AppointmentController(serviceScope.ServiceProvider.GetRequiredService<IAppointmentService>(),
                                              serviceScope.ServiceProvider.GetRequiredService<IEmailService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IDoctorScheduleService>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IDoctorScheduleService>(),
+                                             serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
         }
 
         [Fact]
