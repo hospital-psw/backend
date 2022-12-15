@@ -13,18 +13,16 @@
     {
         public string City { get; private set; }
         public string Street { get; private set; }
-        public string PostalCode { get; set; }
 
-        public Address(string city, string street, string postalCode)
+        public Address(string city, string street)
         {
             City = city;
             Street = street;
-            PostalCode = postalCode;
         }
 
-        public static Address Create(string city, string street, string postalCode) 
+        public static Address Create(string city, string street) 
         {
-            return new Address(city, street, postalCode);
+            return new Address(city, street);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
