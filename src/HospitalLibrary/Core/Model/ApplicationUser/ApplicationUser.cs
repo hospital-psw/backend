@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Model.ApplicationUser
 {
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
@@ -17,6 +18,8 @@
         public DateTime DateOfBirth { get; set; }
 
         public Gender Gender { get; set; }
+
+        public Address Address { get; set; }
 
         public ApplicationUser() : base() { }
         public ApplicationUser(string firstName, string lastName, DateTime dateOfBirth, Gender gender)
