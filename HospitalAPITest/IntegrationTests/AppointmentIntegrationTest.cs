@@ -54,7 +54,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 4;
+            int roomId = 5;
 
             var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<AppointmentDisplayDto>;
 
@@ -66,7 +66,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 5;
+            int roomId = 4;
 
             var result = ((OkObjectResult)controller.GetAllForRoom(roomId)).Value as IEnumerable<AppointmentDisplayDto>;
 

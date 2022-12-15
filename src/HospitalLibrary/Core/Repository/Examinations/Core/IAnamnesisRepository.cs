@@ -16,5 +16,7 @@
         IEnumerable<Anamnesis> GetByDoctor(int doctorId);
 
         IEnumerable<Anamnesis> GetInDateRange(DateRange dateRange);
+
+        Anamnesis GetByAppointment(int id);
     }
 }

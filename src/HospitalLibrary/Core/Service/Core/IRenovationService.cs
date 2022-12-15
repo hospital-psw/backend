@@ -22,6 +22,7 @@
         double GetNewRoomWidth(Room room1, Room room2);
 
         List<RenovationRequest> GetAllForRoom(int roomId);
+        RenovationRequest GetById(int id);
         void Decline(int requestId);
     }
 }

@@ -1,15 +1,13 @@
 ﻿namespace IntegrationAPI.Controllers
 {
     using AutoMapper;
-    using IntegrationAPI.DTO.BloodBank;
-    using IntegrationAPI.DTO.News;
     using IntegrationAPI.DTO.Tender;
-    using IntegrationLibrary.News;
+    using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Tender.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
-
 
     [ApiController]
     [Route("api/[controller]")]
@@ -30,6 +28,12 @@
             return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetAll()));
         }
 
+        [HttpGet("active")]
+        public IActionResult GetActive()
+        {
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
+        }
+
         [HttpGet("{id}")]
         public virtual IActionResult Get(int id)
         {
@@ -41,6 +45,12 @@
             }
 
             return Ok(_mapper.Map<GetTenderDTO>(entity));
+        }
+        [HttpGet("finish/{tenderId}/{offerId}")]
+        public IActionResult FinishTender(int tenderId, int offerId)
+        {
+            _tenderService.FinishTender(tenderId, offerId);
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
         }
 
         [HttpPost]
@@ -71,6 +81,31 @@
             var responseEntity = _tenderService.Update(originalTender);
 
             return Ok(responseEntity);
+        }
+
+        [HttpPut("MakeAnOffer/{tenderId}")]
+        [Authorize]
+        public IActionResult MakeAnOffer(int tenderId, MakeTenderOfferDTO tender)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            TenderOffer tenderOffer = new()
+            {
+                Offeror = new BloodBank()
+                {
+                    Id = int.Parse(User.FindFirst(x => x.Type == "Id")?.Value)
+                },
+                Items = tender.Items
+            };
+
+            TenderOffer validTenderOffer = _tenderService.MakeAnOffer(tenderId, tenderOffer);
+            if (validTenderOffer == null)
+            {
+                return BadRequest();
+            }
+            return Ok(_mapper.Map<ViewTenderOfferDTO>(validTenderOffer));
         }
 
         [HttpDelete("{id}")]

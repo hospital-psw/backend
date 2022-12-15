@@ -4,6 +4,8 @@
     using grpcServices;
     using IntegrationLibrary.Core;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
+    using IntegrationLibrary.UrgentBloodTransfer.Senders;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
     using System;
@@ -14,9 +16,6 @@
 
     public class UrgentBloodTransferService : IUrgentBloodTransferService
     {
-        private Channel _channel;
-        private UrgentBloodTransferGrpcService.UrgentBloodTransferGrpcServiceClient _grpcClient;
-
         private readonly ILogger<UrgentBloodTransfer> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBBConnections _connections;
@@ -67,32 +66,35 @@
             }
         }
 
-        private UrgentBloodTransferResponse GetResponse(UrgentBloodTransferRequest request)
+        private IUrgentBloodTransferSender InstantiateSender(bool Http)
         {
-            _channel = new Channel("localhost:9090", ChannelCredentials.Insecure);
-            _grpcClient = new UrgentBloodTransferGrpcService.UrgentBloodTransferGrpcServiceClient(_channel);
-
-            UrgentBloodTransferResponse response = _grpcClient.transfer(request);
-            _channel?.ShutdownAsync();
-
-            return response;
+            if (Http)
+            {
+                return new HTTPUrgentBloodTransferSender();
+            }
+            else
+            {
+                return new GRPCUrgentBloodTransferSender();
+            }
         }
 
-        public bool RequestBlood(UrgentBloodTransferRequest request)
+        public bool RequestBlood(UrgentBloodTransfer request)
         {
             try
             {
-                var response = GetResponse(request);
+                IUrgentBloodTransferSender sender = InstantiateSender(request.HTTP);
 
-                if (response.HasBlood)
+                var response = sender.SendUrgentBloodRequest(request);
+
+                if (response)
                 {
-                    _connections.SendBloodUnitToHospital(new BloodUnit((BloodType)request.BloodType, (int)request.Amount));
+                    _connections.SendBloodUnitToHospital(new BloodUnit((Model.BloodType)request.BloodType, (int)request.Amount));
 
-                    _unitOfWork.UrgentBloodTransferRepository.Add(new UrgentBloodTransfer(request.BloodType, request.Amount));
+                    _unitOfWork.UrgentBloodTransferRepository.Add(request);
                     _unitOfWork.Save();
                 }
 
-                return response.HasBlood;
+                return response;
             }
             catch (Exception e)
             {

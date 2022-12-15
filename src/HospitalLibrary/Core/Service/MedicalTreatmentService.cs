@@ -108,7 +108,7 @@
 
         private void AddPatientToRoom(Room room, ApplicationPatient patient)
         {
-            room.Patients.Add(patient);
+            room.AddPatient(patient);
             _unitOfWork.RoomRepository.Update(room);
         }
 
@@ -176,11 +176,11 @@
             _unitOfWork.ApplicationPatientRepository.Update(medicalTreatment.Patient);
         }
 
-        public IEnumerable<MedicalTreatment> GetActive()
+        public IEnumerable<MedicalTreatment> GetDoctorsActiveTreatments(int doctorId)
         {
             try
             {
-                return _unitOfWork.MedicalTreatmentRepository.GetActive();
+                return _unitOfWork.MedicalTreatmentRepository.GetDoctorsActiveTreatments(doctorId);
             }
             catch (Exception e)
             {
@@ -189,11 +189,11 @@
             }
         }
 
-        public IEnumerable<MedicalTreatment> GetInactive()
+        public IEnumerable<MedicalTreatment> GetDoctorsInactiveTreatments(int doctorId)
         {
             try
             {
-                return _unitOfWork.MedicalTreatmentRepository.GetInactive();
+                return _unitOfWork.MedicalTreatmentRepository.GetDoctorsInactiveTreatments(doctorId);
             }
             catch (Exception e)
             {
@@ -207,5 +207,6 @@
             MedicalTreatment treatment = _unitOfWork.MedicalTreatmentRepository.Get(id);
             PDFUtil.GenerateTreatmentPdf(treatment);
         }
+
     }
 }

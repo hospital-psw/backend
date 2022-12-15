@@ -17,6 +17,8 @@
             dto.Email = doctor.Email;
             dto.Role = Role.DOCTOR.ToString();
             dto.Specialization = doctor.Specialization;
+            dto.Office = RoomMapper.EntityToEntityDto(doctor.Office);
+            dto.WorkingHours = WorkingHoursMapper.EntityToEntityDto(doctor.WorkHours);
 
             return dto;
         }

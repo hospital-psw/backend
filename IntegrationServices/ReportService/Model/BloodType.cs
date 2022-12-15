@@ -1,4 +1,4 @@
-﻿namespace IntegrationLibrary.UrgentBloodTransfer
+﻿namespace IntegrationServices.ReportService.Model
 {
     using System;
     using System.Collections.Generic;

@@ -214,7 +214,7 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("TenderOffer");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.UrgentBloodTransfer.UrgentBloodTransfer", b =>
+            modelBuilder.Entity("IntegrationLibrary.UrgentBloodTransfer.Model.UrgentBloodTransfer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,6 +235,9 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HTTP")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

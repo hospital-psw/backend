@@ -13,7 +13,7 @@
     public class LoginPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/display";
+        public const string URI = "http://localhost:4200/";
 
         private IWebElement emailInput => driver.FindElement(By.XPath("//*[@id=\"mat-input-0\"]"));
         private IWebElement passwordInput => driver.FindElement(By.XPath("//*[@id=\"mat-input-1\"]"));
@@ -74,6 +74,12 @@
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(MenuPage.URI));
+        }
+
+        public void WaitToRedirectToDoctorsApp()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(MenuDoctorPage.URI));
         }
 
     }

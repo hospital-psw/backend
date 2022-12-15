@@ -1,11 +1,14 @@
 ﻿namespace HospitalLibrary.Core.Service.Examinations
 {
     using HospitalLibrary.Core.DTO.Examinations;
+    using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Examinations;
+    using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Examinations.Core;
+    using HospitalLibrary.Util;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -119,6 +122,17 @@
             //prescriptions.ForEach(_unitOfWork.PrescriptionRepository.Update);
             _unitOfWork.Save();
             return anamnesis;
+        }
+
+        public Anamnesis GetByAppointment(int id)
+        {
+            return _unitOfWork.AnamnesisRepository.GetByAppointment(id);
+        }
+
+        public void GeneratePdf(AnamnesisPdfDTO dto)
+        {
+            Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.GetByAppointment(dto.AppointmentId);
+            PDFUtil.GenerateAnamnesisPDF(anamnesis, dto);
         }
     }
 }

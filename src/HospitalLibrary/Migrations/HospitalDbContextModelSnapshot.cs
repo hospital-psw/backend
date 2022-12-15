@@ -418,9 +418,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Topic")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
@@ -603,9 +600,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Public")
                         .HasColumnType("bit");
@@ -993,9 +987,6 @@ namespace HospitalLibrary.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -1205,6 +1196,9 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.ApplicationUser.ApplicationUser");
 
+                    b.Property<bool>("Blocked")
+                        .HasColumnType("bit");
+
                     b.Property<int>("BloodType")
                         .HasColumnType("int");
 
@@ -1212,6 +1206,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Strikes")
                         .HasColumnType("int");
 
                     b.Property<int?>("applicationDoctorId")
@@ -1374,7 +1371,25 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("RoomId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.ConsiliumTopic", "Topic", b1 =>
+                        {
+                            b1.Property<int>("ConsiliumId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Content")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ConsiliumId");
+
+                            b1.ToTable("Consiliums");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ConsiliumId");
+                        });
+
                     b.Navigation("Room");
+
+                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorSchedule", b =>
@@ -1444,7 +1459,25 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("CreatorId");
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FeedbackMessage", "Message", b1 =>
+                        {
+                            b1.Property<int>("FeedbackId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Message")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("FeedbackId");
+
+                            b1.ToTable("Feedback");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FeedbackId");
+                        });
+
                     b.Navigation("Creator");
+
+                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Floor", b =>
@@ -1592,6 +1625,24 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.DoctorSchedule", null)
                         .WithMany("VacationRequests")
                         .HasForeignKey("DoctorScheduleId");
+
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.VacationRequestComment", "Comment", b1 =>
+                        {
+                            b1.Property<int>("VacationRequestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Comment")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("VacationRequestId");
+
+                            b1.ToTable("VacationRequests");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VacationRequestId");
+                        });
+
+                    b.Navigation("Comment");
 
                     b.Navigation("Doctor");
                 });

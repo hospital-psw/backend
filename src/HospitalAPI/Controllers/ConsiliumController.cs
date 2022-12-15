@@ -1,12 +1,17 @@
 ﻿namespace HospitalAPI.Controllers
 {
     using HospitalAPI.Dto;
+    using HospitalAPI.Dto.Consilium;
     using HospitalAPI.Mappers;
+    using HospitalAPI.Mappers.Consilium;
+    using HospitalLibrary.Core.DTO.Consilium;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Exceptions;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -15,16 +20,36 @@
     public class ConsiliumController : BaseController<Consilium>
     {
         public IConsiliumService _consiliumService;
+        public IDoctorScheduleService _doctorScheduleService;
 
-        public ConsiliumController(IConsiliumService consiliumService)
+        public ConsiliumController(IConsiliumService consiliumService, IDoctorScheduleService doctorScheduleService)
         {
             _consiliumService = consiliumService;
+            _doctorScheduleService = doctorScheduleService;
         }
 
-        //public IActionResult Schedule(NewConsiliumDto dto)
-        //{
+        [HttpPost]
+        public IActionResult Schedule(ScheduleConsiliumDto dto)
+        {
+            try
+            {
+                if (dto == null)
+                {
+                    return BadRequest("Please pass valid data.");
+                }
+                if (dto.Topic == default(string) || dto.Duration == default(int))
+                {
+                    return BadRequest("Please pass valid data.");
+                }
 
-        //}
+                Consilium consilium = _doctorScheduleService.TryToScheduleConsilium(dto);
+                return Ok(ConsiliumMapper.EntityToDto(_consiliumService.Schedule(consilium)));
+            }
+            catch (ScheduleConsiliumException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -34,32 +59,45 @@
             {
                 return NotFound();
             }
-            //ConsiliumDto dto = 
-            return Ok();
+            return Ok(ConsiliumMapper.EntityToDto(consilium));
         }
 
         [HttpGet("all")]
         public IActionResult GetAll()
         {
-            //List<ConsiliumDto> consiliumDtoList = new List<ConsiliumDto>();
+            List<ConsiliumDto> consiliumDtoList = new List<ConsiliumDto>();
             List<Consilium> consiliumList = _consiliumService.GetAll().ToList();
             if (consiliumList.IsNullOrEmpty())
             {
                 return NotFound();
             }
-            //consiliumList.ForEach(consilium => consiliumDtoList.Add());
-            return Ok();
+            consiliumList.ForEach(consilium => consiliumDtoList.Add(ConsiliumMapper.EntityToDto(consilium)));
+            return Ok(consiliumDtoList);
         }
+
         [HttpGet("room/{roomId}")]
         public IActionResult GetAllForRoom(int roomId)
         {
-            List<ConsiliumDisplayDto> consiliumDtos = new List<ConsiliumDisplayDto>();
+            List<ConsiliumDto> consiliumDtos = new List<ConsiliumDto>();
             foreach (Consilium consilium in _consiliumService.GetAllForRoom(roomId))
             {
-                consiliumDtos.Add(ConsiliumDisplayMapper.EntityToEntityDto(consilium));
+                consiliumDtos.Add(ConsiliumMapper.EntityToDto(consilium));
             }
             return Ok(consiliumDtos);
         }
 
+        [HttpGet("doctor/{doctorId}")]
+        public IActionResult GetAllForDoctor(int doctorId)
+        {
+            List<DisplayConsiliumDto> consiliumDtoList = new List<DisplayConsiliumDto>();
+            List<Consilium> consiliumList = _consiliumService.GetAllForDoctor(doctorId).ToList();
+
+            if (consiliumList.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            consiliumList.ForEach(consilium => consiliumDtoList.Add(DisplayConsiliumMapper.EntityToEntityDto(consilium)));
+            return Ok(consiliumDtoList);
+        }
     }
 }

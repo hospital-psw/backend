@@ -10,6 +10,11 @@
     {
         GENERAL,
         CARDIOLOGY,
-        NEUROLOGY
+        NEUROLOGY,
+        DERMATOLOGY,
+        ENDOCRINOLOGY,
+        RADIOLOGY,
+        OPHTHAMOLOGY,
+        DENTISTRY
     }
 }

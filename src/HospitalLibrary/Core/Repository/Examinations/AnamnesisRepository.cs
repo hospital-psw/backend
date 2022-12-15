@@ -52,5 +52,11 @@
         {
             return GetAll().Where(x => dateRange.InRange(x.Appointment.Date));
         }
+
+        public Anamnesis GetByAppointment(int id)
+        {
+            return GetAll().FirstOrDefault(x => x.Appointment.Id == id);
+        }
+
     }
 }

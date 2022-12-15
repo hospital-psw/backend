@@ -14,10 +14,11 @@
     public class DeclineRelocationPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/display";
+        public const string URI = "http://localhost:4200/app/display";
         private IWebElement buildingField => driver.FindElement(By.XPath("//*[@id=\"buildingSelect\"]"));
         private IWebElement buildingFieldBuilding2 => driver.FindElement(By.XPath("//*[@id=\"mat-option-building\"]"));
         private IWebElement declineRelocationButton => driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]"));
+        private IWebElement declineRow;
         private IWebElement tabsRelocation;
         private IWebElement tabRelocation;
         private IWebElement declineButton;
@@ -65,7 +66,7 @@
         {
             Actions action = new Actions(driver);
             Thread.Sleep(1000);
-            action.MoveByOffset(897, 415).Click().Perform(); //897 415, 539 260
+            action.MoveByOffset(788, 402).Click().Perform(); //897 415, 539 260
             Thread.Sleep(1000);
         }
         public void SelectTab()
@@ -79,7 +80,8 @@
 
         public void Decline()
         {
-            declineButton = driver.FindElement(By.XPath("//*[@id=\"decline-relocation\"]/span[1]"));
+            //driver.FindElement(By.XPath("//*[@id=\"mat-tab-content-0-2\"]/div/app-relocations/div/table/tbody/tr[last()]/td[6]"));
+            declineButton = driver.FindElement(By.XPath("//*[@id=\"mat-tab-content-0-2\"]/div/app-relocations/div/table/tbody/tr[last()]/td[6]")); //driver.FindElement(By.XPath("//*[@id=\"decline - relocation\"]/span[1]"));
             declineButton.Click();
             Thread.Sleep(1000);
         }

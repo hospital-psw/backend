@@ -30,6 +30,11 @@
         public IEnumerable<VacationRequest> GetAllRequestsByDoctorsId(int doctorId)
         {
             return _context.VacationRequests.Include(x => x.Doctor)
+                                            .ThenInclude(x => x.Office)
+                                            .ThenInclude(x => x.Floor)
+                                            .ThenInclude(x => x.Building)
+                                            .Include(x => x.Doctor)
+                                            .ThenInclude(x => x.WorkHours)
                                             .Where(x => !x.Deleted && x.Doctor.Id == doctorId)
                                             .ToList();
         }

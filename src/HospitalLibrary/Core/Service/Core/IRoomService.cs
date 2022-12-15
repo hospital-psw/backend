@@ -13,5 +13,6 @@ namespace HospitalLibrary.Core.Service.Core
         void Delete(Room room);
         IEnumerable<Room> GetAvailable();
         List<Room> Search(string roomNumber, int floorNumber, int buildingId, string purpose, DateTime start, DateTime end, int equipmentType, int quantity);
+        IEnumerable<Room> GetRoomsWithWorkingHour(int workHourId);
     }
 }
