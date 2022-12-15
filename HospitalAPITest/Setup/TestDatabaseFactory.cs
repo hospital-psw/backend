@@ -166,6 +166,38 @@
                 ExamType = ExaminationType.OPERATION,
                 Duration = 30
             };
+            ApplicationDoctor appDocc = new ApplicationDoctor
+            {
+                FirstName = "Djankarlo22",
+                LastName = "Rapacoti",
+                Email = "djankarlno@asd.com",
+                Specialization = Specialization.GENERAL,
+                WorkHours = new WorkingHours()
+                {
+                    Start = new DateTime(2022, 10, 11, 8, 34, 58),
+                    End = new DateTime(2022, 12, 11, 8, 34, 58)
+                },
+                Office = null
+            };
+            appDocc.Id = 7;
+            ApplicationPatient appPatt = new ApplicationPatient
+            {
+                FirstName = "Mikaa",
+                LastName = "Mikicc",
+                Email = "mika@com",
+                Hospitalized = true
+            };
+            appPatt.Id = 13;
+            Appointment appointmentt = new Appointment
+            {
+                Date = new DateTime(2022, 11, 15, 8, 34, 58),
+                Doctor = appDocc,
+                Patient = appPatt,
+                Room = room,
+                IsDone = false,
+                ExamType = ExaminationType.GENERAL,
+                Duration = 30
+            };
 
             context.Appointments.Add(appointment1);
 

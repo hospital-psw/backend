@@ -17,6 +17,10 @@
             FromDate = fromDate;
             ToDate = toDate;
         }
+
+        public AppointmentDoctorDto()
+        {
+        }
     }
 
        // "doctorId": 0,

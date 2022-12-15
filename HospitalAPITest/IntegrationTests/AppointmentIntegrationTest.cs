@@ -7,6 +7,7 @@
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Util;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System;
@@ -70,6 +71,19 @@
 
             Assert.NotNull(result);
             Assert.Empty(result);
+        }
+        [Fact]
+        public void Get_appoitment_in_date_range()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            List<int> temp = ListFactory.CreateList(7);
+            AppointmentDoctorDto dto = new AppointmentDoctorDto(temp,13, new DateTime(2022, 10, 11, 8, 34, 58), new DateTime(2022, 12, 11, 8, 34, 58));
+
+            var result = ((OkObjectResult)controller.RecommendAppointmentsInDateRange(dto)).Value as IEnumerable<RecommendedAppointmentDto>;
+
+            Assert.NotNull(result);
+          
         }
 
     }

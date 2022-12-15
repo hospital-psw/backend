@@ -20,6 +20,10 @@
             PatientId = patientId;
             DoctorId = doctorId;
         }
+
+        public RecommendRequestDto()
+        {
+        }
     }
 
 }
