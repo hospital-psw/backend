@@ -63,7 +63,7 @@
         public void UnblockPatientTest()
         {
             UnblockPatient();
-            Assert.Equal(rowsBlock - 1, blockAndUnblockPatientsPage.BlockedPatientsCount() - 1);
+            Assert.Equal(rowsBlock - 1, blockAndUnblockPatientsPage.BlockedPatientsCount());
             Dispose();
         }
 
