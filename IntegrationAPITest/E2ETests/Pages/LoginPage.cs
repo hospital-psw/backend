@@ -2,6 +2,7 @@
 {
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
+    using OpenQA.Selenium.Support.UI;
 
     public class LoginPage
     {
@@ -17,6 +18,31 @@
         {
             _driver = driver;
             _driver.Navigate().GoToUrl(URI);
+        }
+        public void EnsurePageIsDisplayed()
+        {
+            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return Email != null && Password != null;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+        
+        public void WaitToRedirectToMenuPage()
+        {
+            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(MenuPage.URI));
         }
     }
 }

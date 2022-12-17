@@ -2,6 +2,7 @@
 {
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
+    using OpenQA.Selenium.Support.UI;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,6 +19,32 @@
         public BloodBanksPage(ChromeDriver driver)
         {
             _driver = driver;
+        }
+
+        public void EnsurePageIsDisplayed()
+        {
+            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return FirstBloodBank != null;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public void WaitToRedirectToBBDetailsPage()
+        {
+            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(BloodBankDetailsPage.URI));
         }
     }
 }
