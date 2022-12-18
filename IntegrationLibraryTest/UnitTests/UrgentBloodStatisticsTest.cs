@@ -1,13 +1,43 @@
 ﻿namespace IntegrationLibraryTest.UnitTests
 {
     using IntegrationLibrary.UrgentBloodTransfer;
+    using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
+    using IntegrationLibrary.UrgentBloodTransfer.Model;
+    using Moq;
+    using OpenQA.Selenium.DevTools.V105.Page;
     using Shouldly;
 
     public class UrgentBloodStatisticsTest
     {
         private UrgentBloodTransferStatisticsService SetupService() 
         {
-            return new UrgentBloodTransferStatisticsService();
+            var service = new Mock<IUrgentBloodTransferService>();
+            service.Setup(x => x.GetAll()).Returns(
+                new List<UrgentBloodTransfer>()
+                {
+                    new UrgentBloodTransfer(grpcServices.BloodType.Abplus, 5, true)
+                    {
+                        DateCreated = new DateTime(2022, 11, 5),
+                        Sender = new IntegrationLibrary.BloodBank.BloodBank() { Name = "Blood bank 1"},
+                    },
+                    new UrgentBloodTransfer(grpcServices.BloodType.Bplus, 10, true)
+                    {
+                        DateCreated = new DateTime(2022, 11, 5),
+                        Sender = new IntegrationLibrary.BloodBank.BloodBank() { Name = "Blood bank 1"},
+                    },
+                    new UrgentBloodTransfer(grpcServices.BloodType.Oplus, 3, true)
+                    {
+                        DateCreated = new DateTime(2022, 11, 6),
+                        Sender = new IntegrationLibrary.BloodBank.BloodBank() { Name = "Blood bank 2"},
+                    },
+                    new UrgentBloodTransfer(grpcServices.BloodType.Ominus, 7, true)
+                    {
+                        DateCreated = new DateTime(2022, 11, 6),
+                        Sender = new IntegrationLibrary.BloodBank.BloodBank() { Name = "Blood bank 2"},
+                    }
+                }
+            );
+            return new UrgentBloodTransferStatisticsService(service.Object);
         }
 
         [Fact]
@@ -20,10 +50,10 @@
             result.Count.ShouldBe(2);
             var expectedResult_BloodBank1 = new Dictionary<string, double>();
             var expectedResult_BloodBank2 = new Dictionary<string, double>();
-            expectedResult_BloodBank1.Add("AB_POSITIVE", 5);
-            expectedResult_BloodBank1.Add("B_POSITIVE", 10);
-            expectedResult_BloodBank2.Add("O_POSITIVE", 3);
-            expectedResult_BloodBank2.Add("O_NEGATIVE", 7);
+            expectedResult_BloodBank1.Add("Abplus", 5);
+            expectedResult_BloodBank1.Add("Bplus", 10);
+            expectedResult_BloodBank2.Add("Oplus", 3);
+            expectedResult_BloodBank2.Add("Ominus", 7);
             result["Blood bank 1"].ShouldBe(expectedResult_BloodBank1);
             result["Blood bank 2"].ShouldBe(expectedResult_BloodBank2);
         }        
@@ -58,10 +88,10 @@
             var result = service.GetAmountByBloodUnit(new DateTime(2022, 11, 1), new DateTime(2022, 11, 30));
 
             result.Count.ShouldBe(4);
-            result["AB_POSITIVE"].ShouldBe(5);
-            result["B_POSITIVE"].ShouldBe(10);
-            result["O_POSITIVE"].ShouldBe(3);
-            result["O_NEGATIVE"].ShouldBe(7);
+            result["Abplus"].ShouldBe(5);
+            result["Bplus"].ShouldBe(10);
+            result["Oplus"].ShouldBe(3);
+            result["Ominus"].ShouldBe(7);
         }
 
         [Fact]
@@ -69,7 +99,7 @@
         {
             var service = SetupService();
 
-            var result = service.GetAmountByBloodUnit(new DateTime(2022, 11, 1), new DateTime(2022, 11, 30));
+            var result = service.GetAmountByBloodUnit(new DateTime(2022, 11, 20), new DateTime(2022, 11, 1));
 
             result.ShouldNotBe(null);
             result.Count.ShouldBe(0);
@@ -80,7 +110,7 @@
         {
             var service = SetupService();
 
-            var result = service.GetAmountByBloodUnit(new DateTime(2022, 11, 1), new DateTime(2022, 11, 30));
+            var result = service.GetAmountByBloodUnit(new DateTime(2022, 11, 20), new DateTime(2022, 11, 1));
 
             result.ShouldNotBe(null);
             result.Count.ShouldBe(0);
@@ -93,9 +123,9 @@
 
             var result = service.GetBloodBankShare(new DateTime(2022, 11, 1), new DateTime(2022, 11, 30));
 
-            result.Count.ShouldBe(4);
-            result["Blood bank 1"].ShouldBe(15);
-            result["Blood bank 2"].ShouldBe(10);
+            result.Count.ShouldBe(2);
+            result["Blood bank 1"].ShouldBe(0.6);
+            result["Blood bank 2"].ShouldBe(0.4);
         }
 
         [Fact]
