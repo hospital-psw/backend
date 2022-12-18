@@ -7,12 +7,14 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using BloodBank;
 
     public class UrgentBloodTransfer : Entity
     {
         public grpcServices.BloodType BloodType { get; set; }
         public uint Amount { get; set; }
         public bool HTTP { get; set; }
+        public BloodBank Sender { get; set; }
 
         public UrgentBloodTransfer(grpcServices.BloodType bloodType, uint amount, bool hTTP)
         {

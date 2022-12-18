@@ -41,7 +41,7 @@
 
         public UrgentBloodTransfer Get(UrgentBloodTransfer entity)
         {
-            return _context.Set<UrgentBloodTransfer>().Where(x => x == entity).FirstOrDefault();
+            return _context.Set<UrgentBloodTransfer>().Where(x => x == entity).Include(x => x.Sender).FirstOrDefault();
         }
 
         public IEnumerable<UrgentBloodTransfer> GetAll()

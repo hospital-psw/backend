@@ -16,7 +16,7 @@
         public DbSet<BloodBank> BloodBanks { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Tender> Tenders { get; set; }
-        public DbSet<UrgentBloodTransfer> urgentBloodTransfers { get; set; }
+        public DbSet<UrgentBloodTransfer> UrgentBloodTransfers { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         public IntegrationDbContext() { }
 
