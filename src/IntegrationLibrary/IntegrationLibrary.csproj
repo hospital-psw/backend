@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="UrgentBloodTransfer\DTO\" />
     <Folder Include="Util\Email-Templates\" />
   </ItemGroup>
 
