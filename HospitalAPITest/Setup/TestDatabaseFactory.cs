@@ -628,7 +628,7 @@
             context.ApplicationDoctors.Add(new ApplicationDoctor
             {
                 FirstName = "Pero",
-                LastName ="Perovic",
+                LastName = "Perovic",
                 Email = "pero@gmail.com",
                 Specialization = Specialization.CARDIOLOGY,
                 WorkHours = new WorkingHours

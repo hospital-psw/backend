@@ -138,7 +138,7 @@
                 List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAllBySpecialization(specialization, dateRange);
                 return appointments;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return null;
             }
@@ -165,8 +165,8 @@
                         {
                             ReccomendedBySpecializationDTO appointment = new ReccomendedBySpecializationDTO(doctor.Id, doctor.FirstName, doctor.LastName, dayIterator, 30, room.Number, room.Floor.Number.Number, room.Floor.Building.Name);
                             generatedAppointments.Add(appointment);
-                            shiftIterator =shiftIterator.AddMinutes(30);
-                            startDate=startDate.AddMinutes(30);
+                            shiftIterator = shiftIterator.AddMinutes(30);
+                            startDate = startDate.AddMinutes(30);
                         }
 
                         dayIterator = dayIterator.AddDays(1);
@@ -175,7 +175,7 @@
 
                 return generatedAppointments;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return null;
             }
@@ -205,7 +205,7 @@
             try
             {
                 DateRange dateRange = new DateRange(dto.DateRange.From, dto.DateRange.To);
-                List<ReccomendedBySpecializationDTO> generatedAppointments = GenerateBySpecialization(specialization, dto, dateRange).ToList();                
+                List<ReccomendedBySpecializationDTO> generatedAppointments = GenerateBySpecialization(specialization, dto, dateRange).ToList();
                 List<Appointment> scheduledAppointments = GetAllBySpecialization(specialization, dateRange).ToList();
                 List<ReccomendedBySpecializationDTO> reccomendedBySpecializationDTOs = RemoveScheduledAppointmentsBySpecialization(generatedAppointments, scheduledAppointments);
                 return reccomendedBySpecializationDTOs;

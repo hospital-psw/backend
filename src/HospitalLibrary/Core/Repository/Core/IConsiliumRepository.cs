@@ -13,6 +13,6 @@
         IEnumerable<Consilium> GetDoctorsConsiliumsOfPassedDate(int doctorId, DateTime date);
         List<Consilium> GetScheduledConsiliumsForRoom(int roomId);
 
-        
+
     }
 }

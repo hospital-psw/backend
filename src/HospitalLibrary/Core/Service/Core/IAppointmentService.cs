@@ -30,5 +30,5 @@
 
         IEnumerable<ReccomendedBySpecializationDTO> RecommendAppointmentsBySpecialization(ReccomendBySpecializationRequestDto dto, Specialization specialization);
     }
-     
+
 }

@@ -132,7 +132,7 @@
             return Ok(appointmentDtos);
         }
 
-        public IActionResult GetAllBySpecialization(Specialization spec,[FromBody] DateRangeDto dateRangeDto)
+        public IActionResult GetAllBySpecialization(Specialization spec, [FromBody] DateRangeDto dateRangeDto)
         {
             DateRange dateRange = new DateRange(dateRangeDto.From, dateRangeDto.To);
             List<Appointment> appointments = (List<Appointment>)_appointmentService.GetAllBySpecialization(spec, dateRange);
@@ -149,7 +149,7 @@
         [Route("recommendBySpecialization/{specialization}")]
         public IActionResult RecommendAppointmentsBySpecialization(ReccomendBySpecializationRequestDto dto, Specialization specialization)
         {
-            return Ok(_appointmentService.RecommendAppointmentsBySpecialization(dto, specialization));   
+            return Ok(_appointmentService.RecommendAppointmentsBySpecialization(dto, specialization));
         }
     }
 }

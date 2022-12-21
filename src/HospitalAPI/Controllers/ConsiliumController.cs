@@ -97,7 +97,7 @@
             }
 
             List<DisplayConsiliumDto> dtos = new List<DisplayConsiliumDto>();
-            foreach(Consilium c in consiliums)
+            foreach (Consilium c in consiliums)
             {
                 dtos.Add(DisplayConsiliumMapper.EntityToEntityDto(c));
             }

@@ -75,7 +75,7 @@
         }
 
         [Fact]
-        public void Get_appointments_by_doctor_specialization() 
+        public void Get_appointments_by_doctor_specialization()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -88,7 +88,7 @@
             var result = controller.GetAllBySpecialization(spec, dateRangeDto);
 
             Assert.NotNull(result);
-            
+
         }
 
         [Fact]
@@ -102,7 +102,7 @@
             dateRangeDto.From = new DateTime(2023, 1, 8);
             dateRangeDto.To = new DateTime(2023, 1, 15);
             ReccomendBySpecializationRequestDto reccomendRequestDTO = new ReccomendBySpecializationRequestDto()
-            { 
+            {
                 DoctorId = 7,
                 PatientId = 1,
                 DateRange = new DateRange()
@@ -116,7 +116,7 @@
 
             Assert.NotEmpty(result);
             Assert.Equal(4, result.ElementAt(0).DoctorId);
-            
+
         }
 
     }
