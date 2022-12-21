@@ -7,6 +7,7 @@
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
 
     [ApiController]
@@ -118,6 +119,19 @@
             }
 
             return NoContent();
+        }
+        [HttpGet("money/{year}")]
+        public IActionResult GethMonthMoneyStatistics(int year)
+        {
+            List<double> moneyPerMonth = _tenderService.GetMoneyPerMonth(year);
+            if(moneyPerMonth == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(moneyPerMonth);
+            }
         }
     }
 }

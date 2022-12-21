@@ -179,5 +179,25 @@
                 return null;
             }
         }
+
+        public List<double> GetMoneyPerMonth(int year)
+        {
+            List<double> moneyPerMonth = new List<double>();
+            for(int i = 0; i < 12; ++i)
+            {
+                moneyPerMonth.Add(0);
+            }
+            foreach(Tender tender in _unitOfWork.TenderRepository.GetAll())
+            {
+                if (tender.TenderWinner != null && tender.DueDate.Year == year)
+                {
+                    foreach(TenderItem tenderItem in tender.Items)
+                    {
+                        moneyPerMonth[tender.DueDate.Month - 1] += tenderItem.Money.Amount;
+                    }
+                }
+            }
+            return moneyPerMonth;
+        }
     }
 }
