@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
+    using System.Text.Json;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -130,7 +131,9 @@
             }
             else
             {
-                return Ok(moneyPerMonth);
+                JsonSerializer.Serialize<List<double>>(moneyPerMonth);
+                //return Ok(moneyPerMonth);
+                return Ok(JsonSerializer.Serialize<List<double>>(moneyPerMonth));
             }
         }
     }
