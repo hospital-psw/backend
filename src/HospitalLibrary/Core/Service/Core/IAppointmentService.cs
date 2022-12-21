@@ -20,6 +20,8 @@
 
         IEnumerable<Appointment> GetByDoctorsId(int doctorId);
 
+        IEnumerable<Appointment> GetByPatientsId(int doctorId);
+
         IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to);
 
         List<Appointment> GetAllForRoom(int roomId);

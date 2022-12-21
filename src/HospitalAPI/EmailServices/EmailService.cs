@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Util;
+    using IdentityServer4.Models;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Net;
@@ -104,6 +105,24 @@
             };
 
             await client.SendMailAsync(message);
+        }
+
+        //ForgotPasswordMail
+        public async Task SendPasswordResetEmail(string email, string callback) 
+        {
+            try
+            {
+                string body = "<p>Please click on this link to reset your password:</p>" + callback;
+                var message = CreateEmailMessage(body, "Reset Password Token");
+                message.To.Add(email);
+                
+                await SendEmailMessage(message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in HospitalAPI EmailService in CreateActivationEmail {e.Message} in {e.StackTrace}");
+            }
+        
         }
     }
 }

@@ -104,5 +104,11 @@
             var result = await _userManager.ConfirmEmailAsync(user, token);
             return result;
         }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user) 
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            return token;
+        }
     }
 }
