@@ -56,7 +56,7 @@
         {
 
             List<RenovationRequest> finishedRenovations = _unitOfWork.RenovationRepository.GetFinishedRenovations();
-            Console.WriteLine(finishedRenovations.Count);
+            //Console.WriteLine(finishedRenovations.Count);
             if (finishedRenovations.Count == 0) return;
             foreach (RenovationRequest req in finishedRenovations)
             {
