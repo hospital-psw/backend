@@ -4,6 +4,7 @@
     using IntegrationAPI.DTO.Tender;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Tender;
+    using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -135,6 +136,12 @@
                 //return Ok(moneyPerMonth);
                 return Ok(JsonSerializer.Serialize<List<double>>(moneyPerMonth));
             }
+        }
+
+        [HttpGet("blood/{year}/{bloodType}")]
+        public OkObjectResult GethMonthBloodQuantity(int year, int bloodType)
+        {
+            throw new NotImplementedException();
         }
     }
 }
