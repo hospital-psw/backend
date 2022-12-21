@@ -13,6 +13,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -37,6 +38,17 @@
         public IActionResult Get(int id)
         {
             return Ok(AnamnesisMapper.EntityToEntityDto(_anamnesisService.Get(id)));
+        }
+
+        [HttpGet("search")]
+        public IActionResult Search(string input)
+        {
+            var inputParts = Regex.Matches(input, @"(?<match>\w+)|\""(?<match>[\w\s]*)""")
+                            .Cast<Match>()
+                            .Select(p => p.Groups["match"].Value)
+                            .ToList();
+
+            return Ok(AnamnesisMapper.EntityListToEntityDtoList(_anamnesisService.GetAnamnesesBySearchCriteria(inputParts).ToList()));
         }
 
         [HttpPost]

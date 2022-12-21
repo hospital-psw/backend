@@ -18,6 +18,7 @@
         IEnumerable<Prescription> GetAll();
 
         List<Prescription> AddMultiple(List<NewPrescriptionDto> dtos);
+        IEnumerable<Prescription> GetAnamnesesBySearchCriteria(List<string> criteriasList);
 
     }
 }

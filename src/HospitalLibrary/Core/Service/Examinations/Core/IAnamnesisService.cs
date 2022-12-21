@@ -26,5 +26,7 @@
         Anamnesis GetByAppointment(int id);
 
         void GeneratePdf(AnamnesisPdfDTO dto);
+
+        IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(List<string> criteriasList);
     }
 }

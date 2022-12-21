@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
+    using IdentityServer4.Extensions;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -27,5 +28,13 @@
             return GetAll().FirstOrDefault(x => x.Id == id);
         }
 
+        public IEnumerable<Prescription> GetAnamnesesBySearchCriteria(string criteria)
+        {
+            return GetAll()
+                   .Where(x => x.Description.ToUpper().Contains(criteria.ToUpper())
+                       || x.Medicament.Name.ToUpper().Equals(criteria.ToUpper())
+                       || x.Medicament.Description.ToUpper().Contains(criteria.ToUpper()))
+                   .ToList();
+        }
     }
 }

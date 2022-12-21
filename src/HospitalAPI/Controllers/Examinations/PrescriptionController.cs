@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -28,6 +29,17 @@
         public IActionResult GetAll()
         {
             return Ok(PrescriptionMapper.EntityListToEntityDtoList(_prescriptionService.GetAll().ToList()));
+        }
+
+        [HttpGet("search")]
+        public IActionResult Search(string input)
+        {
+            var inputParts = Regex.Matches(input, @"(?<match>\w+)|\""(?<match>[\w\s]*)""")
+                            .Cast<Match>()
+                            .Select(p => p.Groups["match"].Value)
+                            .ToList();
+
+            return Ok(PrescriptionMapper.EntityListToEntityDtoList(_prescriptionService.GetAnamnesesBySearchCriteria(inputParts).ToList()));
         }
 
         [HttpGet("{id}")]

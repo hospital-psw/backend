@@ -52,5 +52,18 @@
             Assert.Equal(result.GetType(), (new OkObjectResult(1)).GetType());
         }
 
+        [Fact]
+        public void Get_anamneses_by_search_criteria()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var input = "";
+
+            var result = ((OkObjectResult)controller.Search(input)).Value as List<AnamnesisDto>;
+
+            Assert.NotNull(result);
+        }
+
     }
 }
