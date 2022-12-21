@@ -46,7 +46,7 @@
 
         public IEnumerable<UrgentBloodTransfer> GetAll()
         {
-            return _context.Set<UrgentBloodTransfer>().ToList();
+            return _context.Set<UrgentBloodTransfer>().Include(x => x.Sender).ToList();
         }
 
         public void Update(UrgentBloodTransfer entity)

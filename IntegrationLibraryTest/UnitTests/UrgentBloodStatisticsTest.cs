@@ -3,6 +3,8 @@
     using IntegrationLibrary.UrgentBloodTransfer;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
     using IntegrationLibrary.UrgentBloodTransfer.Model;
+    using IntegrationLibrary.Util;
+    using IntegrationLibrary.Util.Interfaces;
     using Moq;
     using OpenQA.Selenium.DevTools.V105.Page;
     using Shouldly;
@@ -37,7 +39,7 @@
                     }
                 }
             );
-            return new UrgentBloodTransferStatisticsService(service.Object);
+            return new UrgentBloodTransferStatisticsService(service.Object, new Mock<IHTMLReportService>().Object);
         }
 
         [Fact]
@@ -148,6 +150,14 @@
 
             result.ShouldNotBe(null);
             result.Count.ShouldBe(0);
+        }
+
+        [Fact]
+        public void Test()
+        {
+            var service = new HTMLReportService();
+
+            //service.AddBarChart();
         }
     }
 }
