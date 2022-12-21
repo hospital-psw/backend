@@ -132,8 +132,8 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            int doctorId = 6;
-            var result = ((OkObjectResult)controller.GetAllForDoctor(doctorId)).Value as IEnumerable<DisplayConsiliumDto>;
+            int doctorId = 7;
+            var result = ((OkObjectResult)controller.GetAllByDoctorId(doctorId)).Value as List<DisplayConsiliumDto>;
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);
@@ -146,7 +146,7 @@
             var controller = SetupController(scope);
             int doctorId = 5;
 
-            var result = controller.GetAllForDoctor(doctorId) as StatusCodeResult;
+            var result = controller.GetAllByDoctorId(doctorId) as StatusCodeResult;
 
             Assert.Equal(StatusCodes.Status404NotFound, result.StatusCode);
         }

@@ -9,6 +9,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -165,10 +166,10 @@
                             ReccomendedBySpecializationDTO appointment = new ReccomendedBySpecializationDTO(doctor.Id, doctor.FirstName, doctor.LastName, dayIterator, 30, room.Number, room.Floor.Number.Number, room.Floor.Building.Name);
                             generatedAppointments.Add(appointment);
                             shiftIterator =shiftIterator.AddMinutes(30);
-                            startDate.AddMinutes(30);
+                            startDate=startDate.AddMinutes(30);
                         }
 
-                        dayIterator.AddDays(1);
+                        dayIterator = dayIterator.AddDays(1);
                     }
                 }
 
@@ -204,9 +205,10 @@
             try
             {
                 DateRange dateRange = new DateRange(dto.DateRange.From, dto.DateRange.To);
-                List<ReccomendedBySpecializationDTO> generatedAppointments = GenerateBySpecialization(specialization, dto, dateRange).ToList();
-                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetAllBySpecialization(specialization, dateRange).ToList();
-                return RemoveScheduledAppointmentsBySpecialization(generatedAppointments, scheduledAppointments);
+                List<ReccomendedBySpecializationDTO> generatedAppointments = GenerateBySpecialization(specialization, dto, dateRange).ToList();                
+                List<Appointment> scheduledAppointments = GetAllBySpecialization(specialization, dateRange).ToList();
+                List<ReccomendedBySpecializationDTO> reccomendedBySpecializationDTOs = RemoveScheduledAppointmentsBySpecialization(generatedAppointments, scheduledAppointments);
+                return reccomendedBySpecializationDTOs;
             }
             catch (Exception e)
             {

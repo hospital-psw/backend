@@ -103,8 +103,8 @@
             dateRangeDto.To = new DateTime(2023, 1, 15);
             ReccomendBySpecializationRequestDto reccomendRequestDTO = new ReccomendBySpecializationRequestDto()
             { 
-                DoctorId = 6,
-                PatientId = 4,
+                DoctorId = 7,
+                PatientId = 1,
                 DateRange = new DateRange()
                 {
                     From = dateRangeDto.From,
@@ -115,7 +115,7 @@
             var result = ((OkObjectResult)controller.RecommendAppointmentsBySpecialization(reccomendRequestDTO, spec)).Value as IEnumerable<ReccomendedBySpecializationDTO>;
 
             Assert.NotEmpty(result);
-            Assert.Equal(result.ElementAt(0).DoctorId, 6);
+            Assert.Equal(4, result.ElementAt(0).DoctorId);
             
         }
 

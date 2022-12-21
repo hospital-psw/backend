@@ -117,8 +117,10 @@
         public List<Appointment> GetAllBySpecialization(Specialization specialization, DateRange dateRange)
         {
             return HospitalDbContext.Appointments.Include(x => x.Doctor)
-                                                 .Where(x => x.Doctor.Specialization == specialization && dateRange.InRange(x.Date) && !x.Deleted && !x.IsDone)
+                                                 .Include(x => x.Patient)
+                                                 .Where(x => x.Doctor.Specialization == specialization && x.Date >= dateRange.From && x.Date <= dateRange.To && !x.Deleted && !x.IsDone)
                                                  .ToList();
+            //x.Date >= dateRange.From && x.Date <= dateRange.To
 
         }
         public void Save()

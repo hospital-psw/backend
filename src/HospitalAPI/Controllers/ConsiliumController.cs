@@ -97,8 +97,12 @@
             }
 
             List<DisplayConsiliumDto> dtos = new List<DisplayConsiliumDto>();
+            foreach(Consilium c in consiliums)
+            {
+                dtos.Add(DisplayConsiliumMapper.EntityToEntityDto(c));
+            }
 
-            consiliums.ForEach(c => dtos.Add(DisplayConsiliumMapper.EntityToEntityDto(c)));
+            //consiliums.ForEach(c => dtos.Add(DisplayConsiliumMapper.EntityToEntityDto(c)));
 
             return Ok(dtos);
 
