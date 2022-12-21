@@ -9,5 +9,6 @@
     public interface ITenderService
     {
         public List<double> GetMoneyPerMonth(int year);
+        public List<double> GetBloodPerMonth(int year, int bloodType);
     }
 }

@@ -5,5 +5,6 @@
     public interface IConnections
     {
         public List<double> SendHttpRequestToIntegration(int year);
+        public List<double> SendHttpRequestToIntegrationBloodQuantity(int year, int bloodType);
     }
 }

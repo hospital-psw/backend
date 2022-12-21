@@ -139,9 +139,19 @@
         }
 
         [HttpGet("blood/{year}/{bloodType}")]
-        public OkObjectResult GethMonthBloodQuantity(int year, int bloodType)
+        public IActionResult GethMonthBloodQuantity(int year, int bloodType)
         {
-            throw new NotImplementedException();
+            List<double> bloodQuantityPerMonth = _tenderService.GetBloodPerMonth(year, bloodType);
+            if (bloodQuantityPerMonth == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth);
+                //return Ok(moneyPerMonth);
+                return Ok(JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth));
+            }
         }
     }
 }

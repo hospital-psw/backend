@@ -199,5 +199,66 @@
             }
             return moneyPerMonth;
         }
+
+        public List<double> GetBloodPerMonth(int year, int bloodType)
+        {
+            BloodType bt = convertIntToBloodType(bloodType);
+            List<double> bloodPerMonth = new List<double>();
+            for (int i = 0; i < 12; ++i)
+            {
+                bloodPerMonth.Add(0);
+            }
+            foreach (Tender tender in _unitOfWork.TenderRepository.GetAll())
+            {
+                if (tender.TenderWinner != null && tender.DueDate.Year == year)
+                {
+                    foreach (TenderItem tenderItem in tender.TenderWinner.Items)
+                    {
+                        if(tenderItem.BloodType == bt)
+                        {
+                            bloodPerMonth[tender.DueDate.Month - 1] += tenderItem.Quantity;
+                        }
+                    }
+                }
+            }
+            return bloodPerMonth;
+        }
+
+        private BloodType convertIntToBloodType(int bloodType)
+        {
+            BloodType bt;
+            switch (bloodType)
+            {
+                case 0:
+                    bt = BloodType.A_POSITIVE;
+                    break;
+                case 1:
+                    bt = BloodType.A_NEGATIVE;
+                    break;
+                case 2:
+                    bt = BloodType.B_POSITIVE;
+                    break;
+                case 3:
+                    bt = BloodType.B_NEGATIVE;
+                    break;
+                case 4:
+                    bt = BloodType.O_POSITIVE;
+                    break;
+                case 5:
+                    bt = BloodType.O_NEGATIVE;
+                    break;
+                case 6:
+                    bt = BloodType.AB_POSITIVE;
+                    break;
+                case 7:
+                    bt = BloodType.AB_NEGATIVE;
+                    break;
+                default:
+                    bt = BloodType.A_POSITIVE;
+                    break;
+
+            }
+            return bt;
+        }
     }
 }
