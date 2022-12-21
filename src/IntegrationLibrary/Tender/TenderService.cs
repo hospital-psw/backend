@@ -191,7 +191,7 @@
             {
                 if (tender.TenderWinner != null && tender.DueDate.Year == year)
                 {
-                    foreach(TenderItem tenderItem in tender.Items)
+                    foreach(TenderItem tenderItem in tender.TenderWinner.Items)
                     {
                         moneyPerMonth[tender.DueDate.Month - 1] += tenderItem.Money.Amount;
                     }
