@@ -11,7 +11,11 @@
 
         private readonly IWebDriver driver;
         private Pages.ScheduleAppointmentPage scheduleAppointmentPage;
-        public const string URI_APPOINTMENTS = "http://localhost:4200/appointments";
+        private Pages.LoginPage loginPage;
+        private Pages.MenuPage menuPage;
+        private Pages.AppointmentsCalendarPage appointmentsCalendarPage;
+        public const string URI_APPOINTMENTS = "http://localhost:4200/app/appointments";
+
 
 
         public ScheduleAppointmentTest()
@@ -28,30 +32,63 @@
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.insertEmail("andrija@example.com");
+            loginPage.insertPassword("123.Auth");
+            loginPage.SubmitForm();
+            loginPage.WaitToRedirectToDoctorsApp();
+
+
+
+            appointmentsCalendarPage = new Pages.AppointmentsCalendarPage(driver);
+            appointmentsCalendarPage.EnsurePageIsDisplayed();
+            appointmentsCalendarPage.GoToScheduling();
 
             scheduleAppointmentPage = new Pages.ScheduleAppointmentPage(driver);      // create ProductsPage
-            scheduleAppointmentPage.Navigate();                            // navigate to url
             scheduleAppointmentPage.EnsurePageIsDisplayed();
 
 
         }
 
         [Fact]
-        public void Test()
+        public void Choose_specific_date()
         {
             ChooseAppointmentParameters();
             scheduleAppointmentPage.Sumbit();
             ChooseAppointment();
-            EnsureURLChanged();
+            //scheduleAppointmentPage.EnsureToastNotificationAppeared();
+            scheduleAppointmentPage.EnsureURLChanged();
             Assert.Equal(URI_APPOINTMENTS, driver.Url);
             Dispose();
         }
+
+        [Fact]
+        public void Choose_today()
+        {
+            ChooseToday();
+            scheduleAppointmentPage.Sumbit();
+            ChooseAppointment();
+            //scheduleAppointmentPage.EnsureToastNotificationAppeared();
+            scheduleAppointmentPage.EnsureURLChanged();
+            Assert.Equal(URI_APPOINTMENTS, driver.Url);
+            Dispose();
+
+        }
+
+        private void ChooseToday()
+        {
+            scheduleAppointmentPage.SelectTodaysDate();
+            scheduleAppointmentPage.SelectPatient();
+            scheduleAppointmentPage.SelectExaminationType();
+        }
+
 
 
 
         private void ChooseAppointmentParameters()
         {
-
             scheduleAppointmentPage.SelectDate();
             scheduleAppointmentPage.SelectPatient();
             scheduleAppointmentPage.SelectExaminationType();
@@ -63,25 +100,7 @@
             scheduleAppointmentPage.SelectAppointmentCard();
         }
 
-        private void EnsureURLChanged()
-        {
-            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
-            wait.Until(condition =>
-            {
-                try
-                {
-                    return driver.Url == URI_APPOINTMENTS;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    return false;
-                }
-                catch (NoSuchElementException)
-                {
-                    return false;
-                }
-            });
-        }
+
 
         public void Dispose()
         {

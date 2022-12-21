@@ -40,7 +40,7 @@
                     currentBB = bank;
                     Console.WriteLine(bank.Name);
                     collectTimer.Elapsed += new ElapsedEventHandler(GenerateAndSendReport);
-                    collectTimer.Interval = 10000; //bank.Frequently*24*60*60*1000; //bank.Frequently//freqvently in miliseconds 
+                    collectTimer.Interval = bank.Frequently * 24 * 60 * 60 * 1000; //bank.Frequently//freqvently in miliseconds 
                     collectTimer.Enabled = true;
                 }
             }

@@ -29,7 +29,15 @@
         [HttpPost("createRelocationRequest")]
         public IActionResult Create([FromBody] RelocationRequestDto dto)
         {
-            return Ok(_relocationService.Create(RelocationRequestMapper.EntityDtoToEntity(dto, _roomService.GetById(dto.FromRoomId), _roomService.GetById(dto.ToRoomId), _equipmentService.Get(dto.EquipmentId))));
+            try
+            {
+                RelocationRequest request = RelocationRequestMapper.EntityDtoToEntity(dto, _roomService.GetById(dto.FromRoomId), _roomService.GetById(dto.ToRoomId), _equipmentService.Get(dto.EquipmentId));
+                return Ok(_relocationService.Create(request));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         /*
@@ -59,6 +67,7 @@
         [HttpPost("decline")]
         public IActionResult Decline([FromBody] int requestId)
         {
+            if (_relocationService.GetById(requestId) == null) return NotFound();
             _relocationService.Decline(requestId);
             return Ok();
         }

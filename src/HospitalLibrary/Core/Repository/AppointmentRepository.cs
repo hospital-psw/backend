@@ -113,11 +113,18 @@
                                                .ToList();
         }
 
+
         public List<Appointment> GetAllBySpecialization(Specialization specialization, DateRange dateRange)
         {
             return HospitalDbContext.Appointments.Include(x => x.Doctor)
                                                  .Where(x => x.Doctor.Specialization == specialization && dateRange.InRange(x.Date) && !x.Deleted && !x.IsDone)
                                                  .ToList();
+
+        }
+        public void Save()
+        {
+            HospitalDbContext.SaveChanges();
+
         }
     }
 }

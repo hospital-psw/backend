@@ -15,7 +15,11 @@
         IEnumerable<Consilium> GetAll();
         List<Consilium> GetAllForRoom(int roomId);
 
-        List<Consilium> GetConsiliumsByDoctorId(int doctorId);
+
+
+
+
+        List<Consilium> GetAllForDoctor(int doctorId);
 
     }
 }

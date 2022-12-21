@@ -13,6 +13,7 @@
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Model.VacationRequests;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Settings;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
@@ -89,7 +90,9 @@
                 FirstName = "Mika",
                 LastName = "Mikic",
                 Email = "mika@com",
-                Hospitalized = true
+                Hospitalized = true,
+                Blocked = true,
+                Strikes = 3,
             };
 
             ApplicationPatient appPat2 = new ApplicationPatient
@@ -98,11 +101,81 @@
                 LastName = "Djuric",
                 Email = "djura@com",
                 Hospitalized = true,
+                Blocked = false,
+                Strikes = 0,
+            };
+            ApplicationPatient appPat3 = new ApplicationPatient
+            {
+                FirstName = "Pera",
+                LastName = "Peric",
+                Email = "pera@com",
+                Blocked = true,
+                Strikes = 0,
+            };
+            ApplicationPatient appPat4 = new ApplicationPatient
+            {
+                FirstName = "Tara",
+                LastName = "Taric",
+                Email = "tara@com",
+                Blocked = true,
+                Strikes = 1,
+            };
+            ApplicationPatient appPat5 = new ApplicationPatient
+            {
+                FirstName = "Aleksa",
+                LastName = "Aleksic",
+                Email = "aca@com",
+                Blocked = false,
+                Strikes = 4,
             };
 
             List<ApplicationPatient> patients = new List<ApplicationPatient>();
             patients.Add(appPat);
             patients.Add(appPat2);
+            patients.Add(appPat3);
+            patients.Add(appPat4);
+            patients.Add(appPat5);
+
+
+            Floor floor = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
+            };
+
+            WorkingHours wh = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+
+            Room room = Room.Create("6904", floor, "Soba za kremiranje", wh);
+            room.SetPatients(patients);
+
+
+            Floor floorOffice = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 15",
+                    Name = "Decija bolnica"
+                },
+                Number = FloorNumber.Create(11),
+                Purpose = "Kancelarija"
+            };
+
+            WorkingHours whOffice = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+
+            Room office = Room.Create("1511", floorOffice, "Kancelarija", whOffice);
 
             ApplicationDoctor appDoc = new ApplicationDoctor()
             {
@@ -112,33 +185,10 @@
                 Specialization = Specialization.CARDIOLOGY,
                 WorkHours = new WorkingHours()
                 {
-                    Start = new DateTime(1, 1, 1, 12, 0, 0),
-                    End = new DateTime(1, 1, 1, 16, 0, 0)
+                    Start = new DateTime(1, 1, 1, 6, 0, 0),
+                    End = new DateTime(1, 1, 1, 14, 0, 0)
                 },
-                Office = null
-            };
-
-            Room room = new Room()
-            {
-                Floor = new Floor()
-                {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
-                },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
-                Patients = patients
-
+                Office = office,
             };
 
             BloodExpenditure expenditure = new BloodExpenditure()
@@ -217,7 +267,7 @@
                 From = new DateTime(2022, 11, 25, 0, 0, 0),
                 To = new DateTime(2022, 12, 11, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
@@ -229,57 +279,35 @@
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
 
 
             //for equipment controller
-            Room equipmentRoom = new Room()
+            Floor floor1 = new Floor()
             {
-                Floor = new Floor()
+                Building = new Building()
                 {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
                 },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
-            context.Equipments.Add(new Equipment
+
+            WorkingHours wh1 = new WorkingHours()
             {
-                EquipmentType = EquipmentType.BED,
-                Quantity = 8,
-                Room = equipmentRoom
-            });
-            context.Equipments.Add(new Equipment
-            {
-                EquipmentType = EquipmentType.SCISSORS,
-                Quantity = 10,
-                Room = equipmentRoom
-            });
-            context.Equipments.Add(new Equipment
-            {
-                EquipmentType = EquipmentType.NEEDLE,
-                Quantity = 20,
-                Room = equipmentRoom
-            });
-            context.Equipments.Add(new Equipment
-            {
-                EquipmentType = EquipmentType.BANDAGE,
-                Quantity = 5,
-                Room = equipmentRoom
-            });
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+            Room equipmentRoom = Room.Create("6904", floor1, "Soba za kremiranje", wh1);
+
+            context.Equipments.Add(Equipment.Create(EquipmentType.BED, 8, equipmentRoom));
+            context.Equipments.Add(Equipment.Create(EquipmentType.SCISSORS, 10, equipmentRoom));
+            context.Equipments.Add(Equipment.Create(EquipmentType.NEEDLE, 20, equipmentRoom));
+            context.Equipments.Add(Equipment.Create(EquipmentType.BANDAGE, 5, equipmentRoom));
 
             BloodAcquisition aquisition1 = new BloodAcquisition
             {
@@ -317,14 +345,14 @@
 
             context.Buildings.Add(building);
 
-            Floor floor = new Floor()
+            Floor floor2 = new Floor()
             {
                 Building = building,
-                Number = 0,
+                Number = FloorNumber.Create(0),
                 Purpose = "ortopedija"
             };
 
-            context.Floors.Add(floor);
+            context.Floors.Add(floor1);
 
             WorkingHours workingHours = new WorkingHours()
             {
@@ -334,13 +362,7 @@
 
             context.WorkingHours.Add(workingHours);
 
-            context.Rooms.Add(new Room
-            {
-                Floor = floor,
-                Number = "003",
-                Purpose = "ordinacija",
-                WorkingHours = workingHours
-            });
+            context.Rooms.Add(Room.Create("003", floor2, "ordinacija", workingHours));
 
             context.BloodUnits.Add(new BloodUnit
             {
@@ -360,7 +382,7 @@
                 From = new DateTime(2022, 12, 12, 0, 0, 0),
                 To = new DateTime(2022, 12, 15, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
@@ -372,9 +394,18 @@
             context.ApplicationPatients.Add(new ApplicationPatient
                 ("Fosilka", "Fosilovic", new DateTime(1930, 11, 26), Gender.FEMALE, false, BloodType.O_PLUS));
             context.ApplicationDoctors.Add(new ApplicationDoctor
-                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null));
-            context.ApplicationDoctors.Add(new ApplicationDoctor
-                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, null, null));
+                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, room));
+
+            WorkingHours besonWH = new WorkingHours
+            {
+                Start = new DateTime(1, 1, 1, 6, 0, 0),
+                End = new DateTime(1, 1, 1, 14, 0, 0)
+            };
+
+            ApplicationDoctor docBeson = new ApplicationDoctor
+                ("Lik", "Beson", new DateTime(1992, 5, 1), Gender.MALE, Specialization.NEUROLOGY, besonWH, office);
+
+            context.ApplicationDoctors.Add(docBeson);
 
             context.VacationRequests.Add(new VacationRequest
             {
@@ -382,7 +413,7 @@
                 From = new DateTime(2023, 1, 12, 0, 0, 0),
                 To = new DateTime(2023, 1, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = ""
             });
@@ -393,7 +424,7 @@
                 From = new DateTime(2023, 2, 12, 0, 0, 0),
                 To = new DateTime(2023, 2, 22, 0, 0, 0),
                 Status = VacationRequestStatus.APPROVED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = false,
                 ManagerComment = ""
             });
@@ -404,7 +435,7 @@
                 From = new DateTime(2023, 3, 12, 0, 0, 0),
                 To = new DateTime(2023, 3, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = false,
                 ManagerComment = "Mnogo trazis baca"
             });
@@ -415,7 +446,7 @@
                 From = new DateTime(2023, 4, 12, 0, 0, 0),
                 To = new DateTime(2023, 4, 22, 0, 0, 0),
                 Status = VacationRequestStatus.REJECTED,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = true,
                 ManagerComment = "Ti ga bas pretera"
             });
@@ -426,7 +457,7 @@
                 From = new DateTime(2023, 5, 12, 0, 0, 0),
                 To = new DateTime(2023, 5, 22, 0, 0, 0),
                 Status = VacationRequestStatus.WAITING,
-                Comment = "",
+                Comment = VacationRequestComment.Create(""),
                 Urgent = false,
                 ManagerComment = ""
             });
@@ -463,64 +494,48 @@
 
             context.Anamneses.Add(anam);
 
-            Room relocationFromRoom = new Room()
+            Floor floor3 = new Floor()
             {
-                Floor = new Floor()
+                Building = new Building()
                 {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
                 },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            Room relocationToRoom = new Room()
+            WorkingHours wh3 = new WorkingHours()
             {
-                Floor = new Floor()
-                {
-                    Building = new Building()
-                    {
-                        Address = "Jovana Piperovica 14",
-                        Name = "Radosno detinjstvo"
-                    },
-                    Number = 69,
-                    Purpose = "Krematorijum"
-                },
-                Number = "6904",
-                Purpose = "Soba za kremiranje",
-                WorkingHours = new WorkingHours()
-                {
-                    Start = new DateTime(),
-                    End = new DateTime(1, 1, 1, 23, 0, 0)
-                },
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
             };
 
-            Equipment relocationEquipment = new Equipment
+            Room relocationFromRoom = Room.Create("6904", floor3, "Soba za kremiranje", wh3);
+
+            Floor floor4 = new Floor()
             {
-                EquipmentType = EquipmentType.BED,
-                Quantity = 8,
-                Room = equipmentRoom
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
             };
 
-            context.RelocationRequests.Add(new RelocationRequest
+            WorkingHours wh4 = new WorkingHours()
             {
-                FromRoom = relocationFromRoom,
-                ToRoom = relocationToRoom,
-                Equipment = relocationEquipment,
-                StartTime = new DateTime(2022, 12, 10, 23, 0, 0),
-                Duration = 2
-            });
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
 
+            Room relocationToRoom = Room.Create("6904", floor4, "Soba za kremiranje", wh4);
+
+            Equipment relocationEquipment = Equipment.Create(EquipmentType.BED, 8, equipmentRoom);
+
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 10, 23, 0, 0), 2));
+            context.RelocationRequests.Add(RelocationRequest.Create(relocationFromRoom, relocationToRoom, relocationEquipment, 2, new DateTime(2022, 12, 15, 23, 0, 0), 2));
             context.Appointments.Add(new Appointment
             {
                 Date = new DateTime(2023, 12, 25, 12, 0, 0),
@@ -547,14 +562,68 @@
             List<Room> roomsRenovation = new List<Room>();
             roomsRenovation.Add(room);
             List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
-            context.RenovationRequests.Add(new RenovationRequest
+            context.RenovationRequests.Add(RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, DateTime.Now, 2, renovationDetails));
+
+            ApplicationDoctor appDoc2 = new ApplicationDoctor
+                ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null);
+
+            DoctorSchedule doctorSchedule = new DoctorSchedule(appDoc, new List<Appointment>(), new List<VacationRequest>(), new List<Consilium>());
+            DoctorSchedule doctorSchedule2 = new DoctorSchedule(docBeson, new List<Appointment>(), new List<VacationRequest>(), new List<Consilium>());
+
+            Appointment appointment2 = new Appointment
             {
-                RenovationType = RenovationType.SPLIT,
-                Rooms = roomsRenovation,
-                StartTime = new DateTime(),
-                Duration = 2,
-                RenovationDetails = renovationDetails
-            });
+                Date = new DateTime(2022, 12, 21, 6, 0, 0),
+                Doctor = appDoc,
+                Patient = appPat,
+                Room = office,
+                IsDone = false,
+                ExamType = ExaminationType.OPERATION,
+                Duration = 30
+            };
+
+            Appointment appointment3 = new Appointment
+            {
+                Date = new DateTime(2022, 12, 21, 7, 0, 0),
+                Doctor = docBeson,
+                Patient = appPat,
+                Room = office,
+                IsDone = false,
+                ExamType = ExaminationType.IMAGING,
+                Duration = 30
+            };
+
+            VacationRequest vacationRequest = new VacationRequest
+            {
+                Doctor = appDoc,
+                From = new DateTime(2022, 12, 17, 0, 0, 0),
+                To = new DateTime(2022, 12, 20, 0, 0, 0),
+                Status = VacationRequestStatus.APPROVED,
+                Comment = VacationRequestComment.Create(""),
+                ManagerComment = null,
+                Urgent = false,
+            };
+
+            doctorSchedule.VacationRequests.Add(vacationRequest);
+            doctorSchedule.Appointments.Add(appointment2);
+            doctorSchedule2.Appointments.Add(appointment3);
+
+            List<DoctorSchedule> schedules = new List<DoctorSchedule>();
+            schedules.Add(doctorSchedule);
+            schedules.Add(doctorSchedule2);
+
+            Consilium consilium = new Consilium
+            {
+                DateTime = new DateTime(2022, 12, 21, 6, 30, 0),
+                Topic = ConsiliumTopic.Enter("Tema"),
+                Duration = 30,
+                DoctorsSchedule = schedules,
+                Room = room,
+            };
+
+            context.Consiliums.Add(consilium);
+
+            doctorSchedule.Consiliums.Add(consilium);
+            doctorSchedule2.Consiliums.Add(consilium);
 
             context.ApplicationDoctors.Add(new ApplicationDoctor
             {

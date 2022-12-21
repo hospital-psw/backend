@@ -23,6 +23,11 @@
         bool IsDoctorAvailable(int doctorId, DateTime date);
 
         public List<Appointment> GetAllForRoom(int roomId);
+
         List<Appointment> GetAllBySpecialization(Specialization specialization, DateRange dateRange);
+
+
+        void Save();
+
     }
 }

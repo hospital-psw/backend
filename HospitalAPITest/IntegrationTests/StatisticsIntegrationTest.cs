@@ -36,7 +36,6 @@
 
             Assert.Equal(expected.Chart1, result.Chart1);
             Assert.Equal(expected.Chart2Names, result.Chart2Names);
-            //Assert.Equal(expected.Chart2Values, result.Chart2Values);
             Assert.NotNull(result.Chart2Values);
             Assert.Equal(expected.Chart3Male, result.Chart3Male);
             Assert.Equal(expected.Chart3Female, result.Chart3Female);
@@ -47,10 +46,10 @@
         {
             StatisticsDTO expected = new StatisticsDTO();
             expected.Chart1 = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0);
-            expected.Chart2Names = ListFactory.CreateList("Galina Gavanski", "Lik Beson");
-            expected.Chart3Male = ListFactory.CreateList(0, 2, 0, 0, 0, 0);
+            expected.Chart2Names = ListFactory.CreateList("Galina Gavanski", "Lik Beson", "Djankarlo Rapacoti");
+            expected.Chart3Male = ListFactory.CreateList(0, 2, 0, 0, 0, 2);
             expected.Chart3Female = ListFactory.CreateList(0, 0, 0, 0, 0, 1);
-            expected.Chart4 = ListFactory.CreateList(3, 1, 1, 0);
+            expected.Chart4 = ListFactory.CreateList(5, 1, 1, 1);
 
             return expected;
         }

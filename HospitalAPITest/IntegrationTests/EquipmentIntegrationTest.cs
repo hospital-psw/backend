@@ -32,7 +32,7 @@
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            int roomId = 2;
+            int roomId = 3;
 
             var result = ((OkObjectResult)controller.GetForRoom(roomId)).Value as IEnumerable<EquipmentDto>;
 

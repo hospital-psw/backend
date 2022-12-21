@@ -125,6 +125,9 @@
     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.6.4.0\lib\net461\RabbitMQ.Client.dll</HintPath>
     </Reference>
+    <Reference Include="SeleniumExtras.WaitHelpers, Version=3.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetSeleniumExtras.WaitHelpers.3.11.0\lib\net45\SeleniumExtras.WaitHelpers.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -200,8 +203,14 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebDriver, Version=3.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.10.0\lib\net45\WebDriver.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonhtlyTransferService\Connections.cs" />
+    <Compile Include="MonhtlyTransferService\MonhtlyTransferService.cs" />
+    <Compile Include="MonhtlyTransferService\MQMonthlyService.cs" />
     <Compile Include="RabbitMQServices\MessageDecoder.cs" />
     <Compile Include="RabbitMQServices\MQSubscriberService.cs" />
     <Compile Include="Program.cs" />
@@ -213,13 +222,17 @@
     <Compile Include="ReportService\DTO\DateRangeDTO.cs" />
     <Compile Include="ReportService\GeneratePDF.cs" />
     <Compile Include="ReportService\Model\BloodBank.cs" />
+    <Compile Include="ReportService\Model\BloodType.cs" />
+    <Compile Include="ReportService\Model\BloodUnit.cs" />
     <Compile Include="ReportService\Model\Entity.cs" />
+    <Compile Include="ReportService\Model\MonthlyTransfer.cs" />
     <Compile Include="ReportService\ReportService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\IronPdf.Native.Chrome.Windows.2022.11.10299\build\IronPdf.Native.Chrome.Windows.targets" Condition="Exists('..\packages\IronPdf.Native.Chrome.Windows.2022.11.10299\build\IronPdf.Native.Chrome.Windows.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

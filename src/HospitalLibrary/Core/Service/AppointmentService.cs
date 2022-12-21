@@ -55,77 +55,18 @@
             }
         }
 
-        public IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto)
-        {
-            try
-            {
-                List<RecommendedAppointmentDto> generatedAppointments = GenerateAppointments(dto);
-                List<Appointment> scheduledAppointments = _unitOfWork.AppointmentRepository.GetScheduledAppointments(dto.DoctorId, dto.PatientId).ToList();
-                return RemoveScheduledAppointments(generatedAppointments, scheduledAppointments);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in Appointment service in GenerateFreeAppointments {e.Message} in {e.StackTrace}");
-                return null;
-            }
-        }
-
-        private List<RecommendedAppointmentDto> GenerateAppointments(RecommendRequestDto dto)
-        {
-            try
-            {
-                List<RecommendedAppointmentDto> generatedAppointments = new List<RecommendedAppointmentDto>();
-                ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
-                ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
-                Room room = _unitOfWork.RoomRepository.GetById(16);
-                DateTime shiftIterator = doctor.WorkHours.Start;
-                DateTime startDate = new DateTime(dto.Date.Year, dto.Date.Month, dto.Date.Day, doctor.WorkHours.Start.Hour, doctor.WorkHours.Start.Minute, doctor.WorkHours.Start.Second);
-
-                while (shiftIterator < doctor.WorkHours.End)
-                {
-                    RecommendedAppointmentDto appointment = new RecommendedAppointmentDto(startDate, room.Number, room.Floor.Number, room.Floor.Building.Name); ;
-                    generatedAppointments.Add(appointment);
-                    shiftIterator = shiftIterator.AddMinutes(30);
-                    startDate = startDate.AddMinutes(30);
-                }
-
-                return generatedAppointments;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error in Appointment service in GenerateAppointments {e.Message} in {e.StackTrace}");
-                return null;
-            }
-        }
-
-        private IEnumerable<RecommendedAppointmentDto> SelectExistingAppointmentsToRemove(List<Appointment> scheduledAppointments, RecommendedAppointmentDto generatedAppointment)
-        {
-            return from scheduledAppointment in scheduledAppointments where scheduledAppointment.Date.Equals(generatedAppointment.Date) select generatedAppointment;
-        }
-
-        private List<RecommendedAppointmentDto> GetAllAppointmentsThatShouldBeRemoved(List<RecommendedAppointmentDto> generatedAppointments, List<Appointment> scheduledAppointments)
-        {
-            List<RecommendedAppointmentDto> appointmentsToRemove = new List<RecommendedAppointmentDto>();
-            generatedAppointments.ForEach(appointment => appointmentsToRemove.AddRange(SelectExistingAppointmentsToRemove(scheduledAppointments, appointment)));
-            return appointmentsToRemove;
-        }
-
-        private List<RecommendedAppointmentDto> RemoveScheduledAppointments(List<RecommendedAppointmentDto> generatedAppointments, List<Appointment> scheduledAppointments)
-        {
-            GetAllAppointmentsThatShouldBeRemoved(generatedAppointments, scheduledAppointments).ForEach(appointment => generatedAppointments.Remove(appointment));
-
-            return generatedAppointments;
-        }
-
         public Appointment Create(NewAppointmentDto dto)
         {
             try
             {
                 ApplicationPatient patient = _unitOfWork.ApplicationPatientRepository.Get(dto.PatientId);
                 ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(dto.DoctorId);
-                Room room = _unitOfWork.RoomRepository.GetById(16);
+                Room room = _unitOfWork.RoomRepository.GetById(26);
                 Appointment newAppointment = new Appointment(dto.Date, dto.ExamType, null, patient, doctor);
                 newAppointment.Room = room;
+                DoctorSchedule doctorSchedule = _unitOfWork.DoctorScheduleRepository.GetDoctorScheduleByDoctorId(dto.DoctorId);
+                doctorSchedule.Appointments.Add(newAppointment);
+                _unitOfWork.DoctorScheduleRepository.Update(doctorSchedule);
                 _unitOfWork.AppointmentRepository.Add(newAppointment);
                 _unitOfWork.Save();
                 return newAppointment;
@@ -221,7 +162,7 @@
                         DateTime startDate = new DateTime(dayIterator.Year, dayIterator.Month, dayIterator.Day, doctor.WorkHours.Start.Hour, doctor.WorkHours.Start.Minute, doctor.WorkHours.Start.Second);
                         while (shiftIterator <= doctor.WorkHours.End)
                         {
-                            ReccomendedBySpecializationDTO appointment = new ReccomendedBySpecializationDTO(doctor.Id, doctor.FirstName, doctor.LastName, dayIterator, 30, room.Number, room.Floor.Number, room.Floor.Building.Name);
+                            ReccomendedBySpecializationDTO appointment = new ReccomendedBySpecializationDTO(doctor.Id, doctor.FirstName, doctor.LastName, dayIterator, 30, room.Number, room.Floor.Number.Number, room.Floor.Building.Name);
                             generatedAppointments.Add(appointment);
                             shiftIterator =shiftIterator.AddMinutes(30);
                             startDate.AddMinutes(30);

@@ -21,7 +21,18 @@
 
         public Consilium Schedule(Consilium consilium)
         {
-            throw new NotImplementedException();
+            try
+            {
+                consilium.DoctorsSchedule.ForEach(ds => ds.Consiliums.Add(consilium));
+                _unitOfWork.ConsiliumRepository.Add(consilium);
+                _unitOfWork.Save();
+                return consilium;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ConsiliumService in Get {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
 
         public override Consilium Get(int id)
@@ -60,16 +71,19 @@
             return futureRequests;
         }
 
-        public List<Consilium> GetConsiliumsByDoctorId(int doctorId)
+
+
+        public List<Consilium> GetAllForDoctor(int doctorId)
         {
-            try
+            List<Consilium> consiliums = _unitOfWork.ConsiliumRepository.GetConsiliumsByDoctorId(doctorId).ToList();
+            if (consiliums == null)
             {
-                return _unitOfWork.ConsiliumRepository.GetConsiliumsByDoctorId(doctorId);
+                consiliums = new List<Consilium>();
             }
-            catch(Exception e)
-            {
-                return null;
-            }
+
+            return consiliums;
         }
+
+
     }
 }

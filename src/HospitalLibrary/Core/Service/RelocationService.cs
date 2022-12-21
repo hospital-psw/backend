@@ -24,8 +24,8 @@
             try
             {
                 Equipment equipment = _unitOfWork.EquipmentRepository.Get(entity.Equipment.Id);
-                equipment.ReservedQuantity += entity.Quantity;
-                _unitOfWork.EquipmentRepository.Update(equipment);
+                Equipment changed = equipment.AddReservedQuantity(entity.Quantity.Quantity);
+                _unitOfWork.EquipmentRepository.Update(changed);
                 return _unitOfWork.RelocationRepository.Create(entity);
             }
             catch (Exception)
@@ -48,12 +48,12 @@
             Equipment equipment = _unitOfWork.EquipmentRepository.GetEquipment(request.Equipment.EquipmentType, request.ToRoom);
             if (equipment == null)
             {
-                _unitOfWork.EquipmentRepository.Create(new Equipment(request.Equipment.EquipmentType, request.Quantity, request.ToRoom));
+                _unitOfWork.EquipmentRepository.Create(Equipment.Create(request.Equipment.EquipmentType, request.Quantity.Quantity, request.ToRoom));
             }
             else
             {
-                equipment.Quantity += request.Quantity;
-                _unitOfWork.EquipmentRepository.Update(equipment);
+                Equipment changed = equipment.AddQuantity(request.Quantity.Quantity);
+                _unitOfWork.EquipmentRepository.Update(changed);
                 _unitOfWork.EquipmentRepository.Save();
             }
             SubtractEquipmentFromSourceRoom(request);
@@ -65,10 +65,8 @@
 
         private void SubtractEquipmentFromSourceRoom(RelocationRequest request)
         {
-            request.Equipment.Quantity -= request.Quantity;
-            if (request.Equipment.Quantity <= 0)
-                request.Equipment.Deleted = true;
-            request.Equipment.ReservedQuantity -= request.Quantity;
+            Equipment changed = request.Equipment.SubstractQuantity(request.Quantity.Quantity);
+            request.Equipment.SubstractReservedQuantity(request.Quantity.Quantity);
         }
 
         public List<RelocationRequest> GetAllForRoom(int roomId)
@@ -81,13 +79,24 @@
             }
             return futureRequests;
         }
-
         public void Decline(int requestId)
         {
-            RelocationRequest request = _unitOfWork.RelocationRepository.Get(requestId);
-            request.Deleted = true;
+            RelocationRequest request = _unitOfWork.RelocationRepository.GetById(requestId);
+            request.DeleteRelocation();
             _unitOfWork.RelocationRepository.Update(request);
             _unitOfWork.RelocationRepository.Save();
+        }
+
+        public RelocationRequest GetById(int id)
+        {
+            try
+            {
+                return _unitOfWork.RelocationRepository.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

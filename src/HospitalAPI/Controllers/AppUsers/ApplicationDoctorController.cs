@@ -10,6 +10,7 @@
     using HospitalLibrary.Core.Service.AppUsers;
     using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Linq;
@@ -57,13 +58,28 @@
         }
 
         [HttpGet("specialization/{spec}")]
-        public IActionResult GetBySpecialization(Specialization specialization)
+        public IActionResult GetBySpecialization(Specialization specialization) //ne znam ko ovo koristi i gde ali nemojte vracati celog doktora <3
         {
             var doctor = _doctorService.GetBySpecialization(specialization);
             if (doctor == null)
                 return NotFound();
 
             return Ok(doctor);
+        }
+
+        [HttpGet("specializationDTO/{spec}")]
+        public IActionResult GetBySpecializationDTO(Specialization spec)
+        {
+            var doctors = _doctorService.GetBySpecialization(spec);
+            var DTOlist = new List<ApplicationDoctorDTO>();
+            foreach (ApplicationDoctor doctor in doctors)
+            {
+                DTOlist.Add(ApplicationDoctorMapper.EntityToEntityDTO(doctor));
+            }
+            if (doctors == null)
+                return NotFound();
+
+            return Ok(DTOlist);
         }
 
         [HttpGet("allrecommended")]
@@ -78,6 +94,36 @@
 
             applicationDoctors.ForEach(bt => applicationDoctorDto.Add(ApplicationDoctorMapper.EntityToEntityDTO(bt)));
             return Ok(applicationDoctorDto);
+        }
+
+        [HttpGet("same-shift/{workHourId}")]
+        public IActionResult GetDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            List<ApplicationDoctor> doctors = _doctorService.GetDoctorsWhoWorksInSameShift(workHourId).ToList();
+            List<ApplicationDoctorDTO> dtoList = new List<ApplicationDoctorDTO>();
+            if (doctors == null)
+            {
+                return NotFound();
+            }
+            doctors.ForEach(doc => dtoList.Add(ApplicationDoctorMapper.EntityToEntityDTO(doc)));
+            return Ok(dtoList);
+        }
+
+        [HttpGet("specializations/{workHourId}")]
+        public IActionResult GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId)
+        {
+            List<Specialization> specializations = _doctorService.GetSpecializationsOfDoctorsWhoWorksInSameShift(workHourId).ToList();
+            if (specializations.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            return Ok(specializations);
+        }
+
+        [HttpGet("work-hours/{doctorId}")]
+        public IActionResult GetDoctorsWorkHours(int doctorId)
+        {
+            return Ok(_doctorService.Get(doctorId).WorkHours);
         }
     }
 }
