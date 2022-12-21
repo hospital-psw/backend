@@ -67,5 +67,19 @@
             Assert.NotNull(result);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Gets_Correct_Doctor_Yearly_Booking_Statistics()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetYearlyDoctorAppointmentsStatistics(4, 2022)).Value as List<int>;
+
+            List<int> expected = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1);
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
     }
 }

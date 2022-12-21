@@ -42,5 +42,11 @@
             List<int> result = (List<int>)_statisticsService.GetNumberOfVacationDaysPerMonth(doctorId);
             return Ok(result);
         }
+
+        [HttpGet("getYearlyDoctorAppointmentsStats/{doctorId}/{year}")]
+        public IActionResult GetYearlyDoctorAppointmentsStatistics(int doctorId, int year)
+        {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerYear(doctorId, year));
+        }
     }
 }

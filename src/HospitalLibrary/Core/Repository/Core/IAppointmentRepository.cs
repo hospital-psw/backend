@@ -23,5 +23,6 @@
         public List<Appointment> GetAllForRoom(int roomId);
 
         void Save();
+        IEnumerable<Appointment> GetYearlyAppointmentsForDoctor(int doctorId, int year);
     }
 }

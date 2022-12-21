@@ -142,5 +142,23 @@
                 return null;
             }
         }
+
+        public List<int> GetNumberOfDoctorAppointmentsPerYear(int doctorId, int year)
+        {
+            try
+            {
+                List<int> retList = ListFactory.CreateList<int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetYearlyAppointmentsForDoctor(doctorId, year))
+                {
+                    retList[appointment.Date.Month - 1] = retList[appointment.Date.Month - 1] + 1;
+                }
+
+                return retList;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }
