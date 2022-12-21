@@ -7,6 +7,7 @@
     using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
+    using HospitalLibrary.Util;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -43,12 +44,8 @@
         [HttpGet("search")]
         public IActionResult Search(string input)
         {
-            var inputParts = Regex.Matches(input, @"(?<match>\w+)|\""(?<match>[\w\s]*)""")
-                            .Cast<Match>()
-                            .Select(p => p.Groups["match"].Value)
-                            .ToList();
-
-            return Ok(AnamnesisMapper.EntityListToEntityDtoList(_anamnesisService.GetAnamnesesBySearchCriteria(inputParts).ToList()));
+            var anamneses = _anamnesisService.GetAnamnesesBySearchCriteria(SearchParser.Parse(input)).ToList();
+            return Ok(AnamnesisMapper.EntityListToEntityDtoList(anamneses));
         }
 
         [HttpPost]
