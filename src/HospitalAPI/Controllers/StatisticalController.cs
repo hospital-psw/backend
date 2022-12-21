@@ -49,7 +49,7 @@
             return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerYear(doctorId, year));
         }
 
-        [HttpGet("getMonthlyDoctorAppointmentsStats/{doctorId}/{month}/{year}")]
+        [HttpGet("stats/doctor/month/{doctorId}/{month}/{year}")]
         public IActionResult GetMonthlyDoctorAppointmentsStatistics(int doctorId, int month, int year) {
             return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerMonth(doctorId, month, year));
         }
