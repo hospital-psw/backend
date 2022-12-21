@@ -9,6 +9,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Examinations.Core;
     using HospitalLibrary.Util;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -133,6 +134,28 @@
         {
             Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.GetByAppointment(dto.AppointmentId);
             PDFUtil.GenerateAnamnesisPDF(anamnesis, dto);
+        }
+
+        public IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(List<string> criteriasList)
+        {
+            try
+            {
+                List<Anamnesis> anamnesses = new List<Anamnesis>();
+                foreach (string el in criteriasList)
+                {
+                    List<Anamnesis> a = _unitOfWork.AnamnesisRepository.GetAnamnesesBySearchCriteria(el).ToList();
+                    if (!a.IsNullOrEmpty())
+                    {
+                        anamnesses.AddRange(a);
+                    }
+                }
+                return anamnesses.Distinct();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in GetAll in AnamnesisService {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
     }
 }

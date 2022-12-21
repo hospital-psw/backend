@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Examinations.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -73,6 +74,28 @@
             try
             {
                 return _unitOfWork.PrescriptionRepository.GetAll();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in PrescriptionService in GetAll {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public IEnumerable<Prescription> GetAnamnesesBySearchCriteria(List<string> criteriasList)
+        {
+            try
+            {
+                List<Prescription> prescriptions = new List<Prescription>();
+                foreach (string el in criteriasList)
+                {
+                    List<Prescription> p = _unitOfWork.PrescriptionRepository.GetAnamnesesBySearchCriteria(el).ToList();
+                    if (!p.IsNullOrEmpty())
+                    {
+                        prescriptions.AddRange(p);
+                    }
+                }
+                return prescriptions.Distinct();
             }
             catch (Exception e)
             {
