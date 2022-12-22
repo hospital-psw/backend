@@ -89,7 +89,7 @@
                 List<Prescription> prescriptions = new List<Prescription>();
                 foreach (string el in criteriasList)
                 {
-                    List<Prescription> p = _unitOfWork.PrescriptionRepository.GetAnamnesesBySearchCriteria(el).ToList();
+                    List<Prescription> p = _unitOfWork.PrescriptionRepository.GetPrescriptionsBySearchCriteria(el).ToList();
                     if (!p.IsNullOrEmpty())
                     {
                         prescriptions.AddRange(p);
