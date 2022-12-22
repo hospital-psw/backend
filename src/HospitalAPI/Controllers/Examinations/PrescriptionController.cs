@@ -35,7 +35,7 @@
         [HttpGet("search")]
         public IActionResult Search(string input)
         {
-            var perscriptions = _prescriptionService.GetAnamnesesBySearchCriteria(SearchParser.Parse(input)).ToList();
+            var perscriptions = _prescriptionService.GetPrescriptionsBySearchCriteria(SearchParser.Parse(input)).ToList();
             return Ok(PrescriptionMapper.EntityListToEntityDtoList(perscriptions));
         }
 

@@ -82,7 +82,7 @@
             }
         }
 
-        public IEnumerable<Prescription> GetAnamnesesBySearchCriteria(List<string> criteriasList)
+        public IEnumerable<Prescription> GetPrescriptionsBySearchCriteria(List<string> criteriasList)
         {
             try
             {
