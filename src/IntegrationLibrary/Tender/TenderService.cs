@@ -214,7 +214,7 @@
                 {
                     foreach (TenderItem tenderItem in tender.TenderWinner.Items)
                     {
-                        if(tenderItem.BloodType == bt)
+                        if(tenderItem.BloodType.Equals(bt))
                         {
                             bloodPerMonth[tender.DueDate.Month - 1] += tenderItem.Quantity;
                         }
