@@ -94,20 +94,18 @@
             return Ok(_appointmentService.Create(dto));
         }
 
-        [HttpDelete]
-        [Route("cancel/{id}")]
-        public IActionResult Cancel(int id)
+        [HttpPut]
+        [Route("cancel")]
+        public IActionResult Cancel(CancelAppointmentDto dto)
         {
-            var appointment = _appointmentService.Get(id);
-
+            var appointment = _appointmentService.Get(dto.AppointmentId);
             if (appointment == null)
             {
                 return NotFound();
             }
 
             _emailService.Send(appointment);
-
-            _appointmentService.Delete(appointment);
+            _appointmentService.Delete(appointment, dto.CancellationInfo);
             return Ok();
         }
 

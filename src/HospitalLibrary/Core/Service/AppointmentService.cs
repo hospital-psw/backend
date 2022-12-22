@@ -3,16 +3,12 @@
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
-    using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
-    using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
 
     public class AppointmentService : BaseService<Appointment>, IAppointmentService
@@ -76,16 +72,18 @@
             }
         }
 
-        public void Delete(Appointment appointment)
+        public void Delete(Appointment appointment, CancellationInfo info)
         {
             try
             {
                 appointment.Deleted = true;
+                appointment.CancellationInfo = info;
                 _unitOfWork.AppointmentRepository.Update(appointment);
                 _unitOfWork.Save();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _logger.LogError($"Error in Appointment service in Delete {e.Message} in {e.StackTrace}");
                 throw;
             }
         }
