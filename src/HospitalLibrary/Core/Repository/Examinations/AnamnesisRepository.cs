@@ -62,11 +62,11 @@
         public IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(string criteria)
         {
             return GetAll()
-                    .Where(x => x.Appointment.Patient.FirstName.ToUpper().Equals(criteria.ToUpper())
-                    || x.Appointment.Patient.LastName.ToUpper().Equals(criteria.ToUpper())
-                    || x.Appointment.ExamType.ToString().ToUpper().Equals(criteria.ToUpper())
+                    .Where(x => x.Appointment.Patient.FirstName.ToUpper().Contains(criteria.ToUpper())
+                    || x.Appointment.Patient.LastName.ToUpper().Contains(criteria.ToUpper())
+                    || x.Appointment.ExamType.ToString().ToUpper().Contains(criteria.ToUpper())
                     || x.Description.ToUpper().Contains(criteria.ToUpper())
-                    || x.Symptoms.Exists(s => s.Name.ToUpper().Equals(criteria.ToUpper()))
+                    || x.Symptoms.Exists(s => s.Name.ToUpper().Contains(criteria.ToUpper()))
                     ).ToList();
         }
     }

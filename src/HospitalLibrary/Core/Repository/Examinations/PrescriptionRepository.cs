@@ -32,7 +32,7 @@
         {
             return GetAll()
                    .Where(x => x.Description.ToUpper().Contains(criteria.ToUpper())
-                       || x.Medicament.Name.ToUpper().Equals(criteria.ToUpper())
+                       || x.Medicament.Name.ToUpper().Contains(criteria.ToUpper())
                        || x.Medicament.Description.ToUpper().Contains(criteria.ToUpper()))
                    .ToList();
         }
