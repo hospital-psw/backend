@@ -7,10 +7,12 @@
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
+    using OpenQA.Selenium;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Xml.Linq;
 
     public class TenderService : ITenderService
     {
@@ -182,18 +184,40 @@
 
         public List<double> GetMoneyPerMonth(int year)
         {
+            
             List<double> moneyPerMonth = new List<double>();
-            for(int i = 0; i < 12; ++i)
+            /*
+            var list = _unitOfWork.TenderRepository.GetAll().Where(t => t.TenderWinner != null && t.TenderWinner.DateCreated.Year == year).GroupBy(x => x.TenderWinner.DateCreated.Month)
+                .Select(g => new
+                {
+                    g.Key, total = g.Sum(tender => tender.TenderWinner.Items.Sum(item => item.Money.Amount))
+                });
+            foreach(var element in list)
+            {
+                moneyPerMonth.Add(element.total);
+            }
+            var query = (from tender in _unitOfWork.TenderRepository.GetAll().Where(t => t.TenderWinner != null && t.TenderWinner.DateCreated.Year == year)
+                    group tender by tender.TenderWinner.DateCreated.Month into groups
+                    select new { Month = groups.Key, Count = groups.Sum(tender => tender.TenderWinner.Items.Sum(item => item.Money.Amount)) });
+            */
+            //foreach (Tender element in list)
+            //{
+            //    moneyPerMonth[element.TenderWinner.DateCreated.Month - 1] += 
+            //}
+            //return moneyPerMonth;
+
+            
+            for (int i = 0; i < 12; ++i)
             {
                 moneyPerMonth.Add(0);
             }
             foreach(Tender tender in _unitOfWork.TenderRepository.GetAll())
             {
-                if (tender.TenderWinner != null && tender.DueDate.Year == year)
+                if (tender.TenderWinner != null && tender.TenderWinner.DateCreated.Year == year)
                 {
                     foreach(TenderItem tenderItem in tender.TenderWinner.Items)
                     {
-                        moneyPerMonth[tender.DueDate.Month - 1] += tenderItem.Money.Amount;
+                        moneyPerMonth[tender.TenderWinner.DateCreated.Month - 1] += tenderItem.Money.Amount;
                     }
                 }
             }
