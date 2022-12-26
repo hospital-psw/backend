@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
+    using IdentityServer4.Extensions;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -58,5 +59,15 @@
             return GetAll().FirstOrDefault(x => x.Appointment.Id == id);
         }
 
+        public IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(string criteria)
+        {
+            return GetAll()
+                    .Where(x => x.Appointment.Patient.FirstName.ToUpper().Equals(criteria.ToUpper())
+                    || x.Appointment.Patient.LastName.ToUpper().Equals(criteria.ToUpper())
+                    || x.Appointment.ExamType.ToString().ToUpper().Equals(criteria.ToUpper())
+                    || x.Description.ToUpper().Contains(criteria.ToUpper())
+                    || x.Symptoms.Exists(s => s.Name.ToUpper().Equals(criteria.ToUpper()))
+                    ).ToList();
+        }
     }
 }

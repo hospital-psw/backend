@@ -7,12 +7,14 @@
     using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
+    using HospitalLibrary.Util;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -37,6 +39,13 @@
         public IActionResult Get(int id)
         {
             return Ok(AnamnesisMapper.EntityToEntityDto(_anamnesisService.Get(id)));
+        }
+
+        [HttpGet("search")]
+        public IActionResult Search(string input)
+        {
+            var anamneses = _anamnesisService.GetAnamnesesBySearchCriteria(SearchParser.Parse(input)).ToList();
+            return Ok(AnamnesisMapper.EntityListToEntityDtoList(anamneses));
         }
 
         [HttpPost]
