@@ -14,21 +14,15 @@
     [Route("api/[controller]")]
     public class EventController : BaseController<DomainEvent>
     {
-        private IRenovationService _renovationService;
         private IRenovationEventService _renovationEventService;
-        public EventController(IRenovationService renovationService, IRenovationEventService renovationEventService) : base()
+        public EventController(IRenovationEventService renovationEventService) : base()
         {
-            _renovationService = renovationService;
             _renovationEventService = renovationEventService;
         }
 
         [HttpPost]
         public IActionResult CreateRenovationEvent(RenovationEventDto dto) {
-            if (dto.EventType == RenovationEventType.RENOVATION_TYPE_EVENT) {
-                RenovationRequest request = _renovationService.Create(RenovationRequest.Create(dto.Type, null, DateTime.Now, 0, null));
-                dto.AggregateId = request.Id;
-            }
-            return Ok(_renovationEventService.Add(RenovationEventMapper.EntityDtoToEntity(dto)).AggregateId);
+            return Ok(_renovationEventService.Execute(RenovationEventMapper.EntityDtoToEntity(dto)).AggregateId);
         }
 
     }

@@ -10,5 +10,6 @@
 
     public interface IRenovationEventService : IBaseService<RenovationEvent>
     {
+        DomainEvent Execute(RenovationEvent evt);
     }
 }
