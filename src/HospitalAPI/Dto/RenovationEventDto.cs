@@ -8,9 +8,9 @@
 
     public class RenovationEventDto
     {
-        public int AggregateId;
-        public RenovationEventType EventType;
-        public DateTime TimeStamp;
-        public RenovationType Type;
+        public int AggregateId { get; set; }
+        public RenovationEventType EventType { get; set; }
+        public DateTime TimeStamp { get; set; }
+        public RenovationType Type { get; set; }
     }
 }

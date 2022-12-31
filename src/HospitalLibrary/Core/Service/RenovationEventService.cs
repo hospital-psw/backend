@@ -23,6 +23,7 @@
                 RenovationRequest request = _unitOfWork.RenovationRepository.Create(RenovationRequest.Create(evt.Type, null, DateTime.Now, 0, null));
                 evt = new RenovationEvent(request.Id, DateTime.Now, evt.EventName, evt.Type);
                 request.SetType(evt);
+                request.Delete();
                 _unitOfWork.RenovationRepository.Update(request);
                 _unitOfWork.RenovationEventRepository.Add(evt);
                 _unitOfWork.Save();
@@ -31,6 +32,7 @@
             {
                 RenovationRequest request = _unitOfWork.RenovationRepository.Get(evt.AggregateId);
                 evt = new RenovationEvent(evt.AggregateId, DateTime.Now, evt.EventName, evt.Type);
+                request.SetType(evt);
                 _unitOfWork.RenovationRepository.Update(request);
                 _unitOfWork.RenovationEventRepository.Add(evt);
                 _unitOfWork.Save();

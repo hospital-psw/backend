@@ -43,7 +43,7 @@ namespace HospitalLibrary.Core.Model
         public override void Apply(DomainEvent @event)
         {
             When((dynamic)@event);
-            Version = Version++;
+            Version += 1;
         }
 
         private void Causes(DomainEvent @event)
