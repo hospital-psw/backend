@@ -1,4 +1,8 @@
+using HospitalLibrary.Core.Infrastucture;
 using HospitalLibrary.Core.Model.Enums;
+using IdentityServer4.Events;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class RenovationRequest : Entity
+    public class RenovationRequest : EventSourcedAggregate
     {
         public RenovationType RenovationType { get; private set; }
         public List<Room> Rooms { get; private set; }
@@ -34,6 +38,28 @@ namespace HospitalLibrary.Core.Model
         public void Delete()
         {
             Deleted = true;
+        }
+
+        public override void Apply(DomainEvent @event)
+        {
+            When((dynamic)@event);
+            Version = Version++;
+        }
+
+        private void Causes(DomainEvent @event)
+        {
+            Changes.Add(@event);
+            Apply(@event);
+        }
+
+        private void When(RenovationEvent evt)
+        {
+            RenovationType = evt.Type;
+        }
+
+        public void SetType(DomainEvent evt)
+        {
+            Causes(evt);
         }
     }
 }

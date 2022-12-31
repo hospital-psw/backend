@@ -55,6 +55,9 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Anamnesis> Anamneses { get; set; }
 
+        public DbSet<RenovationEvent> RenovationEvents { get; set; }
+        public DbSet<AppointmentEvent> AppointmentEvents { get; set; }
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         public HospitalDbContext()
@@ -64,6 +67,9 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<RenovationEvent>().ToTable(nameof(RenovationEvent));
+            modelBuilder.Entity<AppointmentEvent>().ToTable(nameof(AppointmentEvent));
+
         }
 
         public override int SaveChanges()
