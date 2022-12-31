@@ -5,11 +5,14 @@
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Util;
     using IdentityServer4.Models;
+    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Mail;
     using System.Threading.Tasks;
+    using static IdentityServer4.Events.TokenIssuedSuccessEvent;
 
     public class EmailService : IEmailService
     {
@@ -61,12 +64,19 @@
             }
         }
 
-        public async Task SendActivationEmail(ApplicationUser identityUser, string url)
+        public async Task SendActivationEmail(string email, string token)
         {
             try
             {
-                string body = $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>";
-                MailMessage mailMessage = CreateActivationEmail(body, "Confirm your email", identityUser.Email);
+                var param = new Dictionary<string, string?>
+                {
+                    {"token", token },
+                    {"email", email }
+                };
+                
+                var callback = QueryHelpers.AddQueryString(_configuration.CallbackURLs.ConfirmEmail, param);
+                string body = $"<p>Please confirm your email by <a href='{callback}'>clicking here</a></p>";
+                MailMessage mailMessage = CreateActivationEmail(body, "Confirm your email", email);
 
                 await SendEmailMessage(mailMessage);
             }
@@ -108,11 +118,18 @@
         }
 
         //ForgotPasswordMail
-        public async Task SendPasswordResetEmail(string email, string callback) 
+        public async Task SendPasswordResetEmail(string email, string clientURL, string token) 
         {
             try
             {
-                string body = "<p>Please click on this link to reset your password:</p>" + callback;
+                var param = new Dictionary<string, string?>
+                {
+                    {"token", token },
+                    {"email", email }
+                };
+                var callback = QueryHelpers.AddQueryString(clientURL, param);
+
+                string body = $"<p>Click <a href='{callback}'>here</a> to reset your password.</p>";
                 var message = CreateEmailMessage(body, "Reset Password Token");
                 message.To.Add(email);
                 

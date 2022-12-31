@@ -61,8 +61,6 @@
                     //izgenerisati email poruku i poslati je putem _emailServic-a;
 
                     var result = _mapper.Map<ApplicationUserDTO>(identityUser);
-                    var callback = QueryHelpers.AddQueryString("http://localhost:16177/api/Auth/ConfirmEmail", param);
-                    await _emailService.SendActivationEmail(identityUser, callback);
                     return Ok(result);
                 }
                 else
@@ -90,17 +88,9 @@
                     await _authService.AddToRole(identityUser, "Patient");
                     await _authService.SignInAsync(identityUser);
                     var token = await _authService.GenerateEmailConfirmationTokenAsync(identityUser);
-                    var param = new Dictionary<string, string?>
-                    {
-                        {"token", token },
-                        {"email", identityUser.Email }
-                    };
 
-                    //izgenerisati email poruku i poslati je putem _emailServic-a;
-
+                    await _emailService.SendActivationEmail(identityUser.Email, token);
                     var result = _mapper.Map<ApplicationUserDTO>(identityUser);
-                    var callback = QueryHelpers.AddQueryString("http://localhost:16177/api/Auth/ConfirmEmail", param);
-                    await _emailService.SendActivationEmail(identityUser, callback);
                     return Ok(result);
                 }
                 else
@@ -132,9 +122,13 @@
                     result.ExpiresIn = _tokenService.GetExpireInDate();
                     return Ok(result);
                 }
+                else if(loginResult.IsNotAllowed)
+                {
+                    return BadRequest("Not allowed, please verify your account.");
+                }
                 else
                 {
-                    return BadRequest("Invalid login!");
+                    return BadRequest("Invalid credentials.");
                 }
             }
 
@@ -163,9 +157,7 @@
                 return BadRequest(new { Errors = errors });
             }
 
-            //ovo srediti
-            var message = "Your password has been successfully changed.";
-            return Ok(JsonSerializer.Serialize(message));
+            return Ok(JsonSerializer.Serialize("Your password has been successfully changed."));
         }
 
         [HttpPost("forgot/password")]
@@ -177,17 +169,9 @@
             if (user == null)
                 return BadRequest("No user with entered email found");
             var token = await _authService.GeneratePasswordResetTokenAsync(user);
-            var param = new Dictionary<string, string?>
-            {
-                {"token", token },
-                {"email", dto.Email }
-            };
-            var callback = QueryHelpers.AddQueryString(dto.ClientURI, param);
-            await _emailService.SendPasswordResetEmail("andrija.d.stanisic@gmail.com", callback);
+            await _emailService.SendPasswordResetEmail(dto.Email, dto.ClientURI, token);
 
-            //ovo srediti
-            var message = "Email has been sent.";
-            return Ok(JsonSerializer.Serialize(message));
+            return Ok(JsonSerializer.Serialize("Email has been sent."));
         }
 
         [HttpGet("ConfirmEmail")]
