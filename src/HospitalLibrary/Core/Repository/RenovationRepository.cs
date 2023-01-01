@@ -23,6 +23,15 @@
             return renovationRequest;
         }
 
+
+        public void UpdateRequest(RenovationRequest request)
+        {
+            RenovationRequest existing = GetById(request.Id);
+            existing.Update(request);
+            _context.RenovationDetails.AddRange(request.RenovationDetails);
+            HospitalDbContext.SaveChanges();
+        }
+
         public override List<RenovationRequest> GetAll()
         {
             return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)

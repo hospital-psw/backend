@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Infrastucture;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using System;
@@ -18,25 +19,26 @@
 
         public DomainEvent Execute(RenovationEvent evt)
         {
+            RenovationRequest request = null;
             if (evt.EventName.Equals("RENOVATION_TYPE_EVENT"))
             {
-                RenovationRequest request = _unitOfWork.RenovationRepository.Create(RenovationRequest.Create(evt.Type, null, DateTime.Now, 0, null));
+                request = _unitOfWork.RenovationRepository.Create(RenovationRequest.Create(evt.Type, null, DateTime.Now, 0));
                 evt = new RenovationEvent(request.Id, DateTime.Now, evt.EventName, evt.Type);
-                request.SetType(evt);
                 request.Delete();
-                _unitOfWork.RenovationRepository.Update(request);
-                _unitOfWork.RenovationEventRepository.Add(evt);
-                _unitOfWork.Save();
             }
             else
             {
-                RenovationRequest request = _unitOfWork.RenovationRepository.Get(evt.AggregateId);
+                request = _unitOfWork.RenovationRepository.Get(evt.AggregateId);
+                if (evt.EventName.Equals("SCHEDULE_EVENT")) {
+                    request.Undelete();
+                }
                 evt = new RenovationEvent(evt.AggregateId, DateTime.Now, evt.EventName, evt.Type);
-                request.SetType(evt);
-                _unitOfWork.RenovationRepository.Update(request);
-                _unitOfWork.RenovationEventRepository.Add(evt);
-                _unitOfWork.Save();
+              
             }
+            request.SetType(evt);
+            _unitOfWork.RenovationRepository.Update(request);
+            _unitOfWork.RenovationEventRepository.Add(evt);
+            _unitOfWork.Save();
             return evt;
         }
     }

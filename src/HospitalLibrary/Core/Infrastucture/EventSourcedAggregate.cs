@@ -17,5 +17,6 @@
         }
 
         public abstract void Apply(DomainEvent changes);
+     
     }
 }
