@@ -115,5 +115,27 @@
         {
             HospitalDbContext.SaveChanges();
         }
+
+        public IEnumerable<Appointment> GetYearlyAppointmentsForDoctor(int doctorId, int year)
+        {
+            return HospitalDbContext.Appointments.Include(x => x.Doctor)
+                                                 .Include(x => x.Patient)
+                                                 .Include(x => x.Room)
+                                                 .ThenInclude(x => x.Floor)
+                                                 .ThenInclude(x => x.Building)
+                                                 .Where(x => x.Doctor.Id == doctorId && x.Date.Year == year && !x.Deleted)
+                                                 .ToList();
+        }
+
+        public IEnumerable<Appointment> GetMonthlyAppointmentsForDoctor(int doctorId, int year, int month)
+        {
+            return HospitalDbContext.Appointments.Include(x => x.Doctor)
+                                          .Include(x => x.Patient)
+                                          .Include(x => x.Room)
+                                          .ThenInclude(x => x.Floor)
+                                          .ThenInclude(x => x.Building)
+                                          .Where(x => x.Doctor.Id == doctorId && x.Date.Year == year && x.Date.Month == month && !x.Deleted)
+                                          .ToList();
+        }
     }
 }

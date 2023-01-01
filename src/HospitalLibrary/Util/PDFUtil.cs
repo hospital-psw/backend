@@ -1,5 +1,7 @@
 ﻿namespace HospitalLibrary.Util
 {
+    using HospitalLibrary.Core.DTO.PDF;
+    using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
     using IronPdf;
@@ -62,5 +64,87 @@
 
             return txt;
         }
+
+        public static void GenerateAnamnesisPDF(Anamnesis anamnesis, AnamnesisPdfDTO dto)
+        {
+
+            var Renderer = new IronPdf.ChromePdfRenderer();
+            string text = System.IO.File.ReadAllText(@"./../HospitalLibrary/Resources/PDF/AnamnesisPdfTemplate.html");
+            text = text.Replace("START_DATE", anamnesis.Appointment.Date.ToString("dd.MM.yyyy."));
+            text = text.Replace("SURNAME", anamnesis.Appointment.Patient.LastName);
+            text = text.Replace("NAME", anamnesis.Appointment.Patient.FirstName);
+            text = text.Replace("BLOOD_TYPE", EnumStringConverters.GetString(anamnesis.Appointment.Patient.BloodType));
+
+            if (dto.IsDescriptionSelected)
+            {
+                text = text.Replace("ANAMNESIS_DESCRIPTION", anamnesis.Description);
+            }
+            else
+            {
+                text = text.Replace("ANAMNESIS_DESCRIPTION", "/");
+            }
+            if (dto.AreSymptomsSelected)
+            {
+                text = text.Replace("SYMPTOMS", GenerateSymptomsList(anamnesis));
+            }
+            else
+            {
+                text = text.Replace("SYMPTOMS", "/");
+            }
+            if (dto.AreRecepiesSelected)
+            {
+                text = text.Replace("PRESCRIPTIONS_LIST", GeneratePrescriptionsList(anamnesis));
+            }
+            else
+            {
+                text = text.Replace("PRESCRIPTIONS_LIST", "/");
+            }
+
+
+            PdfDocument PDF = Renderer.RenderHtmlAsPdf(text);
+            PDF.SaveAs("./../HospitalLibrary/Resources/PDF/anamnesis.pdf");
+        }
+
+
+        private static string GeneratePrescriptionsList(Anamnesis anamnesis)
+        {
+            string txt = "";
+
+            foreach (Prescription p in anamnesis.Prescriptions)
+            {
+                string helper =
+                       "<div class='terapija'>" +
+                       "<div class='naziv-leka'>" +
+                       "<div class='ime'>" + p.Medicament.Name + "</div>" +
+                       "<div class='kolicina'>" + p.Medicament.Quantity + " units</div>" +
+                       "</div>" +
+                       "<div class='datum-leka'>From:" + p.DateRange.From.ToString("dd.MM.yyyy.") + " | To: " + p.DateRange.To.ToString("dd.MM.yyyy.") + "</div>" +
+                       "</div>";
+
+                txt += helper;
+            }
+
+            return txt;
+        }
+
+        private static string GenerateSymptomsList(Anamnesis anamnesis)
+        {
+            string txt = "";
+
+            foreach (Symptom s in anamnesis.Symptoms)
+            {
+                string helper =
+                       "<div class='terapija'>" +
+                       "<div class='naziv-leka'>" +
+                       "<div class='ime'>" + s.Name + "</div>" +
+                       "</div>" +
+                       "</div>";
+
+                txt += helper;
+            }
+
+            return txt;
+        }
+
     }
 }

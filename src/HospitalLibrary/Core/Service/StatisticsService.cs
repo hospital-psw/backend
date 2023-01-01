@@ -7,6 +7,7 @@
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Util;
+    using Syncfusion.Pdf.Lists;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -141,6 +142,62 @@
             {
                 return null;
             }
+        }
+
+        public List<int> GetNumberOfDoctorAppointmentsPerYear(int doctorId, int year)
+        {
+            try
+            {
+                List<int> retList = ListFactory.CreateList<int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetYearlyAppointmentsForDoctor(doctorId, year))
+                {
+                    retList[appointment.Date.Month - 1] = retList[appointment.Date.Month - 1] + 1;
+                }
+
+                return retList;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year) {
+            try
+            {
+                List<int> retList = CreateMonthList(month);
+                Console.WriteLine(retList.Count);
+                List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetMonthlyAppointmentsForDoctor(doctorId, year, month).ToList();
+                foreach (Appointment appointment in appointments)
+                {
+                    Console.WriteLine(appointment.Date.Day);
+                    retList[appointment.Date.Day - 1] = retList[appointment.Date.Day - 1] + 1;
+                }
+                Console.WriteLine("zavrsio", retList.Count);
+                return retList;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        private List<int> CreateMonthList(int month) {
+            switch (month) {
+                case 1: return Enumerable.Repeat(0, 31).ToList();
+                case 2: return Enumerable.Repeat(0, 28).ToList();
+                case 3: return Enumerable.Repeat(0, 31).ToList();
+                case 4: return Enumerable.Repeat(0, 30).ToList();
+                case 5: return Enumerable.Repeat(0, 31).ToList();
+                case 6: return Enumerable.Repeat(0, 30).ToList();
+                case 7: return Enumerable.Repeat(0, 31).ToList();
+                case 8: return Enumerable.Repeat(0, 31).ToList();
+                case 9: return Enumerable.Repeat(0, 30).ToList();
+                case 10: return Enumerable.Repeat(0, 31).ToList();
+                case 11: return Enumerable.Repeat(0, 30).ToList();
+                case 12: return Enumerable.Repeat(0, 31).ToList();
+            }
+            return null;
         }
     }
 }
