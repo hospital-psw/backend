@@ -196,24 +196,6 @@
                 moneyPerMonth.Add(element.total);
             }
             return moneyPerMonth;
-
-            /*
-            for (int i = 0; i < 12; ++i)
-            {
-                moneyPerMonth.Add(0);
-            }
-            foreach(Tender tender in _unitOfWork.TenderRepository.GetAll())
-            {
-                if (tender.TenderWinner != null && tender.TenderWinner.DateCreated.Year == year)
-                {
-                    foreach(TenderItem tenderItem in tender.TenderWinner.Items)
-                    {
-                        moneyPerMonth[tender.TenderWinner.DateCreated.Month - 1] += tenderItem.Money.Amount;
-                    }
-                }
-            }
-            return moneyPerMonth;
-            */
         }
     }
 }
