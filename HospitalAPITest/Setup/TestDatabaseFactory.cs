@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPITest.Setup
 {
     using HospitalAPI;
+    using HospitalAPI.Dto.Enum;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood;
@@ -625,8 +626,9 @@
             doctorSchedule.Consiliums.Add(consilium);
             doctorSchedule2.Consiliums.Add(consilium);
 
+            RenovationEvent evt = new RenovationEvent(1, DateTime.Now, RenovationEventType.RENOVATION_TYPE_EVENT.ToString(), RenovationType.MERGE);
+            context.RenovationEvents.Add(evt);
             context.SaveChanges();
-
         }
     }
 }
