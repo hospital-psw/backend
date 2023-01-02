@@ -61,7 +61,7 @@
         {
 
             List<RenovationRequest> finishedRenovations = _unitOfWork.RenovationRepository.GetFinishedRenovations();
-            Console.WriteLine(finishedRenovations.Count);
+            //Console.WriteLine(finishedRenovations.Count);
             if (finishedRenovations.Count == 0) return;
             foreach (RenovationRequest req in finishedRenovations)
             {
@@ -270,6 +270,27 @@
             try
             {
                 return _unitOfWork.RenovationRepository.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<RenovationRequest> GetAllSuccessfulAggregates()
+        {
+            try
+            {
+                List<RenovationRequest> results = new List<RenovationRequest>();
+                _unitOfWork.RenovationRepository.GetAllAggregates();
+                foreach (var aggregate in _unitOfWork.RenovationRepository.GetAllAggregates())
+                {
+                    if (_unitOfWork.RenovationEventRepository.GetScheduleEventForAggregate(aggregate.Id) != null)
+                    {
+                        results.Add(aggregate);
+                    }
+                }
+                return results;
             }
             catch
             {

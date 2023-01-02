@@ -19,5 +19,8 @@
 
         void UpdateRequest(RenovationRequest request);
         List<RenovationRequest> GetAllEverMade();
+
+        List<RenovationRequest> GetAllAggregates();
+
     }
 }

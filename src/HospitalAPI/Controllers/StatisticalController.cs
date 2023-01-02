@@ -57,5 +57,29 @@
 
      
 
+
+        [HttpGet("getYearlyDoctorAppointmentsStats/{doctorId}/{year}")]
+        public IActionResult GetYearlyDoctorAppointmentsStatistics(int doctorId, int year)
+        {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerYear(doctorId, year));
+        }
+
+        [HttpGet("stats/doctor/month/{doctorId}/{month}/{year}")]
+        public IActionResult GetMonthlyDoctorAppointmentsStatistics(int doctorId, int month, int year) {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerMonth(doctorId, month, year));
+        }
+
+
+        [HttpGet("getNumberOfViewsForEachStep")]
+        public IActionResult GetNumberOfViewsForEachStep()
+        {
+            return Ok(_statisticsService.GetNumberOfViewsForEachStep());
+        }
+
+        [HttpGet("getNumberOfStepsAccordingToRenovationType")]
+        public IActionResult GetNumberOfStepsAccordingToRenovationType()
+        {
+            return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
+        }
     }
 }

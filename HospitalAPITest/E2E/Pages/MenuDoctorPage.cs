@@ -15,6 +15,7 @@
 
         IWebElement consiliumTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-doctor-sidebar/li[3]"));
 
+        IWebElement treatmentsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-doctor-sidebar/li[2]"));
         public MenuDoctorPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -28,6 +29,16 @@
         public void consiliumTabClick()
         {
             consiliumTab.Click();
+        }
+
+        public bool TreatmentsTabDisplayed()
+        {
+            return treatmentsTab.Displayed;
+        }
+
+        public void TreatmentsTabClick()
+        {
+            treatmentsTab.Click();
         }
 
         public void EnsurePageIsDisplayed()

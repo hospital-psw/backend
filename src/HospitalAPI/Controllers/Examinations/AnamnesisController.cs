@@ -4,12 +4,14 @@
     using HospitalAPI.Mappers.Examinations;
     using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.DTO.Examinations;
+    using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     [Route("api/[controller]")]
@@ -62,5 +64,45 @@
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("byAppointment/{id}")]
+        public IActionResult GetByAppointment(int id)
+        {
+            return Ok(_anamnesisService.GetByAppointment(id));
+        }
+
+        [HttpPost("pdf")]
+        public IActionResult FetchPdf(AnamnesisPdfDTO dto)
+        {
+
+            _anamnesisService.GeneratePdf(dto);
+
+            var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/anamnesis.pdf", FileMode.Open);
+            return File(stream, "application/pdf", "anamnesis.pdf");
+
+        }
+
+        [HttpPost("edit")]
+        public IActionResult Edit(Anamnesis anamnesis)
+        {
+            Anamnesis addAnamnesis = _anamnesisService.Get(anamnesis.Id);
+            addAnamnesis.Symptoms = anamnesis.Symptoms;
+            _anamnesisService.Update(addAnamnesis);
+            return Ok();
+        }
+
+
+        private bool CheckIfAppointmentIsDone(int appointmentId)
+        {
+            Anamnesis anamnesis = _anamnesisService.GetByAppointment(appointmentId);
+
+
+            if (anamnesis == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }
