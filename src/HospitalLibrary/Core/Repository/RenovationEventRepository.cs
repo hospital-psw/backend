@@ -21,7 +21,7 @@
 
         public RenovationEvent GetScheduleEventForAggregate(int aggregeateId)
         {
-            return HospitalDbContext.RenovationEvents.FirstOrDefault(x => !x.Deleted && x.AggregateId == aggregeateId && x.EventName == "SCHEDULE_EVENT");                                 
+            return HospitalDbContext.RenovationEvents.FirstOrDefault(x => !x.Deleted && x.AggregateId == aggregeateId && x.EventName == "SCHEDULE_EVENT");
         }
 
     }

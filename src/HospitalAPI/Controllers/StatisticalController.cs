@@ -55,7 +55,7 @@
             return Ok(_statisticsService.GetAverageSchedulingDurationByGroups());
         }
 
-     
+
 
 
         [HttpGet("getYearlyDoctorAppointmentsStats/{doctorId}/{year}")]

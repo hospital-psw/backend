@@ -104,7 +104,7 @@
 
             var result = ((OkObjectResult)controller.GetNumberOfStepsAccordingToRenovationType()).Value as List<double>;
 
-            List<double> expected = new() { 0, 0};
+            List<double> expected = new() { 0, 0 };
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);

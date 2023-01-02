@@ -208,7 +208,7 @@
         {
             List<double> retList = new();
             List<string> evtNames = new()
-            { 
+            {
                 "RENOVATION_TYPE_EVENT",
                 "ROOMS_EVENT",
                 "DATE_PICK_EVENT",
@@ -221,10 +221,10 @@
                 "PREVIOUS_EVENT_5"
             };
             var allSteps = from eventName in evtNames
-                            let key = new { EventName = eventName }
-                            join renovationEvent in _unitOfWork.RenovationEventRepository.GetAll() on key
-                            equals new { renovationEvent.EventName } into g
-                            select new { key, total = g.Count() };
+                           let key = new { EventName = eventName }
+                           join renovationEvent in _unitOfWork.RenovationEventRepository.GetAll() on key
+                           equals new { renovationEvent.EventName } into g
+                           select new { key, total = g.Count() };
 
             retList.Add(_unitOfWork.RenovationRepository.GetAllAggregates().Count);
             foreach (var element in allSteps)
@@ -251,7 +251,7 @@
                 {
                     merge++;
                     retList[0] += request.Changes.Count;
-                } 
+                }
                 else
                 {
                     split++;
@@ -261,7 +261,7 @@
 
             if (merge > 0) retList[0] = retList[0] / merge;
             if (split > 0) retList[1] = retList[1] / split;
-            return retList; 
+            return retList;
         }
 
         public List<double> GetAverageSchedulingDurationByGroups()
@@ -276,7 +276,8 @@
             return Structure(averages);
         }
 
-        public List<double> GetAverageSchedulingDuration() {
+        public List<double> GetAverageSchedulingDuration()
+        {
             List<double> averages = new List<double>();
             List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
             foreach (RenovationRequest request in requests)
@@ -287,14 +288,16 @@
             return averages;
         }
 
-        private List<double> Structure(List<double> averages) {
+        private List<double> Structure(List<double> averages)
+        {
             List<double> structure = new List<double>() { 0, 0, 0, 0, 0 };
-            foreach (double num in averages) {
+            foreach (double num in averages)
+            {
                 if (num <= 30)
                     structure[0]++;
-                else if(num > 30 && num <= 60)
+                else if (num > 30 && num <= 60)
                     structure[1]++;
-                else if(num > 60 && num <= 90)
+                else if (num > 60 && num <= 90)
                     structure[2]++;
                 else if (num > 90 && num <= 120)
                     structure[3]++;
@@ -320,9 +323,11 @@
             return (lastStep - firstStep).Seconds;
         }
 
-        private bool DoesScheduleEventExists(RenovationRequest request) {
-            foreach (RenovationEvent evt in request.Changes) {
-                if(evt.EventName.Equals("SCHEDULE_EVENT"))
+        private bool DoesScheduleEventExists(RenovationRequest request)
+        {
+            foreach (RenovationEvent evt in request.Changes)
+            {
+                if (evt.EventName.Equals("SCHEDULE_EVENT"))
                     return true;
             }
             return false;

@@ -43,7 +43,8 @@
                                                         .ToList();
         }
 
-        public List<RenovationRequest> GetAllEverMade() {
+        public List<RenovationRequest> GetAllEverMade()
+        {
             return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
                                                         .Include(x => x.RenovationDetails)
                                                         .Include(x => x.Changes)

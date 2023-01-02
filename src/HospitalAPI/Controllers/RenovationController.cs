@@ -35,7 +35,7 @@
                 rooms.Add(_roomService.GetById(roomId));
             }
             RenovationRequest request = RenovationRequestMapper.EntityDtoToEntity(dto, rooms);
-            request.Id= dto.Id;
+            request.Id = dto.Id;
             return Ok(_renovationService.Create(request));
         }
 
