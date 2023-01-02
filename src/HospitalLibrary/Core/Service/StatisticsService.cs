@@ -167,14 +167,11 @@
             try
             {
                 List<int> retList = CreateMonthList(month);
-                Console.WriteLine(retList.Count);
                 List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetMonthlyAppointmentsForDoctor(doctorId, year, month).ToList();
                 foreach (Appointment appointment in appointments)
                 {
-                    Console.WriteLine(appointment.Date.Day);
                     retList[appointment.Date.Day - 1] = retList[appointment.Date.Day - 1] + 1;
                 }
-                Console.WriteLine("zavrsio", retList.Count);
                 return retList;
             }
             catch (Exception e)
