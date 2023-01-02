@@ -22,5 +22,6 @@
         List<double> GetNumberOfStepsAccordingToRenovationType();
         List<double> GetAverageSchedulingDurationByGroups();
         List<double> GetAverageSchedulingDuration();
+        List<double> GetAverageNumberOfRenovationSteps();
     }
 }

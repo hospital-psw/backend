@@ -81,5 +81,11 @@
         {
             return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
         }
+
+        [HttpGet("getAverageNumberOfRenovationSteps")]
+        public IActionResult GetAverageNumberOfRenovationSteps()
+        {
+            return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
+        }
     }
 }

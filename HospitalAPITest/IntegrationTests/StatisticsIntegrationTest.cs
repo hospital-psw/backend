@@ -152,5 +152,19 @@
             Assert.NotNull(result);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Gets_Correct_Number_Of_Average_Steps_Renovation()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetAverageNumberOfRenovationSteps()).Value as List<double>;
+
+            List<double> expected = new() { 0, 0 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
     }
 }
