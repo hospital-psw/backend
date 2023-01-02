@@ -122,5 +122,15 @@ namespace HospitalLibraryTest.InMemoryRepositories
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Appointment> GetYearlyAppointmentsForDoctor(int doctorId, int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Appointment> GetMonthlyAppointmentsForDoctor(int doctorId, int year, int month)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

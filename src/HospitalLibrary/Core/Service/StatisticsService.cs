@@ -28,6 +28,11 @@
             _renovationService = renovationService;
         }
 
+        public StatisticsService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public IEnumerable<int> GetNumberOfAppointmentsPerMonth()
         {
             try
