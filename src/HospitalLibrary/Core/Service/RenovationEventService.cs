@@ -30,11 +30,12 @@
             else
             {
                 request = _unitOfWork.RenovationRepository.Get(evt.AggregateId);
-                if (evt.EventName.Equals("SCHEDULE_EVENT")) {
+                if (evt.EventName.Equals("SCHEDULE_EVENT"))
+                {
                     request.Undelete();
                 }
                 evt = new RenovationEvent(evt.AggregateId, DateTime.Now, evt.EventName, evt.Type);
-              
+
             }
             request.SetType(evt);
             _unitOfWork.RenovationRepository.Update(request);
@@ -43,6 +44,6 @@
             return evt;
         }
 
-     
+
     }
 }

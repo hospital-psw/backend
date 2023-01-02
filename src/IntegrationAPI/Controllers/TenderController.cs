@@ -125,7 +125,7 @@
         public IActionResult GethMonthMoneyStatistics(int year)
         {
             List<double> moneyPerMonth = _tenderService.GetMoneyPerMonth(year);
-            if(moneyPerMonth == null)
+            if (moneyPerMonth == null)
             {
                 return BadRequest();
             }

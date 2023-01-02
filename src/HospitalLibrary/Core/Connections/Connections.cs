@@ -1,12 +1,12 @@
 ﻿namespace HospitalAPI.Controllers.TenderStatistics
 {
-    using System.Net.Http;
+    using Microsoft.AspNetCore.Routing.Constraints;
     using System;
     using System.Collections.Generic;
-    using Microsoft.AspNetCore.Routing.Constraints;
+    using System.Net.Http;
     using System.Text.Json;
 
-    public class Connections:IConnections
+    public class Connections : IConnections
     {
         public List<double> SendHttpRequestToIntegration(int year)
         {

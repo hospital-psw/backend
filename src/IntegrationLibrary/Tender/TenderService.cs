@@ -184,7 +184,7 @@
 
         public List<double> GetMoneyPerMonth(int year)
         {
-            
+
             List<double> moneyPerMonth = new List<double>();
             var allMonths = from month in Enumerable.Range(1, 12)
                             let key = new { Month = month }

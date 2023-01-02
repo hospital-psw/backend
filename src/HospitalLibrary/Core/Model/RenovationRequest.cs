@@ -54,7 +54,8 @@ namespace HospitalLibrary.Core.Model
             Deleted = true;
         }
 
-        public void Undelete() {
+        public void Undelete()
+        {
             Deleted = false;
         }
 
@@ -85,7 +86,8 @@ namespace HospitalLibrary.Core.Model
             Version = v;
         }
 
-        public void Update(RenovationRequest r) {
+        public void Update(RenovationRequest r)
+        {
             RenovationType = r.RenovationType;
             Rooms = r.Rooms;
             StartTime = r.StartTime;
