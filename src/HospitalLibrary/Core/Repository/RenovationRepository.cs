@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
 
     public class RenovationRepository : BaseRepository<RenovationRequest>, IRenovationRepository
     {
@@ -23,11 +24,29 @@
             return renovationRequest;
         }
 
+
+        public void UpdateRequest(RenovationRequest request)
+        {
+            RenovationRequest existing = GetById(request.Id);
+            existing.Update(request);
+            _context.RenovationDetails.AddRange(request.RenovationDetails);
+            HospitalDbContext.SaveChanges();
+        }
+
         public override List<RenovationRequest> GetAll()
         {
             return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
                                                         .Include(x => x.RenovationDetails)
                                                         .Where(x => !x.Deleted)
+                                                        .OrderBy(x => x.StartTime)
+                                                        .Distinct()
+                                                        .ToList();
+        }
+
+        public List<RenovationRequest> GetAllEverMade() {
+            return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
+                                                        .Include(x => x.RenovationDetails)
+                                                        .Include(x => x.Changes)
                                                         .OrderBy(x => x.StartTime)
                                                         .Distinct()
                                                         .ToList();
@@ -66,6 +85,14 @@
         public RenovationRequest GetById(int id)
         {
             return _context.RenovationRequests.Include(x => x.Rooms).FirstOrDefault(x => x.Id == id);
+        }
+
+        public List<RenovationRequest> GetAllAggregates()
+        {
+            return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
+                                                       .Include(x => x.RenovationDetails)
+                                                       .Include(x => x.Changes)
+                                                       .ToList();
         }
     }
 }

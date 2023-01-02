@@ -1,7 +1,9 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Infrastucture;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -18,10 +20,12 @@
     public class StatisticsService : IStatisticsService
     {
         public readonly IUnitOfWork _unitOfWork;
+        public readonly IRenovationService _renovationService;
 
-        public StatisticsService(IUnitOfWork unitOfWork)
+        public StatisticsService(IUnitOfWork unitOfWork, IRenovationService renovationService)
         {
             _unitOfWork = unitOfWork;
+            _renovationService = renovationService;
         }
 
         public IEnumerable<int> GetNumberOfAppointmentsPerMonth()
@@ -146,20 +150,17 @@
 
         public List<int> GetNumberOfDoctorAppointmentsPerYear(int doctorId, int year)
         {
-            try
+            List<int> retList = new();
+            var allMonths = from month in Enumerable.Range(1, 12)
+                            let key = new { Month = month }
+                            join appointment in _unitOfWork.AppointmentRepository.GetAll().Where(a => a.Doctor.Id == doctorId && a.Date.Year == year) on key
+                            equals new { appointment.Date.Month } into g
+                            select new { key, total = g.Count() };
+            foreach (var element in allMonths)
             {
-                List<int> retList = ListFactory.CreateList<int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetYearlyAppointmentsForDoctor(doctorId, year))
-                {
-                    retList[appointment.Date.Month - 1] = retList[appointment.Date.Month - 1] + 1;
-                }
-
-                return retList;
+                retList.Add(element.total);
             }
-            catch (Exception e)
-            {
-                return null;
-            }
+            return retList;
         }
 
         public List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year)
@@ -201,6 +202,130 @@
                 case 12: return Enumerable.Repeat(0, 31).ToList();
             }
             return null;
+        }
+
+        public List<double> GetNumberOfViewsForEachStep()
+        {
+            List<double> retList = new();
+            List<string> evtNames = new()
+            { 
+                "RENOVATION_TYPE_EVENT",
+                "ROOMS_EVENT",
+                "DATE_PICK_EVENT",
+                "DURATION_EVENT",
+                "START_TIME_EVENT",
+                "PREVIOUS_EVENT_1",
+                "PREVIOUS_EVENT_2",
+                "PREVIOUS_EVENT_3",
+                "PREVIOUS_EVENT_4",
+                "PREVIOUS_EVENT_5"
+            };
+            var allSteps = from eventName in evtNames
+                            let key = new { EventName = eventName }
+                            join renovationEvent in _unitOfWork.RenovationEventRepository.GetAll() on key
+                            equals new { renovationEvent.EventName } into g
+                            select new { key, total = g.Count() };
+
+            retList.Add(_unitOfWork.RenovationRepository.GetAllAggregates().Count);
+            foreach (var element in allSteps)
+            {
+                if (element.key.EventName == "PREVIOUS_EVENT_1") retList[0] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_2") retList[1] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_3") retList[2] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_4") retList[3] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_5") retList[4] += element.total;
+                else retList.Add(element.total);
+            }
+            return retList;
+        }
+
+        public List<double> GetNumberOfStepsAccordingToRenovationType()
+        {
+            List<double> retList = ListFactory.CreateList<double>(0, 0);
+            int merge = 0;
+            int split = 0;
+            foreach (RenovationRequest request in _renovationService.GetAllSuccessfulAggregates())
+            {
+
+                if (request.RenovationType == RenovationType.MERGE)
+                {
+                    merge++;
+                    retList[0] += request.Changes.Count;
+                } 
+                else
+                {
+                    split++;
+                    retList[1] += request.Changes.Count;
+                }
+            }
+
+            if (merge > 0) retList[0] = retList[0] / merge;
+            if (split > 0) retList[1] = retList[1] / split;
+            return retList; 
+        }
+
+        public List<double> GetAverageSchedulingDurationByGroups()
+        {
+            List<double> averages = new List<double>();
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                averages.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+            }
+            return Structure(averages);
+        }
+
+        public List<double> GetAverageSchedulingDuration() {
+            List<double> averages = new List<double>();
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                averages.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+            }
+            return averages;
+        }
+
+        private List<double> Structure(List<double> averages) {
+            List<double> structure = new List<double>() { 0, 0, 0, 0, 0 };
+            foreach (double num in averages) {
+                if (num <= 30)
+                    structure[0]++;
+                else if(num > 30 && num <= 60)
+                    structure[1]++;
+                else if(num > 60 && num <= 90)
+                    structure[2]++;
+                else if (num > 90 && num <= 120)
+                    structure[3]++;
+                else
+                    structure[4]++;
+            }
+            return structure;
+        }
+
+        private double CalculateAverageTimeForSingleRenovationScheduling(RenovationRequest request)
+        {
+            List<DomainEvent> events = request.Changes;
+            DateTime firstStep = new DateTime();
+            DateTime lastStep = new DateTime();
+
+            foreach (RenovationEvent e in events)
+            {
+                if (e.EventName.Equals("RENOVATION_TYPE_EVENT"))
+                    firstStep = e.TimeStamp;
+                else if (e.EventName.Equals("SCHEDULE_EVENT"))
+                    lastStep = e.TimeStamp;
+            }
+            return (lastStep - firstStep).Seconds;
+        }
+
+        private bool DoesScheduleEventExists(RenovationRequest request) {
+            foreach (RenovationEvent evt in request.Changes) {
+                if(evt.EventName.Equals("SCHEDULE_EVENT"))
+                    return true;
+            }
+            return false;
         }
     }
 }

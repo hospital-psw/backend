@@ -21,7 +21,12 @@
         {
             try
             {
-                return _unitOfWork.RenovationRepository.Create(entity);
+                //Get By id
+                //Update all data except version and id
+                _unitOfWork.RenovationRepository.UpdateRequest(entity);
+                Console.WriteLine(entity.RenovationDetails[0].NewRoomName);
+                _unitOfWork.RenovationRepository.Save();
+                return entity;
             }
             catch (Exception)
             {
@@ -265,6 +270,27 @@
             try
             {
                 return _unitOfWork.RenovationRepository.GetById(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<RenovationRequest> GetAllSuccessfulAggregates()
+        {
+            try
+            {
+                List<RenovationRequest> results = new List<RenovationRequest>();
+                _unitOfWork.RenovationRepository.GetAllAggregates();
+                foreach (var aggregate in _unitOfWork.RenovationRepository.GetAllAggregates())
+                {
+                    if (_unitOfWork.RenovationEventRepository.GetScheduleEventForAggregate(aggregate.Id) != null)
+                    {
+                        results.Add(aggregate);
+                    }
+                }
+                return results;
             }
             catch
             {
