@@ -92,7 +92,7 @@
             var result = ((OkObjectResult)controller.GetMonthlyDoctorAppointmentsStatistics(7, 12, 2022)).Value as List<int>;
 
             List<int> expected = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            
+
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);
@@ -100,7 +100,8 @@
 
 
         [Fact]
-        public void Gets_average_scheduling_duration() {
+        public void Gets_average_scheduling_duration()
+        {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
@@ -147,7 +148,7 @@
 
             var result = ((OkObjectResult)controller.GetNumberOfStepsAccordingToRenovationType()).Value as List<double>;
 
-            List<double> expected = new() { 0, 0};
+            List<double> expected = new() { 0, 0 };
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);

@@ -55,7 +55,7 @@
             return Ok(_statisticsService.GetAverageSchedulingDurationByGroups());
         }
 
-     
+
 
 
         [HttpGet("getYearlyDoctorAppointmentsStats/{doctorId}/{year}")]
@@ -65,7 +65,8 @@
         }
 
         [HttpGet("stats/doctor/month/{doctorId}/{month}/{year}")]
-        public IActionResult GetMonthlyDoctorAppointmentsStatistics(int doctorId, int month, int year) {
+        public IActionResult GetMonthlyDoctorAppointmentsStatistics(int doctorId, int month, int year)
+        {
             return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerMonth(doctorId, month, year));
         }
 
@@ -83,7 +84,8 @@
         }
 
         [HttpGet("getAverageDurationAccordingToRenovationType")]
-        public IActionResult GetAverageDurationAccordingToRenovationType() {
+        public IActionResult GetAverageDurationAccordingToRenovationType()
+        {
             return Ok(_statisticsService.GetAverageSchedulingDurationBasedOnRenovationType());
         }
     }

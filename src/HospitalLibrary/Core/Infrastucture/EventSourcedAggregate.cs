@@ -12,11 +12,12 @@
         public List<DomainEvent> Changes { get; private set; }
         public int Version { get; protected set; }
 
-        public EventSourcedAggregate() {
+        public EventSourcedAggregate()
+        {
             Changes = new List<DomainEvent>();
         }
 
         public abstract void Apply(DomainEvent changes);
-     
+
     }
 }

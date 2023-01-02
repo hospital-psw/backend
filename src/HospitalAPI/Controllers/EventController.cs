@@ -21,10 +21,11 @@
         }
 
         [HttpPost]
-        public IActionResult CreateRenovationEvent(RenovationEventDto dto) {
+        public IActionResult CreateRenovationEvent(RenovationEventDto dto)
+        {
             return Ok(_renovationEventService.Execute(RenovationEventMapper.EntityDtoToEntity(dto)).AggregateId);
         }
 
-     
+
     }
 }
