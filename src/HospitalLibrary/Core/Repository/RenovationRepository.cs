@@ -76,5 +76,13 @@
         {
             return _context.RenovationRequests.Include(x => x.Rooms).FirstOrDefault(x => x.Id == id);
         }
+
+        public List<RenovationRequest> GetAllAggregates()
+        {
+            return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
+                                                       .Include(x => x.RenovationDetails)
+                                                       .Include(x => x.Changes)
+                                                       .ToList();
+        }
     }
 }

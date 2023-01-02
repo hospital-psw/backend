@@ -53,5 +53,18 @@
         public IActionResult GetMonthlyDoctorAppointmentsStatistics(int doctorId, int month, int year) {
             return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerMonth(doctorId, month, year));
         }
+
+
+        [HttpGet("getNumberOfViewsForEachStep")]
+        public IActionResult GetNumberOfViewsForEachStep()
+        {
+            return Ok(_statisticsService.GetNumberOfViewsForEachStep());
+        }
+
+        [HttpGet("getNumberOfStepsAccordingToRenovationType")]
+        public IActionResult GetNumberOfStepsAccordingToRenovationType()
+        {
+            return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
+        }
     }
 }

@@ -19,5 +19,7 @@
 
         void UpdateRequest(RenovationRequest request);
 
+        List<RenovationRequest> GetAllAggregates();
+
     }
 }

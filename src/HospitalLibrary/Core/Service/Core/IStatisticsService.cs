@@ -18,5 +18,7 @@
         public List<int> GetNumberOfVacationDaysPerMonth(int doctorId);
         List<int> GetNumberOfDoctorAppointmentsPerYear(int doctorId, int year);
         List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year);
+        List<double> GetNumberOfViewsForEachStep();
+        List<double> GetNumberOfStepsAccordingToRenovationType();
     }
 }

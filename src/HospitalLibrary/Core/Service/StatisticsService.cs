@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
@@ -146,7 +147,7 @@
 
         public List<int> GetNumberOfDoctorAppointmentsPerYear(int doctorId, int year)
         {
-            try
+            /*try
             {
                 List<int> retList = ListFactory.CreateList<int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetYearlyAppointmentsForDoctor(doctorId, year))
@@ -159,7 +160,18 @@
             catch (Exception e)
             {
                 return null;
+            }*/
+            List<int> retList = new();
+            var allMonths = from month in Enumerable.Range(1, 12)
+                            let key = new { Month = month }
+                            join appointment in _unitOfWork.AppointmentRepository.GetAll().Where(a => a.Doctor.Id == doctorId && a.Date.Year == year) on key
+                            equals new { appointment.Date.Month } into g
+                            select new { key, total = g.Count() };
+            foreach (var element in allMonths)
+            {
+                retList.Add(element.total);
             }
+            return retList;
         }
 
         public List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year) {
@@ -198,6 +210,58 @@
                 case 12: return Enumerable.Repeat(0, 31).ToList();
             }
             return null;
+        }
+
+        public List<double> GetNumberOfViewsForEachStep()
+        {
+            List<double> retList = new();
+            List<string> evtNames = new()
+            {   "RENOVATION_TYPE_EVENT",
+                "RENOVATION_TYPE_EVENT",
+                "ROOMS_EVENT",
+                "DATE_PICK_EVENT",
+                "DURATION_EVENT",
+                "START_TIME_EVENT",
+                "PREVIOUS_EVENT_1",
+                "PREVIOUS_EVENT_2",
+                "PREVIOUS_EVENT_3",
+                "PREVIOUS_EVENT_4",
+                "PREVIOUS_EVENT_5"
+            };
+            var allSteps = from eventName in evtNames
+                            let key = new { EventName = eventName }
+                            join renovationEvent in _unitOfWork.RenovationEventRepository.GetAll() on key
+                            equals new { renovationEvent.EventName } into g
+                            select new { key, total = g.Count() };
+            foreach (var element in allSteps)
+            {
+                if (element.key.EventName == "PREVIOUS_EVENT_1") retList[0] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_2") retList[1] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_3") retList[2] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_4") retList[3] += element.total;
+                else if (element.key.EventName == "PREVIOUS_EVENT_5") retList[4] += element.total;
+                else retList.Add(element.total);
+            }
+            return retList;
+        }
+
+        public List<double> GetNumberOfStepsAccordingToRenovationType()
+        {
+            List<double> retList = new();
+            List<RenovationType> renovationTypes = new()
+            {   RenovationType.MERGE,
+                RenovationType.SPLIT,
+            };
+            var types = from type in renovationTypes
+                            let key = new { Type = type }
+                            join renovationEvent in _unitOfWork.RenovationEventRepository.GetAll() on key
+                            equals new { renovationEvent.Type } into g
+                            select new { key, total = g.Count() };
+            foreach (var element in types)
+            {
+                retList.Add(element.total);
+            }
+            return retList;
         }
     }
 }
