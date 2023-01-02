@@ -12,5 +12,6 @@
         double WinningOfferPrice();
 
         void FinishTender(int tenderId, int offerIndex);
+        List<double> GetMoneyPerMonth(int year);
     }
 }
