@@ -21,7 +21,7 @@
         public DomainEvent Execute(RenovationEvent evt)
         {
             RenovationRequest request = null;
-            if (evt.EventName.Equals("RENOVATION_TYPE_EVENT"))
+            if (evt.AggregateId == -1)
             {
                 request = _unitOfWork.RenovationRepository.Create(RenovationRequest.Create(evt.Type, null, DateTime.Now, 0));
                 evt = new RenovationEvent(request.Id, DateTime.Now, evt.EventName, evt.Type);

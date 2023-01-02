@@ -202,7 +202,7 @@
         {
             List<double> retList = new();
             List<string> evtNames = new()
-            {   "RENOVATION_TYPE_EVENT",
+            { 
                 "RENOVATION_TYPE_EVENT",
                 "ROOMS_EVENT",
                 "DATE_PICK_EVENT",
@@ -219,6 +219,8 @@
                             join renovationEvent in _unitOfWork.RenovationEventRepository.GetAll() on key
                             equals new { renovationEvent.EventName } into g
                             select new { key, total = g.Count() };
+
+            retList.Add(_unitOfWork.RenovationRepository.GetAllAggregates().Count);
             foreach (var element in allSteps)
             {
                 if (element.key.EventName == "PREVIOUS_EVENT_1") retList[0] += element.total;
