@@ -24,5 +24,22 @@
             Description = description;
             DateRange = dateRange;
         }
+
+        public override bool Equals(object obj)
+        {
+            var prescription = obj as Prescription;
+
+            if (prescription == null)
+            {
+                return false;
+            }
+
+            return this.Id.Equals(prescription.Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
+        }
     }
 }

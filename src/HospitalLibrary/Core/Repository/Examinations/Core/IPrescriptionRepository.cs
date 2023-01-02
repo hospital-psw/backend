@@ -10,5 +10,6 @@
 
     public interface IPrescriptionRepository : IBaseRepository<Prescription>
     {
+        IEnumerable<Prescription> GetPrescriptionsBySearchCriteria(string criteria);
     }
 }

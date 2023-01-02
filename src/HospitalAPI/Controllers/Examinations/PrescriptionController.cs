@@ -8,10 +8,12 @@
     using HospitalLibrary.Core.Model.Medicament;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Core.Service.Examinations.Core;
+    using HospitalLibrary.Util;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -28,6 +30,13 @@
         public IActionResult GetAll()
         {
             return Ok(PrescriptionMapper.EntityListToEntityDtoList(_prescriptionService.GetAll().ToList()));
+        }
+
+        [HttpGet("search")]
+        public IActionResult Search(string input)
+        {
+            var perscriptions = _prescriptionService.GetPrescriptionsBySearchCriteria(SearchParser.Parse(input)).ToList();
+            return Ok(PrescriptionMapper.EntityListToEntityDtoList(perscriptions));
         }
 
         [HttpGet("{id}")]
