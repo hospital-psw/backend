@@ -364,5 +364,31 @@
             }
             return false;
         }
+
+        public List<double> GetAverageNumberOfRenovationSteps()
+        {
+            List<double> retList = ListFactory.CreateList<double>(0, 0);
+            int renovations2022 = 0;
+            int renovations2023 = 0;
+            foreach (RenovationRequest request in _renovationService.GetAllSuccessfulAggregates())
+            {
+
+                if (request.DateCreated.Year == 2021)
+                {
+                    renovations2022++;
+                    retList[0] += request.Changes.Count;
+                }
+                else if (request.DateCreated.Year == 2022)
+                {
+                    renovations2023++;
+                    retList[1] += request.Changes.Count;
+                }
+            }
+
+            if (renovations2022 > 0) retList[0] = retList[0] / renovations2022;
+            if (renovations2023 > 0) retList[1] = retList[1] / renovations2023;
+            return retList;
+        }
+
     }
 }

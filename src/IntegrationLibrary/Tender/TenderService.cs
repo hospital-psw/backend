@@ -7,10 +7,12 @@
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
+    using OpenQA.Selenium;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Xml.Linq;
 
     public class TenderService : ITenderService
     {
@@ -178,6 +180,22 @@
                 _logger.LogError($"Error in TenderService in GetActive {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        public List<double> GetMoneyPerMonth(int year)
+        {
+
+            List<double> moneyPerMonth = new List<double>();
+            var allMonths = from month in Enumerable.Range(1, 12)
+                            let key = new { Month = month }
+                            join tender in _unitOfWork.TenderRepository.GetAll().Where(t => t.TenderWinner != null && t.TenderWinner.DateCreated.Year == year) on key
+                            equals new { tender.TenderWinner.DateCreated.Month } into g
+                            select new { key, total = g.Sum(tender => tender.TenderWinner.Items.Sum(item => item.Money.Amount)) };
+            foreach (var element in allMonths)
+            {
+                moneyPerMonth.Add(element.total);
+            }
+            return moneyPerMonth;
         }
     }
 }
