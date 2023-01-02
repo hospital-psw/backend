@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Infrastucture;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.VacationRequests;
@@ -141,6 +142,70 @@
             {
                 return null;
             }
+        }
+
+        public List<double> GetAverageSchedulingDurationByGroups()
+        {
+            List<double> averages = new List<double>();
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                averages.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+            }
+            return Structure(averages);
+        }
+
+        public List<double> GetAverageSchedulingDuration() {
+            List<double> averages = new List<double>();
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                averages.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+            }
+            return averages;
+        }
+
+        private List<double> Structure(List<double> averages) {
+            List<double> structure = new List<double>() { 0, 0, 0, 0, 0 };
+            foreach (double num in averages) {
+                if (num <= 30)
+                    structure[0]++;
+                else if(num > 30 && num <= 60)
+                    structure[1]++;
+                else if(num > 60 && num <= 90)
+                    structure[2]++;
+                else if (num > 90 && num <= 120)
+                    structure[3]++;
+                else
+                    structure[4]++;
+            }
+            return structure;
+        }
+
+        private double CalculateAverageTimeForSingleRenovationScheduling(RenovationRequest request)
+        {
+            List<DomainEvent> events = request.Changes;
+            DateTime firstStep = new DateTime();
+            DateTime lastStep = new DateTime();
+
+            foreach (RenovationEvent e in events)
+            {
+                if (e.EventName.Equals("RENOVATION_TYPE_EVENT"))
+                    firstStep = e.TimeStamp;
+                else if (e.EventName.Equals("SCHEDULE_EVENT"))
+                    lastStep = e.TimeStamp;
+            }
+            return (lastStep - firstStep).Seconds;
+        }
+
+        private bool DoesScheduleEventExists(RenovationRequest request) {
+            foreach (RenovationEvent evt in request.Changes) {
+                if(evt.EventName.Equals("SCHEDULE_EVENT"))
+                    return true;
+            }
+            return false;
         }
     }
 }

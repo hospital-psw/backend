@@ -42,5 +42,20 @@
             List<int> result = (List<int>)_statisticsService.GetNumberOfVacationDaysPerMonth(doctorId);
             return Ok(result);
         }
+
+        [HttpGet("getRenovationStats/duration")]
+        public IActionResult GetAverageSchedulingDuration()
+        {
+            return Ok(_statisticsService.GetAverageSchedulingDuration());
+        }
+
+        [HttpGet("getRenovationStats/duration/groups")]
+        public IActionResult GetAverageSchedulingDurationByGroups()
+        {
+            return Ok(_statisticsService.GetAverageSchedulingDurationByGroups());
+        }
+
+     
+
     }
 }

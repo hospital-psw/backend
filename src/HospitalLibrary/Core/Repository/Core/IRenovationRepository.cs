@@ -18,6 +18,6 @@
         List<RenovationRequest> GetAll();
 
         void UpdateRequest(RenovationRequest request);
-
+        List<RenovationRequest> GetAllEverMade();
     }
 }

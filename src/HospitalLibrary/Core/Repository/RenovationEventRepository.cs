@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,10 +13,11 @@
 
     public class RenovationEventRepository : BaseRepository<RenovationEvent>, IRenovationEventRepository
     {
+        private HospitalDbContext _context;
         public RenovationEventRepository(HospitalDbContext context) : base(context)
         {
+            _context = context;
         }
-
 
     }
 }

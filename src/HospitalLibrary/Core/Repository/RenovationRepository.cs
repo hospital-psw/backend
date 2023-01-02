@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
 
     public class RenovationRepository : BaseRepository<RenovationRequest>, IRenovationRepository
     {
@@ -37,6 +38,15 @@
             return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
                                                         .Include(x => x.RenovationDetails)
                                                         .Where(x => !x.Deleted)
+                                                        .OrderBy(x => x.StartTime)
+                                                        .Distinct()
+                                                        .ToList();
+        }
+
+        public List<RenovationRequest> GetAllEverMade() {
+            return HospitalDbContext.RenovationRequests.Include(x => x.Rooms)
+                                                        .Include(x => x.RenovationDetails)
+                                                        .Include(x => x.Changes)
                                                         .OrderBy(x => x.StartTime)
                                                         .Distinct()
                                                         .ToList();
@@ -76,5 +86,6 @@
         {
             return _context.RenovationRequests.Include(x => x.Rooms).FirstOrDefault(x => x.Id == id);
         }
+    
     }
 }

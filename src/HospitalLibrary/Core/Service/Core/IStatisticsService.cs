@@ -16,5 +16,7 @@
         public List<int> GetUsersByType();
 
         public List<int> GetNumberOfVacationDaysPerMonth(int doctorId);
+        List<double> GetAverageSchedulingDurationByGroups();
+        List<double> GetAverageSchedulingDuration();
     }
 }
