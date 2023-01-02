@@ -88,5 +88,11 @@
         {
             return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
         }
+
+        [HttpGet("getAverageDurationAccordingToRenovationType")]
+        public IActionResult GetAverageDurationAccordingToRenovationType()
+        {
+            return Ok(_statisticsService.GetAverageSchedulingDurationBasedOnRenovationType());
+        }
     }
 }

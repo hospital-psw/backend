@@ -28,6 +28,11 @@
             _renovationService = renovationService;
         }
 
+        public StatisticsService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public IEnumerable<int> GetNumberOfAppointmentsPerMonth()
         {
             try
@@ -283,6 +288,35 @@
                 averages.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
             }
             return averages;
+        }
+        public List<double> GetAverageSchedulingDurationBasedOnRenovationType()
+        {
+            List<double> averagesMerge = new List<double>();
+            List<double> averagesSplit = new List<double>();
+            List<double> result = new List<double>();
+
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                if (request.RenovationType == RenovationType.MERGE)
+                    averagesMerge.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+                else
+                    averagesSplit.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+            }
+            result.Add(CalculateAveragesForType(averagesMerge));
+            result.Add(CalculateAveragesForType(averagesSplit));
+            return result;
+        }
+
+        private double CalculateAveragesForType(List<double> averages)
+        {
+            double average = 0;
+            foreach (double num in averages)
+            {
+                average += num;
+            }
+            return averages.Count == 0 ? 0 : average / averages.Count;
         }
 
         private List<double> Structure(List<double> averages)
