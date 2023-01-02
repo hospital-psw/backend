@@ -19,10 +19,12 @@
     public class StatisticsService : IStatisticsService
     {
         public readonly IUnitOfWork _unitOfWork;
+        public readonly IRenovationService _renovationService;
 
-        public StatisticsService(IUnitOfWork unitOfWork)
+        public StatisticsService(IUnitOfWork unitOfWork, IRenovationService renovationService)
         {
             _unitOfWork = unitOfWork;
+            _renovationService = renovationService;
         }
 
         public IEnumerable<int> GetNumberOfAppointmentsPerMonth()
@@ -147,20 +149,6 @@
 
         public List<int> GetNumberOfDoctorAppointmentsPerYear(int doctorId, int year)
         {
-            /*try
-            {
-                List<int> retList = ListFactory.CreateList<int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                foreach (Appointment appointment in _unitOfWork.AppointmentRepository.GetYearlyAppointmentsForDoctor(doctorId, year))
-                {
-                    retList[appointment.Date.Month - 1] = retList[appointment.Date.Month - 1] + 1;
-                }
-
-                return retList;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }*/
             List<int> retList = new();
             var allMonths = from month in Enumerable.Range(1, 12)
                             let key = new { Month = month }
@@ -247,21 +235,27 @@
 
         public List<double> GetNumberOfStepsAccordingToRenovationType()
         {
-            List<double> retList = new();
-            List<RenovationType> renovationTypes = new()
-            {   RenovationType.MERGE,
-                RenovationType.SPLIT,
-            };
-            var types = from type in renovationTypes
-                            let key = new { Type = type }
-                            join renovationEvent in _unitOfWork.RenovationEventRepository.GetAll() on key
-                            equals new { renovationEvent.Type } into g
-                            select new { key, total = g.Count() };
-            foreach (var element in types)
+            List<double> retList = ListFactory.CreateList<double>(0, 0);
+            int merge = 0;
+            int split = 0;
+            foreach (RenovationRequest request in _renovationService.GetAllSuccessfulAggregates())
             {
-                retList.Add(element.total);
+
+                if (request.RenovationType == RenovationType.MERGE)
+                {
+                    merge++;
+                    retList[0] += request.Changes.Count;
+                } 
+                else
+                {
+                    split++;
+                    retList[1] += request.Changes.Count;
+                }
             }
-            return retList;
+
+            if (merge > 0) retList[0] = retList[0] / merge;
+            if (split > 0) retList[1] = retList[1] / split;
+            return retList; 
         }
     }
 }

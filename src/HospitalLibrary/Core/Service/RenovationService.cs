@@ -276,5 +276,26 @@
                 return null;
             }
         }
+
+        public List<RenovationRequest> GetAllSuccessfulAggregates()
+        {
+            try
+            {
+                List<RenovationRequest> results = new List<RenovationRequest>();
+                _unitOfWork.RenovationRepository.GetAllAggregates();
+                foreach (var aggregate in _unitOfWork.RenovationRepository.GetAllAggregates())
+                {
+                    if (_unitOfWork.RenovationEventRepository.GetScheduleEventForAggregate(aggregate.Id) != null)
+                    {
+                        results.Add(aggregate);
+                    }
+                }
+                return results;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

@@ -10,5 +10,6 @@
 
     public interface IRenovationEventRepository : IBaseRepository<RenovationEvent>
     {
+        RenovationEvent GetScheduleEventForAggregate(int aggregeateId);
     }
 }
