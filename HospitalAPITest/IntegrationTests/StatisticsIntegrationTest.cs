@@ -67,5 +67,105 @@
             Assert.NotNull(result);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Gets_Correct_Doctor_Yearly_Booking_Statistics()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetYearlyDoctorAppointmentsStatistics(4, 2022)).Value as List<int>;
+
+            List<int> expected = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1);
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+
+        [Fact]
+        public void Gets_Correct_Doctor_Monthly_Booking_Statistics()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetMonthlyDoctorAppointmentsStatistics(7, 12, 2022)).Value as List<int>;
+
+            List<int> expected = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+
+        [Fact]
+        public void Gets_average_scheduling_duration()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetAverageSchedulingDuration()).Value as List<double>;
+            List<double> expected = new() { 25 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Gets_average_scheduling_duration_by_groups()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetAverageSchedulingDurationByGroups()).Value as List<double>;
+            List<double> expected = new() { 1, 0, 0, 0, 0 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Gets_Correct_Number_Of_Views_For_Each_Renovation_Step()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetNumberOfViewsForEachStep()).Value as List<double>;
+
+            List<double> expected = new() { 1, 1, 0, 0, 0, 0 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+
+        [Fact]
+        public void Gets_Correct_Number_Of_Steps_According_To_Renovation_Type()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetNumberOfStepsAccordingToRenovationType()).Value as List<double>;
+
+            List<double> expected = new() { 0, 0 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Gets_correct_average_according_to_renovation_type()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetAverageDurationAccordingToRenovationType()).Value as List<double>;
+
+            List<double> expected = new() { 0, 25 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
     }
 }

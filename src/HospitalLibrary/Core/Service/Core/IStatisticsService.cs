@@ -14,7 +14,13 @@
         public (IEnumerable<string>, IEnumerable<int>) GetPatientsPerDoctor();
         public (List<int>, List<int>) GetNumberOfPatientsByAgeGroup();
         public List<int> GetUsersByType();
-
         public List<int> GetNumberOfVacationDaysPerMonth(int doctorId);
+        List<int> GetNumberOfDoctorAppointmentsPerYear(int doctorId, int year);
+        List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year);
+        List<double> GetNumberOfViewsForEachStep();
+        List<double> GetNumberOfStepsAccordingToRenovationType();
+        List<double> GetAverageSchedulingDurationByGroups();
+        List<double> GetAverageSchedulingDuration();
+        List<double> GetAverageSchedulingDurationBasedOnRenovationType();
     }
 }

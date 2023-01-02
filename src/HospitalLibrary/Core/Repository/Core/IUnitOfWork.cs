@@ -48,6 +48,7 @@
         public ISymptomRepository SymptomRepository { get; }
 
         public IAnamnesisRepository AnamnesisRepository { get; }
+        public IRenovationEventRepository RenovationEventRepository { get; }
 
     }
 }
