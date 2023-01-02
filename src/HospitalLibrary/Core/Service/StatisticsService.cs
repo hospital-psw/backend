@@ -162,7 +162,8 @@
             }
         }
 
-        public List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year) {
+        public List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year)
+        {
             try
             {
                 List<int> retList = CreateMonthList(month);
@@ -182,8 +183,10 @@
             }
         }
 
-        private List<int> CreateMonthList(int month) {
-            switch (month) {
+        private List<int> CreateMonthList(int month)
+        {
+            switch (month)
+            {
                 case 1: return Enumerable.Repeat(0, 31).ToList();
                 case 2: return Enumerable.Repeat(0, 28).ToList();
                 case 3: return Enumerable.Repeat(0, 31).ToList();
