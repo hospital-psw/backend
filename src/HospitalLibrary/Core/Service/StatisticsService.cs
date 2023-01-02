@@ -289,6 +289,7 @@
             }
             return averages;
         }
+
         public List<double> GetAverageSchedulingDurationBasedOnRenovationType()
         {
             List<double> averagesMerge = new List<double>();
@@ -388,5 +389,6 @@
             if (renovations2023 > 0) retList[1] = retList[1] / renovations2023;
             return retList;
         }
+
     }
 }
