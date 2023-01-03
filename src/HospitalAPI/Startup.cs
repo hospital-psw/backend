@@ -61,6 +61,11 @@ namespace HospitalAPI
                 .AddEntityFrameworkStores<HospitalDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options => 
+            {
+                options.SignIn.RequireConfirmedEmail = true;
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
                     options.RequireHttpsMetadata = false;
                     options.SaveToken = false;

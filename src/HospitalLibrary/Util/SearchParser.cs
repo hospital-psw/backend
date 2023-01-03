@@ -11,6 +11,10 @@
     {
         public static List<string> Parse(string input)
         {
+            if(input == null)
+            {
+                input = "";
+            }
             return Regex.Matches(input, @"(?<match>\w+)|\""(?<match>[\w\s]*)""")
                         .Cast<Match>()
                         .Select(p => p.Groups["match"].Value)

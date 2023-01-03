@@ -28,7 +28,7 @@
             return GetAll().FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Prescription> GetAnamnesesBySearchCriteria(string criteria)
+        public IEnumerable<Prescription> GetPrescriptionsBySearchCriteria(string criteria)
         {
             return GetAll()
                    .Where(x => x.Description.ToUpper().Contains(criteria.ToUpper())

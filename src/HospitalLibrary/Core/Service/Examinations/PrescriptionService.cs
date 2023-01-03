@@ -82,14 +82,14 @@
             }
         }
 
-        public IEnumerable<Prescription> GetAnamnesesBySearchCriteria(List<string> criteriasList)
+        public IEnumerable<Prescription> GetPrescriptionsBySearchCriteria(List<string> criteriasList)
         {
             try
             {
                 List<Prescription> prescriptions = new List<Prescription>();
                 foreach (string el in criteriasList)
                 {
-                    List<Prescription> p = _unitOfWork.PrescriptionRepository.GetAnamnesesBySearchCriteria(el).ToList();
+                    List<Prescription> p = _unitOfWork.PrescriptionRepository.GetPrescriptionsBySearchCriteria(el).ToList();
                     if (!p.IsNullOrEmpty())
                     {
                         prescriptions.AddRange(p);
