@@ -9,7 +9,7 @@
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TenderController:BaseController<Entity>
+    public class TenderController : BaseController<Entity>
     {
         private readonly ITenderService _tenderService;
 

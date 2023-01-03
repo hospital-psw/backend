@@ -49,5 +49,18 @@
             Assert.NotNull(result);
             Assert.Equal("Aspirin", result.Medicament.Name);
         }
+
+        [Fact]
+        public void Get_prescriptions_by_search_criteria()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var input = "";
+
+            var result = ((OkObjectResult)controller.Search(input)).Value as List<PrescriptionDto>;
+
+            Assert.NotNull(result);
+        }
     }
 }

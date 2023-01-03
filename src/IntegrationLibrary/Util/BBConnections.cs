@@ -71,7 +71,5 @@ namespace IntegrationLibrary.Util
                 var resString = response.Content.ReadAsStringAsync();
             }
         }
-
     }
-
 }

@@ -60,7 +60,6 @@
             Assert.Equal(Pages.DeclineRelocationPage.URI, driver.Url);
             Dispose();
         }
-
         public void Dispose()
         {
             driver.Quit();

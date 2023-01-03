@@ -7,10 +7,12 @@
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
+    using OpenQA.Selenium;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Xml.Linq;
 
     public class TenderService : ITenderService
     {
@@ -183,19 +185,14 @@
         public List<double> GetMoneyPerMonth(int year)
         {
             List<double> moneyPerMonth = new List<double>();
-            for(int i = 0; i < 12; ++i)
+            var allMonths = from month in Enumerable.Range(1, 12)
+                            let key = new { Month = month }
+                            join tender in _unitOfWork.TenderRepository.GetAll().Where(t => t.TenderWinner != null && t.TenderWinner.DateCreated.Year == year) on key
+                            equals new { tender.TenderWinner.DateCreated.Month } into g
+                            select new { key, total = g.Sum(tender => tender.TenderWinner.Items.Sum(item => item.Money.Amount)) };
+            foreach (var element in allMonths)
             {
-                moneyPerMonth.Add(0);
-            }
-            foreach(Tender tender in _unitOfWork.TenderRepository.GetAll())
-            {
-                if (tender.TenderWinner != null && tender.DueDate.Year == year)
-                {
-                    foreach(TenderItem tenderItem in tender.Items)
-                    {
-                        moneyPerMonth[tender.DueDate.Month - 1] += tenderItem.Money.Amount;
-                    }
-                }
+                moneyPerMonth.Add(element.total);
             }
             return moneyPerMonth;
         }
