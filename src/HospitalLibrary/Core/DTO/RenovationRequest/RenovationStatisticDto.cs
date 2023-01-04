@@ -18,7 +18,7 @@
 
         public RenovationStatisticDto() { }
 
-        public RenovationStatisticDto(DateTime date, double step1, double step2, double step3, double step4, double step5, double step6) 
+        public RenovationStatisticDto(DateTime date, double step1, double step2, double step3, double step4, double step5, double step6)
         {
             Date = date;
             Step1 = step1;
