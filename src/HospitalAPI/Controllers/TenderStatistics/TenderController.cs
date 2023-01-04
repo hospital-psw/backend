@@ -31,5 +31,19 @@
                 return Ok(moneyPerMonth);
             }
         }
+
+        [HttpGet("blood/{year}/{bloodType}")]
+        public IActionResult GethMonthBloodQuantity(int year, int bloodType)
+        {
+            List<double> bloodQuantityPerMonth = _tenderService.GetBloodPerMonth(year, bloodType);
+            if (bloodQuantityPerMonth == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(bloodQuantityPerMonth);
+            }
+        }
     }
 }

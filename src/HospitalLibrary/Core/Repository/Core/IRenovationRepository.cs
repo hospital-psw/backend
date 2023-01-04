@@ -15,7 +15,7 @@
 
         int Save();
         public RenovationRequest GetById(int id);
-        List<RenovationRequest> GetAll();
+        new List<RenovationRequest> GetAll();
 
         void UpdateRequest(RenovationRequest request);
         List<RenovationRequest> GetAllEverMade();

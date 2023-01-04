@@ -22,5 +22,10 @@
         {
             return _connections.SendHttpRequestToIntegration(year);
         }
+
+        public List<double> GetBloodPerMonth(int year, int bloodType)
+        {
+            return _connections.SendHttpRequestToIntegrationBloodQuantity(year, bloodType);
+        }
     }
 }
