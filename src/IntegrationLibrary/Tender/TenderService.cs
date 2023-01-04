@@ -209,13 +209,7 @@
             {
                 if (tender.TenderWinner != null && tender.DueDate.Year == year)
                 {
-                    foreach (TenderItem tenderItem in tender.TenderWinner.Items)
-                    {
-                        if (tenderItem.BloodType.Equals(bt))
-                        {
-                            bloodPerMonth[tender.DueDate.Month - 1] += tenderItem.Quantity;
-                        }
-                    }
+                    bloodPerMonth = CalculateBloodPerMonth(tender, bloodPerMonth, bt);
                 }
             }
             return bloodPerMonth;
@@ -256,6 +250,18 @@
 
             }
             return bt;
+        }
+
+        private List<double> CalculateBloodPerMonth(Tender tender, List<double> bloodPerMonth, BloodType bt)
+        {
+            foreach (TenderItem tenderItem in tender.TenderWinner.Items)
+            {
+                if (tenderItem.BloodType.Equals(bt))
+                {
+                    bloodPerMonth[tender.DueDate.Month - 1] += tenderItem.Quantity;
+                }
+            }
+            return bloodPerMonth;
         }
     }
 }
