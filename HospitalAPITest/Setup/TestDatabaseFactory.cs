@@ -563,7 +563,7 @@
             List<Room> roomsRenovation = new List<Room>();
             roomsRenovation.Add(room);
             List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
-            RenovationRequest r = RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, DateTime.Now, 2, renovationDetails);
+            RenovationRequest r = RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, new DateTime(2023, 12, 25, 17, 35, 12), 2, renovationDetails);
             r.Changes.Add(new RenovationEvent(r.Id, new DateTime(2022, 12, 25, 17, 35, 12), RenovationEventType.RENOVATION_TYPE_EVENT.ToString(), RenovationType.MERGE));
             r.Changes.Add(new RenovationEvent(r.Id, new DateTime(2022, 12, 25, 17, 35, 37), RenovationEventType.SCHEDULE_EVENT.ToString(), RenovationType.MERGE));
 

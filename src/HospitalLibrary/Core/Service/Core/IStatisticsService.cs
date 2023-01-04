@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Core
 {
+    using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using System;
@@ -23,6 +24,6 @@
         List<double> GetAverageSchedulingDuration();
         List<double> GetAverageNumberOfRenovationSteps();
         List<double> GetAverageSchedulingDurationBasedOnRenovationType();
-        DTO.RenovationRequest.RenovationStatisticDto GetTimeSpentPerStep();
+        List<RenovationStatisticDto> GetTimeSpentPerStep();
     }
 }

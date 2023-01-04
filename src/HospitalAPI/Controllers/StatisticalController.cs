@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
+    using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.AppUsers.Core;
@@ -98,7 +99,7 @@
         [HttpGet("getTimeSpentPerStep")]
         public IActionResult GetTimeSpentPerStep()
         {
-            HospitalLibrary.Core.DTO.RenovationRequest.RenovationStatisticDto dto = _statisticsService.GetTimeSpentPerStep();
+            List<RenovationStatisticDto> dto = _statisticsService.GetTimeSpentPerStep();
             return Ok(dto);
         }
     }

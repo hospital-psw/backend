@@ -391,25 +391,25 @@
             return retList;
         }
 
-        public RenovationStatisticDto GetTimeSpentPerStep()
+        public List<RenovationStatisticDto> GetTimeSpentPerStep()
         {
-            List<DateTime> dates = new List<DateTime>();
-            List<double> timeSpent = new List<double>();
+            List<RenovationStatisticDto> dtos = new List<RenovationStatisticDto>();
             List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
 
             foreach (RenovationRequest request in requests)
             {
                 if (!DoesScheduleEventExists(request)) continue;
-                dates.Add(request.StartTime);
-                timeSpent.Add(CalculateForRenovationTypeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList()));
-                timeSpent.Add(CalculateForRoomsStep(request.Changes.OrderBy(x => x.TimeStamp).ToList()));
-                timeSpent.Add(CalculateForDatePickStep(request.Changes.OrderBy(x => x.TimeStamp).ToList()));
-                timeSpent.Add(CalculateForDurationStep(request.Changes.OrderBy(x => x.TimeStamp).ToList()));
-                timeSpent.Add(CalculateForStartTimeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList()));
-                timeSpent.Add(CalculateForScheduleStep(request.Changes.OrderBy(x => x.TimeStamp).ToList()));
+                RenovationStatisticDto dto = new RenovationStatisticDto();
+                dto.Date = request.StartTime;
+                dto.Step1 = CalculateForRenovationTypeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step2 = CalculateForRoomsStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step3 = CalculateForDatePickStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step4 = CalculateForDurationStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step5 = CalculateForStartTimeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step6 = CalculateForScheduleStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dtos.Add(dto);
             }
-            RenovationStatisticDto dto = new RenovationStatisticDto(dates, timeSpent);
-            return dto;
+            return dtos;
         }
 
         public double CalculateForRenovationTypeStep(List<DomainEvent> changes)
@@ -421,7 +421,7 @@
                 {
                     DateTime end = changes[i].TimeStamp;
                     DateTime start = changes[i - 1].TimeStamp;
-                    duration = (end - start).Seconds;
+                    duration = duration + (end - start).Seconds;
                 }
             }
             return duration;
@@ -436,7 +436,7 @@
                 {
                     DateTime end = changes[i].TimeStamp;
                     DateTime start = changes[i - 1].TimeStamp;
-                    duration = (end - start).Seconds;
+                    duration = duration + (end - start).Seconds;
                 }
             }
             return duration;
@@ -451,7 +451,7 @@
                 {
                     DateTime end = changes[i].TimeStamp;
                     DateTime start = changes[i - 1].TimeStamp;
-                    duration = (end - start).Seconds;
+                    duration = duration + (end - start).Seconds;
                 }
             }
             return duration;
@@ -466,7 +466,7 @@
                 {
                     DateTime end = changes[i].TimeStamp;
                     DateTime start = changes[i - 1].TimeStamp;
-                    duration = (end - start).Seconds;
+                    duration = duration + (end - start).Seconds;
                 }
             }
             return duration;
@@ -481,7 +481,7 @@
                 {
                     DateTime end = changes[i].TimeStamp;
                     DateTime start = changes[i - 1].TimeStamp;
-                    duration = (end - start).Seconds;
+                    duration = duration + (end - start).Seconds;
                 }
             }
             return duration;
@@ -496,7 +496,7 @@
                 {
                     DateTime end = changes[i].TimeStamp;
                     DateTime start = changes[i - 1].TimeStamp;
-                    duration = (end - start).Seconds;
+                    duration = duration + (end - start).Seconds;
                 }
             }
             return duration;

@@ -8,15 +8,26 @@
 
     public class RenovationStatisticDto
     {
-        public List<DateTime> Dates { get; set; }
-        public List<double> TimeSpentPerStep { get; set; }
+        public DateTime Date { get; set; }
+        public double Step1 { get; set; }
+        public double Step2 { get; set; }
+        public double Step3 { get; set; }
+        public double Step4 { get; set; }
+        public double Step5 { get; set; }
+        public double Step6 { get; set; }
 
         public RenovationStatisticDto() { }
 
-        public RenovationStatisticDto(List<DateTime> dates, List<double> timeSpentPerStep)
+        public RenovationStatisticDto(DateTime date, double step1, double step2, double step3, double step4, double step5, double step6) 
         {
-            this.Dates = dates;
-            this.TimeSpentPerStep = timeSpentPerStep;
+            Date = date;
+            Step1 = step1;
+            Step2 = step2;
+            Step3 = step3;
+            Step4 = step4;
+            Step5 = step5;
+            Step6 = step6;
         }
+
     }
 }

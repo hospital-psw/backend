@@ -188,12 +188,18 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.GetTimeSpentPerStep()).Value as RenovationStatisticDto;
-            List<double> expectedTimeSpentPerStep = new() { 0, 0, 0, 0, 0, 25 };
+            var result = ((OkObjectResult)controller.GetTimeSpentPerStep()).Value as List<RenovationStatisticDto>;
+            RenovationStatisticDto dto = new RenovationStatisticDto(new DateTime(2023, 12, 25, 17, 35, 12), 0, 0, 0, 0, 0, 25);
 
             Assert.NotNull(result);
-            Assert.Equal(expectedTimeSpentPerStep, result.TimeSpentPerStep);
+            var res = result[0];
+            Assert.Equal(dto.Step1, res.Step1);
+            Assert.Equal(dto.Step2, res.Step2);
+            Assert.Equal(dto.Step3, res.Step3);
+            Assert.Equal(dto.Step4, res.Step4);
+            Assert.Equal(dto.Step5, res.Step5);
+            Assert.Equal(dto.Step6, res.Step6);
+            Assert.Equal(dto.Date, res.Date);
         }
-
     }
 }
