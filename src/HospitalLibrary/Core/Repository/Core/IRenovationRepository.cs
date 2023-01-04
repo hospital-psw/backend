@@ -17,5 +17,10 @@
         public RenovationRequest GetById(int id);
         new List<RenovationRequest> GetAll();
 
+        void UpdateRequest(RenovationRequest request);
+        List<RenovationRequest> GetAllEverMade();
+
+        List<RenovationRequest> GetAllAggregates();
+
     }
 }

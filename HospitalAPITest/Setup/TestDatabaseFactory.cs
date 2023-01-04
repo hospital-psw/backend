@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPITest.Setup
 {
     using HospitalAPI;
+    using HospitalAPI.Dto.Enum;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Blood;
@@ -562,7 +563,11 @@
             List<Room> roomsRenovation = new List<Room>();
             roomsRenovation.Add(room);
             List<RenovationDetails> renovationDetails = new List<RenovationDetails>();
-            context.RenovationRequests.Add(RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, DateTime.Now, 2, renovationDetails));
+            RenovationRequest r = RenovationRequest.Create(RenovationType.SPLIT, roomsRenovation, DateTime.Now, 2, renovationDetails);
+            r.Changes.Add(new RenovationEvent(r.Id, new DateTime(2022, 12, 25, 17, 35, 12), RenovationEventType.RENOVATION_TYPE_EVENT.ToString(), RenovationType.MERGE));
+            r.Changes.Add(new RenovationEvent(r.Id, new DateTime(2022, 12, 25, 17, 35, 37), RenovationEventType.SCHEDULE_EVENT.ToString(), RenovationType.MERGE));
+
+            context.RenovationRequests.Add(r);
 
             ApplicationDoctor appDoc2 = new ApplicationDoctor
                 ("Galina", "Gavanski", new DateTime(1980, 5, 1), Gender.FEMALE, Specialization.GENERAL, null, null);
@@ -625,8 +630,9 @@
             doctorSchedule.Consiliums.Add(consilium);
             doctorSchedule2.Consiliums.Add(consilium);
 
+            RenovationEvent evt = new RenovationEvent(1, DateTime.Now, RenovationEventType.RENOVATION_TYPE_EVENT.ToString(), RenovationType.MERGE);
+            context.RenovationEvents.Add(evt);
             context.SaveChanges();
-
         }
     }
 }

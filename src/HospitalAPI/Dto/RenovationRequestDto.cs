@@ -7,6 +7,7 @@
 
     public class RenovationRequestDto
     {
+        public int Id { get; set; }
         public RenovationType RenovationType { get; set; }
         public List<int> RoomsId { get; set; }
         public DateTime StartTime { get; set; }
