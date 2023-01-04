@@ -13,5 +13,6 @@
 
         void FinishTender(int tenderId, int offerIndex);
         List<double> GetMoneyPerMonth(int year);
+        List<double> GetBloodPerMonth(int year, int bloodType);
     }
 }
