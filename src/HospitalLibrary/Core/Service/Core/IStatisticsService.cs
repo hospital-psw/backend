@@ -23,5 +23,6 @@
         List<double> GetAverageSchedulingDuration();
         List<double> GetAverageNumberOfRenovationSteps();
         List<double> GetAverageSchedulingDurationBasedOnRenovationType();
+        DTO.RenovationRequest.RenovationStatisticDto GetTimeSpentPerStep();
     }
 }

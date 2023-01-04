@@ -3,6 +3,7 @@
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto.Statistics;
     using HospitalAPITest.Setup;
+    using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Service.Blood.Core;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Util;
@@ -133,7 +134,7 @@
 
             var result = ((OkObjectResult)controller.GetNumberOfViewsForEachStep()).Value as List<double>;
 
-            List<double> expected = new() { 1, 1, 0, 0, 0, 0 };
+            List<double> expected = new() { 1, 2, 0, 0, 0, 0 };
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);
@@ -179,6 +180,19 @@
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Gets_time_spent_per_step()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetTimeSpentPerStep()).Value as RenovationStatisticDto;
+            List<double> expectedTimeSpentPerStep = new() { 0, 0, 0, 0, 0, 25 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expectedTimeSpentPerStep, result.TimeSpentPerStep);
         }
 
     }

@@ -630,7 +630,7 @@
             doctorSchedule.Consiliums.Add(consilium);
             doctorSchedule2.Consiliums.Add(consilium);
 
-            RenovationEvent evt = new RenovationEvent(1, DateTime.Now, RenovationEventType.RENOVATION_TYPE_EVENT.ToString(), RenovationType.MERGE);
+            RenovationEvent evt = new RenovationEvent(1, new DateTime(2022, 12, 25, 17, 35, 47), RenovationEventType.RENOVATION_TYPE_EVENT.ToString(), RenovationType.MERGE);
             context.RenovationEvents.Add(evt);
             context.SaveChanges();
         }

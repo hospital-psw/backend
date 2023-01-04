@@ -94,5 +94,12 @@
         {
             return Ok(_statisticsService.GetAverageSchedulingDurationBasedOnRenovationType());
         }
+
+        [HttpGet("getTimeSpentPerStep")]
+        public IActionResult GetTimeSpentPerStep()
+        {
+            HospitalLibrary.Core.DTO.RenovationRequest.RenovationStatisticDto dto = _statisticsService.GetTimeSpentPerStep();
+            return Ok(dto);
+        }
     }
 }
