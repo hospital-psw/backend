@@ -7,6 +7,7 @@
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
 
     [ApiController]
@@ -15,11 +16,14 @@
     {
         private readonly ITenderService _tenderService;
         private readonly IMapper _mapper;
+        private readonly ITenderBloodTransferStatisticsService _tenderStatisticsService;
 
-        public TenderController(ITenderService tenderService, IMapper mapper)
+        public TenderController(ITenderService tenderService, IMapper mapper, ITenderBloodTransferStatisticsService tenderBloodTransferStatisticsService)
         {
             _tenderService = tenderService;
             _mapper = mapper;
+            _tenderStatisticsService = tenderBloodTransferStatisticsService;
+
         }
 
         [HttpGet("all")]
@@ -118,6 +122,12 @@
             }
 
             return NoContent();
+        }
+
+        [HttpGet]
+        public IActionResult GenerateReport()
+        {
+            return base.Content(_tenderStatisticsService.GenerateHTMLReport(new DateTime(2022, 12, 1), new DateTime(2022, 12, 31)), "text/html");
         }
     }
 }

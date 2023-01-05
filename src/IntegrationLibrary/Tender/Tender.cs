@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace IntegrationLibrary.Tender
 
 {
+    using BloodBank;
     public class Tender : Entity
     {
         public TenderStatus Status { get; set; }
@@ -14,6 +15,7 @@ namespace IntegrationLibrary.Tender
         public List<TenderOffer> Offers { get; set; }
         public TenderOffer TenderWinner { get; set; }
         public List<TenderItem> Items { get; set; }
+        public BloodBank Sender { get; set; }
 
         public Money TotalSum()
         {
