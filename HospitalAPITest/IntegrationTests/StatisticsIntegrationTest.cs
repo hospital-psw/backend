@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
     using HospitalAPI.Controllers;
+    using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.RenovationRequest;
@@ -210,7 +211,7 @@
 
             DateTime start = new DateTime(2022, 11, 1, 17, 35, 12);
             DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
-            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(4, start, end)).Value as List<int>;
+            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(new DoctorOptionalStatisticDto(4, start, end))).Value as List<int>;
 
             List<int> expected = ListFactory.CreateList(1, 1);
 
@@ -226,7 +227,7 @@
 
             DateTime start = new DateTime(2022, 12, 1, 17, 35, 12);
             DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
-            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(7, start, end)).Value as List<int>;
+            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(new DoctorOptionalStatisticDto(7, start, end))).Value as List<int>;
 
             List<int> expected = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
