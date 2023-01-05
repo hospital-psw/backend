@@ -102,5 +102,11 @@
             List<RenovationStatisticDto> dto = _statisticsService.GetTimeSpentPerStep();
             return Ok(dto);
         }
+
+        [HttpGet("getOptionalDoctorStats/{doctorId}/{start}/{end}")]
+        public IActionResult GetOptionalDoctorAppointmentsStatistics(int doctorId, DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

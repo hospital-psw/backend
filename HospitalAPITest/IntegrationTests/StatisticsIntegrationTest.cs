@@ -201,5 +201,37 @@
             Assert.Equal(dto.Step6, res.Step6);
             Assert.Equal(dto.Date, res.Date);
         }
+
+        [Fact]
+        public void Gets_Correct_Doctor_Optional_Booking_Statistics_Months()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            DateTime start = new DateTime(2022, 11, 1, 17, 35, 12);
+            DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
+            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(4, start, end)).Value as List<int>;
+
+            List<int> expected = ListFactory.CreateList(1, 1);
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Gets_Correct_Doctor_Optional_Booking_Statistics_Days()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            DateTime start = new DateTime(2022, 12, 1, 17, 35, 12);
+            DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
+            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(7, start, end)).Value as List<int>;
+
+            List<int> expected = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
     }
 }
