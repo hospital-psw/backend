@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Infrastucture;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
@@ -390,5 +391,115 @@
             return retList;
         }
 
+        public List<RenovationStatisticDto> GetTimeSpentPerStep()
+        {
+            List<RenovationStatisticDto> dtos = new List<RenovationStatisticDto>();
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                RenovationStatisticDto dto = new RenovationStatisticDto();
+                dto.Date = request.StartTime;
+                dto.Step1 = CalculateForRenovationTypeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step2 = CalculateForRoomsStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step3 = CalculateForDatePickStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step4 = CalculateForDurationStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step5 = CalculateForStartTimeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step6 = CalculateForScheduleStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dtos.Add(dto);
+            }
+            return dtos;
+        }
+
+        public double CalculateForRenovationTypeStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("RENOVATION_TYPE_EVENT") && i != 0)
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForRoomsStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("ROOMS_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForDatePickStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("DATE_PICK_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForDurationStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("DURATION_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForStartTimeStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("START_TIME_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForScheduleStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("SCHEDULE_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
     }
 }
