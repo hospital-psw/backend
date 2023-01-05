@@ -103,10 +103,10 @@
             return Ok(dto);
         }
 
-        [HttpGet("getOptionalDoctorStats/{doctorId}/{start}/{end}")]
-        public IActionResult GetOptionalDoctorAppointmentsStatistics(int doctorId, DateTime start, DateTime end)
+        [HttpPost("getOptionalDoctorStats")]
+        public IActionResult GetOptionalDoctorAppointmentsStatistics(DoctorOptionalStatisticDto dto)
         {
-            throw new NotImplementedException();
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsInOptionalTimeRange(dto.DoctorId, dto.Start, dto.End));
         }
     }
 }

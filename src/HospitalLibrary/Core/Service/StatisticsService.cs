@@ -501,5 +501,59 @@
             }
             return duration;
         }
+
+        public List<int> GetNumberOfDoctorAppointmentsInOptionalTimeRange(int doctorId, DateTime start, DateTime end)
+        {
+            try
+            {
+                List<int> retList = new List<int>();
+                if ((end - start).TotalDays < 32) 
+                {
+                    retList = CalculateForDays(doctorId, start, end);
+                }
+                else
+                {
+                    retList = CalculateForMonths(doctorId, start, end);
+                }
+                return retList; 
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private List<int> CalculateForDays(int doctorId, DateTime start, DateTime end)
+        {
+            List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAppointmentsForDoctorInDateRange(doctorId, start, end).ToList();
+            List<int> retList = new List<int>();
+            for (int i = 0; i <= (int) (end - start).TotalDays; i++)
+            {
+                retList.Add(0);
+            }
+            foreach(Appointment a in appointments)
+            {
+                int index = (int) (a.Date - start).TotalDays;
+                retList[index] = retList[index] + 1;
+            }
+            return retList;
+        }
+
+        private List<int> CalculateForMonths(int doctorId, DateTime start, DateTime end)
+        {
+            List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAppointmentsForDoctorInDateRange(doctorId, start, end).ToList();
+            List<int> retList = new List<int>();
+            int months = Math.Abs((end.Month - start.Month) + 12 * (end.Year - start.Year));
+            for (int i = 0; i <= months; i++)
+            {
+                retList.Add(0);
+            }
+            foreach (Appointment a in appointments)
+            {
+                int index = a.Date.Month - start.Month;
+                retList[index] = retList[index] + 1;
+            }
+            return retList;
+        }
     }
 }
