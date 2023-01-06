@@ -127,24 +127,24 @@
             return feedback is null ? NotFound() : Ok(feedback);
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpPost("add")]
         public IActionResult Add(NewFeedbackDTO dto)
         {
-            if (ModelState.IsValid)
+           /* if (ModelState.IsValid)
             {
                 string token = Request.Headers["Authorization"];
                 if (token == null || !_tokenService.IsTokenValid(token))
                 {
                     return BadRequest("Invalid Authorization");
                 }
-
+           */
                 return Ok(_feedbackService.Add(dto));
-            }
+           /* }
             else
             {
                 return BadRequest("Something went wrong...");
-            }
+            }*/
         }
 
         [HttpPut("make/public/{id}")]
