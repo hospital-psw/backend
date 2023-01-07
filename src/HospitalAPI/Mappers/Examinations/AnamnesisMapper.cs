@@ -9,6 +9,8 @@
     {
         public static AnamnesisDto EntityToEntityDto(Anamnesis anamnesis)
         {
+            if (anamnesis == null) return null;
+
             AnamnesisDto dto = new AnamnesisDto();
             AppointmentDto appointmentDto = AppointmentMapper.EntityToEntityDto(anamnesis.Appointment);
             List<PrescriptionDto> prescriptions = PrescriptionMapper.EntityListToEntityDtoList(anamnesis.Prescriptions);

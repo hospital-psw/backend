@@ -4,6 +4,7 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230107124406_CreatedExaminationEventsTables")]
+    partial class CreatedExaminationEventsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1285,13 +1287,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("DescriptionCreatedEvents", (string)null);
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationEvent", b =>
-                {
-                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
-
-                    b.ToTable("ExaminationEvents", (string)null);
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationFinished", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
@@ -1909,15 +1904,6 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
                         .WithOne()
                         .HasForeignKey("HospitalLibrary.Core.Model.Events.DescriptionCreated", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationEvent", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
-                        .WithOne()
-                        .HasForeignKey("HospitalLibrary.Core.Model.Events.ExaminationEvent", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
                 });

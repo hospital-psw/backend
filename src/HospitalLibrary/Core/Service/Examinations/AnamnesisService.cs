@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Domain;
+    using HospitalLibrary.Core.Model.Events;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Repository.Core;
@@ -104,7 +105,7 @@
             if (dto.SymptomIds != null)
                 symptoms = _unitOfWork.SymptomRepository.GetSelectedSymptoms(dto.SymptomIds).ToList();
 
-            Anamnesis newAnamnesis = new Anamnesis(appointment, dto.Description);
+            Anamnesis newAnamnesis = Anamnesis.Create(appointment, dto.Description);
             newAnamnesis.Symptoms = symptoms;
 
             appointment.IsDone = true;

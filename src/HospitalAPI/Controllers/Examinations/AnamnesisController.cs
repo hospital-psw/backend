@@ -3,7 +3,6 @@
     using HospitalAPI.Dto.Examinations;
     using HospitalAPI.Mappers.Examinations;
     using HospitalLibrary.Core.DTO.Examinations;
-    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
