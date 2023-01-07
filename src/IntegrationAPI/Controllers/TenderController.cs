@@ -4,10 +4,13 @@
     using IntegrationAPI.DTO.Tender;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Tender;
+    using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
+    using System.Text.Json;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -118,6 +121,37 @@
             }
 
             return NoContent();
+        }
+        [HttpGet("money/{year}")]
+        public IActionResult GethMonthMoneyStatistics(int year)
+        {
+            List<double> moneyPerMonth = _tenderService.GetMoneyPerMonth(year);
+            if (moneyPerMonth == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                JsonSerializer.Serialize<List<double>>(moneyPerMonth);
+                //return Ok(moneyPerMonth);
+                return Ok(JsonSerializer.Serialize<List<double>>(moneyPerMonth));
+            }
+        }
+
+        [HttpGet("blood/{year}/{bloodType}")]
+        public IActionResult GethMonthBloodQuantity(int year, int bloodType)
+        {
+            List<double> bloodQuantityPerMonth = _tenderService.GetBloodPerMonth(year, bloodType);
+            if (bloodQuantityPerMonth == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth);
+                //return Ok(moneyPerMonth);
+                return Ok(JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth));
+            }
         }
     }
 }

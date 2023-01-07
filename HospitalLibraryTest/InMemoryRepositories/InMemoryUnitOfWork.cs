@@ -71,6 +71,8 @@
 
         public IAnamnesisRepository AnamnesisRepository { get; set; }
 
+        public IRenovationEventRepository RenovationEventRepository => throw new NotImplementedException();
+
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             string type = typeof(TEntity).Name;

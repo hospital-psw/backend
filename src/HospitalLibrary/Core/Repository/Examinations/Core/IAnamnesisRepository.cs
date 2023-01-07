@@ -18,5 +18,7 @@
         IEnumerable<Anamnesis> GetInDateRange(DateRange dateRange);
 
         Anamnesis GetByAppointment(int id);
+
+        IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(string criteria);
     }
 }

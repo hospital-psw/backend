@@ -23,5 +23,22 @@
             Appointment = appointment;
             Description = description;
         }
+
+        public override bool Equals(object obj)
+        {
+            var anamnesis = obj as Anamnesis;
+
+            if (anamnesis == null)
+            {
+                return false;
+            }
+
+            return this.Id.Equals(anamnesis.Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
+        }
     }
 }
