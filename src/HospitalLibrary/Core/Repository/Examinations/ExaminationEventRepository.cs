@@ -1,20 +1,20 @@
 ﻿namespace HospitalLibrary.Core.Repository.Examinations
 {
     using HospitalLibrary.Core.Infrastucture;
+    using HospitalLibrary.Core.Model.Events;
+    using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using HospitalLibrary.Core.Repository.Examinations.Core;
-    using HospitalLibrary.Core.Model.Events;
 
     public class ExaminationEventRepository : BaseRepository<DomainEvent>, IExaminationEventRepository
     {
         public ExaminationEventRepository(HospitalDbContext context) : base(context)
         {
-            
+
         }
 
         public DomainEvent AddEvent(DomainEvent @event)

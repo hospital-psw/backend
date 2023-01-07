@@ -10,11 +10,11 @@
 
         public PrescriptionRemovedDto()
         {
-                
+
         }
 
         public PrescriptionRemovedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int prescId)
-            :base(aggregateId, eventType, timeStamp)
+            : base(aggregateId, eventType, timeStamp)
         {
             PrescriptionId = prescId;
         }

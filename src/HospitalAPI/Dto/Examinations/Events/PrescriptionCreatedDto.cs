@@ -13,7 +13,7 @@
         }
 
         public PrescriptionCreatedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, NewPrescriptionDto newPrescription)
-            :base(aggregateId, eventType, timeStamp)
+            : base(aggregateId, eventType, timeStamp)
         {
             NewPrescription = newPrescription;
         }

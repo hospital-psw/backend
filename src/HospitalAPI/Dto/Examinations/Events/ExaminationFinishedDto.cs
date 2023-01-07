@@ -14,7 +14,7 @@
         }
 
         public ExaminationFinishedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int appointmentId)
-            :base (aggregateId, eventType, timeStamp)
+            : base(aggregateId, eventType, timeStamp)
         {
             AppointmentId = appointmentId;
         }

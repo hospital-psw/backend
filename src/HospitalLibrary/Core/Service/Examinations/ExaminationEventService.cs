@@ -65,7 +65,7 @@
                 _logger.LogError($"Error in ExaminationEventService in ManageSymptoms {e.Message} in {e.StackTrace}");
                 return null;
             }
-            
+
         }
 
         public Anamnesis CreateDescription(DescriptionCreated descriptionCreated)
@@ -84,7 +84,7 @@
                 _logger.LogError($"Error in ExaminationEventService in Create Description {e.Message} in {e.StackTrace}");
                 return null;
             }
-            
+
         }
 
         public Anamnesis CreatePrescription(PrescriptionCreated prescriptionCreated)

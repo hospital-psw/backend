@@ -24,7 +24,7 @@
 
         Anamnesis FinishExamination(ExaminationFinished examinationFinished);
 
-        Anamnesis ExecuteEvent(ExaminationEvent examinationEvent);  
+        Anamnesis ExecuteEvent(ExaminationEvent examinationEvent);
 
 
     }

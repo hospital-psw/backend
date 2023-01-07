@@ -28,7 +28,7 @@
         [HttpPost("manage-symptoms")]
         public IActionResult AddSymptom(SymptomsChangedDto dto)
         {
-            return Ok(AnamnesisMapper.EntityToEntityDto(_examinationEventService.ManageSymptoms(SymptomChangedMapper.DtoToEntity(dto))));  
+            return Ok(AnamnesisMapper.EntityToEntityDto(_examinationEventService.ManageSymptoms(SymptomChangedMapper.DtoToEntity(dto))));
         }
 
         [HttpPost("add-prescription")]

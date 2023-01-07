@@ -41,7 +41,7 @@
 
         public static Anamnesis Create(Appointment appointment)
         {
-            Anamnesis anamnesis = new Anamnesis(appointment);;
+            Anamnesis anamnesis = new Anamnesis(appointment); ;
             return anamnesis;
         }
 
@@ -78,7 +78,7 @@
             }
             Causes(evt);
         }
-        
+
         public void AddDescription(DescriptionCreated evt)
         {
             Causes(evt);
@@ -125,12 +125,12 @@
 
         private void When(SymptomsChanged symptomsChanged)
         {
-            if(symptomsChanged.Status == SymptomEventStatus.REMOVED)
+            if (symptomsChanged.Status == SymptomEventStatus.REMOVED)
             {
                 Symptom symptom = Symptoms.Find(s => s.Id == symptomsChanged.SymptomId);
                 if (symptom == null) return;
                 Symptoms.Remove(symptom);
-            } 
+            }
         }
 
         private void When(DescriptionCreated descriptionCreated)

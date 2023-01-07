@@ -7,7 +7,7 @@
     {
         public static PrescriptionCreated DtoToEntity(PrescriptionCreatedDto dto)
         {
-            return new PrescriptionCreated(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), 
+            return new PrescriptionCreated(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(),
                                            dto.NewPrescription.MedicamentId, dto.NewPrescription.Description,
                                            dto.NewPrescription.From, dto.NewPrescription.To);
         }
