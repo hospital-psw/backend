@@ -10,6 +10,7 @@
 
         public static PrescriptionDto EntityToEntityDto(Prescription prescription)
         {
+            if (prescription == null) return null;
             return new PrescriptionDto(prescription.Id, MedicamentMapper.EntityToEntityDto(prescription.Medicament), prescription.Description, prescription.DateRange);
         }
 

@@ -14,8 +14,8 @@ using HospitalLibrary.Core.Service.AppUsers.Core;
 using HospitalLibrary.Core.Service.Blood;
 using HospitalLibrary.Core.Service.Blood.Core;
 using HospitalLibrary.Core.Service.Core;
-using HospitalLibrary.Core.Service.Examinations;
 using HospitalLibrary.Core.Service.Examinations.Core;
+using HospitalLibrary.Core.Service.Examinations;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -119,6 +119,7 @@ namespace HospitalAPI
             services.AddScoped<IAnamnesisService, AnamnesisService>();
             services.AddScoped<IRenovationEventService, RenovationEventService>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IExaminationEventService, ExaminationEventService>();
 
             services.AddScoped<IConnections, Connections>();
 

@@ -9,6 +9,7 @@
 
         public static SymptomDto EntityToEntityDto(Symptom symptom)
         {
+            if (symptom == null) return null;
             return new SymptomDto(symptom.Id, symptom.Name);
         }
 
