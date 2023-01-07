@@ -2,9 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public interface IHTMLReportService
     {
@@ -30,5 +27,12 @@
         /// <param name="lables"></param>
         /// <param name="data"></param>
         void AddPieChart(List<string> lables, List<double> data);
+
+        /// <summary>
+        /// Adds a time span in the report header.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        void AddTimestamp(DateTime from, DateTime to);
     }
 }

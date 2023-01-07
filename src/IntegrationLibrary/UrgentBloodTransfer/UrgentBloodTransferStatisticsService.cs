@@ -5,17 +5,20 @@
     using IntegrationLibrary.Util.Interfaces;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
 
     public class UrgentBloodTransferStatisticsService : IUrgentBloodTransferStatisticsService
     {
         private readonly IUrgentBloodTransferService _urgentBloodTransferService;
         private readonly IHTMLReportService _htmlReportService;
+        private readonly ISFTPService _sftpService;
 
-        public UrgentBloodTransferStatisticsService(IUrgentBloodTransferService urgentBloodTransferService, IHTMLReportService htmlReportService)
+        public UrgentBloodTransferStatisticsService(IUrgentBloodTransferService urgentBloodTransferService, IHTMLReportService htmlReportService, ISFTPService sftpService)
         {
             _urgentBloodTransferService = urgentBloodTransferService;
             _htmlReportService = htmlReportService;
+            _sftpService = sftpService;
         }
 
         public string GenerateHTMLReport(DateTime from, DateTime to)
@@ -29,7 +32,23 @@
             _htmlReportService.AddPieChart(new List<string>(bbShare.Keys), new List<double>(bbShare.Values));
             _htmlReportService.AddPieChart(new List<string>(btShare.Keys), new List<double>(btShare.Values));
             _htmlReportService.AddBarChart(new List<string>(btAmount.Keys), new List<double>(btAmount.Values));
+            _htmlReportService.AddTimestamp(from, to);
+
+            _sftpService.SendFile(PdfSharpConvert(_htmlReportService.OutputFile));
             return _htmlReportService.OutputFile;
+        }
+
+        private static Stream PdfSharpConvert(String html)
+        {
+            var Renderer = new IronPdf.ChromePdfRenderer();
+            Renderer.RenderingOptions.MarginLeft = 0;
+            Renderer.RenderingOptions.MarginRight = 0;
+            Renderer.RenderingOptions.MarginTop = 0;
+            Renderer.RenderingOptions.MarginBottom= 0;
+            Renderer.RenderingOptions.EnableJavaScript = true;
+            //Renderer.RenderingOptions.RenderDelay = 800;
+            var pdf = Renderer.RenderHtmlAsPdf(html);
+            return pdf.Stream;
         }
 
         private List<List<string>> ConvertNestedDictionaryToLists(Dictionary<string, Dictionary<string, double>> input)

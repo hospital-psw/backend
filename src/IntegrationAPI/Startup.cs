@@ -112,6 +112,8 @@ namespace IntegrationAPI
             services.AddScoped<ITokenHelper, TokenHelper>();
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<IBBConnections, BBConnections>();
+            services.AddScoped<ISFTPService, SFTPService>();
+
             services.AddMjmlServices(o =>
             {
                 o.DefaultKeepComments = true;

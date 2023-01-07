@@ -7,6 +7,7 @@
     public class HTMLReportService : IHTMLReportService
     {
         private static readonly string BODY_WILDCARD = "<!--BODY_WILDCARD-->";
+        private static readonly string DATE_SPAN_WILDCARD = "<!--DATE_SPAN_WILDCARD-->";
         private static readonly string SCRIPT_WILDCARD = "//SCRIPT_WILDCARD";
         private int barChartCnt;
         private int pieChartCnt;
@@ -84,6 +85,7 @@
                 "                    borderWidth: 1\r\n" +
                 "                }]\r\n" +
                 "            },\r\n" +
+                "            options: { animation: false, }" +
                 "        });";
         }
 
@@ -123,6 +125,11 @@
         private void AddJSElement(string element)
         {
             OutputFile = OutputFile.Replace(SCRIPT_WILDCARD, element + "\n" + SCRIPT_WILDCARD);
+        }
+
+        public void AddTimestamp(DateTime from, DateTime to)
+        {
+            OutputFile = OutputFile.Replace(DATE_SPAN_WILDCARD, DateTime.Now.ToShortDateString() + " and " + DateTime.Now.ToShortDateString());
         }
     }
 }
