@@ -2,6 +2,7 @@
 {
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
     using IntegrationLibrary.UrgentBloodTransfer.Model;
+    using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using System;
     using System.Collections.Generic;
@@ -13,12 +14,14 @@
         private readonly IUrgentBloodTransferService _urgentBloodTransferService;
         private readonly IHTMLReportService _htmlReportService;
         private readonly ISFTPService _sftpService;
+        private readonly IMailSender _mailSender;
 
-        public UrgentBloodTransferStatisticsService(IUrgentBloodTransferService urgentBloodTransferService, IHTMLReportService htmlReportService, ISFTPService sftpService)
+        public UrgentBloodTransferStatisticsService(IUrgentBloodTransferService urgentBloodTransferService, IHTMLReportService htmlReportService, ISFTPService sftpService, IMailSender mailSender)
         {
             _urgentBloodTransferService = urgentBloodTransferService;
             _htmlReportService = htmlReportService;
             _sftpService = sftpService;
+            _mailSender = mailSender;
         }
 
         public string GenerateHTMLReport(DateTime from, DateTime to)
@@ -34,9 +37,13 @@
             _htmlReportService.AddBarChart(new List<string>(btAmount.Keys), new List<double>(btAmount.Values));
             _htmlReportService.AddTimestamp(from, to);
 
-            _sftpService.SendFile(PdfSharpConvert(_htmlReportService.OutputFile));
+            var reportFile = PdfSharpConvert(_htmlReportService.OutputFile);
+            _sftpService.SendFile(reportFile);
+            string template = MailSender.MakeUrgentBloodRequestTemplate();
+            _mailSender.SendEmail(template, "Urgent blood transfer report", "psw.hospital.2022@gmail.com", reportFile);
             return _htmlReportService.OutputFile;
         }
+
 
         private static Stream PdfSharpConvert(String html)
         {
@@ -46,7 +53,6 @@
             Renderer.RenderingOptions.MarginTop = 0;
             Renderer.RenderingOptions.MarginBottom= 0;
             Renderer.RenderingOptions.EnableJavaScript = true;
-            //Renderer.RenderingOptions.RenderDelay = 800;
             var pdf = Renderer.RenderHtmlAsPdf(html);
             return pdf.Stream;
         }
