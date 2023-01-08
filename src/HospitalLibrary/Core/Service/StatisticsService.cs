@@ -371,7 +371,7 @@
             List<double> retList = new List<double>();
             var list = _renovationService.GetAllSuccessfulAggregates().GroupBy(r => new { ID = r.DateCreated.Year })
                 .Select(g => new { Average = g.Average(p => p.Changes.Count), ID = g.Key.ID });
-            foreach(var r in list)
+            foreach (var r in list)
             {
                 retList.Add(r.Average);
             }
