@@ -28,11 +28,12 @@
         [HttpPost]
         public IActionResult Create(BloodUnit bloodUnit)
         {
-            if(bloodUnitService.GetByBloodType(bloodUnit.BloodType) != null && bloodUnit.BloodType.GetType() != BloodType.AB_MINUS.GetType()) {
+            if (bloodUnitService.GetByBloodType(bloodUnit.BloodType) != null && bloodUnit.BloodType.GetType() != BloodType.AB_MINUS.GetType())
+            {
                 return BadRequest("Blood type already exist");
             }
 
-                
+
             return Ok(bloodUnitService.Add(bloodUnit));
         }
 
