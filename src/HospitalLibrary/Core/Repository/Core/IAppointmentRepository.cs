@@ -25,5 +25,6 @@
         void Save();
         IEnumerable<Appointment> GetYearlyAppointmentsForDoctor(int doctorId, int year);
         IEnumerable<Appointment> GetMonthlyAppointmentsForDoctor(int doctorId, int year, int month);
+        IEnumerable<Appointment> GetAppointmentsForDoctorInDateRange(int doctorId, DateTime start, DateTime end);
     }
 }
