@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.Enums;
     using HospitalLibrary.Core.Service.Blood.Core;
@@ -27,6 +28,12 @@
         [HttpPost]
         public IActionResult Create(BloodUnit bloodUnit)
         {
+            if (bloodUnitService.GetByBloodType(bloodUnit.BloodType) != null && bloodUnit.BloodType.GetType() != BloodType.AB_MINUS.GetType())
+            {
+                return BadRequest("Blood type already exist");
+            }
+
+
             return Ok(bloodUnitService.Add(bloodUnit));
         }
 
@@ -43,9 +50,9 @@
         }
 
         [HttpPut]
-        public IActionResult UpdateBloodUnit(BloodUnit bloodUnit)
+        public IActionResult UpdateBloodUnit(BloodUnitDTO dto)
         {
-            return Ok(bloodUnitService.Update(bloodUnit));
+            return Ok(bloodUnitService.UpdateBloodUnit(dto));
         }
 
         [HttpDelete("delete/{id}")]
