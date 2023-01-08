@@ -137,5 +137,16 @@
                                           .Where(x => x.Doctor.Id == doctorId && x.Date.Year == year && x.Date.Month == month && !x.Deleted)
                                           .ToList();
         }
+
+        public IEnumerable<Appointment> GetAppointmentsForDoctorInDateRange(int doctorId, DateTime start, DateTime end)
+        {
+            return HospitalDbContext.Appointments.Include(x => x.Doctor)
+                                          .Include(x => x.Patient)
+                                          .Include(x => x.Room)
+                                          .ThenInclude(x => x.Floor)
+                                          .ThenInclude(x => x.Building)
+                                          .Where(x => x.Doctor.Id == doctorId && x.Date.CompareTo(start) > 0 && x.Date.CompareTo(end) < 0 && !x.Deleted)
+                                          .ToList();
+        }
     }
 }

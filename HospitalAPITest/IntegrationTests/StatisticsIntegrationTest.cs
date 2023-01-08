@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
     using HospitalAPI.Controllers;
+    using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.RenovationRequest;
@@ -70,21 +71,6 @@
         }
 
         [Fact]
-        public void Gets_Correct_Doctor_Yearly_Booking_Statistics()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            var result = ((OkObjectResult)controller.GetYearlyDoctorAppointmentsStatistics(4, 2022)).Value as List<int>;
-
-            List<int> expected = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1);
-
-            Assert.NotNull(result);
-            Assert.Equal(expected, result);
-        }
-
-
-        [Fact]
         public void Gets_Correct_Doctor_Monthly_Booking_Statistics()
         {
             using var scope = Factory.Services.CreateScope();
@@ -127,21 +113,6 @@
         }
 
         [Fact]
-        public void Gets_Correct_Number_Of_Views_For_Each_Renovation_Step()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            var result = ((OkObjectResult)controller.GetNumberOfViewsForEachStep()).Value as List<double>;
-
-            List<double> expected = new() { 1, 2, 0, 0, 0, 0 };
-
-            Assert.NotNull(result);
-            Assert.Equal(expected, result);
-        }
-
-
-        [Fact]
         public void Gets_Correct_Number_Of_Steps_According_To_Renovation_Type()
         {
             using var scope = Factory.Services.CreateScope();
@@ -168,6 +139,35 @@
             Assert.NotNull(result);
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Gets_Correct_Doctor_Yearly_Booking_Statistics()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetYearlyDoctorAppointmentsStatistics(4, 2022)).Value as List<int>;
+
+            List<int> expected = ListFactory.CreateList(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1);
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Gets_Correct_Number_Of_Views_For_Each_Renovation_Step()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetNumberOfViewsForEachStep()).Value as List<double>;
+
+            List<double> expected = new() { 1, 1, 0, 0, 0, 0 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
         [Fact]
         public void Gets_Correct_Number_Of_Average_Steps_Renovation()
         {
@@ -200,6 +200,38 @@
             Assert.Equal(dto.Step5, res.Step5);
             Assert.Equal(dto.Step6, res.Step6);
             Assert.Equal(dto.Date, res.Date);
+        }
+
+        [Fact]
+        public void Gets_Correct_Doctor_Optional_Booking_Statistics_Months()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            DateTime start = new DateTime(2022, 11, 1, 17, 35, 12);
+            DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
+            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(new DoctorOptionalStatisticDto(4, start, end))).Value as List<int>;
+
+            List<int> expected = ListFactory.CreateList(1, 1);
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Gets_Correct_Doctor_Optional_Booking_Statistics_Days()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            DateTime start = new DateTime(2022, 12, 1, 17, 35, 12);
+            DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
+            var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(new DoctorOptionalStatisticDto(7, start, end))).Value as List<int>;
+
+            List<int> expected = new() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            Assert.NotNull(result);
+            Assert.Equal(expected, result);
         }
     }
 }
