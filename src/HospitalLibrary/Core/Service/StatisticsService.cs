@@ -368,7 +368,15 @@
 
         public List<double> GetAverageNumberOfRenovationSteps()
         {
-            List<double> retList = ListFactory.CreateList<double>(0, 0);
+            List<double> retList = new List<double>();//ListFactory.CreateList<double>(0, 0);
+            var list = _renovationService.GetAllSuccessfulAggregates().GroupBy(r => new { ID = r.DateCreated.Year })
+                .Select(g => new { Average = g.Average(p => p.Changes.Count), ID = g.Key.ID });
+            foreach(var r in list)
+            {
+                retList.Add(r.Average);
+            }
+            return retList;
+            /*
             int renovations2022 = 0;
             int renovations2023 = 0;
             foreach (RenovationRequest request in _renovationService.GetAllSuccessfulAggregates())
@@ -389,6 +397,7 @@
             if (renovations2022 > 0) retList[0] = retList[0] / renovations2022;
             if (renovations2023 > 0) retList[1] = retList[1] / renovations2023;
             return retList;
+            */
         }
 
         public List<RenovationStatisticDto> GetTimeSpentPerStep()
