@@ -494,7 +494,7 @@
             try
             {
                 List<int> retList = new List<int>();
-                if ((end - start).TotalDays < 32) 
+                if ((end - start).TotalDays < 32)
                 {
                     retList = CalculateForDays(doctorId, start, end);
                 }
@@ -502,7 +502,7 @@
                 {
                     retList = CalculateForMonths(doctorId, start, end);
                 }
-                return retList; 
+                return retList;
             }
             catch (Exception)
             {
@@ -514,13 +514,13 @@
         {
             List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAppointmentsForDoctorInDateRange(doctorId, start, end).ToList();
             List<int> retList = new List<int>();
-            for (int i = 0; i <= (int) (end - start).TotalDays; i++)
+            for (int i = 0; i <= (int)(end - start).TotalDays; i++)
             {
                 retList.Add(0);
             }
-            foreach(Appointment a in appointments)
+            foreach (Appointment a in appointments)
             {
-                int index = (int) (a.Date - start).TotalDays;
+                int index = (int)(a.Date - start).TotalDays;
                 retList[index] = retList[index] + 1;
             }
             return retList;

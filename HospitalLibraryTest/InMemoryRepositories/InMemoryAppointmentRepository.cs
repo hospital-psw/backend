@@ -132,5 +132,10 @@ namespace HospitalLibraryTest.InMemoryRepositories
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Appointment> GetAppointmentsForDoctorInDateRange(int doctorId, DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
