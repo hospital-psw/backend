@@ -136,5 +136,33 @@
             result.ShouldNotBe(null);
             result.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
         }
+
+        [Fact]
+        public void Get_month_tender_money()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            SetupContext(scope);
+
+            int year = 2022;
+            var result = ((OkObjectResult)controller.GethMonthMoneyStatistics(year)).Value as IEnumerable<double>;
+            result.ShouldNotBe(null);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void Get_month_tender_blood_quantity()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            SetupContext(scope);
+
+            //BloodType bloodType = BloodType.A_NEGATIVE;
+            int bloodType = 0;
+            int year = 2022;
+            var result = ((OkObjectResult)controller.GethMonthBloodQuantity(year, bloodType)).Value as IEnumerable<double>;
+            result.ShouldNotBe(null);
+            Assert.NotEmpty(result);
+        }
     }
 }

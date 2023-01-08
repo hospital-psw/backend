@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
+    using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.AppUsers.Core;
@@ -41,6 +42,71 @@
         {
             List<int> result = (List<int>)_statisticsService.GetNumberOfVacationDaysPerMonth(doctorId);
             return Ok(result);
+        }
+
+        [HttpGet("getRenovationStats/duration")]
+        public IActionResult GetAverageSchedulingDuration()
+        {
+            return Ok(_statisticsService.GetAverageSchedulingDuration());
+        }
+
+        [HttpGet("getRenovationStats/duration/groups")]
+        public IActionResult GetAverageSchedulingDurationByGroups()
+        {
+            return Ok(_statisticsService.GetAverageSchedulingDurationByGroups());
+        }
+
+
+
+
+        [HttpGet("getYearlyDoctorAppointmentsStats/{doctorId}/{year}")]
+        public IActionResult GetYearlyDoctorAppointmentsStatistics(int doctorId, int year)
+        {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerYear(doctorId, year));
+        }
+
+        [HttpGet("stats/doctor/month/{doctorId}/{month}/{year}")]
+        public IActionResult GetMonthlyDoctorAppointmentsStatistics(int doctorId, int month, int year)
+        {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsPerMonth(doctorId, month, year));
+        }
+
+
+        [HttpGet("getNumberOfViewsForEachStep")]
+        public IActionResult GetNumberOfViewsForEachStep()
+        {
+            return Ok(_statisticsService.GetNumberOfViewsForEachStep());
+        }
+
+        [HttpGet("getNumberOfStepsAccordingToRenovationType")]
+        public IActionResult GetNumberOfStepsAccordingToRenovationType()
+        {
+            return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
+        }
+
+        [HttpGet("getAverageNumberOfRenovationSteps")]
+        public IActionResult GetAverageNumberOfRenovationSteps()
+        {
+            return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
+        }
+
+        [HttpGet("getAverageDurationAccordingToRenovationType")]
+        public IActionResult GetAverageDurationAccordingToRenovationType()
+        {
+            return Ok(_statisticsService.GetAverageSchedulingDurationBasedOnRenovationType());
+        }
+
+        [HttpGet("getTimeSpentPerStep")]
+        public IActionResult GetTimeSpentPerStep()
+        {
+            List<RenovationStatisticDto> dto = _statisticsService.GetTimeSpentPerStep();
+            return Ok(dto);
+        }
+
+        [HttpPost("getOptionalDoctorStats")]
+        public IActionResult GetOptionalDoctorAppointmentsStatistics(DoctorOptionalStatisticDto dto)
+        {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsInOptionalTimeRange(dto.DoctorId, dto.Start, dto.End));
         }
     }
 }

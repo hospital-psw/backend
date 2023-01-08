@@ -82,6 +82,47 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("ConsiliumDoctorSchedule");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Infrastucture.DomainEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AggregateId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AnamnesisId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("EventName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RenovationRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnamnesisId");
+
+                    b.HasIndex("RenovationRequestId");
+
+                    b.ToTable("DomainEvent");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.ApplicationUser.ApplicationRole", b =>
                 {
                     b.Property<int>("Id")
@@ -511,6 +552,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AppointmentId");
@@ -853,6 +897,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1221,6 +1268,102 @@ namespace HospitalLibrary.Migrations
                     b.HasDiscriminator().HasValue("ApplicationPatient");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.AppointmentEvent", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.ToTable("AppointmentEvent", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.DescriptionCreated", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("DescriptionCreatedEvents", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationEvent", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.ToTable("ExaminationEvents", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationFinished", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<int>("FinishedAnamnesisId")
+                        .HasColumnType("int");
+
+                    b.ToTable("ExaminationFinishedEvents", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationStarted", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.ToTable("ExaminationStartedEvents", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.PrescriptionCreated", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MedicamentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
+
+                    b.ToTable("PrescriptionCreatedEvents", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.PrescriptionRemoved", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<int>("PrescriptionId")
+                        .HasColumnType("int");
+
+                    b.ToTable("PrescriptionRemovedEvents", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.SymptomsChanged", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SymptomId")
+                        .HasColumnType("int");
+
+                    b.ToTable("SymptomsChangedEvents", (string)null);
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationEvent", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.ToTable("RenovationEvent", (string)null);
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.BloodUnitTherapy", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.Therapy.Therapy");
@@ -1320,6 +1463,17 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("DoctorsScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Infrastucture.DomainEvent", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Examinations.Anamnesis", null)
+                        .WithMany("Changes")
+                        .HasForeignKey("AnamnesisId");
+
+                    b.HasOne("HospitalLibrary.Core.Model.RenovationRequest", null)
+                        .WithMany("Changes")
+                        .HasForeignKey("RenovationRequestId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -1741,6 +1895,87 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("applicationDoctor");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.AppointmentEvent", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.AppointmentEvent", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.DescriptionCreated", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.Events.DescriptionCreated", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationEvent", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.Events.ExaminationEvent", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationFinished", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.Events.ExaminationFinished", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationStarted", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.Events.ExaminationStarted", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.PrescriptionCreated", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.Events.PrescriptionCreated", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.PrescriptionRemoved", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.Events.PrescriptionRemoved", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Events.SymptomsChanged", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.Events.SymptomsChanged", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationEvent", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Infrastucture.DomainEvent", null)
+                        .WithOne()
+                        .HasForeignKey("HospitalLibrary.Core.Model.RenovationEvent", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy.BloodUnitTherapy", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Blood.BloodUnit", "BloodUnit")
@@ -1776,6 +2011,8 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Examinations.Anamnesis", b =>
                 {
+                    b.Navigation("Changes");
+
                     b.Navigation("Prescriptions");
                 });
 
@@ -1788,6 +2025,8 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.RenovationRequest", b =>
                 {
+                    b.Navigation("Changes");
+
                     b.Navigation("RenovationDetails");
                 });
 
