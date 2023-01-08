@@ -9,7 +9,7 @@
         {
             return new PrescriptionCreated(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(),
                                            dto.NewPrescription.MedicamentId, dto.NewPrescription.Description,
-                                           dto.NewPrescription.From, dto.NewPrescription.To);
+                                           dto.NewPrescription.From, dto.NewPrescription.To, dto.UserId);
         }
     }
 }

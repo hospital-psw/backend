@@ -7,7 +7,7 @@
     {
         public static PrescriptionRemoved DtoToEntity(PrescriptionRemovedDto dto)
         {
-            return new PrescriptionRemoved(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.PrescriptionId);
+            return new PrescriptionRemoved(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.PrescriptionId, dto.UserId);
         }
     }
 }

@@ -13,8 +13,8 @@
 
         }
 
-        public DescriptionCreatedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, string description)
-            : base(aggregateId, eventType, timeStamp)
+        public DescriptionCreatedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, string description, int userId)
+            : base(aggregateId, eventType, timeStamp, userId)
         {
             Description = description;
         }
