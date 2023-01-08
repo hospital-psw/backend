@@ -9,6 +9,7 @@
     {
         public static MedicalTreatmentDto EntityToEntityDto(MedicalTreatment medicalTreatment)
         {
+            if (medicalTreatment == null) return null;
             MedicalTreatmentDto dto = new MedicalTreatmentDto();
 
             dto.Id = medicalTreatment.Id;

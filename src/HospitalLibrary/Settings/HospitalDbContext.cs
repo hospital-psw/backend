@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.Blood;
 using HospitalLibrary.Core.Model.Blood.BloodManagment;
+using HospitalLibrary.Core.Model.Events;
 using HospitalLibrary.Core.Model.Examinations;
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
@@ -58,6 +59,19 @@ namespace HospitalLibrary.Settings
         public DbSet<RenovationEvent> RenovationEvents { get; set; }
         public DbSet<AppointmentEvent> AppointmentEvents { get; set; }
 
+        public DbSet<ExaminationStarted> ExaminationStartedEvents { get; set; }
+
+        public DbSet<SymptomsChanged> SymptomsChangedEvents { get; set; }
+
+        public DbSet<DescriptionCreated> DescriptionCreatedEvents { get; set; }
+
+        public DbSet<PrescriptionCreated> PrescriptionCreatedEvents { get; set; }
+
+        public DbSet<PrescriptionRemoved> PrescriptionRemovedEvents { get; set; }
+
+        public DbSet<ExaminationFinished> ExaminationFinishedEvents { get; set; }
+
+        public DbSet<ExaminationEvent> ExaminationEvents { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         public HospitalDbContext()
@@ -69,7 +83,13 @@ namespace HospitalLibrary.Settings
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<RenovationEvent>().ToTable(nameof(RenovationEvent));
             modelBuilder.Entity<AppointmentEvent>().ToTable(nameof(AppointmentEvent));
-
+            modelBuilder.Entity<ExaminationStarted>().ToTable("ExaminationStartedEvents");
+            modelBuilder.Entity<ExaminationFinished>().ToTable("ExaminationFinishedEvents");
+            modelBuilder.Entity<SymptomsChanged>().ToTable("SymptomsChangedEvents");
+            modelBuilder.Entity<DescriptionCreated>().ToTable("DescriptionCreatedEvents");
+            modelBuilder.Entity<PrescriptionCreated>().ToTable("PrescriptionCreatedEvents");
+            modelBuilder.Entity<PrescriptionRemoved>().ToTable("PrescriptionRemovedEvents");
+            modelBuilder.Entity<ExaminationEvent>().ToTable("ExaminationEvents");
         }
 
         public override int SaveChanges()

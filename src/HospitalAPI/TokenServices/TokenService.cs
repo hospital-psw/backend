@@ -2,12 +2,9 @@
 {
     using HospitalAPI.Configuration;
     using HospitalLibrary.Core.Model.ApplicationUser;
-    using HospitalLibrary.Core.Model.ApplicationUser;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
-    using System;
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
