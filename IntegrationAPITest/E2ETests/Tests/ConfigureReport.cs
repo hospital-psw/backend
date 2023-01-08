@@ -1,30 +1,29 @@
 ﻿namespace IntegrationAPITest.E2ETests.Tests
 {
+    using IntegrationAPITest.E2ETests.Pages;
+    using IntegrationAPITest.MockData;
+    using IntegrationAPITest.Setup;
+    using IntegrationLibrary.Settings;
+    using Microsoft.Extensions.DependencyInjection;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Chrome;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using IntegrationAPITest.E2ETests.Pages;
-    using IntegrationAPITest.MockData;
-    using IntegrationLibrary.Settings;
-    using Microsoft.Extensions.DependencyInjection;
-    using OpenQA.Selenium.Chrome;
-    using WebDriverManager.DriverConfigs.Impl;
     using WebDriverManager;
-    using IntegrationAPITest.Setup;
-    using OpenQA.Selenium;
+    using WebDriverManager.DriverConfigs.Impl;
 
-    public class CheckBloodTypeAndAmount : IDisposable
+    public class ConfigureReport : IDisposable
     {
-
         private readonly IWebDriver driver;
         private Pages.LoginPage loginPage;
         private Pages.MenuPage menuPage;
         private Pages.BloodBanksPage bloodBanksPage;
         private Pages.BloodBankDetailsPage bloodBankDetailsPage;
 
-        public CheckBloodTypeAndAmount()
+        public ConfigureReport()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");            // open Browser in maximized mode
@@ -55,7 +54,12 @@
 
             bloodBanksPage.Rows.ElementAt(2).Click();
 
+            bloodBankDetailsPage = new Pages.BloodBankDetailsPage(driver);
+            bloodBankDetailsPage.ShowConfig.Click(); 
+            bloodBankDetailsPage.EnsureConfigIsDisplayed();
+
         }
+
         public void Dispose()
         {
             driver.Quit();
@@ -63,16 +67,12 @@
         }
 
         [Fact]
-        public void Check_APositive_BloodType_Amount_1()
+        private void Configure_Report()
         {
-            
-            var bloodbankdetails = new BloodBankDetailsPage(driver);
-            bloodbankdetails.EnsurePageIsDisplayed();
-            bloodbankdetails.BloodType.Click();
-            bloodbankdetails.APositive.Click();
-            bloodbankdetails.BloodAmount.SendKeys("1");
-            Assert.True(bloodbankdetails.EnsureToastrPopup());
-
+            bloodBankDetailsPage.Frequent.Clear();
+            bloodBankDetailsPage.Frequent.SendKeys("25");
+            bloodBankDetailsPage.SaveReport.Click();
+            Assert.True(bloodBankDetailsPage.GetToast());
             Dispose();
         }
     }

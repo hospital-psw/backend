@@ -11,41 +11,23 @@
 
     public class MenuPage
     {
-        private readonly ChromeDriver _driver;
-        public const string URI = "http://localhost:4200/app";
+        private readonly IWebDriver driver;
+        public const string URI = "http://localhost:4200/app/display";
 
-        public IWebElement BloodBanksTab => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[6]/a"));
-
-        public MenuPage(ChromeDriver driver)
+        IWebElement bloodBanksTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-manager-sidebar/li[3]/a"));
+       
+        public MenuPage(IWebDriver driver)
         {
-            _driver = driver;
-            _driver.Navigate().GoToUrl(URI);
+            this.driver = driver;
+        }
+        public bool bloodBanksTabDisplayed()
+        {
+            return bloodBanksTab.Displayed;
         }
 
-        public void EnsurePageIsDisplayed()
+        public void bloodBanksTabClick()
         {
-            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
-            wait.Until(condition =>
-            {
-                try
-                {
-                    return true;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    return false;
-                }
-                catch (NoSuchElementException)
-                {
-                    return false;
-                }
-            });
-        }
-
-        public void WaitToRedirectToBloodBanksPage()
-        {
-            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(BloodBanksPage.URI));
+            bloodBanksTab.Click();
         }
     }
 }

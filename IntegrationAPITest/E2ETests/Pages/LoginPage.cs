@@ -6,27 +6,28 @@
 
     public class LoginPage
     {
-        private readonly ChromeDriver _driver;
+        private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/";
 
-        public IWebElement Email => _driver.FindElement(By.Name("email"));
-        public IWebElement Password => _driver.FindElement(By.Name("password"));
+        private IWebElement emailInput => driver.FindElement(By.XPath("//*[@id=\"mat-input-0\"]"));
+        private IWebElement passwordInput => driver.FindElement(By.XPath("//*[@id=\"mat-input-1\"]"));
+        private IWebElement logInButton => driver.FindElement(By.XPath("/html/body/app-root/app-login-page/div/div[1]/app-login-form/div/form/button"));
+        public string Title => driver.Title;
 
-        public IWebElement SubmitButton => _driver.FindElement(By.ClassName("submit-button"));
-
-        public LoginPage(ChromeDriver driver)
+        public LoginPage(IWebDriver driver)
         {
-            _driver = driver;
-            _driver.Navigate().GoToUrl(URI);
+            this.driver = driver;
         }
+        public void Navigate() => driver.Navigate().GoToUrl(URI);
+
         public void EnsurePageIsDisplayed()
         {
-            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(condition =>
             {
                 try
                 {
-                    return Email != null && Password != null;
+                    return emailInput != null && passwordInput != null;
                 }
                 catch (StaleElementReferenceException)
                 {
@@ -38,11 +39,41 @@
                 }
             });
         }
-        
-        public void WaitToRedirectToMenuPage()
+
+        public bool emailInputDisplayed()
         {
-            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
+            return emailInput.Displayed;
+        }
+        public bool passwordInputDisplayed()
+        {
+            return passwordInput.Displayed;
+        }
+        public bool loginButtonDisplayed()
+        {
+            return logInButton.Displayed;
+        }
+        public void insertEmail(string email)
+        {
+            emailInput.SendKeys(email);
+        }
+        public void insertPassword(string password)
+        {
+            passwordInput.SendKeys(password);
+        }
+        public void SubmitForm()
+        {
+            logInButton.Click();
+        }
+        public void WaitForFormSubmit()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(MenuPage.URI));
         }
+
+        public void WaitToRedirectToBloodBanksApp()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/app/bloodbanks"));
+        } 
     }
 }
