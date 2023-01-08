@@ -4,6 +4,7 @@
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Repository.Examinations.Core;
     using HospitalLibrary.Settings;
+    using IdentityServer4.Extensions;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -30,6 +31,7 @@
                                               .Include(x => x.Symptoms)
                                               .Include(x => x.Prescriptions)
                                               .ThenInclude(x => x.Medicament)
+                                              .Include(x => x.Changes)
                                               .Where(x => !x.Deleted);
         }
 
@@ -58,5 +60,25 @@
             return GetAll().FirstOrDefault(x => x.Appointment.Id == id);
         }
 
+        public Anamnesis GetUnfinishedAnamnesis(int id)
+        {
+            return GetAll().FirstOrDefault(x => x.Id == id && !x.Appointment.IsDone);
+        }
+
+        public Anamnesis GetUnfinishedAnamnesisByAppointment(int appointmentId)
+        {
+            return GetAll().FirstOrDefault(x => x.Appointment.Id == appointmentId && !x.Appointment.IsDone);
+        }
+
+        public IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(string criteria)
+        {
+            return GetAll()
+                    .Where(x => x.Appointment.IsDone && (x.Appointment.Patient.FirstName.ToUpper().Contains(criteria.ToUpper())
+                    || x.Appointment.Patient.LastName.ToUpper().Contains(criteria.ToUpper())
+                    || x.Appointment.ExamType.ToString().ToUpper().Contains(criteria.ToUpper())
+                    || x.Description.ToUpper().Contains(criteria.ToUpper())
+                    || x.Symptoms.Exists(s => s.Name.ToUpper().Contains(criteria.ToUpper())))
+                    ).ToList();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Infrastucture;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
@@ -26,6 +27,11 @@
         {
             _unitOfWork = unitOfWork;
             _renovationService = renovationService;
+        }
+
+        public StatisticsService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<int> GetNumberOfAppointmentsPerMonth()
@@ -168,17 +174,14 @@
             try
             {
                 List<int> retList = CreateMonthList(month);
-                Console.WriteLine(retList.Count);
                 List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetMonthlyAppointmentsForDoctor(doctorId, year, month).ToList();
                 foreach (Appointment appointment in appointments)
                 {
-                    Console.WriteLine(appointment.Date.Day);
                     retList[appointment.Date.Day - 1] = retList[appointment.Date.Day - 1] + 1;
                 }
-                Console.WriteLine("zavrsio", retList.Count);
                 return retList;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -288,6 +291,36 @@
             return averages;
         }
 
+        public List<double> GetAverageSchedulingDurationBasedOnRenovationType()
+        {
+            List<double> averagesMerge = new List<double>();
+            List<double> averagesSplit = new List<double>();
+            List<double> result = new List<double>();
+
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                if (request.RenovationType == RenovationType.MERGE)
+                    averagesMerge.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+                else
+                    averagesSplit.Add(CalculateAverageTimeForSingleRenovationScheduling(request));
+            }
+            result.Add(CalculateAveragesForType(averagesMerge));
+            result.Add(CalculateAveragesForType(averagesSplit));
+            return result;
+        }
+
+        private double CalculateAveragesForType(List<double> averages)
+        {
+            double average = 0;
+            foreach (double num in averages)
+            {
+                average += num;
+            }
+            return averages.Count == 0 ? 0 : average / averages.Count;
+        }
+
         private List<double> Structure(List<double> averages)
         {
             List<double> structure = new List<double>() { 0, 0, 0, 0, 0 };
@@ -331,6 +364,129 @@
                     return true;
             }
             return false;
+        }
+
+        public List<double> GetAverageNumberOfRenovationSteps()
+        {
+            List<double> retList = new List<double>();
+            var list = _renovationService.GetAllSuccessfulAggregates().GroupBy(r => new { ID = r.DateCreated.Year })
+                .Select(g => new { Average = g.Average(p => p.Changes.Count), ID = g.Key.ID });
+            foreach (var r in list)
+            {
+                retList.Add(r.Average);
+            }
+            return retList;
+        }
+
+        public List<RenovationStatisticDto> GetTimeSpentPerStep()
+        {
+            List<RenovationStatisticDto> dtos = new List<RenovationStatisticDto>();
+            List<RenovationRequest> requests = _unitOfWork.RenovationRepository.GetAllEverMade().ToList();
+
+            foreach (RenovationRequest request in requests)
+            {
+                if (!DoesScheduleEventExists(request)) continue;
+                RenovationStatisticDto dto = new RenovationStatisticDto();
+                dto.Date = request.StartTime;
+                dto.Step1 = CalculateForRenovationTypeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step2 = CalculateForRoomsStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step3 = CalculateForDatePickStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step4 = CalculateForDurationStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step5 = CalculateForStartTimeStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dto.Step6 = CalculateForScheduleStep(request.Changes.OrderBy(x => x.TimeStamp).ToList());
+                dtos.Add(dto);
+            }
+            return dtos;
+        }
+
+        public double CalculateForRenovationTypeStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("RENOVATION_TYPE_EVENT") && i != 0)
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForRoomsStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("ROOMS_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForDatePickStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("DATE_PICK_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForDurationStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("DURATION_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForStartTimeStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("START_TIME_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+
+        public double CalculateForScheduleStep(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("SCHEDULE_EVENT"))
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
         }
     }
 }

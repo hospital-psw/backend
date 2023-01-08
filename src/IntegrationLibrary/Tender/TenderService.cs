@@ -7,10 +7,12 @@
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
     using Microsoft.Extensions.Logging;
+    using OpenQA.Selenium;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Xml.Linq;
 
     public class TenderService : ITenderService
     {
@@ -178,6 +180,88 @@
                 _logger.LogError($"Error in TenderService in GetActive {e.Message} in {e.StackTrace}");
                 return null;
             }
+        }
+
+        public List<double> GetMoneyPerMonth(int year)
+        {
+            List<double> moneyPerMonth = new List<double>();
+            var allMonths = from month in Enumerable.Range(1, 12)
+                            let key = new { Month = month }
+                            join tender in _unitOfWork.TenderRepository.GetAll().Where(t => t.TenderWinner != null && t.TenderWinner.DateCreated.Year == year) on key
+                            equals new { tender.TenderWinner.DateCreated.Month } into g
+                            select new { key, total = g.Sum(tender => tender.TenderWinner.Items.Sum(item => item.Money.Amount)) };
+            foreach (var element in allMonths)
+            {
+                moneyPerMonth.Add(element.total);
+            }
+            return moneyPerMonth;
+        }
+
+        public List<double> GetBloodPerMonth(int year, int bloodType)
+        {
+            BloodType bt = convertIntToBloodType(bloodType);
+            List<double> bloodPerMonth = new List<double>();
+            for (int i = 0; i < 12; ++i)
+            {
+                bloodPerMonth.Add(0);
+            }
+            foreach (Tender tender in _unitOfWork.TenderRepository.GetAll())
+            {
+                if (tender.TenderWinner != null && tender.DueDate.Year == year)
+                {
+                    bloodPerMonth = CalculateBloodPerMonth(tender, bloodPerMonth, bt);
+                }
+            }
+            return bloodPerMonth;
+        }
+
+        private BloodType convertIntToBloodType(int bloodType)
+        {
+            BloodType bt;
+            switch (bloodType)
+            {
+                case 0:
+                    bt = BloodType.A_POSITIVE;
+                    break;
+                case 1:
+                    bt = BloodType.A_NEGATIVE;
+                    break;
+                case 2:
+                    bt = BloodType.B_POSITIVE;
+                    break;
+                case 3:
+                    bt = BloodType.B_NEGATIVE;
+                    break;
+                case 4:
+                    bt = BloodType.O_POSITIVE;
+                    break;
+                case 5:
+                    bt = BloodType.O_NEGATIVE;
+                    break;
+                case 6:
+                    bt = BloodType.AB_POSITIVE;
+                    break;
+                case 7:
+                    bt = BloodType.AB_NEGATIVE;
+                    break;
+                default:
+                    bt = BloodType.A_POSITIVE;
+                    break;
+
+            }
+            return bt;
+        }
+
+        private List<double> CalculateBloodPerMonth(Tender tender, List<double> bloodPerMonth, BloodType bt)
+        {
+            foreach (TenderItem tenderItem in tender.TenderWinner.Items)
+            {
+                if (tenderItem.BloodType.Equals(bt))
+                {
+                    bloodPerMonth[tender.DueDate.Month - 1] += tenderItem.Quantity;
+                }
+            }
+            return bloodPerMonth;
         }
     }
 }

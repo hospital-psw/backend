@@ -4,11 +4,13 @@
     using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Domain;
+    using HospitalLibrary.Core.Model.Events;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Examinations.Core;
     using HospitalLibrary.Util;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -103,7 +105,7 @@
             if (dto.SymptomIds != null)
                 symptoms = _unitOfWork.SymptomRepository.GetSelectedSymptoms(dto.SymptomIds).ToList();
 
-            Anamnesis newAnamnesis = new Anamnesis(appointment, dto.Description);
+            Anamnesis newAnamnesis = Anamnesis.Create(appointment, dto.Description);
             newAnamnesis.Symptoms = symptoms;
 
             appointment.IsDone = true;
@@ -133,6 +135,28 @@
         {
             Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.GetByAppointment(dto.AppointmentId);
             PDFUtil.GenerateAnamnesisPDF(anamnesis, dto);
+        }
+
+        public IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(List<string> criteriasList)
+        {
+            try
+            {
+                List<Anamnesis> anamnesses = new List<Anamnesis>();
+                foreach (string el in criteriasList)
+                {
+                    List<Anamnesis> a = _unitOfWork.AnamnesisRepository.GetAnamnesesBySearchCriteria(el).ToList();
+                    if (!a.IsNullOrEmpty())
+                    {
+                        anamnesses.AddRange(a);
+                    }
+                }
+                return anamnesses.Distinct();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in GetAll in AnamnesisService {e.Message} in {e.StackTrace}");
+                return null;
+            }
         }
     }
 }

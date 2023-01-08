@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
+    using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.AppUsers.Core;
@@ -81,6 +82,25 @@
         public IActionResult GetNumberOfStepsAccordingToRenovationType()
         {
             return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
+        }
+
+        [HttpGet("getAverageNumberOfRenovationSteps")]
+        public IActionResult GetAverageNumberOfRenovationSteps()
+        {
+            return Ok(_statisticsService.GetNumberOfStepsAccordingToRenovationType());
+        }
+
+        [HttpGet("getAverageDurationAccordingToRenovationType")]
+        public IActionResult GetAverageDurationAccordingToRenovationType()
+        {
+            return Ok(_statisticsService.GetAverageSchedulingDurationBasedOnRenovationType());
+        }
+
+        [HttpGet("getTimeSpentPerStep")]
+        public IActionResult GetTimeSpentPerStep()
+        {
+            List<RenovationStatisticDto> dto = _statisticsService.GetTimeSpentPerStep();
+            return Ok(dto);
         }
     }
 }

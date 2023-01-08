@@ -1,5 +1,6 @@
 using AutoMapper;
 using HospitalAPI.Configuration;
+using HospitalAPI.Controllers.TenderStatistics;
 using HospitalAPI.Dto.AppUsers;
 using HospitalAPI.EmailServices;
 using HospitalAPI.Mappers;
@@ -117,6 +118,11 @@ namespace HospitalAPI
             services.AddScoped<ISymptomService, SymptomService>();
             services.AddScoped<IAnamnesisService, AnamnesisService>();
             services.AddScoped<IRenovationEventService, RenovationEventService>();
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IExaminationEventService, ExaminationEventService>();
+
+            services.AddScoped<IConnections, Connections>();
+
 
             ProjectConfiguration config = new ProjectConfiguration();
             Configuration.Bind("EmailSettings", config.EmailSettings);
