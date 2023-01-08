@@ -14,7 +14,7 @@
         public const string URI = "http://localhost:4200/app/display";
 
         IWebElement managerTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-manager-sidebar/li[1]/a"));
-        IWebElement blockedPatientsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/li[4]/a"));
+        IWebElement blockedPatientsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-manager-sidebar/li[10]/a"));
         IWebElement managerVacationRequestsTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-manager-sidebar/li[2]/a"));
         IWebElement feedbackTab => driver.FindElement(By.Id("feedback"));
         public MenuPage(IWebDriver driver)

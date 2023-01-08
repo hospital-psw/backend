@@ -35,25 +35,6 @@
         {
             this.driver = driver;
         }
-        /*public void EnsureTabMalIsDisplayed()
-        {
-            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 2000));
-            wait.Until(condition =>
-            {
-                try
-                {
-                    return TabMalicious != null;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    return false;
-                }
-                catch (NoSuchElementException)
-                {
-                    return false;
-                }
-            });
-        }*/
         public bool EnsureTabMalIsDisplayed()
         {
             return TabMalicious.Displayed;
@@ -108,7 +89,7 @@
             {
                 try
                 {
-                    BlockedRows = driver.FindElements(By.XPath("//table[@id='tableBlocked']/tbody/tr"));
+                    BlockedRows = driver.FindElements(By.XPath("//*[@id=\"tableBlocked\"]/tbody/tr"));
                     return BlockedRows.Count > 0;
                 }
                 catch (StaleElementReferenceException)
@@ -124,23 +105,28 @@
         public void SelectBlockedTab()
         {
             TabBlocked.Click();
-            Thread.Sleep(2000);
+            EnsureBlockedTableIsDisplayed();
         }
         public void SelectMalTab()
         {
             TabMalicious.Click();
-            Thread.Sleep(2000);
+            EnsureMalTableIsDisplayed();
         }
         public void ClickBlockButton()
         {
+            int MalNum = MaliciousPatientsCount();
             ButtonBlock.Click();
-            Thread.Sleep(3000);
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition => MaliciousRows.Count < MalNum);
         }
         public void ClickUnblockButton()
         {
             ButtonUnblock = driver.FindElement(By.XPath("//*[@id=\"tableBlocked\"]/tbody/tr[1]/td[3]/button"));
+            EnsureBlockedTableIsDisplayed();
+            int BlockNum = BlockedPatientsCount();
             ButtonUnblock.Click();
-            Thread.Sleep(3000);
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition => BlockedRows.Count < BlockNum);
         }
         public int BlockedPatientsCount()
         {

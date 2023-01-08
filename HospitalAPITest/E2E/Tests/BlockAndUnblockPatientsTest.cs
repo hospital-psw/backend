@@ -80,7 +80,6 @@
             rowsMal = blockAndUnblockPatientsPage.MaliciousPatientsCount();
             blockAndUnblockPatientsPage.ClickBlockButton();
         }
-        [Fact]
         private void UnblockPatient()
         {
             blockAndUnblockPatientsPage.EnsureTabBlockedIsDisplayed();
