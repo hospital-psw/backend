@@ -52,7 +52,7 @@
             {
                 try
                 {
-                    Rows = Table.FindElements(By.Id("kita"));
+                    Rows = Table.FindElements(By.Id("BBName"));
                     return Rows.Count() > 0;
                 }
                 catch (StaleElementReferenceException)
