@@ -13,8 +13,8 @@
 
         }
 
-        public ExaminationFinishedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int appointmentId)
-            : base(aggregateId, eventType, timeStamp)
+        public ExaminationFinishedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int appointmentId, int userId)
+            : base(aggregateId, eventType, timeStamp, userId)
         {
             AppointmentId = appointmentId;
         }

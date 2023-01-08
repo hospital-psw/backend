@@ -37,11 +37,11 @@
                 medicalTreatment.BloodUnitTherapies.Add(entity);
                 _unitOfWork.MedicalTreatmentRepository.Update(medicalTreatment);
 
-                //BloodExpenditure bloodExpenditure = new BloodExpenditure(medicalTreatment.Doctor, entity.BloodUnit.BloodType, entity.AmountOfBloodUnit, "Blood therapy", DateTime.Now);
-                //_unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
+                BloodExpenditure bloodExpenditure = new BloodExpenditure(medicalTreatment.Doctor, entity.BloodUnit.BloodType, entity.AmountOfBloodUnit, "Blood therapy", DateTime.Now);
+                _unitOfWork.BloodExpenditureRepository.Add(bloodExpenditure);
 
-                //_unitOfWork.BloodUnitTherapyRepository.Add(entity);
-                //_unitOfWork.Save();
+                _unitOfWork.BloodUnitTherapyRepository.Add(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }

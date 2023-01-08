@@ -9,11 +9,14 @@
 
     public class ExaminationStarted : DomainEvent
     {
+
+        public int UserId { get; set; }
         public int AppointmentId { get; set; }
 
-        public ExaminationStarted(int aggregateId, DateTime timeStamp, string eventName, int appointmentId) : base(aggregateId, timeStamp, eventName)
+        public ExaminationStarted(int aggregateId, DateTime timeStamp, string eventName, int appointmentId, int userId) : base(aggregateId, timeStamp, eventName)
         {
             AppointmentId = appointmentId;
+            UserId = userId;
         }
     }
 }

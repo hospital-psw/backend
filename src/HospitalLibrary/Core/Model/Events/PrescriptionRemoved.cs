@@ -9,10 +9,12 @@
 
     public class PrescriptionRemoved : DomainEvent
     {
+        public int UserId { get; set; }
         public int PrescriptionId { get; set; }
-        public PrescriptionRemoved(int aggregateId, DateTime timeStamp, string eventName, int prescriptionId) : base(aggregateId, timeStamp, eventName)
+        public PrescriptionRemoved(int aggregateId, DateTime timeStamp, string eventName, int prescriptionId, int userId) : base(aggregateId, timeStamp, eventName)
         {
             PrescriptionId = prescriptionId;
+            UserId = userId;
         }
     }
 }

@@ -7,7 +7,7 @@
     {
         public static DescriptionCreated DtoToEntity(DescriptionCreatedDto dto)
         {
-            return new DescriptionCreated(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.Description);
+            return new DescriptionCreated(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.Description, dto.UserId);
         }
     }
 }

@@ -10,7 +10,7 @@
 
         public ExaminationStartedDto() : base() { }
 
-        public ExaminationStartedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int appointmentId) : base(aggregateId, eventType, timeStamp)
+        public ExaminationStartedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int appointmentId, int userId) : base(aggregateId, eventType, timeStamp, userId)
         {
             AppointmentId = appointmentId;
         }
