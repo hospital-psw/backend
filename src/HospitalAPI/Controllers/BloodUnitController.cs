@@ -32,7 +32,7 @@
                 return BadRequest("Blood type already exist");
             }
 
-
+                
             return Ok(bloodUnitService.Add(bloodUnit));
         }
 
