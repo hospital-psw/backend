@@ -48,7 +48,7 @@
 
         private IWebElement Dialogue;
 
-        
+
 
         public TreatmentsPage(IWebDriver driver)
         {
@@ -79,7 +79,7 @@
 
         public void SelectPatient()
         {
-            
+
             SelectPatientsDiv();
 
             //PatientsDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-value-13\"]"));
@@ -87,7 +87,7 @@
             //PatientsDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-4\"]"));
             //driver.ExecuteJavaScript("arguments[0].click();", PatientsDiv);
 
-            
+
 
             EnsurePatientsListIsDisplayed();
             PatientsListDiv = driver.FindElement(By.Id("cdk-overlay-1"));
@@ -104,9 +104,9 @@
         public void SelectRoom()
         {
             EnsureDialogueIsDisplayed();
-            
+
             //RoomDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-6\"]"));
-            
+
             IWebElement outterDiv = driver.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div"));
             MatSelects = outterDiv.FindElements(By.TagName("mat-select"));
             EnsureMatSelectsAreAssigned();
@@ -220,7 +220,7 @@
             });
         }
 
-        public void SelectPatientsDiv() 
+        public void SelectPatientsDiv()
         {
             EnsureDialogueIsDisplayed();
             Dialogue = driver.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div"));
@@ -238,7 +238,7 @@
 
             MatSelects.First().Click();
             driver.ExecuteJavaScript("arguments[0].click();", MatSelects.First());
-            
+
         }
 
         public void EnsureDialogueIsDisplayed()
