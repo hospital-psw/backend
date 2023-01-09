@@ -18,10 +18,9 @@
         private readonly IMapper _mapper;
         private readonly ITenderBloodTransferStatisticsService _tenderStatisticsService;
 
-        public TenderController(ITenderService tenderService, IMapper mapper, ITenderBloodTransferStatisticsService tenderBloodTransferStatisticsService)
+        public TenderController(ITenderService tenderService, ITenderBloodTransferStatisticsService tenderBloodTransferStatisticsService)
         {
             _tenderService = tenderService;
-            _mapper = mapper;
             _tenderStatisticsService = tenderBloodTransferStatisticsService;
 
         }

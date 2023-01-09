@@ -8,6 +8,9 @@ namespace IntegrationLibrary.Tender
 
 {
     using BloodBank;
+    using Mailjet.Client.Resources.SMS;
+    using static System.Net.WebRequestMethods;
+
     public class Tender : Entity
     {
         public TenderStatus Status { get; set; }
@@ -57,5 +60,6 @@ namespace IntegrationLibrary.Tender
             }
             return true;
         }
+
     }
 }
