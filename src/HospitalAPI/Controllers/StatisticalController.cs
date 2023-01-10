@@ -108,5 +108,43 @@
         {
             return Ok(_statisticsService.GetNumberOfDoctorAppointmentsInOptionalTimeRange(dto.DoctorId, dto.Start, dto.End));
         }
+
+        [HttpGet("examination/average-duration")]
+        public IActionResult GetAverageExaminationDuration()
+        {
+            return Ok();
+        }
+
+        [HttpGet("examinaton/average-steps")]
+        public IActionResult GetAverageExaminationSteps()
+        {
+            return Ok();
+        }
+
+        [HttpGet("examination/average-prescriptions")]
+        public IActionResult GetAverageExaminationPrescriptions()
+        {
+            return Ok();
+        }
+
+        [HttpGet("examination/symptom-frequency")]
+        public IActionResult GetExaminationSymptomFrequency()
+        {
+            return Ok();
+        }
+
+        [HttpGet("examination/average-back-steps")]
+        public IActionResult GetAverageBackSteps()
+        {
+            return Ok();
+        }
+
+        [HttpGet("examination/specialization/average-duration")]
+        public IActionResult GetAverageDurationBySpecialization()
+        {
+            // Ovo vraca listu anamnesis statistics dto
+            return Ok();
+        }
+
     }
 }
