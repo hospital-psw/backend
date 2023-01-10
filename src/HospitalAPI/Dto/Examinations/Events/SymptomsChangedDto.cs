@@ -14,8 +14,8 @@
 
         }
 
-        public SymptomsChangedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int symptomId, SymptomEventStatus status)
-            : base(aggregateId, eventType, timeStamp)
+        public SymptomsChangedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int symptomId, SymptomEventStatus status, int userId)
+            : base(aggregateId, eventType, timeStamp, userId)
         {
             SymptomId = symptomId;
             Status = status;

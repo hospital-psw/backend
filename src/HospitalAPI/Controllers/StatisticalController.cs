@@ -102,5 +102,11 @@
             List<RenovationStatisticDto> dto = _statisticsService.GetTimeSpentPerStep();
             return Ok(dto);
         }
+
+        [HttpPost("getOptionalDoctorStats")]
+        public IActionResult GetOptionalDoctorAppointmentsStatistics(DoctorOptionalStatisticDto dto)
+        {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsInOptionalTimeRange(dto.DoctorId, dto.Start, dto.End));
+        }
     }
 }

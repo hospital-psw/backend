@@ -13,8 +13,8 @@
 
         }
 
-        public PrescriptionRemovedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int prescId)
-            : base(aggregateId, eventType, timeStamp)
+        public PrescriptionRemovedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int prescId, int userId)
+            : base(aggregateId, eventType, timeStamp, userId)
         {
             PrescriptionId = prescId;
         }

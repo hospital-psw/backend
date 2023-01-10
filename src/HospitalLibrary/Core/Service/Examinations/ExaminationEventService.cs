@@ -28,7 +28,7 @@
             try
             {
                 Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.GetByAppointment(examinationStarted.AppointmentId);
-                if (anamnesis.Appointment.IsDone) return anamnesis;
+
                 if (anamnesis == null)
                 {
                     Appointment appointment = _unitOfWork.AppointmentRepository.Get(examinationStarted.AppointmentId);
@@ -37,7 +37,9 @@
                     _unitOfWork.Save();
                 }
 
-                anamnesis.StartExamination(new ExaminationStarted(anamnesis.Id, examinationStarted.TimeStamp, examinationStarted.EventName, examinationStarted.AppointmentId));
+                if (anamnesis.Appointment.IsDone) return anamnesis;
+
+                anamnesis.StartExamination(new ExaminationStarted(anamnesis.Id, examinationStarted.TimeStamp, examinationStarted.EventName, examinationStarted.AppointmentId, examinationStarted.UserId));
                 _unitOfWork.Save();
                 return anamnesis;
             }
@@ -116,6 +118,7 @@
                 if (anamnesis == null) return null;
 
                 anamnesis.RemovePrescription(prescriptionRemoved);
+                _unitOfWork.PrescriptionRepository.Delete(prescriptionRemoved.PrescriptionId);
                 _unitOfWork.Save();
                 return anamnesis;
             }

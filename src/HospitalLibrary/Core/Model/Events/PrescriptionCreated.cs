@@ -10,6 +10,8 @@
 
     public class PrescriptionCreated : DomainEvent
     {
+
+        public int UserId { get; set; }
         public int MedicamentId { get; set; }
 
         public string Description { get; set; }
@@ -17,12 +19,13 @@
         public DateTime From { get; set; }
 
         public DateTime To { get; set; }
-        public PrescriptionCreated(int aggregateId, DateTime timeStamp, string eventName, int medicamentId, string description, DateTime from, DateTime to) : base(aggregateId, timeStamp, eventName)
+        public PrescriptionCreated(int aggregateId, DateTime timeStamp, string eventName, int medicamentId, string description, DateTime from, DateTime to, int userId) : base(aggregateId, timeStamp, eventName)
         {
             MedicamentId = medicamentId;
             Description = description;
             From = from;
             To = to;
+            UserId = userId;
         }
     }
 }

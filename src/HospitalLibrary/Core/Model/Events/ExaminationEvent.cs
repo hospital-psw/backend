@@ -9,8 +9,10 @@
 
     public class ExaminationEvent : DomainEvent
     {
-        public ExaminationEvent(int aggregateId, DateTime timeStamp, string eventName) : base(aggregateId, timeStamp, eventName)
+        public int UserId { get; set; }
+        public ExaminationEvent(int aggregateId, DateTime timeStamp, string eventName, int userId) : base(aggregateId, timeStamp, eventName)
         {
+            UserId = userId;
         }
     }
 }

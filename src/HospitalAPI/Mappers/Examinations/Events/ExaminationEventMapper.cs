@@ -7,7 +7,7 @@
     {
         public static ExaminationEvent DtoToEntity(ExaminationEventDto dto)
         {
-            return new ExaminationEvent(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString());
+            return new ExaminationEvent(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.UserId);
         }
     }
 }
