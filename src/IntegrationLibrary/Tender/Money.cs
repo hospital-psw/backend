@@ -22,7 +22,7 @@
 
         public virtual int GetHashCode()
         {
-            return this.Currency.GetHashCode() + this.Amount;
+            return this.Currency.GetHashCode() + this.Amount.GetHashCode();
         }
     }
 }
