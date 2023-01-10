@@ -14,7 +14,7 @@
             return this.BloodType.Equals(other.BloodType) && this.Money.Equals(other.Money) && this.Quantity == other.Quantity;
         }
 
-        public virtual int GetHashCode()
+        override public int GetHashCode()
         {
             return this.BloodType.GetHashCode() + this.Money.GetHashCode() + this.Quantity.GetHashCode();
         }
