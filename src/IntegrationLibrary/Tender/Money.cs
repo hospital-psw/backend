@@ -20,7 +20,7 @@
             return this.Currency.Equals(other.Currency) && this.Amount == other.Amount;
         }
 
-        public virtual int GetHashCode()
+        override public int GetHashCode()
         {
             return this.Currency.GetHashCode() + this.Amount.GetHashCode();
         }
