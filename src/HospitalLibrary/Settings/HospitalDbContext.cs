@@ -4,6 +4,8 @@ using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Model.Blood;
 using HospitalLibrary.Core.Model.Blood.BloodManagment;
 using HospitalLibrary.Core.Model.Events;
+using HospitalLibrary.Core.Model.Events.Scheduling;
+using HospitalLibrary.Core.Model.Events.Scheduling.Root;
 using HospitalLibrary.Core.Model.Examinations;
 using HospitalLibrary.Core.Model.MedicalTreatment;
 using HospitalLibrary.Core.Model.Medicament;
@@ -72,7 +74,18 @@ namespace HospitalLibrary.Settings
         public DbSet<ExaminationFinished> ExaminationFinishedEvents { get; set; }
 
         public DbSet<ExaminationEvent> ExaminationEvents { get; set; }
+
+        public DbSet<AppointmentSchedulingRoot> AppointmentRoots { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+        public DbSet<AppointmentScheduled> AppointmentScheduledEvents { get; set; }
+        public DbSet<AppointmentSelected> AppointmentSelectedEvents { get; set; }
+        public DbSet<BackClicked> BackClickedEvents { get; set; }
+        public DbSet<DateSelected> DateSelectedEvents { get; set; }
+        public DbSet<DoctorSelected> DoctorSelectedEvents { get; set; }
+        public DbSet<NextClicked> NextClickedEvents { get; set; }
+        public DbSet<SessionStarted> SessionStartedEvents { get; set; }
+        public DbSet<SpecializationSelected> SpecializationSelectedEvents { get; set; }
+
 
         public HospitalDbContext()
         {
@@ -90,6 +103,15 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<PrescriptionCreated>().ToTable("PrescriptionCreatedEvents");
             modelBuilder.Entity<PrescriptionRemoved>().ToTable("PrescriptionRemovedEvents");
             modelBuilder.Entity<ExaminationEvent>().ToTable("ExaminationEvents");
+
+            modelBuilder.Entity<AppointmentScheduled>().ToTable("AppointmentScheduledEvents");
+            modelBuilder.Entity<AppointmentSelected>().ToTable("AppointmentSelectedEvents");
+            modelBuilder.Entity<BackClicked>().ToTable("BackClickedEvents");
+            modelBuilder.Entity<DateSelected>().ToTable("DateSelectedEvents");
+            modelBuilder.Entity<DoctorSelected>().ToTable("DoctorSelectedEvents");
+            modelBuilder.Entity<NextClicked>().ToTable("NextClickedEvents");
+            modelBuilder.Entity<SessionStarted>().ToTable("SessionStartedEvents");
+            modelBuilder.Entity<SpecializationSelected>().ToTable("SpecializationSelectedEvents");
         }
 
         public override int SaveChanges()
