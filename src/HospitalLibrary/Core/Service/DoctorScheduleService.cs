@@ -326,5 +326,9 @@
             return generatedAppointments;
         }
 
+        public DoctorSchedule GetDoctorsSchedule(int id)
+        {
+            return _unitOfWork.DoctorScheduleRepository.GetDoctorScheduleByDoctorId(id);
+        }
     }
 }
