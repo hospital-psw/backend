@@ -186,7 +186,7 @@
         {
             return _unitOfWork.AppointmentSchedulingRootRepository.GetAllSessionStarted();
         }
-        private int CountNumberOfStepsTaken(AppointmentSchedulingRoot appointment)
+        private int SumNumberOfStepsTaken(AppointmentSchedulingRoot appointment)
         {
             List<SessionStarted> sessionStarted = _unitOfWork.AppointmentSchedulingRootRepository.GetSessionStartedEvent(appointment.Id);
             List<DateSelected> dateSelecteds = _unitOfWork.AppointmentSchedulingRootRepository.GetDateSelectedEvent(appointment.Id);
@@ -208,9 +208,8 @@
                 if (!ScheduledAppointmentEventExists(appointment) || appointment.Id < 10) continue;
                 else
                 {
-                    averages.Add(CountNumberOfStepsTaken(appointment));
+                    averages.Add(SumNumberOfStepsTaken(appointment));
                 }
-
             }
             return averages;
         }
