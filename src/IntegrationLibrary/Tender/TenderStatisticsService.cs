@@ -73,32 +73,33 @@
         }
         private List<Tender> RequestsInRange(DateTime from, DateTime to)
         {
-            return _tenderService.GetAll().Where(x => x.Status == Enums.TenderStatus.CLOSED && x.TenderWinner!=null && from <= x.DateUpdated && x.DateUpdated <= to).ToList();
+            return _tenderService.GetAll().Where(x => x.Status == Enums.TenderStatus.CLOSED && x.TenderWinner != null && from <= x.DateUpdated && x.DateUpdated <= to).ToList();
         }
         public Dictionary<string, Dictionary<string, double>> GetAmountByBloodBankByBloodGroup(DateTime from, DateTime to)
         {
             Dictionary<string, Dictionary<string, double>> bloodBanks = new Dictionary<string, Dictionary<string, double>>();
             foreach (Tender request in RequestsInRange(from, to))
             {
-                foreach (TenderItem item in request.Items) { 
-                     if (bloodBanks.ContainsKey(request.TenderWinner.Offeror.Name))
-                         {
-                            var bloodBank = bloodBanks[request.TenderWinner.Offeror.Name];
-                            if (bloodBank.ContainsKey(item.BloodType.ToString()))
-                            {
-                                bloodBank[item.BloodType.ToString()] += item.Quantity;
-                            }
-                            else
-                            {
-                                bloodBank.Add(item.BloodType.ToString(), item.Quantity);
-                            }
+                foreach (TenderItem item in request.Items)
+                {
+                    if (bloodBanks.ContainsKey(request.TenderWinner.Offeror.Name))
+                    {
+                        var bloodBank = bloodBanks[request.TenderWinner.Offeror.Name];
+                        if (bloodBank.ContainsKey(item.BloodType.ToString()))
+                        {
+                            bloodBank[item.BloodType.ToString()] += item.Quantity;
                         }
                         else
                         {
-                            Dictionary<string, double> newBloodBankBloodType = new Dictionary<string, double>();
-                            newBloodBankBloodType.Add(item.BloodType.ToString(), item.Quantity);
-                            bloodBanks.Add(request.TenderWinner.Offeror.Name, newBloodBankBloodType);
+                            bloodBank.Add(item.BloodType.ToString(), item.Quantity);
                         }
+                    }
+                    else
+                    {
+                        Dictionary<string, double> newBloodBankBloodType = new Dictionary<string, double>();
+                        newBloodBankBloodType.Add(item.BloodType.ToString(), item.Quantity);
+                        bloodBanks.Add(request.TenderWinner.Offeror.Name, newBloodBankBloodType);
+                    }
                 }
             }
             return bloodBanks;
@@ -160,7 +161,7 @@
             Dictionary<string, double> bloodTypes = new Dictionary<string, double>();
             foreach (Tender tender in RequestsInRange(from, to))
             {
-                foreach(TenderItem item in tender.Items)
+                foreach (TenderItem item in tender.Items)
                 {
                     if (bloodTypes.ContainsKey(item.BloodType.ToString()))
                     {
@@ -171,7 +172,7 @@
                         bloodTypes.Add(item.BloodType.ToString(), item.Quantity);
                     }
                 }
-                
+
             }
             return NormalizeDictionary(bloodTypes);
         }
