@@ -37,7 +37,7 @@ namespace IntegrationLibrary.Util
             using (var client = new HttpClient())
             {
                 var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAvailability.Replace("!BLOOD_TYPE", type)}");
-                client.DefaultRequestHeaders.Add("x-api-key", bloodBank.ApiKey);
+                //client.DefaultRequestHeaders.Add("x-api-key", bloodBank.ApiKey);
                 var result = client.GetAsync(endpoint).Result;
                 var json = result.Content.ReadAsStringAsync().Result;
                 return Convert.ToBoolean(json);
