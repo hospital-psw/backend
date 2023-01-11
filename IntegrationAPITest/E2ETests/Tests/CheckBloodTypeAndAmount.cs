@@ -73,6 +73,7 @@
             bloodbankdetails.APositive.Click();
             bloodbankdetails.BloodAmount.SendKeys("1");
             bloodbankdetails.CheckBloodAmountButton.Click();
+            bloodbankdetails.EnsureResponseLabeldDisplayed();
             Assert.True(bloodbankdetails.ResponseLabel.Displayed);
 
             Dispose();
