@@ -2,13 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
     public interface ITenderStatisticsService
     {
-        string GenerateHTMLReport(DateTime from, DateTime to);
+        Stream GenerateHTMLReport(DateTime from, DateTime to);
         Dictionary<string, Dictionary<string, double>> GetAmountByBloodBankByBloodGroup(DateTime from, DateTime to);
         Dictionary<string, double> GetBloodBankShare(DateTime from, DateTime to);
         Dictionary<string, double> GetBloodTypeShare(DateTime from, DateTime to);

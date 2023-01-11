@@ -24,7 +24,7 @@
             _sftpService = sftpService;
             _mailSender = mailSender;
         }
-        public string GenerateHTMLReport(DateTime from, DateTime to)
+        public Stream GenerateHTMLReport(DateTime from, DateTime to)
         {
             Dictionary<string, double> bbShare = GetBloodBankShare(from, to);
             Dictionary<string, double> btShare = GetBloodTypeShare(from, to);
@@ -41,7 +41,7 @@
             _sftpService.SendFile(reportFile);
             string template = MailSender.MakeUrgentBloodRequestTemplate();
             _mailSender.SendEmail(template, "Tender transfer report", "psw.hospital.2022@gmail.com", reportFile);
-            return _htmlReportService.OutputFile;
+            return reportFile;
         }
         private static Stream PdfSharpConvert(String html)
         {

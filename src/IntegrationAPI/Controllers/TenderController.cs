@@ -158,7 +158,9 @@
         [HttpPost("generate-report")]
         public IActionResult GenerateReport([FromBody] RangeDTO range)
         {
-            return base.Content(_statisticsService.GenerateHTMLReport(range.start, range.end), "text/html");
+            var report = _statisticsService.GenerateHTMLReport(range.start, range.end);
+            report.Position = 0;
+            return new FileStreamResult(report, "application/pdf");
         }
     }
 }
