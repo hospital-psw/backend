@@ -93,6 +93,12 @@
         {
             return Ok(_appointmentSchedulingService.CalculateTheAverageNumberOfStepsToCreateAppointment());
         }
+
+        [HttpGet("getAverageTimePerStep")]
+        public IActionResult GetAverageTimePerStep()
+        {
+            return Ok(_appointmentSchedulingService.TimeSpentOnEachStep());
+        }
         [HttpGet("getTimesSpentSteps")]
         public IActionResult GetTimesSpentSteps()
         {

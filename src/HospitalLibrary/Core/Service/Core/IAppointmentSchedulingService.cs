@@ -22,5 +22,6 @@
         List<SessionStarted> GetAllSessionStarted();
         List<double> CalculateTheAverageNumberOfStepsToCreateAppointment();
         List<double> CalculateNumberOfTimesSpentOnEachStep();
+        List<double> TimeSpentOnEachStep();
     }
 }
