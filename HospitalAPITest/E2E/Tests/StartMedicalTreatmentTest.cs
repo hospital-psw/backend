@@ -59,7 +59,7 @@
             treatmentsPage.Finish();
             treatmentsPage.RefreshTable();
             Assert.Equal(treatmentsPage.GetRowCount(), treatmentsPage.GetRefreshedRowCount());
-            //Dispose();
+            Dispose();
         }
 
         [Fact]

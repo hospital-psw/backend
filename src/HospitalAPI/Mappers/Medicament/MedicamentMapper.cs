@@ -8,6 +8,7 @@
     {
         public static MedicamentDto EntityToEntityDto(Medicament medicament)
         {
+            if (medicament == null) return null;
             MedicamentDto dto = new MedicamentDto();
 
             dto.Id = medicament.Id;

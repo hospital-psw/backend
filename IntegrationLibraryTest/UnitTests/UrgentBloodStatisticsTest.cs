@@ -5,13 +5,14 @@
     using IntegrationLibrary.UrgentBloodTransfer.Model;
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
+    using Microsoft.Extensions.Configuration;
     using Moq;
     using OpenQA.Selenium.DevTools.V105.Page;
     using Shouldly;
 
     public class UrgentBloodStatisticsTest
     {
-        private UrgentBloodTransferStatisticsService SetupService() 
+        private UrgentBloodTransferStatisticsService SetupService()
         {
             var service = new Mock<IUrgentBloodTransferService>();
             service.Setup(x => x.GetAll()).Returns(
@@ -39,7 +40,7 @@
                     }
                 }
             );
-            return new UrgentBloodTransferStatisticsService(service.Object, new Mock<IHTMLReportService>().Object);
+            return new UrgentBloodTransferStatisticsService(service.Object, new Mock<IHTMLReportService>().Object, new Mock<ISFTPService>().Object, new Mock<IMailSender>().Object, new Mock<IConfiguration>().Object);
         }
 
         [Fact]
@@ -58,7 +59,7 @@
             expectedResult_BloodBank2.Add("Ominus", 7);
             result["Blood bank 1"].ShouldBe(expectedResult_BloodBank1);
             result["Blood bank 2"].ShouldBe(expectedResult_BloodBank2);
-        }        
+        }
 
         [Fact]
         public void GetAmountByBloodBankByBloodGroup_ShouldReturn_EmptyDictionary()

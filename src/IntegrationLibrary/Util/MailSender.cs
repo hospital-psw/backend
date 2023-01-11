@@ -142,8 +142,9 @@
             else
             {
                 string base64File;
-                using(var stream = new MemoryStream())
+                using (var stream = new MemoryStream())
                 {
+                    attachment.Position = 0;
                     attachment.CopyTo(stream);
                     byte[] buffer = stream.ToArray();
                     base64File = Convert.ToBase64String(buffer);
@@ -153,7 +154,7 @@
                     .WithSubject(subject)
                     .WithHtmlPart(html.Html)
                     .WithTo(new SendContact(destinationEmail))
-                    .WithAttachment(new Attachment("report", "application/pdf", base64File))
+                    .WithAttachment(new Attachment("report.pdf", "application/pdf", base64File))
                     .Build();
             }
 

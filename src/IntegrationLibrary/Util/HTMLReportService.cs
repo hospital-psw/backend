@@ -107,7 +107,7 @@
         {
             if (list == null || list.Count == 0)
             {
-                return "[]";    
+                return "[]";
             }
             string output = "[";
             foreach (string item in list)

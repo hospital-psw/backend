@@ -1,10 +1,10 @@
 ﻿namespace IntegrationAPI.Controllers
 {
+    using IntegrationAPI.DTO.UrgentBloodTransfer;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
     using IntegrationLibrary.UrgentBloodTransfer.Model;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using System;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -32,10 +32,12 @@
             }
         }
 
-        [HttpGet]
-        public IActionResult GenerateReport()
+        [HttpPost("report")]
+        public IActionResult GenerateReport(GenerateReportDTO reportParams)
         {
-            return base.Content(_statisticsService.GenerateHTMLReport(new DateTime(2022, 12, 1), new DateTime(2022, 12, 31)), "text/html");
+            var report = _statisticsService.GenerateHTMLReport(reportParams.Start, reportParams.End, reportParams.SendEmail);
+            report.Position = 0;
+            return new FileStreamResult(report, "application/pdf");
         }
     }
 }

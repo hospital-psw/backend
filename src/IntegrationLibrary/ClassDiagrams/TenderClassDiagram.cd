@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IntegrationLibrary.Tender.Tender">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAQCCAAAAQAAAAAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Tender\Tender.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Status" />
+      <Property Name="TenderWinner" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Items" />
+      <Property Name="Offers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="IntegrationLibrary.Tender.TenderItem">
+    <Position X="4.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAgAAAQAAAAAAAAIAAAAAAgAAAAAA=</HashCode>
+      <FileName>Tender\TenderItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BloodType" />
+      <Property Name="Money" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="IntegrationLibrary.Tender.TenderOffer">
+    <Position X="4.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAQAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tender\TenderOffer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Offeror" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Items" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="IntegrationLibrary.Tender.Money">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAgAAAAACACAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tender\Money.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Currency" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="IntegrationLibrary.BloodBank.BloodBank" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAIAAQAACAAAAgAAAAAgAQgAABAAAEAAEAAIAAAAAA=</HashCode>
+      <FileName>BloodBank\BloodBank.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="IntegrationLibrary.Tender.Enums.TenderStatus" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tender\Enums\TenderStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IntegrationLibrary.Tender.Enums.BloodType" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAQAIAAgABAAAAQBAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tender\Enums\BloodType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IntegrationLibrary.Tender.Enums.Currency" Collapsed="true">
+    <Position X="8.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tender\Enums\Currency.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
