@@ -7,6 +7,7 @@
     using IntegrationLibrary.UrgentBloodTransfer;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
     using IntegrationLibrary.UrgentBloodTransfer.Model;
+    using IntegrationLibrary.Util.Interfaces;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,7 @@
 
         private static UrgentBloodTransferController SetupController(IServiceScope scope)
         {
-            return new UrgentBloodTransferController(scope.ServiceProvider.GetRequiredService<IUrgentBloodTransferService>());
+            return new UrgentBloodTransferController(scope.ServiceProvider.GetRequiredService<IUrgentBloodTransferService>(), scope.ServiceProvider.GetRequiredService<IUrgentBloodTransferStatisticsService>());
         }
 
         private IntegrationDbContext SetupContext(IServiceScope scope)
