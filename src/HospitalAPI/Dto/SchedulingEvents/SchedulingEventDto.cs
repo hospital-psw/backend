@@ -1,8 +1,8 @@
 ﻿namespace HospitalAPI.Dto.SchedulingEvents
 {
-    using System.ComponentModel.DataAnnotations;
-    using System;
     using HospitalAPI.Dto.SchedulingEvents.Enum;
+    using System;
+    using System.ComponentModel.DataAnnotations;
 
     public class SchedulingEventDto
     {

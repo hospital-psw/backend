@@ -9,7 +9,7 @@
 
     public class BackClicked : DomainEvent
     {
-        public int Step {get; set; }
+        public int Step { get; set; }
         public int PatientId { get; set; }
         public BackClicked(int aggregateId, DateTime timeStamp, string eventName, int step, int patientId) : base(aggregateId, timeStamp, eventName)
         {

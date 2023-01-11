@@ -9,6 +9,6 @@
 
     public interface IAppointmentSchedulingRootRepository : IBaseRepository<AppointmentSchedulingRoot>
     {
-        public IEnumerable<AppointmentSchedulingRoot>GetByPatientId(int id);
+        public IEnumerable<AppointmentSchedulingRoot> GetByPatientId(int id);
     }
 }

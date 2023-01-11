@@ -13,7 +13,7 @@
         public Specialization Specialization { get; set; }
         public SpecializationSelectedDto(int aggregateId, SchedulingEventType eventType, DateTime timeStamp, Specialization specialization, int patientId) : base(aggregateId, eventType, timeStamp)
         {
-            PatientId = patientId; 
+            PatientId = patientId;
             Specialization = specialization;
         }
     }

@@ -41,7 +41,7 @@
         public override void Apply(DomainEvent changes)
         {
             When((dynamic)changes); //when - drugacija u zavisnosti od pozvanog eventa
-            Version++;
+            Version += 1;
         }
 
         //OVO JE KAKO AGREGAT ILI SESIJA REAGUEJ NA KOJI DOGADJAJ

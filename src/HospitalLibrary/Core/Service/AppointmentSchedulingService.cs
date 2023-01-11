@@ -19,12 +19,11 @@
         {
             CleanUp(evt.PatientId); //ako je ostala nedovrsena sesija kojoj je poslednji event pre vise od 15 min stavi je na completed
             AppointmentSchedulingRoot root = GetActiveRoot(evt.PatientId);  //dobavi aktivan od tog usera
-            if(root is null)    //ako ne nadje pravi novi
+            if (root is null)    //ako ne nadje pravi novi
             {
                 root = AppointmentSchedulingRoot.Create(evt);
                 root.LastChange = evt.TimeStamp;
                 _unitOfWork.AppointmentSchedulingRootRepository.Add(root);
-                _unitOfWork.Save(); //suvisno vrv
             }
             root.StartedSession(evt);   //root je zapravo sesija i sa njega pozivamo sve moguce dogadjaje
             _unitOfWork.Save();
@@ -43,7 +42,7 @@
             return root;
         }
 
-                //Sustinski sve funkcije sem poslednje 3 rade identicno
+        //Sustinski sve funkcije sem poslednje 3 rade identicno
         public AppointmentSchedulingRoot ClickBack(BackClicked evt)
         {
             AppointmentSchedulingRoot root = GetActiveRoot(evt.PatientId);

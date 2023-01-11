@@ -9,7 +9,7 @@
 
     public class DoctorSelected : DomainEvent
     {
-        public int DoctorId {get; set; }
+        public int DoctorId { get; set; }
         public int PatientId { get; set; }
         public DoctorSelected(int aggregateId, DateTime timeStamp, string eventName, int doctorId, int patientId) : base(aggregateId, timeStamp, eventName)
         {

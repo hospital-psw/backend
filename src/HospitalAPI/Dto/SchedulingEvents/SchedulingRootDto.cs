@@ -5,7 +5,7 @@
 
     public class SchedulingRootDto
     {
-        public int? Id { get; set; } 
+        public int? Id { get; set; }
         public int PatientId { get; set; }
         public DateTime LastChanged { get; set; }
         public DateTime? DatePicked { get; set; }
