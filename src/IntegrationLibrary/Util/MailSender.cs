@@ -117,7 +117,7 @@
             return template;
         }
 
-        public static string MakeAcceptBloodUnitTemplate(uint amount, BloodBank sender, BloodType bloodType)
+        public static string MakeAcceptBloodUnitTemplate(uint amount, string sender, BloodType bloodType)
         {
             string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
             basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
@@ -139,7 +139,7 @@
             return template;
         }
 
-        public static string MakeDeclineBloodUnitTemplate(uint amount, BloodBank sender, BloodType bloodType)
+        public static string MakeDeclineBloodUnitTemplate(uint amount, string sender, BloodType bloodType)
         {
             string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
             basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });

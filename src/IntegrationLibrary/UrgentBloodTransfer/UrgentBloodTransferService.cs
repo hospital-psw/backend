@@ -96,7 +96,7 @@
                 {
                     _connections.SendBloodUnitToHospital(new BloodUnit((Model.BloodType)request.BloodType, (int)request.Amount));
 
-                    string templateAccept = MailSender.MakeAcceptBloodUnitTemplate(request.Amount, request.Sender, request.BloodType);
+                    string templateAccept = MailSender.MakeAcceptBloodUnitTemplate(request.Amount, request.Sender.Name, request.BloodType);
                     _mailSender.SendEmail(templateAccept, "Successful blood transfer", _configuration["ManagerEmail"]);
 
                     _unitOfWork.UrgentBloodTransferRepository.Add(request);
@@ -105,7 +105,7 @@
                 }
                 else
                 {
-                    string templateDecline = MailSender.MakeDeclineBloodUnitTemplate(request.Amount, request.Sender, request.BloodType);
+                    string templateDecline = MailSender.MakeDeclineBloodUnitTemplate(request.Amount, request.Sender.Name, request.BloodType);
                     _mailSender.SendEmail(templateDecline, "Unsuccessful blood transfer", _configuration["ManagerEmail"]);
                 }
                 return response;
