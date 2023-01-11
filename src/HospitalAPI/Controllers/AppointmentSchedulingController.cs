@@ -9,13 +9,16 @@
     using HospitalAPI.Dto.SchedulingEvents;
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.Model.Events.Scheduling.Root;
+    using System.Collections.Generic;
+    using System.Linq;
+    using HospitalLibrary.Core.Model.Events.Scheduling;
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentSchedulingControler : BaseController<AppointmentSchedulingRoot>
+    public class AppointmentSchedulingController : BaseController<AppointmentSchedulingRoot>
     {
         private readonly IAppointmentSchedulingService _appointmentSchedulingService;
-        public AppointmentSchedulingControler(IAppointmentSchedulingService service)
+        public AppointmentSchedulingController(IAppointmentSchedulingService service)
         {
             _appointmentSchedulingService = service;
         }
@@ -63,6 +66,37 @@
         public IActionResult ScheduleAppointment(AppointmentScheduledDto dto)
         {
             return Ok(SchedulingEventMapper.EntityToDto(_appointmentSchedulingService.ScheduleAppointment(SchedulingEventMapper.AppointmentScheduledDtoToEntity(dto))));
+        }
+        [HttpGet("getAll")]
+        public IActionResult GetAll()
+        {
+            List<SchedulingRootDto> appointmentsDto = new List<SchedulingRootDto>();
+            List<AppointmentSchedulingRoot> appointments = _appointmentSchedulingService.GetAll().ToList();
+            appointments.ForEach(a => appointmentsDto.Add(SchedulingEventMapper.EntityToDto(a)));
+            return Ok(appointmentsDto);
+        }
+
+        [HttpGet("getAverageTimeSpent")]
+        public IActionResult GetAverageTimeSpent()
+        {
+            return Ok(_appointmentSchedulingService.CalculateAverageTimeSpentToCreateAppointment());
+        }
+        [HttpGet("getAllS")]
+        public IActionResult GetAllS()
+        {
+            List<SessionStarted> appointments = _appointmentSchedulingService.GetAllSessionStarted().ToList();
+            
+            return Ok(appointments);
+        }
+        [HttpGet("getAverageSteps")]
+        public IActionResult GetAverageSteps()
+        {
+            return Ok(_appointmentSchedulingService.CalculateTheAverageNumberOfStepsToCreateAppointment());
+        }
+        [HttpGet("getTimesSpentSteps")]
+        public IActionResult GetTimesSpentSteps()
+        {
+            return Ok(_appointmentSchedulingService.CalculateNumberOfTimesSpentOnEachStep());
         }
     }
 }

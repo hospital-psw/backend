@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using HospitalLibrary.Core.Model.Events.Scheduling.Root;
     using System;
     using System.Collections.Generic;
     using System.Linq;

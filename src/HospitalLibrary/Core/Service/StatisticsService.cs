@@ -5,10 +5,12 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.Events.Scheduling.Root;
     using HospitalLibrary.Core.Model.VacationRequests;
     using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
+    using HospitalLibrary.Settings;
     using HospitalLibrary.Util;
     using Syncfusion.Pdf.Lists;
     using System;

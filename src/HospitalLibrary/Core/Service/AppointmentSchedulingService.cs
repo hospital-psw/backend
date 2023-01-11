@@ -1,5 +1,7 @@
 ﻿namespace HospitalLibrary.Core.Service
 {
+    using HospitalLibrary.Core.Infrastucture;
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Events.Scheduling;
     using HospitalLibrary.Core.Model.Events.Scheduling.Root;
     using HospitalLibrary.Core.Repository.Core;
@@ -139,6 +141,100 @@
         {
             TimeSpan dif = DateTime.Now - date;
             return dif.TotalMinutes < 15;
+        }
+        private double GetTimeSpentForSingleAppointment(AppointmentSchedulingRoot appointment)
+        {
+            List<DomainEvent> events = appointment.Changes;
+            List<SessionStarted> sessionStarted = _unitOfWork.AppointmentSchedulingRootRepository.GetSessionStartedEvent(appointment.Id);
+            DateTime firstStep = sessionStarted[0].TimeStamp;
+            DateTime lastStep = new DateTime();
+
+            foreach (DomainEvent e in events)
+            {
+                if (e.EventName.Equals("APPOINTMENT_SCHEDULED"))
+                    lastStep = e.TimeStamp;
+            }
+            return (lastStep - firstStep).TotalSeconds;
+        }
+        private bool ScheduledAppointmentEventExists(AppointmentSchedulingRoot appointment)
+        {
+            List<AppointmentScheduled> appointmentScheduled = new List<AppointmentScheduled>();
+            appointmentScheduled =  _unitOfWork.AppointmentSchedulingRootRepository.GetAppointmentScheduledEvent(appointment.Id);
+            if(appointmentScheduled.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public List<double> CalculateAverageTimeSpentToCreateAppointment()
+        {
+            List<double> averages = new List<double>();
+            List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
+            foreach (AppointmentSchedulingRoot appointment in appointments)
+            {
+                if (!ScheduledAppointmentEventExists(appointment) || appointment.Id < 10) continue;
+                else
+                {
+                    averages.Add(GetTimeSpentForSingleAppointment(appointment));
+                }
+               
+            }
+            return averages;
+        }
+
+        public List<SessionStarted> GetAllSessionStarted()
+        {
+            return _unitOfWork.AppointmentSchedulingRootRepository.GetAllSessionStarted();
+        }
+        private int CountNumberOfStepsTaken(AppointmentSchedulingRoot appointment)
+        {
+            List<SessionStarted> sessionStarted = _unitOfWork.AppointmentSchedulingRootRepository.GetSessionStartedEvent(appointment.Id);
+            List<DateSelected> dateSelecteds = _unitOfWork.AppointmentSchedulingRootRepository.GetDateSelectedEvent(appointment.Id);
+            List<NextClicked> next = _unitOfWork.AppointmentSchedulingRootRepository.GetNextClickedEvent(appointment.Id);
+            List<BackClicked> back = _unitOfWork.AppointmentSchedulingRootRepository.GetBackClickedEvent(appointment.Id);
+            List<DoctorSelected> doctpr = _unitOfWork.AppointmentSchedulingRootRepository.GetDoctorSelectedEvent(appointment.Id);
+            List<AppointmentSelected> appointmentSelected = _unitOfWork.AppointmentSchedulingRootRepository.GetAppointmentSelectedEvent(appointment.Id);
+            List<SpecializationSelected> specializations = _unitOfWork.AppointmentSchedulingRootRepository.GetSpecializationSelectedEvent(appointment.Id);
+            List<AppointmentScheduled> appointmentScheduled = _unitOfWork.AppointmentSchedulingRootRepository.GetAppointmentScheduledEvent(appointment.Id);
+            return sessionStarted.Count + dateSelecteds.Count + next.Count + back.Count + doctpr.Count + appointmentSelected.Count + specializations.Count + appointmentScheduled.Count;
+
+        }
+        public List<double> CalculateTheAverageNumberOfStepsToCreateAppointment()
+        {
+            List<double> averages = new List<double>();
+            List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
+            foreach (AppointmentSchedulingRoot appointment in appointments)
+            {
+                if (!ScheduledAppointmentEventExists(appointment) || appointment.Id < 10) continue;
+                else
+                {
+                    averages.Add(CountNumberOfStepsTaken(appointment));
+                }
+
+            }
+            return averages;
+        }
+        public List<double> CalculateNumberOfTimesSpentOnEachStep()
+        {
+            List<double> steps = new List<double> { 0.0, 0.0, 0.0, 0.0};
+            List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
+            foreach(AppointmentSchedulingRoot appointment in appointments)
+            {
+                if (!ScheduledAppointmentEventExists(appointment)) continue;
+                else
+                {
+                    List<DateSelected> dateSelected = _unitOfWork.AppointmentSchedulingRootRepository.GetDateSelectedEvent(appointment.Id);
+                    List<SpecializationSelected> specializations = _unitOfWork.AppointmentSchedulingRootRepository.GetSpecializationSelectedEvent(appointment.Id);
+                    List<DoctorSelected> doctorSelected = _unitOfWork.AppointmentSchedulingRootRepository.GetDoctorSelectedEvent(appointment.Id);
+                    List<AppointmentSelected> appointmentSelected = _unitOfWork.AppointmentSchedulingRootRepository.GetAppointmentSelectedEvent(appointment.Id);
+                    steps[0] = steps[0] + dateSelected.Count;
+                    steps[1] = steps[1] + specializations.Count;
+                    steps[2] = steps[2] + doctorSelected.Count;
+                    steps[3] = steps[3] + appointmentSelected.Count;
+                }
+            }
+            return steps;
+            
         }
     }
 }

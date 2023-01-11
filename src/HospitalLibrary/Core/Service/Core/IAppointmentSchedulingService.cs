@@ -18,5 +18,9 @@
         AppointmentSchedulingRoot SelectDoctor(DoctorSelected doctorSelected);
         AppointmentSchedulingRoot SelectAppointment(AppointmentSelected appointmentSelected);
         AppointmentSchedulingRoot ScheduleAppointment(AppointmentScheduled appointmentScheduled);
+        List<double> CalculateAverageTimeSpentToCreateAppointment();
+        List<SessionStarted> GetAllSessionStarted();
+        List<double> CalculateTheAverageNumberOfStepsToCreateAppointment();
+        List<double> CalculateNumberOfTimesSpentOnEachStep();
     }
 }
