@@ -75,5 +75,13 @@
             Assert.True(bloodBankDetailsPage.GetToast());
             Dispose();
         }
+        [Fact]
+        private void Configure_Report_Negative()
+        {
+            bloodBankDetailsPage.Frequent.Clear();
+            bloodBankDetailsPage.Frequent.SendKeys("-1");
+            Assert.True(bloodBankDetailsPage.ErrLabelDisplayed());
+            Dispose();
+        }
     }
 }

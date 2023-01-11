@@ -17,6 +17,9 @@
         public IWebElement ShowConfig => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[1]/p"));
         public IWebElement CheckBloodAmountButton => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/div/div/div[2]/button/span[1]"));
         public IWebElement ResponseLabel => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/div/div/div[2]/div/label"));
+
+        public IWebElement FreqErrlable;
+
         public IWebElement Frequent;
         public IWebElement SaveReport;
         public IWebElement toast;
@@ -79,6 +82,12 @@
                     return false;
                 }
             });
+        }
+
+        public bool ErrLabelDisplayed()
+        {
+            FreqErrlable = _driver.FindElement(By.Id("error404hilton"));
+            return FreqErrlable != null;
         }
     }
 }
