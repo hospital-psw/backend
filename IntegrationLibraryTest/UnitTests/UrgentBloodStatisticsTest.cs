@@ -5,6 +5,7 @@
     using IntegrationLibrary.UrgentBloodTransfer.Model;
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
+    using Microsoft.Extensions.Configuration;
     using Moq;
     using OpenQA.Selenium.DevTools.V105.Page;
     using Shouldly;
@@ -39,7 +40,7 @@
                     }
                 }
             );
-            return new UrgentBloodTransferStatisticsService(service.Object, new Mock<IHTMLReportService>().Object);
+            return new UrgentBloodTransferStatisticsService(service.Object, new Mock<IHTMLReportService>().Object, new Mock<ISFTPService>().Object, new Mock<IMailSender>().Object, new Mock<IConfiguration>().Object);
         }
 
         [Fact]
