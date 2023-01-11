@@ -31,7 +31,7 @@
                 List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
                 List<ExaminationDurationDto> dtoList = new List<ExaminationDurationDto>();
                 int durationSum = 0;
-                
+
                 foreach (Anamnesis anamnesis in finishedExaminations)
                 {
                     ExaminationDurationDto examinationDurationDto = new ExaminationDurationDto();
@@ -63,7 +63,7 @@
                 foreach (Anamnesis anamnesis in finishedExaminations)
                 {
                     ExaminationDurationDto dto = new ExaminationDurationDto();
-                    if(anamnesis.Changes.IsNullOrEmpty()) continue;
+                    if (anamnesis.Changes.IsNullOrEmpty()) continue;
                     dto.Id = anamnesis.Id;
                     dto.Duration = CalculateDuration(anamnesis);
                     examDtoList.Add(dto);
@@ -73,7 +73,7 @@
                     {
                         TemporarySpecStatisticsDto specDto = new TemporarySpecStatisticsDto(currentSpec, dto.Duration, 1);
                         tempDtoList.Add(specDto);
-                    } 
+                    }
                     else
                     {
                         TemporarySpecStatisticsDto specDto = tempDtoList.Find(x => x.Specialization == currentSpec);
@@ -115,7 +115,7 @@
                     dtoList.Add(dto);
                     backStepsSum += dto.BackStepsNumber;
                 }
-            
+
                 return new AverageBackStepsDto(dtoList, Math.Round((double)backStepsSum / dtoList.Count, 2));
             }
             catch (Exception e)
@@ -136,11 +136,12 @@
                 {
                     foreach (Symptom symptom in anamnesis.Symptoms)
                     {
-                        if(!dtoList.Exists(x => x.Name.Equals(symptom.Name)))
+                        if (!dtoList.Exists(x => x.Name.Equals(symptom.Name)))
                         {
                             TemporarySymptomStatisticsDto dto = new TemporarySymptomStatisticsDto(symptom.Name, 1, finishedExaminations.Count);
                             dtoList.Add(dto);
-                        } else
+                        }
+                        else
                         {
                             TemporarySymptomStatisticsDto dto = dtoList.Find(x => x.Name.Equals(symptom.Name));
                             dto.Occurrences += 1;
@@ -151,7 +152,7 @@
                 List<SymptomStatisticsDto> sympDtoList = new List<SymptomStatisticsDto>();
                 dtoList.ForEach(e =>
                 {
-                    SymptomStatisticsDto dto = new SymptomStatisticsDto(e.Name, Math.Round((double) e.Occurrences / e.AnamnesisNum, 2));
+                    SymptomStatisticsDto dto = new SymptomStatisticsDto(e.Name, Math.Round((double)e.Occurrences / e.AnamnesisNum, 2));
                     sympDtoList.Add(dto);
                 });
 
@@ -175,7 +176,7 @@
                     backSteps += 1;
                 }
             }
-            
+
             return backSteps;
         }
 
@@ -194,13 +195,13 @@
                     durationSum += partialSum;
                     partialSum = 0;
                     firstStep = e.TimeStamp;
-                } 
+                }
                 else
                 {
                     lastStep = e.TimeStamp;
                     TimeSpan stepGap = lastStep - firstStep;
                     if (stepGap.TotalMinutes > 15) continue;
-                    partialSum = (int) stepGap.TotalSeconds;
+                    partialSum = (int)stepGap.TotalSeconds;
                 }
             }
 
