@@ -15,7 +15,8 @@
         public const string URI = "http://localhost:4200/app/display";
 
         IWebElement bloodBanksTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-manager-sidebar/li[3]/a"));
-       
+        IWebElement reconsiderRequestTab => driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[1]/app-sidebar/div/ul/app-manager-sidebar/li[9]/a"));
+
         public MenuPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -28,6 +29,16 @@
         public void bloodBanksTabClick()
         {
             bloodBanksTab.Click();
+        }
+
+        public bool reconsiderRequestTabDisplayed()
+        {
+            return reconsiderRequestTab.Displayed;
+        }
+
+        public void reconsiderRequestTabClick()
+        {
+            reconsiderRequestTab.Click();
         }
     }
 }
