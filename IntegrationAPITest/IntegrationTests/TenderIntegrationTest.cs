@@ -25,7 +25,7 @@
         private static TenderController SetupController(IServiceScope serviceScope)
         {
             return new TenderController(serviceScope.ServiceProvider.GetRequiredService<ITenderService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>(), serviceScope.ServiceProvider.GetRequiredService<ITenderStatisticsService>());
         }
 
         private IntegrationDbContext SetupContext(IServiceScope scope)

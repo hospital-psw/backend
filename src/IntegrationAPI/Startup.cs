@@ -106,7 +106,7 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IUrgentBloodTransferService, UrgentBloodTransferService>();
             services.AddScoped<IUrgentBloodTransferStatisticsService, UrgentBloodTransferStatisticsService>();
-
+            services.AddScoped<ITenderStatisticsService, TenderStatisticsService>();
 
             services.AddScoped<IHTMLReportService, HTMLReportService>();
             services.AddScoped<ITokenHelper, TokenHelper>();
