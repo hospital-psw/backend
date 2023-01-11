@@ -58,6 +58,7 @@
 
             ApplicationPatientRepository = new ApplicationPatientRepository(_context);
             ApplicationDoctorRepository = new ApplicationDoctorRepository(_context);
+            AppointmentSchedulingRootRepository = new AppointmentSchedulingRootRepository(_context);
             BloodAdditionRepository = new BloodAdditionRepository(_context);
         }
 
@@ -94,6 +95,7 @@
 
         public IAnamnesisRepository AnamnesisRepository { get; set; }
         public IRenovationEventRepository RenovationEventRepository { get; set; }
+        public IAppointmentSchedulingRootRepository AppointmentSchedulingRootRepository { get; set; }
 
         public IBloodAdditionRepository BloodAdditionRepository { get; set; }
 

@@ -100,17 +100,5 @@
         }
 
 
-        private bool CheckIfAppointmentIsDone(int appointmentId)
-        {
-            Anamnesis anamnesis = _anamnesisService.GetByAppointment(appointmentId);
-
-
-            if (anamnesis == null)
-            {
-                return false;
-            }
-            return true;
-        }
-
     }
 }

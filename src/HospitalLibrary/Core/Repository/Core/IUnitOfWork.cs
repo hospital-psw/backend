@@ -49,6 +49,7 @@
 
         public IAnamnesisRepository AnamnesisRepository { get; }
         public IRenovationEventRepository RenovationEventRepository { get; }
+        public IAppointmentSchedulingRootRepository AppointmentSchedulingRootRepository { get; }
 
         public IBloodAdditionRepository BloodAdditionRepository { get; }
 

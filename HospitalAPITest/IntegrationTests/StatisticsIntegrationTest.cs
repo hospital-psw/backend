@@ -23,7 +23,8 @@
         }
         private static StatisticalController SetupController(IServiceScope serviceScope)
         {
-            return new StatisticalController(serviceScope.ServiceProvider.GetRequiredService<IStatisticsService>());
+            return new StatisticalController(serviceScope.ServiceProvider.GetRequiredService<IStatisticsService>(),
+                serviceScope.ServiceProvider.GetRequiredService<IExaminationStatisticsService>());
         }
 
         [Fact]
@@ -162,7 +163,7 @@
 
             var result = ((OkObjectResult)controller.GetNumberOfViewsForEachStep()).Value as List<double>;
 
-            List<double> expected = new() { 1, 1, 0, 0, 0, 0 };
+            List<double> expected = new() { 1, 2, 0, 0, 0, 0 };
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);
@@ -212,7 +213,7 @@
             DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
             var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(new DoctorOptionalStatisticDto(4, start, end))).Value as List<int>;
 
-            List<int> expected = ListFactory.CreateList(1, 1);
+            List<int> expected = ListFactory.CreateList(1, 0);
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);

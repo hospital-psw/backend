@@ -15,6 +15,7 @@
         public EventSourcedAggregate()
         {
             Changes = new List<DomainEvent>();
+            Version = 0;
         }
 
         public abstract void Apply(DomainEvent changes);

@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Tender
             Money totalSum = new Money();
             foreach (TenderItem item in Items)
             {
-                totalSum.Add(item.Money);
+                totalSum = totalSum.Add(item.Money);
             }
             return totalSum;
         }
