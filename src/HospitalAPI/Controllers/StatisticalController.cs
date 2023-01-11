@@ -140,20 +140,40 @@
         [HttpGet("examination/symptom-count")]
         public IActionResult GetExaminationSymptomFrequency()
         {
-            return Ok(_examinationStatisticsService.GetSymptomStats());
+            AverageSymptomsDto dto = _examinationStatisticsService.CalculateSymptomsAverageFrequence();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
         [HttpGet("examination/average-back-steps")]
         public IActionResult GetAverageBackSteps()
         {
-            return Ok();
+            AverageBackStepsDto dto = _examinationStatisticsService.CalculateAverageNumberOfBackSteps();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
         [HttpGet("examination/specialization/average-duration")]
         public IActionResult GetAverageDurationBySpecialization()
         {
-            // Ovo vraca listu anamnesis statistics dto
-            return Ok();
+            AverageSpecializationDurationDto dto = _examinationStatisticsService.CalculateAverageExaminationDurationBySpec();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
         [HttpGet("examination/data")]

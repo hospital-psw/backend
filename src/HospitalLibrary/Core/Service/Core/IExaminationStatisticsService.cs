@@ -19,5 +19,11 @@
         AveragePrescriptionsDto CalculateAveragePrescriptions();
 
         List<SymptomDataDto> GetSymptomStats();
+
+        AverageBackStepsDto CalculateAverageNumberOfBackSteps();
+        
+        AverageSpecializationDurationDto CalculateAverageExaminationDurationBySpec();
+        
+        AverageSymptomsDto CalculateSymptomsAverageFrequence();
     }
 }
