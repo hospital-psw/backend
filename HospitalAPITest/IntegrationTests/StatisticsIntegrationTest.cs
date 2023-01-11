@@ -163,7 +163,7 @@
 
             var result = ((OkObjectResult)controller.GetNumberOfViewsForEachStep()).Value as List<double>;
 
-            List<double> expected = new() { 1, 1, 0, 0, 0, 0 };
+            List<double> expected = new() { 1, 2, 0, 0, 0, 0 };
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);
