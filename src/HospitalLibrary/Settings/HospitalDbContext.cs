@@ -72,6 +72,8 @@ namespace HospitalLibrary.Settings
         public DbSet<ExaminationFinished> ExaminationFinishedEvents { get; set; }
 
         public DbSet<ExaminationEvent> ExaminationEvents { get; set; }
+
+        public DbSet<BloodAddition> BloodAdditions { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         public HospitalDbContext()

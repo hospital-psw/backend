@@ -54,6 +54,10 @@
             BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(dto.BloodType);
             bloodUnit.Amount += dto.Amount;
             _unitOfWork.BloodUnitRepository.Update(bloodUnit);
+            
+
+            BloodAddition bloodAddition = new BloodAddition(DateTime.Now, dto.BloodType,dto.Amount);
+            _unitOfWork.BloodAdditionRepository.Add(bloodAddition);
             _unitOfWork.Save();
             return bloodUnit;
         }

@@ -50,5 +50,7 @@
         public IAnamnesisRepository AnamnesisRepository { get; }
         public IRenovationEventRepository RenovationEventRepository { get; }
 
+        public IBloodAdditionRepository BloodAdditionRepository { get; }
+
     }
 }
