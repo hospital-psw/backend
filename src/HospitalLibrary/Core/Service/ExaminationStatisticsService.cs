@@ -30,7 +30,7 @@
                 List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
                 List<ExaminationDurationDto> dtoList = new List<ExaminationDurationDto>();
                 int durationSum = 0;
-                
+
                 foreach (Anamnesis anamnesis in finishedExaminations)
                 {
                     ExaminationDurationDto examinationDurationDto = new ExaminationDurationDto();
@@ -44,7 +44,7 @@
 
                 return new AverageDurationDto(dtoList, Math.Round((double)durationSum / dtoList.Count, 2));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError($"Error in ExaminationStatisticsService in CalculateAverageDuration, {e.Message} in {e.StackTrace}");
                 return null;
@@ -59,7 +59,7 @@
             int durationSum = 0;
             int partialSum = 0;
 
-            foreach(DomainEvent e in examination.Changes.OrderBy(x => x.TimeStamp))
+            foreach (DomainEvent e in examination.Changes.OrderBy(x => x.TimeStamp))
             {
 
                 if (e.EventName.Equals("EXAMINATION_STARTED"))
@@ -67,13 +67,13 @@
                     durationSum += partialSum;
                     partialSum = 0;
                     firstStep = e.TimeStamp;
-                } 
+                }
                 else
                 {
                     lastStep = e.TimeStamp;
                     TimeSpan stepGap = lastStep - firstStep;
                     if (stepGap.TotalMinutes > 15) continue;
-                    partialSum = (int) stepGap.TotalSeconds;
+                    partialSum = (int)stepGap.TotalSeconds;
                 }
             }
             durationSum += partialSum;
@@ -85,7 +85,7 @@
             List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
             List<ExaminationDataDto> examinationDataList = new List<ExaminationDataDto>();
 
-            foreach(Anamnesis anamnesis in finishedExaminations)
+            foreach (Anamnesis anamnesis in finishedExaminations)
             {
                 if (anamnesis.Changes.IsNullOrEmpty()) continue;
 
