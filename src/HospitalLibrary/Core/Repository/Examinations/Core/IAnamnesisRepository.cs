@@ -24,5 +24,7 @@
         Anamnesis GetUnfinishedAnamnesisByAppointment(int appointmentId);
 
         IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(string criteria);
+
+        IEnumerable<Anamnesis> GetAllFinishedAnamneses();
     }
 }

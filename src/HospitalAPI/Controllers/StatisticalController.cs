@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
+    using HospitalLibrary.Core.DTO.ExaminationStatistics;
     using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
@@ -18,10 +19,12 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
+        private readonly IExaminationStatisticsService _examinationStatisticsService;
 
-        public StatisticalController(IStatisticsService statisticsService)
+        public StatisticalController(IStatisticsService statisticsService, IExaminationStatisticsService examinationStatisticsService)
         {
             _statisticsService = statisticsService;
+            _examinationStatisticsService = examinationStatisticsService;
         }
 
         [HttpGet("getStats")]
@@ -112,7 +115,14 @@
         [HttpGet("examination/average-duration")]
         public IActionResult GetAverageExaminationDuration()
         {
-            return Ok();
+            AverageDurationDto dto = _examinationStatisticsService.CalculateAverageExaminationDuration();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
         [HttpGet("examinaton/average-steps")]
@@ -130,20 +140,40 @@
         [HttpGet("examination/symptom-frequency")]
         public IActionResult GetExaminationSymptomFrequency()
         {
-            return Ok();
+            AverageSymptomsDto dto = _examinationStatisticsService.CalculateSymptomsAverageFrequence();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
         [HttpGet("examination/average-back-steps")]
         public IActionResult GetAverageBackSteps()
         {
-            return Ok();
+            AverageBackStepsDto dto = _examinationStatisticsService.CalculateAverageNumberOfBackSteps();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
         [HttpGet("examination/specialization/average-duration")]
         public IActionResult GetAverageDurationBySpecialization()
         {
-            // Ovo vraca listu anamnesis statistics dto
-            return Ok();
+            AverageSpecializationDurationDto dto = _examinationStatisticsService.CalculateAverageExaminationDurationBySpec();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
     }
