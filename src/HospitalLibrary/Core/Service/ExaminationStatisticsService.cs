@@ -51,7 +51,7 @@
                 return null;
             }
         }
-        
+
         private int CalculateDuration(Anamnesis examination)
         {
 
@@ -234,7 +234,7 @@
         {
             return finishedExaminations.Where(x => x.Symptoms.Any(symy => symy.Id == s.Id)).ToList().Count;
         }
-        
+
         private int CalculateNumberOfBackSteps(Anamnesis examination)
         {
             int backSteps = 0;
@@ -250,35 +250,6 @@
             return backSteps;
         }
 
-        private int CalculateDuration(Anamnesis examination)
-        {
-            DateTime firstStep = default(DateTime);
-            DateTime lastStep = default(DateTime);
-            int durationSum = 0;
-            int partialSum = 0;
-
-            foreach (DomainEvent e in examination.Changes.OrderBy(x => x.TimeStamp))
-            {
-
-                if (e.EventName.Equals("EXAMINATION_STARTED"))
-                {
-                    durationSum += partialSum;
-                    partialSum = 0;
-                    firstStep = e.TimeStamp;
-                }
-                else
-                {
-                    lastStep = e.TimeStamp;
-                    TimeSpan stepGap = lastStep - firstStep;
-                    if (stepGap.TotalMinutes > 15) continue;
-                    partialSum = (int)stepGap.TotalSeconds;
-                }
-            }
-
-            durationSum += partialSum;
-            return durationSum;
-        }
-        
         public AverageSpecializationDurationDto CalculateAverageExaminationDurationBySpec()
         {
             try
