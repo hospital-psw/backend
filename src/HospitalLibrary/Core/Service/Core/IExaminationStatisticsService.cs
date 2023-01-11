@@ -10,6 +10,6 @@
 
     public interface IExaminationStatisticsService
     {
-        Anamnesis CalculateAverageExaminationDuration();
+        AverageDurationDto CalculateAverageExaminationDuration();
     }
 }

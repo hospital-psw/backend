@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
+    using HospitalLibrary.Core.DTO.ExaminationStatistics;
     using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
@@ -114,7 +115,14 @@
         [HttpGet("examination/average-duration")]
         public IActionResult GetAverageExaminationDuration()
         {
-            return Ok(_examinationStatisticsService.CalculateAverageExaminationDuration());
+            AverageDurationDto dto = _examinationStatisticsService.CalculateAverageExaminationDuration();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
         }
 
         [HttpGet("examinaton/average-steps")]

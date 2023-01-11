@@ -6,6 +6,7 @@
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -22,13 +23,26 @@
             _logger = logger;
         }
 
-        public Anamnesis CalculateAverageExaminationDuration()
+        public AverageDurationDto CalculateAverageExaminationDuration()
         {
             try
             {
                 List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
-                Anamnesis an = CalculateDuration(finishedExaminations.ElementAt(0));
-                return an;
+                List<ExaminationDurationDto> dtoList = new List<ExaminationDurationDto>();
+                int durationSum = 0;
+                
+                foreach (Anamnesis anamnesis in finishedExaminations)
+                {
+                    ExaminationDurationDto examinationDurationDto = new ExaminationDurationDto();
+                    if (anamnesis.Changes.IsNullOrEmpty()) continue;
+                    examinationDurationDto.Id = anamnesis.Id;
+                    examinationDurationDto.Duration = CalculateDuration(anamnesis);
+                    dtoList.Add(examinationDurationDto);
+
+                    durationSum += examinationDurationDto.Duration;
+                }
+
+                return new AverageDurationDto(dtoList, Math.Round((double)durationSum / dtoList.Count, 2));
             }
             catch(Exception e)
             {
@@ -37,20 +51,33 @@
             }
         }
 
-        private Anamnesis CalculateDuration(Anamnesis examination)
+        private int CalculateDuration(Anamnesis examination)
         {
-            examination.Changes.ForEach(x => Console.WriteLine(x.ToString()));
 
-            examination.Changes.Sort(delegate(DomainEvent x, DomainEvent y)
+            DateTime firstStep = default(DateTime);
+            DateTime lastStep = default(DateTime);
+            int durationSum = 0;
+            int partialSum = 0;
+
+            foreach(DomainEvent e in examination.Changes.OrderBy(x => x.TimeStamp))
             {
-                if (x.TimeStamp > y.TimeStamp) return 1;
-                else if (x.TimeStamp < y.TimeStamp) return -1;
-                else return 0;
-            });
 
-            examination.Changes.ForEach(x => Console.WriteLine(x.ToString()));
-
-            return examination;
+                if (e.EventName.Equals("EXAMINATION_STARTED"))
+                {
+                    durationSum += partialSum;
+                    partialSum = 0;
+                    firstStep = e.TimeStamp;
+                } 
+                else
+                {
+                    lastStep = e.TimeStamp;
+                    TimeSpan stepGap = lastStep - firstStep;
+                    if (stepGap.TotalMinutes > 15) continue;
+                    partialSum = (int) stepGap.TotalSeconds;
+                }
+            }
+            durationSum += partialSum;
+            return durationSum;
         }
     }
 }
