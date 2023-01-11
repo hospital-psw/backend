@@ -69,15 +69,10 @@
 
             var bloodbankdetails = new BloodBankDetailsPage(driver);
             bloodbankdetails.EnsurePageIsDisplayed();
-            Thread.Sleep(2000);
             bloodbankdetails.BloodType.Click();
-            Thread.Sleep(2000);
             bloodbankdetails.APositive.Click();
-            Thread.Sleep(2000);
             bloodbankdetails.BloodAmount.SendKeys("1");
-            Thread.Sleep(2000);
             bloodbankdetails.CheckBloodAmountButton.Click();
-            Thread.Sleep(2000);
             Assert.True(bloodbankdetails.ResponseLabel.Displayed);
 
             Dispose();
