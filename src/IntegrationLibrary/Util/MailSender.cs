@@ -1,5 +1,7 @@
 ﻿namespace IntegrationLibrary.Util
 {
+    using grpcServices;
+    using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Tender;
     using IntegrationLibrary.Util.Interfaces;
     using Mailjet.Client;
@@ -105,6 +107,50 @@
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
                 "<p>Your requested report for urgent blood transfers can be found in attachment below.</p>" +
+                "</mj-text>" +
+                "</mj-column>" +
+                "</mj-section>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "</mj-body>" +
+                "</mjml>";
+
+            return template;
+        }
+
+        public static string MakeAcceptBloodUnitTemplate(uint amount, string sender, BloodType bloodType)
+        {
+            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+
+            string template = "<mjml>" +
+                "<mj-body>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
+                "<mj-column width=\"500px\">" +
+                "<mj-text font-size=\"16px\" align=\"left\">" +
+                "<p>Congratulations, you have succedfully received <b>" + amount + "</b> units of blood, blood type: <b>" + bloodType + "</b> from <b>" + sender + "</b></p>" +
+                "</mj-text>" +
+                "</mj-column>" +
+                "</mj-section>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "</mj-body>" +
+                "</mjml>";
+
+            return template;
+        }
+
+        public static string MakeDeclineBloodUnitTemplate(uint amount, string sender, BloodType bloodType)
+        {
+            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+
+            string template = "<mjml>" +
+                "<mj-body>" +
+                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
+                "<mj-column width=\"500px\">" +
+                "<mj-text font-size=\"16px\" align=\"left\">" +
+                "<p>Unfourtunatelly we cannot transfer you <b>" + amount + "</b> units of blood, blood type: <b>" + bloodType + "</b> from <b>" + sender + "</b></p>" +
                 "</mj-text>" +
                 "</mj-column>" +
                 "</mj-section>" +
