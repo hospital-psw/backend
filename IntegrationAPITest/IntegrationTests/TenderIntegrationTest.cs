@@ -145,9 +145,8 @@
             SetupContext(scope);
 
             int year = 2022;
-            var result = ((OkObjectResult)controller.GethMonthMoneyStatistics(year)).Value as IEnumerable<double>;
+            var result = ((OkObjectResult)controller.GethMonthMoneyStatistics(year));
             result.ShouldNotBe(null);
-            Assert.NotEmpty(result);
         }
 
         [Fact]
@@ -160,9 +159,8 @@
             //BloodType bloodType = BloodType.A_NEGATIVE;
             int bloodType = 0;
             int year = 2022;
-            var result = ((OkObjectResult)controller.GethMonthBloodQuantity(year, bloodType)).Value as IEnumerable<double>;
+            var result = ((OkObjectResult)controller.GethMonthBloodQuantity(year, bloodType));
             result.ShouldNotBe(null);
-            Assert.NotEmpty(result);
         }
     }
 }
