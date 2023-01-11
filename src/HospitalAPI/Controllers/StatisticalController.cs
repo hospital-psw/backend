@@ -128,19 +128,19 @@
         [HttpGet("examinaton/average-steps")]
         public IActionResult GetAverageExaminationSteps()
         {
-            return Ok();
+            return Ok(_examinationStatisticsService.CalculateAverageSteps());
         }
 
         [HttpGet("examination/average-prescriptions")]
         public IActionResult GetAverageExaminationPrescriptions()
         {
-            return Ok();
+            return Ok(_examinationStatisticsService.CalculateAveragePrescriptions());
         }
 
-        [HttpGet("examination/symptom-frequency")]
+        [HttpGet("examination/symptom-count")]
         public IActionResult GetExaminationSymptomFrequency()
         {
-            return Ok();
+            return Ok(_examinationStatisticsService.GetSymptomStats());
         }
 
         [HttpGet("examination/average-back-steps")]
@@ -154,6 +154,12 @@
         {
             // Ovo vraca listu anamnesis statistics dto
             return Ok();
+        }
+
+        [HttpGet("examination/data")]
+        public IActionResult GetExaminatonData()
+        {
+            return Ok(_examinationStatisticsService.GetExaminationData());
         }
 
     }

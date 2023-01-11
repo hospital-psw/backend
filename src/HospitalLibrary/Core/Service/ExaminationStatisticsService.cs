@@ -79,5 +79,94 @@
             durationSum += partialSum;
             return durationSum;
         }
+
+        public List<ExaminationDataDto> GetExaminationData()
+        {
+            List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
+            List<ExaminationDataDto> examinationDataList = new List<ExaminationDataDto>();
+
+            foreach(Anamnesis anamnesis in finishedExaminations)
+            {
+                if (anamnesis.Changes.IsNullOrEmpty()) continue;
+
+
+                examinationDataList.Add(CreateExaminationData(anamnesis));
+            }
+
+            return examinationDataList;
+        }
+
+        private ExaminationDataDto CreateExaminationData(Anamnesis anamnesis)
+        {
+            int duration = CalculateDuration(anamnesis);
+            DateTime date = anamnesis.Appointment.Date;
+            string doctor = anamnesis.Appointment.Doctor.FirstName + " " + anamnesis.Appointment.Doctor.LastName;
+            string patient = anamnesis.Appointment.Patient.FirstName + " " + anamnesis.Appointment.Patient.LastName;
+            string specialization = anamnesis.Appointment.Doctor.Specialization.ToString();
+            string type = anamnesis.Appointment.ExamType.ToString();
+            int steps = anamnesis.Version;
+            return new(date, doctor, patient, specialization, type, duration, steps);
+        }
+
+        public AverageStepsDto CalculateAverageSteps()
+        {
+            try
+            {
+                List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
+                AverageStepsDto averageSteps = new AverageStepsDto();
+                int totalSteps = 0;
+                finishedExaminations.Where(e => e.Version != 0).ToList().ForEach((e) => { averageSteps.Steps.Add(e.Version); totalSteps += e.Version; });
+                averageSteps.CalculateAverageSteps(totalSteps);
+                return averageSteps;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ExaminationStatisticsService in CalculateAverageSteps {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public AveragePrescriptionsDto CalculateAveragePrescriptions()
+        {
+            try
+            {
+                List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
+                AveragePrescriptionsDto averagePrescriptions = new AveragePrescriptionsDto();
+                int totalSteps = 0;
+                finishedExaminations.ForEach((e) => { averagePrescriptions.Prescriptions.Add(e.Prescriptions.Count); totalSteps++; });
+                averagePrescriptions.CalculateAverage(totalSteps);
+                return averagePrescriptions;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ExaminationStatisticsService in CalculateAveragePrescriptions {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        public List<SymptomDataDto> GetSymptomStats()
+        {
+            try
+            {
+                List<Anamnesis> finishedExaminations = _unitOfWork.AnamnesisRepository.GetAllFinishedAnamneses().ToList();
+                List<Symptom> symptomList = _unitOfWork.SymptomRepository.GetAll().ToList();
+                List<SymptomDataDto> symptomDataDtoList = new List<SymptomDataDto>();
+                symptomList.ForEach(s =>
+                {
+                    symptomDataDtoList.Add(new SymptomDataDto(s.Name, CountSymptomInstances(s, finishedExaminations)));
+                });
+                return symptomDataDtoList;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in ExaminationStatisticsService in CalculateAveragePrescriptions {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
+        private int CountSymptomInstances(Symptom s, List<Anamnesis> finishedExaminations)
+        {
+            return finishedExaminations.Where(x => x.Symptoms.Any(symy => symy.Id == s.Id)).ToList().Count;
+        }
     }
 }
