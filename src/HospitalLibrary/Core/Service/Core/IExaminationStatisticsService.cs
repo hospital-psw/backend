@@ -11,5 +11,8 @@
     public interface IExaminationStatisticsService
     {
         AverageDurationDto CalculateAverageExaminationDuration();
+        AverageBackStepsDto CalculateAverageNumberOfBackSteps();
+        AverageSpecializationDurationDto CalculateAverageExaminationDurationBySpec();
+        AverageSymptomsDto CalculateSymptomsAverageFrequence();
     }
 }
