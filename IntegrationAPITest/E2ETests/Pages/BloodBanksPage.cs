@@ -15,7 +15,7 @@
         public const string URI = "http://localhost:4200/app/bloodbank";
 
         public IWebElement AddButton => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-all/mat-card/div/div/button"));
-        public IWebElement FirstBloodBank; 
+        public IWebElement FirstBloodBank;
         public IEnumerable<IWebElement> Rows;
         public IWebElement Table;
         public IWebElement SingleElement;

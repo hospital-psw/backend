@@ -1,19 +1,19 @@
 ﻿namespace IntegrationAPITest.E2ETests.Tests
 {
+    using IntegrationAPITest.E2ETests.Pages;
+    using IntegrationAPITest.MockData;
+    using IntegrationAPITest.Setup;
+    using IntegrationLibrary.Settings;
+    using Microsoft.Extensions.DependencyInjection;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Chrome;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using IntegrationAPITest.E2ETests.Pages;
-    using IntegrationAPITest.MockData;
-    using IntegrationLibrary.Settings;
-    using Microsoft.Extensions.DependencyInjection;
-    using OpenQA.Selenium.Chrome;
-    using WebDriverManager.DriverConfigs.Impl;
     using WebDriverManager;
-    using IntegrationAPITest.Setup;
-    using OpenQA.Selenium;
+    using WebDriverManager.DriverConfigs.Impl;
 
     public class CheckBloodTypeAndAmount : IDisposable
     {
@@ -66,7 +66,7 @@
         [Fact]
         public void Check_APositive_BloodType_Amount_1()
         {
-            
+
             var bloodbankdetails = new BloodBankDetailsPage(driver);
             bloodbankdetails.EnsurePageIsDisplayed();
             Thread.Sleep(2000);

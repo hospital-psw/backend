@@ -55,7 +55,7 @@
             bloodBanksPage.Rows.ElementAt(2).Click();
 
             bloodBankDetailsPage = new Pages.BloodBankDetailsPage(driver);
-            bloodBankDetailsPage.ShowConfig.Click(); 
+            bloodBankDetailsPage.ShowConfig.Click();
             bloodBankDetailsPage.EnsureConfigIsDisplayed();
 
         }

@@ -16,7 +16,7 @@
         private Pages.MenuPage menuPage;
         private Pages.ReconsiderBloodRequestPage reconsiderBloodRequestPage;
 
-        public ReconsiderBloodRequest() 
+        public ReconsiderBloodRequest()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");            // open Browser in maximized mode

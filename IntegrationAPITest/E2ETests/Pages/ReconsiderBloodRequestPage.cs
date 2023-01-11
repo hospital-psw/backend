@@ -11,8 +11,8 @@
     {
         private readonly IWebDriver _driver;
         public const string URI = "http://localhost:4200/app/blood-request-view";
-    
-        public ReconsiderBloodRequestPage(IWebDriver driver) 
+
+        public ReconsiderBloodRequestPage(IWebDriver driver)
         {
             _driver = driver;
         }
@@ -20,7 +20,7 @@
         public void EnsurePageIsDisplayed()
         {
 
-        }    
+        }
 
     }
 }

@@ -68,7 +68,7 @@
                 {
                     SaveReport = _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/fieldset[1]/div/div[4]/button"));
                     Frequent = _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/fieldset[1]/div/div[1]/mat-form-field/div/div[1]/div/input"));
-                    return SaveReport != null && Frequent !=null;
+                    return SaveReport != null && Frequent != null;
                 }
                 catch (StaleElementReferenceException)
                 {
