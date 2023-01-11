@@ -155,10 +155,10 @@
                 return Ok(JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth));
             }
         }
-        [HttpGet]
-        public IActionResult GenerateReport()
+        [HttpPost("generate-report")]
+        public IActionResult GenerateReport([FromBody] RangeDTO range)
         {
-            return base.Content(_statisticsService.GenerateHTMLReport(new DateTime(2022, 10,1), new DateTime(2022, 12, 31)), "text/html");
+            return base.Content(_statisticsService.GenerateHTMLReport(range.start, range.end), "text/html");
         }
     }
 }
