@@ -7,7 +7,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BloodAddition: Entity
+    public class BloodAddition : Entity
     {
         public DateTime Date { get; set; }
         public BloodType BloodType { get; set; }
@@ -15,7 +15,7 @@
 
         public BloodAddition() { }
 
-        public BloodAddition(DateTime date,BloodType bloodType, int amount) 
+        public BloodAddition(DateTime date, BloodType bloodType, int amount)
         {
             Date = date;
             BloodType = bloodType;

@@ -9,7 +9,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IBloodAdditionRepository : IBaseRepository<BloodAddition> 
+    public interface IBloodAdditionRepository : IBaseRepository<BloodAddition>
     {
 
         public IEnumerable<BloodAddition> GetByBloodType(BloodType bloodType);
