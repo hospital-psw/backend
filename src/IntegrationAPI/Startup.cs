@@ -105,10 +105,15 @@ namespace IntegrationAPI
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IUrgentBloodTransferService, UrgentBloodTransferService>();
+            services.AddScoped<IUrgentBloodTransferStatisticsService, UrgentBloodTransferStatisticsService>();
+            services.AddScoped<ITenderStatisticsService, TenderStatisticsService>();
 
+            services.AddScoped<IHTMLReportService, HTMLReportService>();
             services.AddScoped<ITokenHelper, TokenHelper>();
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<IBBConnections, BBConnections>();
+            services.AddScoped<ISFTPService, SFTPService>();
+
             services.AddMjmlServices(o =>
             {
                 o.DefaultKeepComments = true;

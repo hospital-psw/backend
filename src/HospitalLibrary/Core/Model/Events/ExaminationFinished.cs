@@ -9,11 +9,13 @@
 
     public class ExaminationFinished : DomainEvent
     {
+        public int UserId { get; set; }
         public int FinishedAnamnesisId { get; set; }
 
-        public ExaminationFinished(int aggregateId, DateTime timeStamp, string eventName, int finishedAnamnesisId) : base(aggregateId, timeStamp, eventName)
+        public ExaminationFinished(int aggregateId, DateTime timeStamp, string eventName, int finishedAnamnesisId, int userId) : base(aggregateId, timeStamp, eventName)
         {
             FinishedAnamnesisId = finishedAnamnesisId;
+            UserId = userId;
         }
     }
 }

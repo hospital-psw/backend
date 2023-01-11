@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.Blood
 {
+    using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.Model.Blood;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
@@ -46,6 +47,15 @@
         public BloodUnit GetByBloodType(BloodType bloodType)
         {
             return _unitOfWork.BloodUnitRepository.GetByBloodType(bloodType);
+        }
+
+        public BloodUnit UpdateBloodUnit(BloodUnitDTO dto)
+        {
+            BloodUnit bloodUnit = _unitOfWork.BloodUnitRepository.GetByBloodType(dto.BloodType);
+            bloodUnit.Amount += dto.Amount;
+            _unitOfWork.BloodUnitRepository.Update(bloodUnit);
+            _unitOfWork.Save();
+            return bloodUnit;
         }
     }
 }

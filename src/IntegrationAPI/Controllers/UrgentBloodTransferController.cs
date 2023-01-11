@@ -1,6 +1,6 @@
 ﻿namespace IntegrationAPI.Controllers
 {
-    using grpcServices;
+    using IntegrationAPI.DTO.UrgentBloodTransfer;
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
     using IntegrationLibrary.UrgentBloodTransfer.Model;
     using Microsoft.AspNetCore.Http;
@@ -11,10 +11,12 @@
     public class UrgentBloodTransferController : Controller
     {
         private readonly IUrgentBloodTransferService _service;
+        private readonly IUrgentBloodTransferStatisticsService _statisticsService;
 
-        public UrgentBloodTransferController(IUrgentBloodTransferService service)
+        public UrgentBloodTransferController(IUrgentBloodTransferService service, IUrgentBloodTransferStatisticsService statisticsService)
         {
             _service = service;
+            _statisticsService = statisticsService;
         }
 
         [HttpPost]
@@ -28,6 +30,14 @@
             {
                 return NoContent();
             }
+        }
+
+        [HttpPost("report")]
+        public IActionResult GenerateReport(GenerateReportDTO reportParams)
+        {
+            var report = _statisticsService.GenerateHTMLReport(reportParams.Start, reportParams.End, reportParams.SendEmail);
+            report.Position = 0;
+            return new FileStreamResult(report, "application/pdf");
         }
     }
 }

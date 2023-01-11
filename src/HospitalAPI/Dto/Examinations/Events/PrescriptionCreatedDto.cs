@@ -12,8 +12,8 @@
 
         }
 
-        public PrescriptionCreatedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, NewPrescriptionDto newPrescription)
-            : base(aggregateId, eventType, timeStamp)
+        public PrescriptionCreatedDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, NewPrescriptionDto newPrescription, int userId)
+            : base(aggregateId, eventType, timeStamp, userId)
         {
             NewPrescription = newPrescription;
         }

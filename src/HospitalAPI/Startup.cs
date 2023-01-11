@@ -121,6 +121,7 @@ namespace HospitalAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IExaminationEventService, ExaminationEventService>();
             services.AddScoped<IAppointmentSchedulingService, AppointmentSchedulingService>();
+            services.AddScoped<IExaminationStatisticsService, ExaminationStatisticsService>();
 
             services.AddScoped<IConnections, Connections>();
 

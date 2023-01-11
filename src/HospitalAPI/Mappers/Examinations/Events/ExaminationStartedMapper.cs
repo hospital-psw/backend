@@ -7,7 +7,7 @@
     {
         public static ExaminationStarted DtoToEntity(ExaminationStartedDto dto)
         {
-            return new ExaminationStarted(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.AppointmentId);
+            return new ExaminationStarted(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.AppointmentId, dto.UserId);
         }
     }
 }

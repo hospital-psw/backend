@@ -1333,12 +1333,18 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.ToTable("DescriptionCreatedEvents", (string)null);
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Events.ExaminationEvent", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.ToTable("ExaminationEvents", (string)null);
                 });
@@ -1350,6 +1356,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("FinishedAnamnesisId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.ToTable("ExaminationFinishedEvents", (string)null);
                 });
 
@@ -1358,6 +1367,9 @@ namespace HospitalLibrary.Migrations
                     b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
 
                     b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.ToTable("ExaminationStartedEvents", (string)null);
@@ -1379,6 +1391,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.ToTable("PrescriptionCreatedEvents", (string)null);
                 });
 
@@ -1387,6 +1402,9 @@ namespace HospitalLibrary.Migrations
                     b.HasBaseType("HospitalLibrary.Core.Infrastucture.DomainEvent");
 
                     b.Property<int>("PrescriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.ToTable("PrescriptionRemovedEvents", (string)null);
@@ -1498,6 +1516,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("SymptomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.ToTable("SymptomsChangedEvents", (string)null);

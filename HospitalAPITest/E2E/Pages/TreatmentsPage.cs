@@ -40,6 +40,16 @@
 
         private IEnumerable<IWebElement> Patients;
 
+        private IWebElement PatientsListDiv;
+
+        private IWebElement RoomsListDiv;
+
+        private IEnumerable<IWebElement> MatSelects;
+
+        private IWebElement Dialogue;
+
+
+
         public TreatmentsPage(IWebDriver driver)
         {
             this.driver = driver;
@@ -69,27 +79,55 @@
 
         public void SelectPatient()
         {
-            PatientsDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-4\"]"));
-            driver.ExecuteJavaScript("arguments[0].click();", PatientsDiv);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-            SelectedPatient = wait.Until(e => e.FindElement(By.XPath("//*[@id=\"mat-option-7\"]")));
+
+            SelectPatientsDiv();
+
+            //PatientsDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-value-13\"]"));
+            //PatientsDiv.Click();
+            //PatientsDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-4\"]"));
+            //driver.ExecuteJavaScript("arguments[0].click();", PatientsDiv);
+
+
+
+            EnsurePatientsListIsDisplayed();
+            PatientsListDiv = driver.FindElement(By.Id("cdk-overlay-1"));
+            IEnumerable<IWebElement> patients = PatientsListDiv.FindElements(By.TagName("mat-option"));
+            patients.First().Click();
+
+            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            //SelectedPatient = wait.Until(e => e.FindElement(By.XPath("//*[@id=\"mat-option-7\"]")));
 
             //Patients = PatientsDiv.FindElement(By.TagName("mat-option"));
-            driver.ExecuteJavaScript("arguments[0].click();", SelectedPatient);
+            //driver.ExecuteJavaScript("arguments[0].click();", SelectedPatient);
         }
 
         public void SelectRoom()
         {
-            RoomDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-6\"]"));
+            EnsureDialogueIsDisplayed();
+
+            //RoomDiv = driver.FindElement(By.XPath("//*[@id=\"mat-select-6\"]"));
+
+            IWebElement outterDiv = driver.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div"));
+            MatSelects = outterDiv.FindElements(By.TagName("mat-select"));
+            EnsureMatSelectsAreAssigned();
+
+            RoomDiv = MatSelects.ElementAt(1);
             driver.ExecuteJavaScript("arguments[0].click();", RoomDiv);
-            SelectedRoom = driver.FindElement(By.XPath("//*[@id=\"mat-option-20\"]"));
-            driver.ExecuteJavaScript("arguments[0].click();", SelectedRoom);
+
+
+
+            //SelectedRoom = driver.FindElement(By.XPath("//*[@id=\"mat-option-20\"]"));
+            //driver.ExecuteJavaScript("arguments[0].click();", SelectedRoom);
+
+            RoomsListDiv = driver.FindElement(By.Id("cdk-overlay-2"));
+            IEnumerable<IWebElement> rooms = RoomsListDiv.FindElements(By.TagName("mat-option"));
+            rooms.First().Click();
         }
 
         public void FillReason()
         {
             TextAreaSelect = driver.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div/app-dialog-content-component/div/div[1]/textarea"));
-            TextAreaSelect.SendKeys("Pacijent je dosao sa polomljenom nogom");
+            TextAreaSelect.SendKeys("Pacijent je dosao sa polomljenom nogom i polomljenom lobanjom");
         }
 
         public void CloseDialog()
@@ -181,5 +219,110 @@
                 }
             });
         }
+
+        public void SelectPatientsDiv()
+        {
+            EnsureDialogueIsDisplayed();
+            Dialogue = driver.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div"));
+
+            EnsureMatSelectsAreAssigned();
+
+            MatSelects = Dialogue.FindElements(By.TagName("mat-select"));
+
+
+            Thread.Sleep(1000);
+
+
+
+            EnsureMatSelectsFirstIsAssigned();
+
+            MatSelects.First().Click();
+            driver.ExecuteJavaScript("arguments[0].click();", MatSelects.First());
+
+        }
+
+        public void EnsureDialogueIsDisplayed()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return driver.FindElement(By.XPath("//*[@id=\"mat-dialog-0\"]/app-create-dialog-component/div")) != null;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public void EnsurePatientsListIsDisplayed()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return driver.FindElement(By.Id("cdk-overlay-1")) != null;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public void EnsureMatSelectsAreAssigned()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return Dialogue.FindElements(By.TagName("mat-select")) != null;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public void EnsureMatSelectsFirstIsAssigned()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return MatSelects.First() != null;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+
+
     }
+
 }

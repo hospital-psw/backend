@@ -7,8 +7,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class UrgentBloodTransferRepository : IUrgentBloodTransferRepository
     {
@@ -41,12 +39,12 @@
 
         public UrgentBloodTransfer Get(UrgentBloodTransfer entity)
         {
-            return _context.Set<UrgentBloodTransfer>().Where(x => x == entity).FirstOrDefault();
+            return _context.Set<UrgentBloodTransfer>().Where(x => x == entity).Include(x => x.Sender).FirstOrDefault();
         }
 
         public IEnumerable<UrgentBloodTransfer> GetAll()
         {
-            return _context.Set<UrgentBloodTransfer>().ToList();
+            return _context.Set<UrgentBloodTransfer>().Include(x => x.Sender).ToList();
         }
 
         public void Update(UrgentBloodTransfer entity)

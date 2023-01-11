@@ -6,6 +6,8 @@
     public class ExaminationEventDto
     {
         [Required]
+        public int UserId { get; set; }
+        [Required]
         public int AggregateId { get; set; }
 
         [Required]
@@ -16,11 +18,12 @@
 
         public ExaminationEventDto() { }
 
-        public ExaminationEventDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp)
+        public ExaminationEventDto(int aggregateId, ExaminationEventType eventType, DateTime timeStamp, int userId)
         {
             AggregateId = aggregateId;
             EventType = eventType;
             TimeStamp = timeStamp;
+            UserId = userId;
         }
     }
 }

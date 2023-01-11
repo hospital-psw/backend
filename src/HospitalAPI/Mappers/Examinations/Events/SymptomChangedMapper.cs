@@ -8,7 +8,7 @@
     {
         public static SymptomsChanged DtoToEntity(SymptomsChangedDto dto)
         {
-            return new SymptomsChanged(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.SymptomId, dto.Status);
+            return new SymptomsChanged(dto.AggregateId, dto.TimeStamp, dto.EventType.ToString(), dto.SymptomId, dto.Status, dto.UserId);
         }
     }
 }

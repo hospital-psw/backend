@@ -2,6 +2,7 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Statistics;
+    using HospitalLibrary.Core.DTO.ExaminationStatistics;
     using HospitalLibrary.Core.DTO.RenovationRequest;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service;
@@ -18,10 +19,12 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
+        private readonly IExaminationStatisticsService _examinationStatisticsService;
 
-        public StatisticalController(IStatisticsService statisticsService)
+        public StatisticalController(IStatisticsService statisticsService, IExaminationStatisticsService examinationStatisticsService)
         {
             _statisticsService = statisticsService;
+            _examinationStatisticsService = examinationStatisticsService;
         }
 
         [HttpGet("getStats")]
@@ -102,5 +105,82 @@
             List<RenovationStatisticDto> dto = _statisticsService.GetTimeSpentPerStep();
             return Ok(dto);
         }
+
+        [HttpPost("getOptionalDoctorStats")]
+        public IActionResult GetOptionalDoctorAppointmentsStatistics(DoctorOptionalStatisticDto dto)
+        {
+            return Ok(_statisticsService.GetNumberOfDoctorAppointmentsInOptionalTimeRange(dto.DoctorId, dto.Start, dto.End));
+        }
+
+        [HttpGet("examination/average-duration")]
+        public IActionResult GetAverageExaminationDuration()
+        {
+            AverageDurationDto dto = _examinationStatisticsService.CalculateAverageExaminationDuration();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
+        }
+
+        [HttpGet("examinaton/average-steps")]
+        public IActionResult GetAverageExaminationSteps()
+        {
+            return Ok(_examinationStatisticsService.CalculateAverageSteps());
+        }
+
+        [HttpGet("examination/average-prescriptions")]
+        public IActionResult GetAverageExaminationPrescriptions()
+        {
+            return Ok(_examinationStatisticsService.CalculateAveragePrescriptions());
+        }
+
+        [HttpGet("examination/symptom-count")]
+        public IActionResult GetExaminationSymptomFrequency()
+        {
+            AverageSymptomsDto dto = _examinationStatisticsService.CalculateSymptomsAverageFrequence();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
+        }
+
+        [HttpGet("examination/average-back-steps")]
+        public IActionResult GetAverageBackSteps()
+        {
+            AverageBackStepsDto dto = _examinationStatisticsService.CalculateAverageNumberOfBackSteps();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
+        }
+
+        [HttpGet("examination/specialization/average-duration")]
+        public IActionResult GetAverageDurationBySpecialization()
+        {
+            AverageSpecializationDurationDto dto = _examinationStatisticsService.CalculateAverageExaminationDurationBySpec();
+
+            if (dto == null)
+            {
+                NoContent();
+            }
+
+            return Ok(dto);
+        }
+
+        [HttpGet("examination/data")]
+        public IActionResult GetExaminatonData()
+        {
+            return Ok(_examinationStatisticsService.GetExaminationData());
+        }
+
     }
 }

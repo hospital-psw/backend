@@ -9,10 +9,12 @@
 
     public class DescriptionCreated : DomainEvent
     {
+        public int UserId { get; set; }
         public string Description { get; set; }
-        public DescriptionCreated(int aggregateId, DateTime timeStamp, string eventName, string description) : base(aggregateId, timeStamp, eventName)
+        public DescriptionCreated(int aggregateId, DateTime timeStamp, string eventName, string description, int userId) : base(aggregateId, timeStamp, eventName)
         {
             Description = description;
+            UserId = userId;
         }
     }
 }
