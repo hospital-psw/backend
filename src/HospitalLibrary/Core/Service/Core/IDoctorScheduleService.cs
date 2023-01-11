@@ -15,5 +15,7 @@
         IEnumerable<DoctorSchedule> GetAll();
         IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto);
         Consilium TryToScheduleConsilium(ScheduleConsiliumDto dto);
+
+        DoctorSchedule GetDoctorsSchedule(int id);
     }
 }

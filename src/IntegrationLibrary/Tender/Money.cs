@@ -14,5 +14,15 @@
             money.Amount += Amount;
             return money;
         }
+
+        public virtual bool Equals(Money other)
+        {
+            return this.Currency.Equals(other.Currency) && this.Amount == other.Amount;
+        }
+
+        override public int GetHashCode()
+        {
+            return this.Currency.GetHashCode() + this.Amount.GetHashCode();
+        }
     }
 }

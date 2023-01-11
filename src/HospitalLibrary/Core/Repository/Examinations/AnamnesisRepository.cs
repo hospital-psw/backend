@@ -31,6 +31,7 @@
                                               .Include(x => x.Symptoms)
                                               .Include(x => x.Prescriptions)
                                               .ThenInclude(x => x.Medicament)
+                                              .Include(x => x.Changes)
                                               .Where(x => !x.Deleted);
         }
 
@@ -59,6 +60,16 @@
             return GetAll().FirstOrDefault(x => x.Appointment.Id == id);
         }
 
+        public Anamnesis GetUnfinishedAnamnesis(int id)
+        {
+            return GetAll().FirstOrDefault(x => x.Id == id && !x.Appointment.IsDone);
+        }
+
+        public Anamnesis GetUnfinishedAnamnesisByAppointment(int appointmentId)
+        {
+            return GetAll().FirstOrDefault(x => x.Appointment.Id == appointmentId && !x.Appointment.IsDone);
+        }
+
         public IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(string criteria)
         {
             return GetAll()
@@ -68,6 +79,11 @@
                     || x.Description.ToUpper().Contains(criteria.ToUpper())
                     || x.Symptoms.Exists(s => s.Name.ToUpper().Contains(criteria.ToUpper())))
                     ).ToList();
+        }
+
+        public IEnumerable<Anamnesis> GetAllFinishedAnamneses()
+        {
+            return GetAll().Where(x => x.Appointment.IsDone).ToList();
         }
     }
 }

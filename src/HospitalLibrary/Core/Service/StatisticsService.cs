@@ -368,26 +368,13 @@
 
         public List<double> GetAverageNumberOfRenovationSteps()
         {
-            List<double> retList = ListFactory.CreateList<double>(0, 0);
-            int renovations2022 = 0;
-            int renovations2023 = 0;
-            foreach (RenovationRequest request in _renovationService.GetAllSuccessfulAggregates())
+            List<double> retList = new List<double>();
+            var list = _renovationService.GetAllSuccessfulAggregates().GroupBy(r => new { ID = r.DateCreated.Year })
+                .Select(g => new { Average = g.Average(p => p.Changes.Count), ID = g.Key.ID });
+            foreach (var r in list)
             {
-
-                if (request.DateCreated.Year == 2021)
-                {
-                    renovations2022++;
-                    retList[0] += request.Changes.Count;
-                }
-                else if (request.DateCreated.Year == 2022)
-                {
-                    renovations2023++;
-                    retList[1] += request.Changes.Count;
-                }
+                retList.Add(r.Average);
             }
-
-            if (renovations2022 > 0) retList[0] = retList[0] / renovations2022;
-            if (renovations2023 > 0) retList[1] = retList[1] / renovations2023;
             return retList;
         }
 
@@ -500,6 +487,60 @@
                 }
             }
             return duration;
+        }
+
+        public List<int> GetNumberOfDoctorAppointmentsInOptionalTimeRange(int doctorId, DateTime start, DateTime end)
+        {
+            try
+            {
+                List<int> retList = new List<int>();
+                if ((end - start).TotalDays < 32)
+                {
+                    retList = CalculateForDays(doctorId, start, end);
+                }
+                else
+                {
+                    retList = CalculateForMonths(doctorId, start, end);
+                }
+                return retList;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private List<int> CalculateForDays(int doctorId, DateTime start, DateTime end)
+        {
+            List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAppointmentsForDoctorInDateRange(doctorId, start, end).ToList();
+            List<int> retList = new List<int>();
+            for (int i = 0; i <= (int)(end - start).TotalDays; i++)
+            {
+                retList.Add(0);
+            }
+            foreach (Appointment a in appointments)
+            {
+                int index = (int)(a.Date - start).TotalDays;
+                retList[index] = retList[index] + 1;
+            }
+            return retList;
+        }
+
+        private List<int> CalculateForMonths(int doctorId, DateTime start, DateTime end)
+        {
+            List<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAppointmentsForDoctorInDateRange(doctorId, start, end).ToList();
+            List<int> retList = new List<int>();
+            int months = Math.Abs((end.Month - start.Month) + 12 * (end.Year - start.Year));
+            for (int i = 0; i <= months; i++)
+            {
+                retList.Add(0);
+            }
+            foreach (Appointment a in appointments)
+            {
+                int index = a.Date.Month - start.Month;
+                retList[index] = retList[index] + 1;
+            }
+            return retList;
         }
     }
 }
