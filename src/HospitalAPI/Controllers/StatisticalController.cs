@@ -18,10 +18,12 @@
     public class StatisticalController : ControllerBase
     {
         private readonly IStatisticsService _statisticsService;
+        private readonly IExaminationStatisticsService _examinationStatisticsService;
 
-        public StatisticalController(IStatisticsService statisticsService)
+        public StatisticalController(IStatisticsService statisticsService, IExaminationStatisticsService examinationStatisticsService)
         {
             _statisticsService = statisticsService;
+            _examinationStatisticsService = examinationStatisticsService;
         }
 
         [HttpGet("getStats")]
@@ -112,7 +114,7 @@
         [HttpGet("examination/average-duration")]
         public IActionResult GetAverageExaminationDuration()
         {
-            return Ok();
+            return Ok(_examinationStatisticsService.CalculateAverageExaminationDuration());
         }
 
         [HttpGet("examinaton/average-steps")]
