@@ -9,12 +9,14 @@
         private readonly IWebDriver _driver;
         public const string URI = "http://localhost:4200/app/bloodbank/46/detail";
 
-        public IWebElement BloodType => _driver.FindElement(By.Id("bloodtype"));
-        public IWebElement BloodAmount => _driver.FindElement(By.Id("bloodamount"));
-        public IWebElement APositive => _driver.FindElement(By.XPath("html/body/app-root/div[2]/div[2]/div/div/mat-option"));
+        public IWebElement BloodType => _driver.FindElement(By.XPath("//*[@id=\"mat-select-6\"]"));
+        public IWebElement BloodAmount => _driver.FindElement(By.XPath("//*[@id=\"bloodamount\"]"));
+        public IWebElement APositive => _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div/div/mat-option[1]/span"));
         public IWebElement ToastPopup => _driver.FindElement(By.XPath("//div[@class='toast-message']"));
 
         public IWebElement ShowConfig => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[1]/p"));
+        public IWebElement CheckBloodAmountButton => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/div/div/div[2]/button/span[1]"));
+        public IWebElement ResponseLabel => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/div/div/div[2]/div/label"));
         public IWebElement Frequent;
         public IWebElement SaveReport;
         public IWebElement toast;

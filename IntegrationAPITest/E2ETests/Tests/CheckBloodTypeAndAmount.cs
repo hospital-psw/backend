@@ -53,7 +53,8 @@
             bloodBanksPage.EnsureTableDispley();
             bloodBanksPage.EnsureDataIsFetched();
 
-            bloodBanksPage.Rows.ElementAt(2).Click();
+            // click the Mock-ISA-BB bloodbank
+            bloodBanksPage.Rows.ElementAt(4).Click();
 
         }
         public void Dispose()
@@ -68,10 +69,16 @@
             
             var bloodbankdetails = new BloodBankDetailsPage(driver);
             bloodbankdetails.EnsurePageIsDisplayed();
+            Thread.Sleep(2000);
             bloodbankdetails.BloodType.Click();
+            Thread.Sleep(2000);
             bloodbankdetails.APositive.Click();
+            Thread.Sleep(2000);
             bloodbankdetails.BloodAmount.SendKeys("1");
-            Assert.True(bloodbankdetails.EnsureToastrPopup());
+            Thread.Sleep(2000);
+            bloodbankdetails.CheckBloodAmountButton.Click();
+            Thread.Sleep(2000);
+            Assert.True(bloodbankdetails.ResponseLabel.Displayed);
 
             Dispose();
         }
