@@ -128,16 +128,16 @@
         [HttpGet("examinaton/average-steps")]
         public IActionResult GetAverageExaminationSteps()
         {
-            return Ok();
+            return Ok(_examinationStatisticsService.CalculateAverageSteps());
         }
 
         [HttpGet("examination/average-prescriptions")]
         public IActionResult GetAverageExaminationPrescriptions()
         {
-            return Ok();
+            return Ok(_examinationStatisticsService.CalculateAveragePrescriptions());
         }
 
-        [HttpGet("examination/symptom-frequency")]
+        [HttpGet("examination/symptom-count")]
         public IActionResult GetExaminationSymptomFrequency()
         {
             AverageSymptomsDto dto = _examinationStatisticsService.CalculateSymptomsAverageFrequence();
@@ -174,6 +174,12 @@
             }
 
             return Ok(dto);
+        }
+
+        [HttpGet("examination/data")]
+        public IActionResult GetExaminatonData()
+        {
+            return Ok(_examinationStatisticsService.GetExaminationData());
         }
 
     }

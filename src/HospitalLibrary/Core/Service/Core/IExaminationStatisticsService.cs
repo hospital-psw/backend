@@ -11,8 +11,19 @@
     public interface IExaminationStatisticsService
     {
         AverageDurationDto CalculateAverageExaminationDuration();
+
+        List<ExaminationDataDto> GetExaminationData();
+
+        AverageStepsDto CalculateAverageSteps();
+
+        AveragePrescriptionsDto CalculateAveragePrescriptions();
+
+        List<SymptomDataDto> GetSymptomStats();
+
         AverageBackStepsDto CalculateAverageNumberOfBackSteps();
+
         AverageSpecializationDurationDto CalculateAverageExaminationDurationBySpec();
+
         AverageSymptomsDto CalculateSymptomsAverageFrequence();
     }
 }
