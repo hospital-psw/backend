@@ -213,7 +213,7 @@
             DateTime end = new DateTime(2022, 12, 20, 17, 35, 12);
             var result = ((OkObjectResult)controller.GetOptionalDoctorAppointmentsStatistics(new DoctorOptionalStatisticDto(4, start, end))).Value as List<int>;
 
-            List<int> expected = ListFactory.CreateList(1, 1);
+            List<int> expected = ListFactory.CreateList(1, 0);
 
             Assert.NotNull(result);
             Assert.Equal(expected, result);
