@@ -107,7 +107,7 @@
         {
             if (list == null || list.Count == 0)
             {
-                return "[]";    
+                return "[]";
             }
             string output = "[";
             foreach (string item in list)
@@ -129,7 +129,7 @@
 
         public void AddTimestamp(DateTime from, DateTime to)
         {
-            OutputFile = OutputFile.Replace(DATE_SPAN_WILDCARD, DateTime.Now.ToShortDateString() + " and " + DateTime.Now.ToShortDateString());
+            OutputFile = OutputFile.Replace(DATE_SPAN_WILDCARD, from.ToShortDateString() + " and " + to.ToShortDateString());
         }
     }
 }

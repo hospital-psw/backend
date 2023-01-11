@@ -4,6 +4,7 @@
     using IntegrationLibrary.UrgentBloodTransfer.Model;
     using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
+    using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -15,23 +16,25 @@
         private readonly IHTMLReportService _htmlReportService;
         private readonly ISFTPService _sftpService;
         private readonly IMailSender _mailSender;
+        private readonly IConfiguration _configuration;
 
-        public UrgentBloodTransferStatisticsService(IUrgentBloodTransferService urgentBloodTransferService, IHTMLReportService htmlReportService, ISFTPService sftpService, IMailSender mailSender)
+        public UrgentBloodTransferStatisticsService(IUrgentBloodTransferService urgentBloodTransferService, IHTMLReportService htmlReportService, ISFTPService sftpService, IMailSender mailSender, IConfiguration configuration)
         {
             _urgentBloodTransferService = urgentBloodTransferService;
             _htmlReportService = htmlReportService;
             _sftpService = sftpService;
             _mailSender = mailSender;
+            _configuration = configuration;
         }
 
-        public string GenerateHTMLReport(DateTime from, DateTime to)
+        public Stream GenerateHTMLReport(DateTime from, DateTime to, bool sendEmail)
         {
-            Dictionary<string,double> bbShare = GetBloodBankShare(from, to);
-            Dictionary<string, double>  btShare = GetBloodTypeShare(from, to);
+            Dictionary<string, double> bbShare = GetBloodBankShare(from, to);
+            Dictionary<string, double> btShare = GetBloodTypeShare(from, to);
             Dictionary<string, double> btAmount = GetAmountByBloodUnit(from, to);
             Dictionary<string, Dictionary<string, double>> bloodBanks = GetAmountByBloodBankByBloodGroup(from, to);
             List<List<string>> convertedBloodBanks = ConvertNestedDictionaryToLists(bloodBanks);
-            _htmlReportService.AddTable(new List<string>(new string[] {"Blood bank", "Blood type", "Amount"}), convertedBloodBanks);
+            _htmlReportService.AddTable(new List<string>(new string[] { "Blood bank", "Blood type", "Amount" }), convertedBloodBanks);
             _htmlReportService.AddPieChart(new List<string>(bbShare.Keys), new List<double>(bbShare.Values));
             _htmlReportService.AddPieChart(new List<string>(btShare.Keys), new List<double>(btShare.Values));
             _htmlReportService.AddBarChart(new List<string>(btAmount.Keys), new List<double>(btAmount.Values));
@@ -39,9 +42,12 @@
 
             var reportFile = PdfSharpConvert(_htmlReportService.OutputFile);
             _sftpService.SendFile(reportFile);
-            string template = MailSender.MakeUrgentBloodRequestTemplate();
-            _mailSender.SendEmail(template, "Urgent blood transfer report", "psw.hospital.2022@gmail.com", reportFile);
-            return _htmlReportService.OutputFile;
+            if (sendEmail)
+            {
+                string template = MailSender.MakeUrgentBloodRequestTemplate();
+                _mailSender.SendEmail(template, "Urgent blood transfer report", _configuration["ManagerEmail"], reportFile);
+            }
+            return reportFile;
         }
 
 
@@ -51,7 +57,7 @@
             Renderer.RenderingOptions.MarginLeft = 0;
             Renderer.RenderingOptions.MarginRight = 0;
             Renderer.RenderingOptions.MarginTop = 0;
-            Renderer.RenderingOptions.MarginBottom= 0;
+            Renderer.RenderingOptions.MarginBottom = 0;
             Renderer.RenderingOptions.EnableJavaScript = true;
             var pdf = Renderer.RenderHtmlAsPdf(html);
             return pdf.Stream;
@@ -77,18 +83,18 @@
 
         private List<UrgentBloodTransfer> RequestsInRange(DateTime from, DateTime to)
         {
-            return _urgentBloodTransferService.GetAll().Where(x =>  from <= x.DateCreated && x.DateCreated <= to && x.Sender != null).ToList();
+            return _urgentBloodTransferService.GetAll().Where(x => from <= x.DateCreated && x.DateCreated <= to && x.Sender != null).ToList();
         }
 
         private Dictionary<string, double> NormalizeDictionary(Dictionary<string, double> dictionary)
         {
             double valueSum = 0;
-            foreach(var element in dictionary)
+            foreach (var element in dictionary)
             {
                 valueSum += element.Value;
             }
             Dictionary<string, double> result = new Dictionary<string, double>();
-            foreach(var element in dictionary)
+            foreach (var element in dictionary)
             {
                 result[element.Key] = element.Value / valueSum;
             }
@@ -97,12 +103,12 @@
         public Dictionary<string, Dictionary<string, double>> GetAmountByBloodBankByBloodGroup(DateTime from, DateTime to)
         {
             Dictionary<string, Dictionary<string, double>> bloodBanks = new Dictionary<string, Dictionary<string, double>>();
-            foreach(UrgentBloodTransfer request in RequestsInRange(from, to))
+            foreach (UrgentBloodTransfer request in RequestsInRange(from, to))
             {
                 if (bloodBanks.ContainsKey(request.Sender.Name))
                 {
                     var bloodBank = bloodBanks[request.Sender.Name];
-                    if(bloodBank.ContainsKey(request.BloodType.ToString()))
+                    if (bloodBank.ContainsKey(request.BloodType.ToString()))
                     {
                         bloodBank[request.BloodType.ToString()] += request.Amount;
                     }
@@ -124,9 +130,9 @@
         public Dictionary<string, double> GetAmountByBloodUnit(DateTime from, DateTime to)
         {
             Dictionary<string, double> bloodTypes = new Dictionary<string, double>();
-            foreach(UrgentBloodTransfer request in RequestsInRange(from, to))
+            foreach (UrgentBloodTransfer request in RequestsInRange(from, to))
             {
-                if(bloodTypes.ContainsKey(request.BloodType.ToString()))
+                if (bloodTypes.ContainsKey(request.BloodType.ToString()))
                 {
                     bloodTypes[request.BloodType.ToString()] += request.Amount;
                 }

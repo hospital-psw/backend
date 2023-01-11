@@ -11,7 +11,7 @@
 
     public class UrgentBloodStatisticsTest
     {
-        private UrgentBloodTransferStatisticsService SetupService() 
+        private UrgentBloodTransferStatisticsService SetupService()
         {
             var service = new Mock<IUrgentBloodTransferService>();
             service.Setup(x => x.GetAll()).Returns(
@@ -58,7 +58,7 @@
             expectedResult_BloodBank2.Add("Ominus", 7);
             result["Blood bank 1"].ShouldBe(expectedResult_BloodBank1);
             result["Blood bank 2"].ShouldBe(expectedResult_BloodBank2);
-        }        
+        }
 
         [Fact]
         public void GetAmountByBloodBankByBloodGroup_ShouldReturn_EmptyDictionary()
