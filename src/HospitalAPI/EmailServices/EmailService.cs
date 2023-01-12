@@ -73,7 +73,7 @@
                     {"token", token },
                     {"email", email }
                 };
-                
+
                 var callback = QueryHelpers.AddQueryString(_configuration.CallbackURLs.ConfirmEmail, param);
                 string body = $"<p>Please confirm your email by <a href='{callback}'>clicking here</a></p>";
                 MailMessage mailMessage = CreateActivationEmail(body, "Confirm your email", email);
@@ -118,7 +118,7 @@
         }
 
         //ForgotPasswordMail
-        public async Task SendPasswordResetEmail(string email, string clientURL, string token) 
+        public async Task SendPasswordResetEmail(string email, string clientURL, string token)
         {
             try
             {
@@ -132,14 +132,14 @@
                 string body = $"<p>Click <a href='{callback}'>here</a> to reset your password.</p>";
                 var message = CreateEmailMessage(body, "Reset Password Token");
                 message.To.Add(email);
-                
+
                 await SendEmailMessage(message);
             }
             catch (Exception e)
             {
                 _logger.LogError($"Error in HospitalAPI EmailService in CreateActivationEmail {e.Message} in {e.StackTrace}");
             }
-        
+
         }
     }
 }

@@ -25,7 +25,7 @@
         private readonly IApplicationPatientService _patientService;
 
         public AppointmentController(IAppointmentService appointmentService,
-            IEmailService emailService, 
+            IEmailService emailService,
             IDoctorScheduleService doctorScheduleService,
             IApplicationPatientService patientService)
         {

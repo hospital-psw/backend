@@ -14,10 +14,10 @@
         public CancellationInfo(DateTime date, int canceledBy)
         {
             Date = date;
-            CanceledBy = canceledBy;    
+            CanceledBy = canceledBy;
         }
 
-        public static CancellationInfo Create(DateTime date, int canceledBy) 
+        public static CancellationInfo Create(DateTime date, int canceledBy)
         {
             return new CancellationInfo(date, canceledBy);
         }

@@ -102,7 +102,7 @@
             }
         }
 
-        public IEnumerable<Appointment> GetByPatientsId(int patientId) 
+        public IEnumerable<Appointment> GetByPatientsId(int patientId)
         {
             try
             {

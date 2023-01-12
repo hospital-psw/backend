@@ -62,25 +62,26 @@ namespace HospitalAPI
                 .AddEntityFrameworkStores<HospitalDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options => 
+            services.Configure<IdentityOptions>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>{
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = false;
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
-                        ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
-                    };
-                });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidAudience = Configuration["ProjectConfiguration:Jwt:Audience"],
+                    ValidIssuer = Configuration["ProjectConfiguration:Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
+                };
+            });
 
             //services.ConfigureApplicationCookie(options =>
             //{

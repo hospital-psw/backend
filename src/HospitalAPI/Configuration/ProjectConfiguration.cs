@@ -35,7 +35,7 @@
         public bool EnableSsl { get; set; }
     }
 
-    public class CallbackURLs 
+    public class CallbackURLs
     {
         public string ConfirmEmail { get; set; }
     }

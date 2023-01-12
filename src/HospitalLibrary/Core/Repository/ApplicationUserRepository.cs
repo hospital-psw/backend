@@ -14,7 +14,7 @@
     public class ApplicationUserRepository : BaseRepository<ApplicationUser>, IApplicationUserRepository
     {
         private readonly HospitalDbContext _context;
-        
+
         public ApplicationUserRepository(HospitalDbContext context) : base(context)
         {
             _context = context;

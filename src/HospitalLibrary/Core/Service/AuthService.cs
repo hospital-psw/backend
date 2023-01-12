@@ -105,7 +105,7 @@
             return result;
         }
 
-        public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user) 
+        public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
         {
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             return token;

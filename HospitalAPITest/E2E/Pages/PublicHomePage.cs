@@ -12,7 +12,7 @@
     {
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/app/home";
-        
+
         private IWebElement calendar => driver.FindElement(By.TagName("app-calendar"));
         private IWebElement cancelButton => driver.FindElement(By.Id("cancel"));
         private IWebElement appointment;
@@ -64,13 +64,13 @@
             });
         }
 
-        public void selectAppointment() 
+        public void selectAppointment()
         {
             appointment = driver.FindElement(By.CssSelector("call-event"));
             appointment.Click();
         }
 
-        public void cancelAppointment() 
+        public void cancelAppointment()
         {
             cancelButton.Click();
             EnsureModalDialogIsDisplayed();

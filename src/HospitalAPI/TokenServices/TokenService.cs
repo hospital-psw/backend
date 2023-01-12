@@ -21,7 +21,7 @@
         private readonly ILogger<TokenService> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public TokenService(ProjectConfiguration configuration, 
+        public TokenService(ProjectConfiguration configuration,
                             UserManager<ApplicationUser> userManager,
                             ILogger<TokenService> logger)
         {

@@ -20,7 +20,7 @@
             Street = street;
         }
 
-        public static Address Create(string city, string street) 
+        public static Address Create(string city, string street)
         {
             return new Address(city, street);
         }

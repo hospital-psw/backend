@@ -122,7 +122,7 @@
                     result.ExpiresIn = _tokenService.GetExpireInDate();
                     return Ok(result);
                 }
-                else if(loginResult.IsNotAllowed)
+                else if (loginResult.IsNotAllowed)
                 {
                     return BadRequest("Not allowed, please verify your account.");
                 }
@@ -144,7 +144,7 @@
 
         [HttpPost("reset/password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDTO dto)
-        {   
+        {
             if (!ModelState.IsValid)
                 return BadRequest();
             var user = await _authService.FindByEmailAsync(dto.Email);

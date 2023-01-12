@@ -17,7 +17,7 @@
         public AppointmentCancelationTests()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArguments("start-maximized");            
+            options.AddArguments("start-maximized");
             options.AddArguments("disable-infobars");           // disabling infobars
             options.AddArguments("--disable-extensions");       // disabling extensions
             options.AddArguments("--disable-gpu");              // applicable to windows os only
@@ -39,7 +39,7 @@
         }
 
         [Fact]
-        public void Cancel_appointment() 
+        public void Cancel_appointment()
         {
             homePage.selectAppointment();
             homePage.cancelAppointment();
