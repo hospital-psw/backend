@@ -25,7 +25,7 @@
         private static TenderController SetupController(IServiceScope serviceScope)
         {
             return new TenderController(serviceScope.ServiceProvider.GetRequiredService<ITenderService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IMapper>(), serviceScope.ServiceProvider.GetRequiredService<ITenderStatisticsService>());
         }
 
         private IntegrationDbContext SetupContext(IServiceScope scope)
@@ -135,6 +135,32 @@
 
             result.ShouldNotBe(null);
             result.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
+        }
+
+        [Fact]
+        public void Get_month_tender_money()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            SetupContext(scope);
+
+            int year = 2022;
+            var result = ((OkObjectResult)controller.GethMonthMoneyStatistics(year));
+            result.ShouldNotBe(null);
+        }
+
+        [Fact]
+        public void Get_month_tender_blood_quantity()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            SetupContext(scope);
+
+            //BloodType bloodType = BloodType.A_NEGATIVE;
+            int bloodType = 0;
+            int year = 2022;
+            var result = ((OkObjectResult)controller.GethMonthBloodQuantity(year, bloodType));
+            result.ShouldNotBe(null);
         }
     }
 }

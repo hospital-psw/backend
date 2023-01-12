@@ -11,7 +11,7 @@
     {
         public static List<string> Parse(string input)
         {
-            if(input == null)
+            if (input == null)
             {
                 input = "";
             }

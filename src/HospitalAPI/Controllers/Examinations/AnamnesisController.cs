@@ -3,7 +3,6 @@
     using HospitalAPI.Dto.Examinations;
     using HospitalAPI.Mappers.Examinations;
     using HospitalLibrary.Core.DTO.Examinations;
-    using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
@@ -100,18 +99,6 @@
             return Ok();
         }
 
-
-        private bool CheckIfAppointmentIsDone(int appointmentId)
-        {
-            Anamnesis anamnesis = _anamnesisService.GetByAppointment(appointmentId);
-
-
-            if (anamnesis == null)
-            {
-                return false;
-            }
-            return true;
-        }
 
     }
 }

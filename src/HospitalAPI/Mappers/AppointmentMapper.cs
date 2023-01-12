@@ -28,6 +28,7 @@
         public static List<AppointmentDto> EntityListToEntityDtoList(List<Appointment> appointments)
         {
             List<AppointmentDto> appointmentDtos = new List<AppointmentDto>();
+            if (appointments == null) return appointmentDtos;
             appointments.ForEach(x => appointmentDtos.Add(EntityToEntityDto(x)));
             return appointmentDtos;
         }

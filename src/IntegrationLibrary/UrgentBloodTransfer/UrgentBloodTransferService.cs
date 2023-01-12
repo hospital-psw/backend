@@ -6,7 +6,9 @@
     using IntegrationLibrary.UrgentBloodTransfer.Interfaces;
     using IntegrationLibrary.UrgentBloodTransfer.Model;
     using IntegrationLibrary.UrgentBloodTransfer.Senders;
+    using IntegrationLibrary.Util;
     using IntegrationLibrary.Util.Interfaces;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
@@ -19,12 +21,16 @@
         private readonly ILogger<UrgentBloodTransfer> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBBConnections _connections;
+        private readonly IMailSender _mailSender;
+        private readonly IConfiguration _configuration;
 
-        public UrgentBloodTransferService(ILogger<UrgentBloodTransfer> logger, IUnitOfWork integrationUnitOfWork, IBBConnections connections)
+        public UrgentBloodTransferService(ILogger<UrgentBloodTransfer> logger, IUnitOfWork integrationUnitOfWork, IBBConnections connections, IMailSender mailSender, IConfiguration configuration)
         {
             _logger = logger;
             _unitOfWork = integrationUnitOfWork;
             _connections = connections;
+            _mailSender = mailSender;
+            _configuration = configuration;
         }
 
         public UrgentBloodTransfer Create(UrgentBloodTransfer entity)
@@ -90,10 +96,18 @@
                 {
                     _connections.SendBloodUnitToHospital(new BloodUnit((Model.BloodType)request.BloodType, (int)request.Amount));
 
+                    string templateAccept = MailSender.MakeAcceptBloodUnitTemplate(request.Amount, request.Sender.Name, request.BloodType);
+                    _mailSender.SendEmail(templateAccept, "Successful blood transfer", _configuration["ManagerEmail"]);
+
                     _unitOfWork.UrgentBloodTransferRepository.Add(request);
                     _unitOfWork.Save();
-                }
 
+                }
+                else
+                {
+                    string templateDecline = MailSender.MakeDeclineBloodUnitTemplate(request.Amount, request.Sender.Name, request.BloodType);
+                    _mailSender.SendEmail(templateDecline, "Unsuccessful blood transfer", _configuration["ManagerEmail"]);
+                }
                 return response;
             }
             catch (Exception e)

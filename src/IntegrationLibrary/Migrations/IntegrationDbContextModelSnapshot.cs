@@ -240,9 +240,14 @@ namespace IntegrationLibrary.Migrations
                     b.Property<bool>("HTTP")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("SenderId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("urgentBloodTransfers");
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("UrgentBloodTransfers");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodBank.BloodBank", b =>
@@ -342,6 +347,15 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("TenderId");
 
                     b.Navigation("Offeror");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.UrgentBloodTransfer.Model.UrgentBloodTransfer", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBank.BloodBank", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Tender.Tender", b =>

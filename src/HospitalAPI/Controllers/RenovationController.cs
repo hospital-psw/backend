@@ -34,7 +34,9 @@
             {
                 rooms.Add(_roomService.GetById(roomId));
             }
-            return Ok(_renovationService.Create(RenovationRequestMapper.EntityDtoToEntity(dto, rooms)));
+            RenovationRequest request = RenovationRequestMapper.EntityDtoToEntity(dto, rooms);
+            request.Id = dto.Id;
+            return Ok(_renovationService.Create(request));
         }
 
         [HttpPut("recommend")]

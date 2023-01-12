@@ -4,10 +4,13 @@
     using IntegrationAPI.DTO.Tender;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.Tender;
+    using IntegrationLibrary.Tender.Enums;
     using IntegrationLibrary.Tender.Interfaces;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
+    using System.Text.Json;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -15,11 +18,13 @@
     {
         private readonly ITenderService _tenderService;
         private readonly IMapper _mapper;
+        private readonly ITenderStatisticsService _statisticsService;
 
-        public TenderController(ITenderService tenderService, IMapper mapper)
+        public TenderController(ITenderService tenderService, IMapper mapper, ITenderStatisticsService tenderStatisticsService)
         {
             _tenderService = tenderService;
             _mapper = mapper;
+            _statisticsService = tenderStatisticsService;
         }
 
         [HttpGet("all")]
@@ -118,6 +123,44 @@
             }
 
             return NoContent();
+        }
+        [HttpGet("money/{year}")]
+        public IActionResult GethMonthMoneyStatistics(int year)
+        {
+            List<double> moneyPerMonth = _tenderService.GetMoneyPerMonth(year);
+            if (moneyPerMonth == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                JsonSerializer.Serialize<List<double>>(moneyPerMonth);
+                //return Ok(moneyPerMonth);
+                return Ok(JsonSerializer.Serialize<List<double>>(moneyPerMonth));
+            }
+        }
+
+        [HttpGet("blood/{year}/{bloodType}")]
+        public IActionResult GethMonthBloodQuantity(int year, int bloodType)
+        {
+            List<double> bloodQuantityPerMonth = _tenderService.GetBloodPerMonth(year, bloodType);
+            if (bloodQuantityPerMonth == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth);
+                //return Ok(moneyPerMonth);
+                return Ok(JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth));
+            }
+        }
+        [HttpPost("generate-report")]
+        public IActionResult GenerateReport([FromBody] RangeDTO range)
+        {
+            var report = _statisticsService.GenerateHTMLReport(range.start, range.end);
+            report.Position = 0;
+            return new FileStreamResult(report, "application/pdf");
         }
     }
 }

@@ -88,7 +88,7 @@
 
             for (DateTime date = dto.DateRange.From; date.CompareTo(dto.DateRange.To) <= 0; date = date.AddDays(1))
             {
-                if (IsSomeDoctorOnVacation(doctors, date) || IsSomeDoctorBusy(doctors, date))
+                if (IsSomeDoctorUnavailable(doctors, date))
                 {
                     continue;
                 }
@@ -141,20 +141,6 @@
             }
         }
 
-        private bool CheckIfDoctorsAreAvailableInCurrentAppointment(List<ApplicationDoctor> doctors, DateTime currentAppointment, DateTime currentDate)
-        {
-            foreach (ApplicationDoctor doc in doctors)
-            {
-                RecommendRequestDto rDto = new RecommendRequestDto(currentDate, default(int), doc.Id);
-                List<RecommendedAppointmentDto> currentDoctorAvailableAppointments = RecommendAppointments(rDto).ToList();
-                if (!currentDoctorAvailableAppointments.Exists(curr => curr.Date.Hour == currentAppointment.Hour && curr.Date.Minute == currentAppointment.Minute))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         private Consilium ScheduleBySelectedSpecializations(ScheduleConsiliumDto dto, List<ApplicationDoctor> doctors)
         {
             int maxPresence = default(int);
@@ -173,15 +159,15 @@
                 foreach (DateTime appointment in unionOfAllAvailableAppointments)
                 {
                     int presence = 0;
-                    ScheduleBySpecializationDto specDto = DoctorsAvailableForCurrentAppointment(currentDayAvailableDoctors, presence, date, appointment);
-                    if (SpecializationsDontExistInDoctorList(dto.SelectedSpecializations, specDto.CurrentAppointmentAvailableDoctors))
+                    List<ApplicationDoctor> currAvailableDoctors = DoctorsAvailableForCurrentAppointment(currentDayAvailableDoctors, date, appointment);
+                    if (SpecializationsDontExistInDoctorList(dto.SelectedSpecializations, currAvailableDoctors))
                     {
                         continue;
                     }
-                    presence = specDto.Presence;
+                    presence = currAvailableDoctors.Count();
                     if (presence > maxPresence)
                     {
-                        presenceDoctors = specDto.CurrentAppointmentAvailableDoctors;
+                        presenceDoctors = currAvailableDoctors;
                         maxPresence = presence;
                         timeOfMaxPresence = appointment;
                         dateOfMaxPresence = date;
@@ -209,20 +195,30 @@
             return consilium;
         }
 
-        private ScheduleBySpecializationDto DoctorsAvailableForCurrentAppointment(List<ApplicationDoctor> currentDateAvailableDoctors, int presence, DateTime date, DateTime appointment)
+        private bool CheckIfDoctorsAreAvailableInCurrentAppointment(List<ApplicationDoctor> doctors, DateTime currentAppointment, DateTime currentDate)
         {
-            List<ApplicationDoctor> currentAppointmentAvailableDoctors = new List<ApplicationDoctor>();
-            foreach (ApplicationDoctor doc in currentDateAvailableDoctors)
+            DateTime dt = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, currentAppointment.Hour, currentAppointment.Minute, currentAppointment.Second);
+            return IsSomeDoctorUnavailable(doctors, dt);
+        }
+
+        private List<ApplicationDoctor> DoctorsAvailableForCurrentAppointment(List<ApplicationDoctor> currentDateAvailableDoctors, DateTime date, DateTime appointment)
+        {
+            DateTime dt = new DateTime(date.Year, date.Month, date.Day, appointment.Hour, appointment.Minute, appointment.Second);
+            return CurrentDateAvailableDoctors(currentDateAvailableDoctors, dt);
+        }
+
+        private List<ApplicationDoctor> CurrentDateAvailableDoctors(List<ApplicationDoctor> doctors, DateTime date)
+        {
+            List<ApplicationDoctor> availableDoctors = new List<ApplicationDoctor>();
+            List<DoctorSchedule> doctorSchedules = _unitOfWork.DoctorScheduleRepository.GetDoctorSchedulesByDoctorList(doctors).ToList();
+            foreach (DoctorSchedule doctorSchedule in doctorSchedules)
             {
-                RecommendRequestDto requestDto = new RecommendRequestDto(date, default(int), doc.Id);
-                if (GetDoctorAvailableAppointments(date, doc).ToList().Exists(x => x.Hour == appointment.Hour && x.Minute == appointment.Minute))
+                if (doctorSchedule.IsDoctorAvailable(date))
                 {
-                    presence++;
-                    currentAppointmentAvailableDoctors.Add(doc);
+                    availableDoctors.Add(doctorSchedule.Doctor);
                 }
             }
-            ScheduleBySpecializationDto dto = new ScheduleBySpecializationDto(presence, currentAppointmentAvailableDoctors);
-            return dto;
+            return availableDoctors;
         }
 
         private List<DateTime> UnionAllAvailableAppointments(List<ApplicationDoctor> availableDoctors, DateTime date)
@@ -239,22 +235,6 @@
             return allAvailableAppointments;
         }
 
-        private List<ApplicationDoctor> CurrentDateAvailableDoctors(List<ApplicationDoctor> doctors, DateTime date)
-        {
-            List<ApplicationDoctor> availableDoctors = new List<ApplicationDoctor>();
-            doctors.ForEach(doc =>
-            {
-                RecommendRequestDto dto = new RecommendRequestDto(date, default(int), doc.Id);
-                DoctorSchedule doctorSchedule = _unitOfWork.DoctorScheduleRepository.GetDoctorScheduleByDoctorId(doc.Id);
-                if (!RecommendAppointments(dto).IsNullOrEmpty() && !IsDoctorOnVacation(doctorSchedule, date))
-                {
-                    availableDoctors.Add(doc);
-                }
-            });
-
-            return availableDoctors;
-        }
-
         private bool SpecializationsDontExistInDoctorList(List<Specialization> selectedSpecializations, List<ApplicationDoctor> doctors)
         {
             if (selectedSpecializations.Any(spec => !doctors.Exists(x => x.Specialization == spec)))
@@ -264,43 +244,17 @@
             return false;
         }
 
-        private bool IsSomeDoctorBusy(List<ApplicationDoctor> doctors, DateTime date)
+        private bool IsSomeDoctorUnavailable(List<ApplicationDoctor> doctors, DateTime date)
         {
-            foreach (ApplicationDoctor doctor in doctors)
+            List<DoctorSchedule> doctorSchedules = _unitOfWork.DoctorScheduleRepository.GetDoctorSchedulesByDoctorList(doctors).ToList();
+            foreach (DoctorSchedule ds in doctorSchedules)
             {
-                RecommendRequestDto dto = new RecommendRequestDto(date, default(int), doctor.Id);
-                if (RecommendAppointments(dto).IsNullOrEmpty())
+                if (!ds.IsDoctorAvailable(date))
                 {
                     return true;
                 }
             }
             return false;
-        }
-
-        private bool IsSomeDoctorOnVacation(List<ApplicationDoctor> doctors, DateTime date)
-        {
-            List<DoctorSchedule> doctorSchedules = _unitOfWork.DoctorScheduleRepository.GetDoctorSchedulesByDoctorList(doctors).ToList();
-            if (doctorSchedules.Any(ds => IsDoctorOnVacation(ds, date)))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsDoctorOnVacation(DoctorSchedule schedule, DateTime date)
-        {
-            List<VacationRequest> vacations = _unitOfWork.VacationRequestsRepository.GetAllApprovedByDoctorId(schedule.Doctor.Id).ToList();
-            if (vacations.Any(v => IsDateInVacationRange(v.From, v.To, date)))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsDateInVacationRange(DateTime vacationStart, DateTime vacationEnd, DateTime date)
-        {
-            DateRange vacationRange = new DateRange(vacationStart, vacationEnd);
-            return vacationRange.InRange(date);
         }
 
         public List<DateTime> GetDatesListOutOfDtoList(List<RecommendedAppointmentDto> dtoList)
@@ -372,5 +326,9 @@
             return generatedAppointments;
         }
 
+        public DoctorSchedule GetDoctorsSchedule(int id)
+        {
+            return _unitOfWork.DoctorScheduleRepository.GetDoctorScheduleByDoctorId(id);
+        }
     }
 }

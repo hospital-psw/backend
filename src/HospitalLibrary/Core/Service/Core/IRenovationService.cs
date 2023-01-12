@@ -24,5 +24,6 @@
         List<RenovationRequest> GetAllForRoom(int roomId);
         RenovationRequest GetById(int id);
         void Decline(int requestId);
+        List<RenovationRequest> GetAllSuccessfulAggregates();
     }
 }

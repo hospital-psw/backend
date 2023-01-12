@@ -11,5 +11,7 @@
     public interface IPrescriptionRepository : IBaseRepository<Prescription>
     {
         IEnumerable<Prescription> GetPrescriptionsBySearchCriteria(string criteria);
+
+        Prescription Delete(int prescriptionId);
     }
 }

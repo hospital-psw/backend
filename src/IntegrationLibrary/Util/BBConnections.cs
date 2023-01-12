@@ -37,13 +37,39 @@ namespace IntegrationLibrary.Util
             using (var client = new HttpClient())
             {
                 var endpoint = new Uri($"http://{bloodBank.ApiUrl}/{bloodBank.GetBloodTypeAvailability.Replace("!BLOOD_TYPE", type)}");
-                client.DefaultRequestHeaders.Add("x-api-key", bloodBank.ApiKey);
+                //client.DefaultRequestHeaders.Add("x-api-key", bloodBank.ApiKey);
                 var result = client.GetAsync(endpoint).Result;
                 var json = result.Content.ReadAsStringAsync().Result;
                 return Convert.ToBoolean(json);
             }
         }
 
-    }
+        public async void SendTenderMoneyStatistics(List<double> statistics)
+        {
+            using (var client = new HttpClient())
+            {
 
+                var json = JsonSerializer.Serialize(statistics);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var putEndpoint = new Uri("http://localhost:16177/api/BloodUnit");
+                var response = await client.PutAsync(putEndpoint, content);
+                var resString = response.Content.ReadAsStringAsync();
+            }
+        }
+
+        public async void SendTenderBloodQuantityPerMonth(List<double> statistics)
+        {
+            using (var client = new HttpClient())
+            {
+
+                var json = JsonSerializer.Serialize(statistics);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var putEndpoint = new Uri("http://localhost:16177/api/BloodUnit");
+                var response = await client.PutAsync(putEndpoint, content);
+                var resString = response.Content.ReadAsStringAsync();
+            }
+        }
+    }
 }
