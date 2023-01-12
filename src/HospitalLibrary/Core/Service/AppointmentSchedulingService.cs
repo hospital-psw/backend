@@ -431,5 +431,66 @@
         {
             throw new NotImplementedException();
         }
+        private double GetAverageNumberOfStepsByAgeGroup(List<AppointmentSchedulingRoot> appointments)
+        {
+            double sum = 0;
+            double average = 0;
+
+            foreach (AppointmentSchedulingRoot appointment in appointments)
+            {
+                if (!ScheduledAppointmentEventExists(appointment)) continue;
+                else
+                {
+                    sum = sum + (SumNumberOfStepsTaken(appointment));
+
+                }
+                average = sum / appointments.Count;
+            }
+            return average;
+        }
+        public List<double> CalculateAverageNumberOfStepsForCreatingAppointmentByAgeGroup()
+        {
+            List<double> averages = new List<double> { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+            List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
+            List<AppointmentSchedulingRoot> appointmentsGroup0 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup1 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup2 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup3 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup4 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup5 = new List<AppointmentSchedulingRoot>();
+
+
+            foreach (AppointmentSchedulingRoot appointment in appointments)
+            {
+                switch (_statisticsService.GetAgeGroup(_unitOfWork.ApplicationPatientRepository.Get(appointment.PatientId)))
+                {
+                    case 0:
+                        appointmentsGroup0.Add(appointment);
+                        break;
+                    case 1:
+                        appointmentsGroup1.Add(appointment);
+                        break;
+                    case 2:
+                        appointmentsGroup2.Add(appointment);
+                        break;
+                    case 3:
+                        appointmentsGroup3.Add(appointment);
+                        break;
+                    case 4:
+                        appointmentsGroup4.Add(appointment);
+                        break;
+                    case 5:
+                        appointmentsGroup5.Add(appointment);
+                        break;
+                }
+            }
+            averages[0] = GetAverageNumberOfStepsByAgeGroup(appointmentsGroup0);
+            averages[1] = GetAverageNumberOfStepsByAgeGroup(appointmentsGroup1);
+            averages[2] = GetAverageNumberOfStepsByAgeGroup(appointmentsGroup2);
+            averages[3] = GetAverageNumberOfStepsByAgeGroup(appointmentsGroup3);
+            averages[4] = GetAverageNumberOfStepsByAgeGroup(appointmentsGroup4);
+            averages[5] = GetAverageNumberOfStepsByAgeGroup(appointmentsGroup5);
+            return averages;
+        }
     }
 }
