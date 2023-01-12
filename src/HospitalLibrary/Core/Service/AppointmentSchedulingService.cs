@@ -2,8 +2,10 @@
 {
     using HospitalLibrary.Core.Infrastucture;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Events.Scheduling;
     using HospitalLibrary.Core.Model.Events.Scheduling.Root;
+    using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
     using System;
@@ -14,9 +16,13 @@
 
     public class AppointmentSchedulingService : BaseService<AppointmentSchedulingRoot>, IAppointmentSchedulingService
     {
-        public AppointmentSchedulingService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public readonly IStatisticsService _statisticsService;
+
+        public AppointmentSchedulingService(IUnitOfWork unitOfWork, IStatisticsService statisticsService) : base(unitOfWork)
         {
+            _statisticsService= statisticsService;
         }
+
         public AppointmentSchedulingRoot StartSession(SessionStarted evt)
         {
             CleanUp(evt.PatientId); //ako je ostala nedovrsena sesija kojoj je poslednji event pre vise od 15 min stavi je na completed
@@ -181,6 +187,60 @@
             }
             return averages;
         }
+        private double GetAverageTimeSpentForAppointmentGroup(List<AppointmentSchedulingRoot> appointments)
+        {
+            double sum = 0;
+            foreach(AppointmentSchedulingRoot a in appointments)
+            {
+                sum = sum +GetTimeSpentForSingleAppointment(a);
+            }
+            
+            return sum/appointments.Count;
+        }
+        public List<double> CalculateAverageTimeSpentToCreateAppointmentForSpecificAgeGrouup( )
+
+        {
+            List<double> averages = new List<double> { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+            List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
+            List<AppointmentSchedulingRoot> appointmentsGroup0 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup1 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup2 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup3 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup4 = new List<AppointmentSchedulingRoot>();
+            List<AppointmentSchedulingRoot> appointmentsGroup5 = new List<AppointmentSchedulingRoot>();
+     
+
+            foreach (AppointmentSchedulingRoot appointment in appointments) {
+                switch (_statisticsService.GetAgeGroup(_unitOfWork.ApplicationPatientRepository.Get(appointment.PatientId)))
+                {
+                    case 0:
+                        appointmentsGroup0.Add(appointment);
+                        break;
+                    case 1:
+                        appointmentsGroup1.Add(appointment);
+                        break;
+                    case 2:
+                        appointmentsGroup2.Add(appointment);
+                        break;
+                    case 3:
+                        appointmentsGroup3.Add(appointment);
+                        break;
+                    case 4:
+                        appointmentsGroup4.Add(appointment);
+                        break;
+                    case 5:
+                        appointmentsGroup5.Add(appointment);
+                        break;
+                }
+            }
+            averages[0] = GetAverageTimeSpentForAppointmentGroup(appointmentsGroup0);
+            averages[1] = GetAverageTimeSpentForAppointmentGroup(appointmentsGroup1);
+            averages[2] = GetAverageTimeSpentForAppointmentGroup(appointmentsGroup2);
+            averages[3] = GetAverageTimeSpentForAppointmentGroup(appointmentsGroup3);
+            averages[4] = GetAverageTimeSpentForAppointmentGroup(appointmentsGroup4);
+            averages[5] = GetAverageTimeSpentForAppointmentGroup(appointmentsGroup5);
+            return averages;
+        }
 
         public List<SessionStarted> GetAllSessionStarted()
         {
@@ -317,6 +377,33 @@
                 }
             }
             return duration;
+        }
+
+        public IEnumerable<ApplicationPatient> GetNonHospitalized()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ApplicationPatient> GetBlocked()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ApplicationPatient> GetMalicious()
+        {
+            throw new NotImplementedException();
+        }
+
+    
+
+        public void Add(ApplicationPatient entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(ApplicationPatient entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

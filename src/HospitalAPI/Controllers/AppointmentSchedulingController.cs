@@ -107,5 +107,12 @@
         {
             return Ok(_appointmentSchedulingService.CalculateNumberOfTimesSpentOnEachStep());
         }
+
+        [HttpGet("getTimeToCreateAppointmentByAgeGroup")]
+        public IActionResult AppointmentCreatingTimeByAgeGroup()
+
+        {
+            return Ok(_appointmentSchedulingService.CalculateAverageTimeSpentToCreateAppointmentForSpecificAgeGrouup());
+        }
     }
 }

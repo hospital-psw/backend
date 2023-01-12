@@ -22,6 +22,7 @@
         {
             return HospitalDbContext.AppointmentRoots.Where(x => x.PatientId == id && x.Completed == false);
         }
+
         public override List<AppointmentSchedulingRoot> GetAll()
         {
             return HospitalDbContext.AppointmentRoots.ToList();

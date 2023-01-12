@@ -23,5 +23,6 @@
         List<double> CalculateTheAverageNumberOfStepsToCreateAppointment();
         List<double> CalculateNumberOfTimesSpentOnEachStep();
         List<double> TimeSpentOnEachStep();
+        List<double> CalculateAverageTimeSpentToCreateAppointmentForSpecificAgeGrouup();
     }
 }

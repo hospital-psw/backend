@@ -27,5 +27,6 @@
         List<double> GetAverageSchedulingDurationBasedOnRenovationType();
         List<RenovationStatisticDto> GetTimeSpentPerStep();
         List<int> GetNumberOfDoctorAppointmentsInOptionalTimeRange(int doctorId, DateTime start, DateTime end);
+        int GetAgeGroup(ApplicationUser applicationPatient);
     }
 }
