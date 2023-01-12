@@ -285,6 +285,7 @@
             }
             return averages;
         }
+
         public List<double> CalculateNumberOfTimesSpentOnEachStep()
         {
             List<double> steps = new List<double> { 0.0, 0.0, 0.0, 0.0};
@@ -307,13 +308,14 @@
             return steps;
             
         }
+        double counter0 = 0;
+        double counter1 = 0;
+        double counter2 = 0;
+        double counter3 = 0;
         public List<double> TimeSpentOnEachStep()
         {
             List<double> steps = new List<double> { 0.0, 0.0, 0.0, 0.0 };
-            double counter0 = 0;
-            double counter1 = 0;
-            double counter2 = 0;
-            double counter3 = 0;
+            
             
             List<DateTime>timeDateSelected = new List<DateTime>();   
             List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
@@ -330,13 +332,10 @@
                     List<DomainEvent> second = doctorSelected.Concat<DomainEvent>(appointmentSelected).ToList();
                     List<DomainEvent> allEvents = first.Concat<DomainEvent>(second).ToList();
                     steps[0] = steps[0]+ CalculateForDateSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
-                    counter0++;
                     steps[1] = steps[1]+CalculateForSpecializationSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
-                    counter1++;
                     steps[2] = steps[2]+CalculateForDoctorSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
-                    counter2++;
                     steps[3] = steps[3]+CalculateForAppointmentSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
-                    counter3++;
+                    
 
                     steps[0] = steps[0] / counter0;
                     steps[1] = steps[1] / counter1;
@@ -349,7 +348,8 @@
         }
         public double CalculateForDateSelected(List<DomainEvent> changes)
         {
-            
+            counter0++;
+
             double duration = 0;
             for (int i = 0; i < changes.Count; i++)
             {
@@ -364,6 +364,7 @@
         }
         public double CalculateForSpecializationSelected(List<DomainEvent> changes)
         {
+            counter1++;
             double duration = 0;
             for (int i = 0; i < changes.Count; i++)
             {
@@ -378,6 +379,7 @@
         }
         public double CalculateForDoctorSelected(List<DomainEvent> changes)
         {
+            counter2++;
             double duration = 0;
             for (int i = 0; i < changes.Count; i++)
             {
@@ -392,6 +394,7 @@
         }
         public double CalculateForAppointmentSelected(List<DomainEvent> changes)
         {
+            counter3++;
             double duration = 0;
             for (int i = 0; i < changes.Count; i++)
             {
