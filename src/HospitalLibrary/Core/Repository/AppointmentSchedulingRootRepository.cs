@@ -34,6 +34,7 @@
         {
             return HospitalDbContext.AppointmentScheduledEvents.Where(x => x.AggregateId == id).ToList();
         }
+       
         public List<SessionStarted> GetAllSessionStarted()
         {
             return HospitalDbContext.SessionStartedEvents.OrderBy(x => x.DateCreated).ToList();

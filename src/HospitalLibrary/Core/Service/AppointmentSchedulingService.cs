@@ -207,8 +207,8 @@
         public List<double> CalculateTheAverageNumberOfStepsToCreateAppointment()
         {
             List<double> averages = new List<double>();
-            List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
-            foreach (AppointmentSchedulingRoot appointment in appointments)
+            List<AppointmentSchedulingRoot> appointmentAgregats = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
+            foreach (AppointmentSchedulingRoot appointment in appointmentAgregats)
             {
                 if (!ScheduledAppointmentEventExists(appointment) || appointment.Id < 10) continue;
                 else
@@ -239,6 +239,89 @@
             }
             return steps;
             
+        }
+        public List<double> TimeSpentOnEachStep()
+        {
+            List<double> steps = new List<double> { 0.0, 0.0, 0.0, 0.0 };
+            List<DateTime>timeDateSelected = new List<DateTime>();   
+            List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
+            foreach (AppointmentSchedulingRoot appointment in appointments)
+            {
+                if (!ScheduledAppointmentEventExists(appointment)) continue;
+                else
+                {
+                    List<DateSelected> dateSelected = _unitOfWork.AppointmentSchedulingRootRepository.GetDateSelectedEvent(appointment.Id);
+                    List<SpecializationSelected> specializations = _unitOfWork.AppointmentSchedulingRootRepository.GetSpecializationSelectedEvent(appointment.Id);
+                    List<DoctorSelected> doctorSelected = _unitOfWork.AppointmentSchedulingRootRepository.GetDoctorSelectedEvent(appointment.Id);
+                    List<AppointmentSelected> appointmentSelected = _unitOfWork.AppointmentSchedulingRootRepository.GetAppointmentSelectedEvent(appointment.Id);
+                    List<DomainEvent> first = dateSelected.Concat<DomainEvent>(specializations).ToList();
+                    List<DomainEvent> second = doctorSelected.Concat<DomainEvent>(appointmentSelected).ToList();
+                    List<DomainEvent> allEvents = first.Concat<DomainEvent>(second).ToList();
+                    steps[0] = steps[0]+ CalculateForDateSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+                    steps[1] = steps[1]+CalculateForSpecializationSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+                    steps[2] = steps[2]+CalculateForDoctorSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+                    steps[3] = steps[3]+CalculateForAppointmentSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+
+                }
+            }
+            return steps;
+
+        }
+        public double CalculateForDateSelected(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("DATE_SELECTED") && i != 0)
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+        public double CalculateForSpecializationSelected(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("SPECIALIZATION_SELECTED") && i != 0)
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+        public double CalculateForDoctorSelected(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("DOCTOR_SELECTED") && i != 0)
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
+        }
+        public double CalculateForAppointmentSelected(List<DomainEvent> changes)
+        {
+            double duration = 0;
+            for (int i = 0; i < changes.Count; i++)
+            {
+                if (changes[i].EventName.Equals("APPOINTMENT_SELECTED") && i != 0)
+                {
+                    DateTime end = changes[i].TimeStamp;
+                    DateTime start = changes[i - 1].TimeStamp;
+                    duration = duration + (end - start).Seconds;
+                }
+            }
+            return duration;
         }
     }
 }
