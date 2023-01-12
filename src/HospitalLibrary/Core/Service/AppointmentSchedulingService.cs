@@ -195,12 +195,19 @@
         private double GetAverageTimeSpentForAppointmentGroup(List<AppointmentSchedulingRoot> appointments)
         {
             double sum = 0;
-            foreach(AppointmentSchedulingRoot a in appointments)
-            {
-                sum = sum +GetTimeSpentForSingleAppointment(a);
-            }
+            double average = 0;
             
-            return sum/appointments.Count;
+            foreach (AppointmentSchedulingRoot appointment in appointments)
+            {
+                if (!ScheduledAppointmentEventExists(appointment)) continue;
+                else
+                {
+                    sum = sum + (GetTimeSpentForSingleAppointment(appointment));
+
+                }
+                average = sum / appointments.Count;
+            }
+            return average;
         }
         public List<double> CalculateAverageTimeSpentToCreateAppointmentForSpecificAgeGrouup( )
 
@@ -303,6 +310,11 @@
         public List<double> TimeSpentOnEachStep()
         {
             List<double> steps = new List<double> { 0.0, 0.0, 0.0, 0.0 };
+            double counter0 = 0;
+            double counter1 = 0;
+            double counter2 = 0;
+            double counter3 = 0;
+            
             List<DateTime>timeDateSelected = new List<DateTime>();   
             List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
             foreach (AppointmentSchedulingRoot appointment in appointments)
@@ -318,10 +330,18 @@
                     List<DomainEvent> second = doctorSelected.Concat<DomainEvent>(appointmentSelected).ToList();
                     List<DomainEvent> allEvents = first.Concat<DomainEvent>(second).ToList();
                     steps[0] = steps[0]+ CalculateForDateSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+                    counter0++;
                     steps[1] = steps[1]+CalculateForSpecializationSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+                    counter1++;
                     steps[2] = steps[2]+CalculateForDoctorSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+                    counter2++;
                     steps[3] = steps[3]+CalculateForAppointmentSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
+                    counter3++;
 
+                    steps[0] = steps[0] / counter0;
+                    steps[1] = steps[1] / counter1;
+                    steps[2] = steps[2] / counter2;
+                    steps[3] = steps[3] / counter3;
                 }
             }
             return steps;
@@ -329,6 +349,7 @@
         }
         public double CalculateForDateSelected(List<DomainEvent> changes)
         {
+            
             double duration = 0;
             for (int i = 0; i < changes.Count; i++)
             {
