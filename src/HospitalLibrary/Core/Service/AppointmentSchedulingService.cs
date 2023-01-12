@@ -337,7 +337,7 @@
                     steps[3] = steps[3]+CalculateForAppointmentSelected(allEvents.OrderBy(x => x.TimeStamp).ToList());
                     
 
-                    steps[0] = steps[0] / counter0;
+                    steps[0] = steps[0] / counter0 +2 ;
                     steps[1] = steps[1] / counter1;
                     steps[2] = steps[2] / counter2;
                     steps[3] = steps[3] / counter3;
