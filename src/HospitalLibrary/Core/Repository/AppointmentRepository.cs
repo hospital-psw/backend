@@ -35,7 +35,13 @@
 
         public IEnumerable<Appointment> GetAppointmentsForPatient(int patientId)
         {
-            return GetAll().Where(x => x.Patient.Id == patientId).ToList();
+            return HospitalDbContext.Appointments.Include(x => x.Patient)
+                                                 .Include(x => x.Doctor)
+                                                 .ThenInclude(x => x.Office)
+                                                 .Include(x => x.Room)
+                                                 .ThenInclude(x => x.Floor)
+                                                 .ThenInclude(x => x.Building)
+                                                 .Where(x => x.Patient.Id == patientId).ToList();
         }
 
         public IEnumerable<Appointment> GetAppointmentsForDoctor(int doctorId)

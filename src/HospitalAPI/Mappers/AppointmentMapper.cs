@@ -20,6 +20,7 @@
             dto.Patient = ApplicationPatientMapper.EntityToEntityDTO(appointment.Patient);
             dto.Doctor = ApplicationDoctorMapper.EntityToEntityDTO(appointment.Doctor);
             dto.Room = RoomMapper.EntityToEntityDto(appointment.Room);
+            dto.Deleted = appointment.Deleted;
 
             return dto;
         }
