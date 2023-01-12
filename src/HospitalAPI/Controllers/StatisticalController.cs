@@ -8,8 +8,10 @@
     using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using PagedList;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -176,10 +178,22 @@
             return Ok(dto);
         }
 
-        [HttpGet("examination/data")]
-        public IActionResult GetExaminatonData()
+        [HttpGet("examination/data/{pageSize}/{pageNumber}")]
+        public IActionResult GetExaminatonData(int pageSize, int pageNumber)
         {
-            return Ok(_examinationStatisticsService.GetExaminationData());
+            if (pageNumber == 0)
+            {
+                pageNumber = 1;
+            }
+
+            List<ExaminationDataDto> dtoList = _examinationStatisticsService.GetExaminationData();
+
+            if (dtoList.IsNullOrEmpty())
+            {
+                return NoContent();
+            }
+
+            return Ok(dtoList.ToPagedList(pageNumber, pageSize));
         }
 
     }
