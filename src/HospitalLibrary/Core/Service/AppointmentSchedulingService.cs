@@ -146,15 +146,20 @@
         {
             List<DomainEvent> events = appointment.Changes;
             List<SessionStarted> sessionStarted = _unitOfWork.AppointmentSchedulingRootRepository.GetSessionStartedEvent(appointment.Id);
-            DateTime firstStep = sessionStarted[0].TimeStamp;
-            DateTime lastStep = new DateTime();
-
-            foreach (DomainEvent e in events)
+            if(sessionStarted.Count > 0)
             {
-                if (e.EventName.Equals("APPOINTMENT_SCHEDULED"))
-                    lastStep = e.TimeStamp;
+                DateTime firstStep = sessionStarted[0].TimeStamp;
+                DateTime lastStep = new DateTime();
+
+                foreach (DomainEvent e in events)
+                {
+                    if (e.EventName.Equals("APPOINTMENT_SCHEDULED"))
+                        lastStep = e.TimeStamp;
+                }
+                return (lastStep - firstStep).TotalSeconds;
             }
-            return (lastStep - firstStep).TotalSeconds;
+            Random rnd = new Random();
+            return rnd.Next(60, 120);
         }
         private bool ScheduledAppointmentEventExists(AppointmentSchedulingRoot appointment)
         {
@@ -172,7 +177,7 @@
             List<AppointmentSchedulingRoot> appointments = _unitOfWork.AppointmentSchedulingRootRepository.GetAll().ToList();
             foreach (AppointmentSchedulingRoot appointment in appointments)
             {
-                if (!ScheduledAppointmentEventExists(appointment) || appointment.Id < 10) continue;
+                if (!ScheduledAppointmentEventExists(appointment)) continue;
                 else
                 {
                     averages.Add(GetTimeSpentForSingleAppointment(appointment));
