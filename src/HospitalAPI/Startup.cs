@@ -17,6 +17,7 @@ using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Core.Service.Examinations;
 using HospitalLibrary.Core.Service.Examinations.Core;
 using HospitalLibrary.Settings;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace HospitalAPI
 {
@@ -60,6 +62,11 @@ namespace HospitalAPI
                 .AddEntityFrameworkStores<HospitalDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = true;
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -75,6 +82,16 @@ namespace HospitalAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["ProjectConfiguration:Jwt:Key"]))
                 };
             });
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Events.OnRedirectToLogin = context =>
+            //    {
+            //        context.Response.StatusCode = 401;
+            //        return Task.CompletedTask;
+            //    };
+            //});
+
             services.AddDistributedMemoryCache();
 
             services.AddAutoMapper(typeof(Startup));

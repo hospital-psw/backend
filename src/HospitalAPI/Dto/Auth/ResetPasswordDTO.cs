@@ -5,12 +5,10 @@
 
     public class ResetPasswordDTO
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string? Email { get; set; }
+        public string? Token { get; set; }
 
         [Required]
-        [StringLength(10, ErrorMessage = "Password must be at least 4 characters")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

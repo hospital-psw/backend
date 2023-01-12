@@ -20,6 +20,7 @@
     using Microsoft.Net.Http.Headers;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
     [ApiController]
@@ -60,8 +61,6 @@
                     //izgenerisati email poruku i poslati je putem _emailServic-a;
 
                     var result = _mapper.Map<ApplicationUserDTO>(identityUser);
-                    var callback = QueryHelpers.AddQueryString("http://localhost:16177/api/Auth/ConfirmEmail", param);
-                    await _emailService.SendActivationEmail(identityUser, callback);
                     return Ok(result);
                 }
                 else
@@ -89,19 +88,10 @@
                     await _authService.AddToRole(identityUser, "Patient");
                     await _authService.SignInAsync(identityUser);
                     var token = await _authService.GenerateEmailConfirmationTokenAsync(identityUser);
-                    var param = new Dictionary<string, string?>
-                    {
-                        {"token", token },
-                        {"email", identityUser.Email }
-                    };
 
-                    //izgenerisati email poruku i poslati je putem _emailServic-a;
-
+                    await _emailService.SendActivationEmail(identityUser.Email, token);
                     var result = _mapper.Map<ApplicationUserDTO>(identityUser);
-                    var callback = QueryHelpers.AddQueryString("http://localhost:16177/api/Auth/ConfirmEmail", param);
-                    await _emailService.SendActivationEmail(identityUser, callback);
                     return Ok(result);
-                    //return Ok(_mapper.Map<ApplicationUserDTO>(identityUser));
                 }
                 else
                 {
@@ -126,15 +116,19 @@
                 {
                     var user = await _authService.FindByEmailAsync(dto.Email);
                     var role = await _authService.GetUserRole(user.Id);
-                    var token = _tokenService.BuildToken(user, role);
+                    var token = await _tokenService.BuildToken(user, role);
                     var result = _mapper.Map<LoginResponseDTO>(user);
                     result.Token = token;
                     result.ExpiresIn = _tokenService.GetExpireInDate();
                     return Ok(result);
                 }
+                else if (loginResult.IsNotAllowed)
+                {
+                    return BadRequest("Not allowed, please verify your account.");
+                }
                 else
                 {
-                    return BadRequest("Invalid login!");
+                    return BadRequest("Invalid credentials.");
                 }
             }
 
@@ -151,55 +145,33 @@
         [HttpPost("reset/password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDTO dto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return BadRequest();
+            var user = await _authService.FindByEmailAsync(dto.Email);
+            if (user == null)
+                return BadRequest("There is no user with entered email.");
+            var result = await _authService.ResetPasswordAsync(user, dto.Token, dto.Password);
+            if (!result.Succeeded)
             {
-                var user = await _authService.FindByEmailAsync(dto.Email);
-
-                if (user == null)
-                    return BadRequest("Something went wrong...");
-
-                var token = await _authService.GenerateEmailConfirmationTokenAsync(user);
-                var result = await _authService.ResetPasswordAsync(user, token, dto.Password);
-
-                if (result.Succeeded)
-                {
-                    await _authService.SignInAsync(user);
-                    return Ok(result);
-                }
+                var errors = result.Errors.Select(e => e.Description);
+                return BadRequest(new { Errors = errors });
             }
 
-            return BadRequest("Something went wrong...");
+            return Ok(JsonSerializer.Serialize("Your password has been successfully changed."));
         }
-
 
         [HttpPost("forgot/password")]
-        public async Task<IActionResult> ForgetPassword(ResetPasswordDTO dto)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO dto)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await _authService.FindByEmailAsync(dto.Email);
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid Request");
+            var user = await _authService.FindByEmailAsync(dto.Email);
+            if (user == null)
+                return BadRequest("No user with entered email found");
+            var token = await _authService.GeneratePasswordResetTokenAsync(user);
+            await _emailService.SendPasswordResetEmail(dto.Email, dto.ClientURI, token);
 
-                if (user == null || !(await _authService.IsEmailConfirmedAsync(user)))
-                {
-                    return BadRequest("You must confirm your password through email...");
-                }
-            }
-
-            return BadRequest("Something went wrong...");
-        }
-
-
-        [Authorize(Roles = "Patient")]
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            string token = Request.Headers["Authorization"];
-            if (token == null || !_tokenService.IsTokenValid(token))
-            {
-                return BadRequest("Error");
-            }
-
-            return Ok("Success");
+            return Ok(JsonSerializer.Serialize("Email has been sent."));
         }
 
         [HttpGet("ConfirmEmail")]

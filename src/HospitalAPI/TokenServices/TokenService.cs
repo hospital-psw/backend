@@ -2,49 +2,53 @@
 {
     using HospitalAPI.Configuration;
     using HospitalLibrary.Core.Model.ApplicationUser;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
     using System;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
     using System.Security.Claims;
     using System.Text;
     using System.Text.Json;
+    using System.Threading.Tasks;
 
     public class TokenService : ITokenService
     {
         private readonly ProjectConfiguration _configuration;
         private readonly ILogger<TokenService> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TokenService(ProjectConfiguration configuration, ILogger<TokenService> logger)
+        public TokenService(ProjectConfiguration configuration,
+                            UserManager<ApplicationUser> userManager,
+                            ILogger<TokenService> logger)
         {
             _configuration = configuration;
             _logger = logger;
+            _userManager = userManager;
         }
 
-        public string BuildToken(ApplicationUser user, string role)
+        public async Task<string> BuildToken(ApplicationUser user, string role)
         {
-            if (role == null)
-                role = "Undefined";
-
-            var issuer = _configuration.Jwt.Issuer;
-            var audience = _configuration.Jwt.Audience;
             var key = Encoding.ASCII.GetBytes(_configuration.Jwt.Key);
+            var signinCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature);
+            var roles = await _userManager.GetRolesAsync(user);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("id", user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, role)
+                    new Claim(ClaimTypes.Role, roles.First())
                 }),
 
                 Expires = DateTime.UtcNow.AddMinutes(_configuration.Jwt.ExpiresIn),
-                Issuer = issuer,
-                Audience = audience,
-                SigningCredentials = new SigningCredentials
-                (new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha512Signature)
+                Audience = _configuration.Jwt.Audience,
+                Issuer = _configuration.Jwt.Issuer,
+                SigningCredentials = signinCredentials,
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -7,6 +7,7 @@
     public interface IEmailService
     {
         Task Send(Appointment appointment);
-        Task SendActivationEmail(ApplicationUser identityUser, string url);
+        Task SendActivationEmail(string email, string token);
+        Task SendPasswordResetEmail(string email, string clientURL, string token);
     }
 }

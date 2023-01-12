@@ -7,6 +7,8 @@
         public EmailSettings EmailSettings { get; set; } = new EmailSettings();
 
         public Jwt Jwt { get; set; } = new Jwt();
+
+        public CallbackURLs CallbackURLs { get; set; } = new CallbackURLs();
     }
 
     public class DatabaseConfiguration
@@ -31,5 +33,10 @@
         public string DisplayName { get; set; }
         public string ServerAddress { get; set; }
         public bool EnableSsl { get; set; }
+    }
+
+    public class CallbackURLs
+    {
+        public string ConfirmEmail { get; set; }
     }
 }
