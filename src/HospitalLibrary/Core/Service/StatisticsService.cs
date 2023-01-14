@@ -341,6 +341,7 @@
             List<double> structure = new List<double>() { 0, 0, 0, 0, 0 };
             foreach (double num in averages)
             {
+                Console.WriteLine(num);
                 if (num <= 30)
                     structure[0]++;
                 else if (num > 30 && num <= 60)
@@ -368,7 +369,8 @@
                 else if (e.EventName.Equals("SCHEDULE_EVENT"))
                     lastStep = e.TimeStamp;
             }
-            return (lastStep - firstStep).Seconds;
+            return lastStep.Subtract(firstStep).TotalSeconds;
+            //return (lastStep - firstStep).Seconds;
         }
 
         private bool DoesScheduleEventExists(RenovationRequest request)
