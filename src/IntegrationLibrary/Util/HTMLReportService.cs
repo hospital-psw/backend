@@ -15,10 +15,11 @@
         public string OutputFile { get; set; }
         public HTMLReportService()
         {
-            var currentPath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            currentPath = Path.Combine(new string[] { currentPath, "IntegrationLibrary", "Util", "Report-Templates", "template.html" });
-            _templateFile = File.ReadAllText(currentPath);
-            OutputFile = _templateFile;
+
+            //var currentPath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            //currentPath = Path.Combine(new string[] { Environment.CurrentDirectory, "IntegrationLibrary", "Util", "Report-Templates", "template.html" });
+            //_templateFile = File.ReadAllText(currentPath);
+            OutputFile = HtmlTemplate();
         }
 
         public void AddBarChart(List<string> lables, List<double> data)
@@ -130,6 +131,11 @@
         public void AddTimestamp(DateTime from, DateTime to)
         {
             OutputFile = OutputFile.Replace(DATE_SPAN_WILDCARD, from.ToShortDateString() + " and " + to.ToShortDateString());
+        }
+
+        private static string HtmlTemplate()
+        {
+            return "<!DOCTYPE html>\r\n<html>\r\n\r\n<head>\r\n\r\n</head>\r\n\r\n<body>\r\n    <style>\r\n        body {\r\n            font-family: Arial, Helvetica, sans-serif;\r\n        }\r\n\r\n        h1 {\r\n            color: #97D0F6;\r\n        }\r\n\r\n        .container {\r\n            margin: auto;\r\n            width: 100%;\r\n        }\r\n\r\n        .chart {\r\n            display: inline-block;\r\n        }\r\n\r\n        .table {\r\n            border-collapse: collapse;\r\n            width: 100%;\r\n        }\r\n\r\n        .table td, .table th {\r\n            border: 1px solid #ddd;\r\n            padding: 8px;\r\n        }\r\n\r\n        .table tr:nth-child(even) {\r\n            background-color: #f2f2f2;\r\n        }\r\n\r\n        .table tr:hover {\r\n            background-color: #ddd;\r\n        }\r\n\r\n        .table th {\r\n            padding-top: 12px;\r\n            padding-bottom: 12px;\r\n            text-align: left;\r\n            background-color: #97D0F6;\r\n            color: white;\r\n        }\r\n    </style>\r\n    <div class=\"container\">\r\n        <h1>Report for period between <!--DATE_SPAN_WILDCARD--></h1>\r\n        <!--BODY_WILDCARD-->\r\n    </div>\r\n\r\n\r\n    <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>\r\n\r\n    <script>\r\n        //SCRIPT_WILDCARD\r\n\r\n    </script>\r\n</body>\r\n\r\n</html>";
         }
     }
 }
