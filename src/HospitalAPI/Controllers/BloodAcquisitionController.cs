@@ -1,20 +1,12 @@
 ﻿namespace HospitalAPI.Controllers
 {
-    using HospitalAPI.Dto;
-    using HospitalAPI.Mappers;
-    using HospitalAPI.Mappers.Blood;
     using HospitalLibrary.Core.DTO.BloodManagment;
-    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Blood.BloodManagment;
     using HospitalLibrary.Core.Model.Blood.Enums;
-    using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.AppUsers.Core;
-    using HospitalLibrary.Core.Service.Blood;
     using HospitalLibrary.Core.Service.Blood.Core;
-    using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
     using System;
-    using System.Collections.Generic;
 
     [ApiController]
     [Route("api/[controller]")]

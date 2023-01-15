@@ -5,11 +5,6 @@
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
     using IronPdf;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class PDFUtil
     {

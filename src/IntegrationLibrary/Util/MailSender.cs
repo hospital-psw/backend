@@ -1,8 +1,6 @@
 ﻿namespace IntegrationLibrary.Util
 {
     using grpcServices;
-    using IntegrationLibrary.BloodBank;
-    using IntegrationLibrary.Tender;
     using IntegrationLibrary.Util.Interfaces;
     using Mailjet.Client;
     using Mailjet.Client.Resources;
@@ -26,13 +24,13 @@
 
         public static string MakeRegisterTemplate(string mail, string apiKey, string password)
         {
-            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+            //string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            //basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
 
             string template = "<mjml>" +
                 "<mj-body>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "welcome_mail_content.mjml" }) + "\" />" +
+                "<mj-include path=\"" + HeaderMjml() + "\" />" +
+                "<mj-include path=\"" + WelcomeMailContentMjml() + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
@@ -40,11 +38,11 @@
                 "<p>The password is " + password + "</p><br/>" +
                 "<p>For further communication between our servers use the following API key: <b>" + apiKey + "</b></p>" +
                 "</mj-text>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "attach_to_queue.mjml" }) + "\" />" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "news_sending.mjml" }) + "\" />" +
+                "<mj-include path=\"" + AttachToQueueMjml() + "\" />" +
+                "<mj-include path=\"" + NewsSendingMjml() + "\" />" +
                 "</mj-column>" +
                 "</mj-section>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "<mj-include path=\"" + FooterMjml() + "\" />" +
                 "</mj-body>" +
                 "</mjml>";
 
@@ -53,12 +51,12 @@
 
         public static string MakeWinningTemplate(int tendId)
         {
-            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+            //string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            //basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
 
             string template = "<mjml>" +
                 "<mj-body>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-include path=\"" + HeaderMjml() + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
@@ -66,7 +64,7 @@
                 "</mj-text>" +
                 "</mj-column>" +
                 "</mj-section>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "<mj-include path=\"" + FooterMjml() + "\" />" +
                 "</mj-body>" +
                 "</mjml>";
 
@@ -75,12 +73,12 @@
 
         public static string MakeLoseTemplate(int tendId)
         {
-            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+            //string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            //basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
 
             string template = "<mjml>" +
                 "<mj-body>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-include path=\"" + HeaderMjml() + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
@@ -88,7 +86,7 @@
                 "</mj-text>" +
                 "</mj-column>" +
                 "</mj-section>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "<mj-include path=\"" + FooterMjml() + "\" />" +
                 "</mj-body>" +
                 "</mjml>";
 
@@ -97,12 +95,12 @@
 
         public static string MakeUrgentBloodRequestTemplate()
         {
-            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+            //string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            //basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
 
             string template = "<mjml>" +
                 "<mj-body>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-include path=\"" + HeaderMjml() + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
@@ -110,7 +108,7 @@
                 "</mj-text>" +
                 "</mj-column>" +
                 "</mj-section>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "<mj-include path=\"" + FooterMjml() + "\" />" +
                 "</mj-body>" +
                 "</mjml>";
 
@@ -119,12 +117,12 @@
 
         public static string MakeAcceptBloodUnitTemplate(uint amount, string sender, BloodType bloodType)
         {
-            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+            //string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            //basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
 
             string template = "<mjml>" +
                 "<mj-body>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-include path=\"" + HeaderMjml() + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
@@ -132,7 +130,7 @@
                 "</mj-text>" +
                 "</mj-column>" +
                 "</mj-section>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "<mj-include path=\"" + FooterMjml() + "\" />" +
                 "</mj-body>" +
                 "</mjml>";
 
@@ -141,12 +139,12 @@
 
         public static string MakeDeclineBloodUnitTemplate(uint amount, string sender, BloodType bloodType)
         {
-            string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
-            basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
+            //string basePath = Directory.GetParent(Environment.CurrentDirectory).FullName;
+            //basePath = Path.Combine(new string[] { basePath, "IntegrationLibrary", "Util", "Email-Templates" });
 
             string template = "<mjml>" +
                 "<mj-body>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "header.mjml" }) + "\" />" +
+                "<mj-include path=\"" + HeaderMjml() + "\" />" +
                 "<mj-section background-color=\"#ffffff\" padding-top=\"0\">" +
                 "<mj-column width=\"500px\">" +
                 "<mj-text font-size=\"16px\" align=\"left\">" +
@@ -154,7 +152,7 @@
                 "</mj-text>" +
                 "</mj-column>" +
                 "</mj-section>" +
-                "<mj-include path=\"" + Path.Combine(new string[] { basePath, "footer.mjml" }) + "\" />" +
+                "<mj-include path=\"" + FooterMjml() + "\" />" +
                 "</mj-body>" +
                 "</mjml>";
 
@@ -215,6 +213,29 @@
         public void SendEmail(string template, string subject, string destinationEmail, Stream attachment)
         {
             RunAsync(template, subject, destinationEmail, attachment).Wait();
+        }
+
+        private static string HeaderMjml()
+        {
+            return "<mj-section background-color=\"#9be5aa\" padding-top=\"0\" padding-bottom=\"0\">\r\n    <mj-column>\r\n        <mj-image align=\"center\" width=\"150px\" src=\"https://media.istockphoto.com/vectors/caduceus-medical-symbol-vector-id1215977731?k=20&m=1215977731&s=612x612&w=0&h=EvFkHQ9BNDAiCno7Qm19In-syJPUYe5br61T7GyOTc8=\" />\r\n    </mj-column>\r\n</mj-section>";
+        }
+
+        private static string FooterMjml()
+        {
+            return "<mj-section background-color=\"#9be5aa\" padding-top=\"0\" padding-bottom=\"0\">\r\n    <mj-column>\r\n        <mj-text align=\"center\" font-size=\"12px\" padding=\"0\">\r\n            <p>PSW Hospital 69420 Random Road, Novi Sad, Serbia</p>\r\n            <p>Phone number: 021 69420</p>\r\n        </mj-text>\r\n    </mj-column>\r\n</mj-section>";
+        }
+
+        private static string WelcomeMailContentMjml()
+        {
+            return "<mj-section background-color=\"#ffffff\" padding-top=\"0\">\r\n    <mj-column width=\"500px\">\r\n        <mj-text font-size=\"20px\" align=\"center\">\r\n            <p>Your institution has been registered to our hospital!</p>\r\n        </mj-text>\r\n        <mj-text font-size=\"16px\" align=\"left\">\r\n            <p>To confirm this registration fill out the change password form on the following <a href=\"http://localhost:4200/changePassword\">link</a></p>\r\n        </mj-text>\r\n    </mj-column>\r\n</mj-section>";
+        }
+        private static string AttachToQueueMjml()
+        {
+            return "<mj-text font-size=\"16px\" align=\"left\">\r\n    <p>To be able to send Your news to us, You will need to open a connection with our message queue</p>\r\n    <p>To do so, follow the guidelines below</p>\r\n    <ul>\r\n        <li>Download and install RabbitMQ message queue service</li>\r\n        <li>Declare a connection towards <b>Hostname=localhost</b></li>\r\n        <li>Declare a queue with the name <b>hello</b></li>\r\n        <li>All other queue parameters should be set to <b>false</b> or <b>null</b></li>\r\n    </ul>\r\n</mj-text>";
+        }
+        private static string NewsSendingMjml()
+        {
+            return "<mj-text font-size=\"16px\" align=\"left\">\r\n    <p>To send news to our establishment follow the guidelines below:</p>\r\n    <ul>\r\n        <li>News image <b>extension</b></li>\r\n        <li><b>Delimiter</b> consisting of a newline character followed by 20 '-' characters</li>\r\n        <li>News <b>image data</b> encoded in Base64</li>\r\n        <li><b>Delimiter</b></li>\r\n        <li>News <b>title</b></li>\r\n        <li><b>Delimiter</b></li>\r\n        <li>News <b>body</b></li>\r\n    </ul>\r\n</mj-text>";
         }
     }
 }
