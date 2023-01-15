@@ -14,7 +14,7 @@
         Appointment Get(int id);
         Appointment Update(Appointment appointment);
         IEnumerable<Appointment> GetAll();
-
+        void CancelAppointment(int id);
         Appointment Create(NewAppointmentDto dto);
 
         void Delete(Appointment appointment, CancellationInfo info);

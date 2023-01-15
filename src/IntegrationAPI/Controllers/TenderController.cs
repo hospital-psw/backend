@@ -39,6 +39,12 @@
             return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
         }
 
+        [HttpGet("closed")]
+        public IActionResult GetClosed()
+        {
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetClosed()));
+        }
+
         [HttpGet("{id}")]
         public virtual IActionResult Get(int id)
         {

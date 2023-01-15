@@ -109,6 +109,22 @@
             return Ok();
         }
 
+        [HttpDelete]
+        [Route("cancel/{id}")]
+        public IActionResult Cancel(int id)
+        {
+            var appointment = _appointmentService.Get(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            _emailService.Send(appointment);
+            _appointmentService.CancelAppointment(id);
+            return Ok();
+        }
+
+
         [HttpGet]
         [Route("doctor/{id}")]
         public IActionResult GetDoctorAppointments(int id)

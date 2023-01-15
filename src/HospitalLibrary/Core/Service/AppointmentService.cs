@@ -88,6 +88,22 @@
             }
         }
 
+        public void CancelAppointment(int id)
+        {
+            try
+            {
+                Appointment appointment = _unitOfWork.AppointmentRepository.Get(id);
+                appointment.Deleted = true;
+                _unitOfWork.AppointmentRepository.Update(appointment);
+                _unitOfWork.Save();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in Appointment service in Delete {e.Message} in {e.StackTrace}");
+                throw;
+            }
+        }
+
         public IEnumerable<Appointment> GetByDoctorsId(int doctorId)
         {
             try

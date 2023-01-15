@@ -8,6 +8,7 @@
     {
         TenderOffer MakeAnOffer(int tenderId, TenderOffer offer);
         List<Tender> GetActive();
+        List<Tender> GetClosed();
         double AvgTotalPrice();
         double WinningOfferPrice();
 
