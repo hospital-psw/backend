@@ -14,6 +14,7 @@ using HospitalLibrary.Core.Service.Core;
 using HospitalLibrary.Core.Service.Examinations;
 using HospitalLibrary.Core.Service.Examinations.Core;
 using HospitalLibrary.Settings;
+using HospitalLibrary.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -163,6 +164,7 @@ namespace HospitalAPI
             services.AddScoped<IExaminationStatisticsService, ExaminationStatisticsService>();
 
             services.AddScoped<IConnections, Connections>();
+            services.AddScoped<IPDFUtil, PDFUtil>();
 
 
             ProjectConfiguration config = new ProjectConfiguration();

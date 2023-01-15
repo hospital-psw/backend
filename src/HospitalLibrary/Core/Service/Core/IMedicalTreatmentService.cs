@@ -2,11 +2,8 @@
 {
     using HospitalLibrary.Core.DTO.MedicalTreatment;
     using HospitalLibrary.Core.Model.MedicalTreatment;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.IO;
 
     public interface IMedicalTreatmentService
     {
@@ -19,6 +16,6 @@
         MedicalTreatment ReleasePatient(MedicalTreatment medicalTreatment, string description);
         IEnumerable<MedicalTreatment> GetDoctorsActiveTreatments(int doctorId);
         IEnumerable<MedicalTreatment> GetDoctorsInactiveTreatments(int doctorId);
-        void GeneratePdf(int id);
+        Stream GeneratePdf(int id);
     }
 }

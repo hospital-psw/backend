@@ -5,26 +5,24 @@
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
-    using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
-    using HospitalLibrary.Settings;
     using HospitalLibrary.Util;
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.IO;
 
     public class MedicalTreatmentService : BaseService<MedicalTreatment>, IMedicalTreatmentService
     {
 
         private readonly ILogger<MedicalTreatment> _logger;
+        private readonly IPDFUtil _pdfUtil;
 
-        public MedicalTreatmentService(ILogger<MedicalTreatment> logger, IUnitOfWork unitOfWork) : base(unitOfWork)
+        public MedicalTreatmentService(ILogger<MedicalTreatment> logger, IUnitOfWork unitOfWork, IPDFUtil pdfUtil) : base(unitOfWork)
         {
             _logger = logger;
+            _pdfUtil = pdfUtil;
         }
 
         public override MedicalTreatment Get(int id)
@@ -202,10 +200,10 @@
             }
         }
 
-        public void GeneratePdf(int id)
+        public Stream GeneratePdf(int id)
         {
             MedicalTreatment treatment = _unitOfWork.MedicalTreatmentRepository.Get(id);
-            PDFUtil.GenerateTreatmentPdf(treatment);
+            return _pdfUtil.GenerateTreatmentPdf(treatment);
         }
 
     }

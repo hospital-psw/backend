@@ -1,19 +1,15 @@
 ﻿namespace HospitalAPI.Controllers.Examinations
 {
-    using HospitalAPI.Dto.Examinations;
     using HospitalAPI.Mappers.Examinations;
     using HospitalLibrary.Core.DTO.Examinations;
     using HospitalLibrary.Core.DTO.PDF;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Examinations.Core;
     using HospitalLibrary.Util;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Text.RegularExpressions;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -82,11 +78,8 @@
         [HttpPost("pdf")]
         public IActionResult FetchPdf(AnamnesisPdfDTO dto)
         {
-
-            _anamnesisService.GeneratePdf(dto);
-
-            var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/anamnesis.pdf", FileMode.Open);
-            return File(stream, "application/pdf", "anamnesis.pdf");
+            //var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/anamnesis.pdf", FileMode.Open);
+            return File(_anamnesisService.GeneratePdf(dto), "application/pdf", "anamnesis.pdf");
 
         }
 

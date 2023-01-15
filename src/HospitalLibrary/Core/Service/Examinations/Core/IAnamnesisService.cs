@@ -5,11 +5,8 @@
     using HospitalLibrary.Core.Model.Domain;
     using HospitalLibrary.Core.Model.Examinations;
     using HospitalLibrary.Core.Service.Core;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.IO;
 
     public interface IAnamnesisService : IBaseService<Anamnesis>
     {
@@ -25,7 +22,7 @@
 
         Anamnesis GetByAppointment(int id);
 
-        void GeneratePdf(AnamnesisPdfDTO dto);
+        Stream GeneratePdf(AnamnesisPdfDTO dto);
 
         IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(List<string> criteriasList);
     }

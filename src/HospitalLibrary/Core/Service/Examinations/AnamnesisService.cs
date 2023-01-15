@@ -14,6 +14,7 @@
     using Microsoft.Extensions.Logging;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -22,10 +23,12 @@
     {
 
         private readonly ILogger<AnamnesisService> _logger;
+        private readonly IPDFUtil _pdfUtil;
 
-        public AnamnesisService(IUnitOfWork unitOfWork, ILogger<AnamnesisService> logger) : base(unitOfWork)
+        public AnamnesisService(IUnitOfWork unitOfWork, ILogger<AnamnesisService> logger, IPDFUtil pdfUtil) : base(unitOfWork)
         {
             _logger = logger;
+            _pdfUtil = pdfUtil;
         }
 
         public override IEnumerable<Anamnesis> GetAll()
@@ -131,10 +134,10 @@
             return _unitOfWork.AnamnesisRepository.GetByAppointment(id);
         }
 
-        public void GeneratePdf(AnamnesisPdfDTO dto)
+        public Stream GeneratePdf(AnamnesisPdfDTO dto)
         {
             Anamnesis anamnesis = _unitOfWork.AnamnesisRepository.GetByAppointment(dto.AppointmentId);
-            PDFUtil.GenerateAnamnesisPDF(anamnesis, dto);
+            return _pdfUtil.GenerateAnamnesisPDF(anamnesis, dto);
         }
 
         public IEnumerable<Anamnesis> GetAnamnesesBySearchCriteria(List<string> criteriasList)

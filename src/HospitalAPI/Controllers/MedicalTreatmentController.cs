@@ -144,8 +144,8 @@
         {
             _medicalTreatmentService.GeneratePdf(id);
 
-            var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/treatment.pdf", FileMode.Open);
-            return File(stream, "application/pdf", "treatment.pdf");
+            //var stream = new FileStream(@"./../HospitalLibrary/Resources/PDF/treatment.pdf", FileMode.Open);
+            return File(_medicalTreatmentService.GeneratePdf(id), "application/pdf", "treatment.pdf");
 
         }
     }
