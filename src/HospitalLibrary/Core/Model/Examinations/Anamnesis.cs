@@ -120,7 +120,7 @@
         public override void Apply(DomainEvent changes)
         {
             When((dynamic)changes);
-            Version = Version++;
+            Version += 1;
         }
 
         private void When(SymptomsChanged symptomsChanged)

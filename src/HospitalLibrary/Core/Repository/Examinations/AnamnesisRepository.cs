@@ -80,5 +80,10 @@
                     || x.Symptoms.Exists(s => s.Name.ToUpper().Contains(criteria.ToUpper())))
                     ).ToList();
         }
+
+        public IEnumerable<Anamnesis> GetAllFinishedAnamneses()
+        {
+            return GetAll().Where(x => x.Appointment.IsDone).ToList();
+        }
     }
 }

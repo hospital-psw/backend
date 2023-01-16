@@ -1,18 +1,15 @@
 ﻿namespace IntegrationLibrary.UrgentBloodTransfer.Model
 {
-    using grpcServices;
+    using BloodBank;
     using IntegrationLibrary.Core;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class UrgentBloodTransfer : Entity
     {
         public grpcServices.BloodType BloodType { get; set; }
         public uint Amount { get; set; }
         public bool HTTP { get; set; }
+        public BloodBank Sender { get; set; }
 
         public UrgentBloodTransfer(grpcServices.BloodType bloodType, uint amount, bool hTTP)
         {

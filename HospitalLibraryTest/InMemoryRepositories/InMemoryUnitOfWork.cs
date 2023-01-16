@@ -72,6 +72,9 @@
         public IAnamnesisRepository AnamnesisRepository { get; set; }
 
         public IRenovationEventRepository RenovationEventRepository => throw new NotImplementedException();
+        public IAppointmentSchedulingRootRepository AppointmentSchedulingRootRepository => throw new NotImplementedException();
+
+        public IBloodAdditionRepository BloodAdditionRepository { get; set; }
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {

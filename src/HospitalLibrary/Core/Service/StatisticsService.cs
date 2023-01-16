@@ -17,6 +17,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Xml.Linq;
 
     public class StatisticsService : IStatisticsService
     {
@@ -171,6 +172,20 @@
 
         public List<int> GetNumberOfDoctorAppointmentsPerMonth(int doctorId, int month, int year)
         {
+            //List<int> retList = new();
+            //var allDays = from day in CreateMonthList(month)
+            //                let key = new { Day = day }
+            //                join appointment in _unitOfWork.AppointmentRepository.GetAll().Where(a => a.Doctor.Id == doctorId && a.Date.Month == month && a.Date.Year == year) on key
+            //                equals new { appointment.Date.Day } into g
+            //                select new { key, total = g.Count() };
+            //Console.WriteLine(allDays);
+
+            //foreach (var element in allDays)
+            //{
+            //    Console.WriteLine(element);
+            //    retList.Add(element.total);
+            //}
+            //return retList;
             try
             {
                 List<int> retList = CreateMonthList(month);
@@ -326,6 +341,7 @@
             List<double> structure = new List<double>() { 0, 0, 0, 0, 0 };
             foreach (double num in averages)
             {
+                Console.WriteLine(num);
                 if (num <= 30)
                     structure[0]++;
                 else if (num > 30 && num <= 60)
@@ -353,7 +369,8 @@
                 else if (e.EventName.Equals("SCHEDULE_EVENT"))
                     lastStep = e.TimeStamp;
             }
-            return (lastStep - firstStep).Seconds;
+            return lastStep.Subtract(firstStep).TotalSeconds;
+            //return (lastStep - firstStep).Seconds;
         }
 
         private bool DoesScheduleEventExists(RenovationRequest request)

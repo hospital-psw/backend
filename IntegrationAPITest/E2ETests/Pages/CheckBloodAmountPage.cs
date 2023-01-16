@@ -1,11 +1,10 @@
 ﻿namespace IntegrationAPITest.E2ETests.Pages
 {
     using OpenQA.Selenium;
-    using OpenQA.Selenium.Chrome;
 
     public class CheckBloodAmountPage
     {
-        private readonly ChromeDriver _driver;
+        private readonly IWebDriver _driver;
         public const string URI = "http://localhost:4200/app/bloodbank/46/detail";
 
         public IWebElement Email => _driver.FindElement(By.Id("email"));
@@ -19,11 +18,10 @@
         public IWebElement Freq => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/fieldset[1]/div/div[1]/mat-form-field/div/div[1]/div/input"));
 
         public IWebElement toast;
-        public IWebElement SaveReport => _driver.FindElement(By.XPath("/html/body/app-root/app-application-main/div/div[2]/div/app-detail/mat-card/div[2]/fieldset[1]/div/div[4]/button"));
-        public CheckBloodAmountPage(ChromeDriver driver)
+        public IWebElement SaveReport;
+        public CheckBloodAmountPage(IWebDriver driver)
         {
             _driver = driver;
-            _driver.Navigate().GoToUrl(URI);
         }
 
         public Boolean GetToast()

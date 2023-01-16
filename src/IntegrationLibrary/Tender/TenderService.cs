@@ -182,6 +182,19 @@
             }
         }
 
+        public List<Tender> GetClosed()
+        {
+            try
+            {
+                return _unitOfWork.TenderRepository.GetAll().Where(x => x.Status == TenderStatus.CLOSED).ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error in TenderService in GetActive {e.Message} in {e.StackTrace}");
+                return null;
+            }
+        }
+
         public List<double> GetMoneyPerMonth(int year)
         {
             List<double> moneyPerMonth = new List<double>();

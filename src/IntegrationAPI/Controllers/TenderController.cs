@@ -18,11 +18,13 @@
     {
         private readonly ITenderService _tenderService;
         private readonly IMapper _mapper;
+        private readonly ITenderStatisticsService _statisticsService;
 
-        public TenderController(ITenderService tenderService, IMapper mapper)
+        public TenderController(ITenderService tenderService, IMapper mapper, ITenderStatisticsService tenderStatisticsService)
         {
             _tenderService = tenderService;
             _mapper = mapper;
+            _statisticsService = tenderStatisticsService;
         }
 
         [HttpGet("all")]
@@ -35,6 +37,12 @@
         public IActionResult GetActive()
         {
             return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetActive()));
+        }
+
+        [HttpGet("closed")]
+        public IActionResult GetClosed()
+        {
+            return Ok(_mapper.Map<IEnumerable<GetTenderDTO>>(_tenderService.GetClosed()));
         }
 
         [HttpGet("{id}")]
@@ -152,6 +160,13 @@
                 //return Ok(moneyPerMonth);
                 return Ok(JsonSerializer.Serialize<List<double>>(bloodQuantityPerMonth));
             }
+        }
+        [HttpPost("generate-report")]
+        public IActionResult GenerateReport([FromBody] RangeDTO range)
+        {
+            var report = _statisticsService.GenerateHTMLReport(range.start, range.end);
+            report.Position = 0;
+            return new FileStreamResult(report, "application/pdf");
         }
     }
 }

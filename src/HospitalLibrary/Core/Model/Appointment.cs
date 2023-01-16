@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -23,6 +24,8 @@
         public ApplicationPatient Patient { get; set; }
 
         public ApplicationDoctor Doctor { get; set; }
+
+        public CancellationInfo CancellationInfo { get; set; }
 
         public override bool Equals(object obj)
         {

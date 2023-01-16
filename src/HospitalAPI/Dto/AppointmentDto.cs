@@ -25,5 +25,7 @@
         public ApplicationPatientDTO Patient { get; set; }
 
         public ApplicationDoctorDTO Doctor { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }
