@@ -1,7 +1,9 @@
 ﻿namespace HospitalLibrary.Core.Model
 {
     using HospitalLibrary.Core.DTO.Feedback;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,9 +12,9 @@
 
     public class Feedback : Entity
     {
-        public Patient Creator { get; set; }
+        public ApplicationPatient Creator { get; set; }
 
-        public string Message { get; set; }
+        public FeedbackMessage Message { get; set; }
 
         public bool Anonymous { get; set; }
 
@@ -26,7 +28,7 @@
 
         public Feedback(NewFeedbackDTO dto)
         {
-            Message = dto.Message;
+            Message = FeedbackMessage.Create(dto.Message);
             Anonymous = dto.Anonymous;
             Public = dto.Public;
         }

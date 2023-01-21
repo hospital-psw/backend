@@ -2,6 +2,7 @@
 {
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ValueObjects;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,13 +14,17 @@
         Appointment Get(int id);
         Appointment Update(Appointment appointment);
         IEnumerable<Appointment> GetAll();
-
-        IEnumerable<RecommendedAppointmentDto> RecommendAppointments(RecommendRequestDto dto);
-
+        void CancelAppointment(int id);
         Appointment Create(NewAppointmentDto dto);
 
-        void Delete(Appointment appointment);
+        void Delete(Appointment appointment, CancellationInfo info);
 
         IEnumerable<Appointment> GetByDoctorsId(int doctorId);
+
+        IEnumerable<Appointment> GetByPatientsId(int doctorId);
+
+        IEnumerable<Appointment> GetAppointmentsInDateRangeDoctor(int doctorId, DateTime from, DateTime to);
+
+        List<Appointment> GetAllForRoom(int roomId);
     }
 }

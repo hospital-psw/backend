@@ -18,5 +18,15 @@ namespace HospitalLibrary.Core.Model
         public string Password { get; set; }
 
         public Role Role { get; set; }
+
+        public User() { }
+        public User(string firstName, string lastName, string email, string password, Role role)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Password = password;
+            Role = role;
+        }
     }
 }

@@ -1,11 +1,11 @@
 ﻿namespace IntegrationAPI.Controllers
 {
     using AutoMapper;
-    using IntegrationAPI.DTO;
+    using IntegrationAPI.DTO.BloodBank;
+    using IntegrationAPI.Token;
     using IntegrationLibrary.BloodBank;
     using IntegrationLibrary.BloodBank.Interfaces;
-    using IntegrationLibrary.Exceptions;
-    using IntegrationLibrary.Util.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -16,13 +16,13 @@
     {
         private readonly IBloodBankService _bloodBankService;
         private readonly IMapper _mapper;
-        private readonly IMailSender _mailer;
+        private readonly ITokenHelper _tokenHelper;
 
-        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, IMailSender mailer)
+        public BloodBankController(IBloodBankService bloodBankService, IMapper mapper, ITokenHelper tokenHelper)
         {
             _bloodBankService = bloodBankService;
             _mapper = mapper;
-            _mailer = mailer;
+            _tokenHelper = tokenHelper;
         }
 
         [HttpGet("all")]
@@ -63,6 +63,7 @@
         }
 
         [HttpPost("Login")]
+        [AllowAnonymous]
         public IActionResult Login(BloodBankManagerLoginDTO credentials)
         {
             try
@@ -82,13 +83,67 @@
                 }
                 if (bloodBank.AdminPassword.Equals(credentials.Password))
                 {
-                    return Ok(bloodBank.IsDummyPassword);
+                    if (!bloodBank.IsDummyPassword)
+                    {
+                        return Ok(
+                            new LoginResponseDTO()
+                            {
+                                Id = bloodBank.Id,
+                                Email = bloodBank.Email,
+                                Token = _tokenHelper.GenerateToken(bloodBank.Id, bloodBank.Email),
+                                ExpiresIn = 60
+                            });
+                    }
+                    return Ok();
                 }
                 return Unauthorized();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPatch("saveConfiguration")]
+        public IActionResult SaveConfiguration(SaveConfigurationDTO configDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (configDTO == null)
+                {
+                    return BadRequest();
+                }
+                var retVal = _bloodBankService.SaveConfiguration(configDTO.Id, configDTO.Frequently, configDTO.ReportFrom, configDTO.ReportTo);
+                return Ok(_mapper.Map<GetBloodBankDTO>(retVal));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+        [HttpPatch("monthlyTransferConfiguration/{id}")]
+        public IActionResult SaveMonthlyTransferConfiguration(int id, MonthlyTransfer mt)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                if (mt == null)
+                {
+                    return BadRequest();
+                }
+                var retVal = _bloodBankService.SaveMonthlyTransferConfiguration(id, mt);
+                return Ok(_mapper.Map<GetBloodBankDTO>(retVal));
+            }
+            catch (Exception)
+            {
+                return BadRequest();
             }
         }
 
@@ -115,7 +170,7 @@
                 _bloodBankService.Update(bloodBank);
                 return Ok(bloodBank);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new StatusCodeResult(500);
             }
@@ -163,7 +218,7 @@
             {
                 return Ok(_bloodBankService.CheckBloodType(id, type));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return new StatusCodeResult(500);
             }

@@ -2,27 +2,27 @@
 {
     using HospitalAPI.Dto;
     using HospitalAPI.Mappers;
+    using HospitalAPI.TokenServices;
     using HospitalLibrary.Core.DTO.Feedback;
     using HospitalLibrary.Core.Model;
-    using HospitalLibrary.Core.Model.Enums;
-    using HospitalLibrary.Core.Service;
     using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.InteropServices;
 
     [ApiController]
     [Route("api/[controller]")]
     public class FeedbackController : BaseController<Feedback>
     {
         private IFeedbackService _feedbackService;
+        private readonly ITokenService _tokenService;
 
-        public FeedbackController(IFeedbackService feedbackService) : base()
+        public FeedbackController(IFeedbackService feedbackService, ITokenService tokenService) : base()
         {
             _feedbackService = feedbackService;
+            _tokenService = tokenService;
         }
 
         [HttpGet("all")]
@@ -130,14 +130,23 @@
         }
 
         [HttpPost("add")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         public IActionResult Add(NewFeedbackDTO dto)
         {
-            if (dto == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest("Dto is null, please check your input.");
-            }
+                string token = Request.Headers["Authorization"];
+                if (token == null || !_tokenService.IsTokenValid(token))
+                {
+                    return BadRequest("Invalid Authorization");
+                }
 
-            return Ok(_feedbackService.Add(dto));
+                return Ok(_feedbackService.Add(dto));
+            }
+            else
+            {
+                return BadRequest("Something went wrong...");
+            }
         }
 
         [HttpPut("make/public/{id}")]

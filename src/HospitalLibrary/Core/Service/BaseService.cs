@@ -2,6 +2,8 @@
 {
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
+    using HospitalLibrary.Core.Service.Core;
     using HospitalLibrary.Settings;
     using Microsoft.Extensions.Logging;
     using System;
@@ -11,19 +13,21 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BaseService<TEntity> where TEntity : class
+    public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class
     {
 
-        public BaseService()
+        protected readonly IUnitOfWork _unitOfWork;
+
+        public BaseService(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public virtual TEntity Get(int id)
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.GetRepository<TEntity>().Get(id);
+                return _unitOfWork.GetRepository<TEntity>().Get(id);
             }
             catch (Exception)
             {
@@ -35,8 +39,7 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                return unitOfWork.GetRepository<TEntity>().GetAll();
+                return _unitOfWork.GetRepository<TEntity>().GetAll();
 
             }
             catch (Exception)
@@ -49,12 +52,10 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.GetRepository<TEntity>().Add(entity);
-                unitOfWork.Save();
+                _unitOfWork.GetRepository<TEntity>().Add(entity);
+                _unitOfWork.Save();
 
                 return entity;
-
             }
             catch (Exception)
             {
@@ -67,12 +68,11 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                TEntity entity = unitOfWork.GetRepository<TEntity>().Get(id);
+                TEntity entity = _unitOfWork.GetRepository<TEntity>().Get(id);
 
                 (entity as Entity).Deleted = true;
-                unitOfWork.GetRepository<TEntity>().Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.GetRepository<TEntity>().Update(entity);
+                _unitOfWork.Save();
 
                 return true;
             }
@@ -86,9 +86,8 @@
         {
             try
             {
-                using UnitOfWork unitOfWork = new(new HospitalDbContext());
-                unitOfWork.GetRepository<TEntity>().Update(entity);
-                unitOfWork.Save();
+                _unitOfWork.GetRepository<TEntity>().Update(entity);
+                _unitOfWork.Save();
 
                 return entity;
             }

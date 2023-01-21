@@ -1,29 +1,38 @@
 ﻿namespace HospitalAPI.Controllers
 {
+    using AutoMapper;
     using HospitalAPI.Dto;
+    using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.EmailServices;
     using HospitalAPI.Mappers;
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using IdentityServer4.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     [ApiController]
     [Route("api/[controller]")]
     public class AppointmentController : BaseController<Appointment>
     {
-        private IAppointmentService _appointmentService;
-        private IEmailService _emailService;
-        private IDoctorService _doctorService;
+        private readonly IAppointmentService _appointmentService;
+        private readonly IEmailService _emailService;
+        private readonly IDoctorScheduleService _doctorScheduleService;
+        private readonly IApplicationPatientService _patientService;
 
-        public AppointmentController(IAppointmentService appointmentService, IEmailService emailService, IDoctorService doctorService)
+        public AppointmentController(IAppointmentService appointmentService,
+            IEmailService emailService,
+            IDoctorScheduleService doctorScheduleService,
+            IApplicationPatientService patientService)
         {
             _appointmentService = appointmentService;
             _emailService = emailService;
-            _doctorService = doctorService;
+            _doctorScheduleService = doctorScheduleService;
+            _patientService = patientService;
         }
 
         [HttpGet("{id}")]
@@ -34,8 +43,8 @@
             {
                 return NotFound();
             }
-            AppointmentDto dto = AppointmentMapper.EntityToEntityDto(appointment);
-            return Ok(dto);
+
+            return Ok(AppointmentMapper.EntityToEntityDto(appointment));
         }
 
         [HttpPut]
@@ -52,7 +61,7 @@
 
             Appointment appointment = _appointmentService.Get(dto.Id);
 
-            if ((DateTime.Now - appointment.Date).TotalDays < 2)
+            if ((appointment.Date - DateTime.Now).TotalDays < 2)
             {
                 return BadRequest("You can't reschedule this appointment.");
             }
@@ -75,7 +84,7 @@
         [Route("recommend")]
         public IActionResult RecommendAppointments(RecommendRequestDto dto)
         {
-            return Ok(_appointmentService.RecommendAppointments(dto));
+            return Ok(_doctorScheduleService.RecommendAppointments(dto));
         }
 
         [HttpPost]
@@ -85,48 +94,77 @@
             return Ok(_appointmentService.Create(dto));
         }
 
-        [HttpDelete]
-        [Route("cancel/{id}")]
-        public IActionResult Cancel(int id)
+        [HttpPut]
+        [Route("cancel")]
+        public IActionResult Cancel(CancelAppointmentDto dto)
         {
-            var appointment = _appointmentService.Get(id);
-
+            var appointment = _appointmentService.Get(dto.AppointmentId);
             if (appointment == null)
             {
                 return NotFound();
             }
 
             _emailService.Send(appointment);
-
-            _appointmentService.Delete(appointment);
+            _appointmentService.Delete(appointment, dto.CancellationInfo);
             return Ok();
         }
 
-        [HttpGet]
-        [Route("doctor/{doctorId}")]
-        public IActionResult GetByDoctorId(int doctorId)
+        [HttpDelete]
+        [Route("cancel/{id}")]
+        public IActionResult Cancel(int id)
         {
-            var doctor = _doctorService.Get(doctorId);
-
-            if (doctor == null)
+            var appointment = _appointmentService.Get(id);
+            if (appointment == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            var appointments = _appointmentService.GetByDoctorsId(doctorId);
+            _emailService.Send(appointment);
+            _appointmentService.CancelAppointment(id);
+            return Ok();
+        }
+
+
+        [HttpGet]
+        [Route("doctor/{id}")]
+        public IActionResult GetDoctorAppointments(int id)
+        {
+            List<Appointment> appointments = (List<Appointment>)_appointmentService.GetByDoctorsId(id);
 
             if (appointments.IsNullOrEmpty())
             {
-                return NoContent();
+                return NotFound();
             }
 
-            var appointmentsDTO = new List<AppointmentDto>();
-            foreach (Appointment a in appointments)
-            {
-                appointmentsDTO.Add(AppointmentMapper.EntityToEntityDto(a));
-            }
-
-            return Ok(appointmentsDTO);
+            return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
         }
+
+        [HttpGet]
+        [Route("room/{id}")]
+        public IActionResult GetAllForRoom(int id)
+        {
+            List<AppointmentDisplayDto> appointmentDtos = new List<AppointmentDisplayDto>();
+            foreach (Appointment appointment in _appointmentService.GetAllForRoom(id))
+            {
+                appointmentDtos.Add(AppointmentDisplayMapper.EntityToEntityDto(appointment));
+            }
+            return Ok(appointmentDtos);
+        }
+
+        [HttpGet("patient/{id}")]
+        public IActionResult GetPatientAppointments(int id)
+        {
+            var patient = _patientService.Get(id);
+            if (patient == null)
+                return NotFound("Patient with this id, doesn't exists in our system.");
+
+            var appointments = _appointmentService.GetByPatientsId(id).ToList();
+            if (appointments == null)
+                return Ok("There are no appointments for this patient.");
+
+            return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
+        }
+
+
     }
 }

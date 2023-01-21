@@ -1,6 +1,7 @@
 ﻿namespace HospitalAPI.Mappers
 {
     using HospitalAPI.Dto;
+    using HospitalAPI.Mappers.AppUsers;
     using HospitalLibrary.Core.Model;
     using System.Collections.Generic;
 
@@ -16,9 +17,10 @@
             dto.Duration = appointment.Duration;
             dto.IsDone = appointment.IsDone;
             dto.ExamType = appointment.ExamType;
-            dto.Patient = PatientMapper.EntityToEntityDto(appointment.Patient);
-            dto.Doctor = DoctorMapper.EntityToEntityDto(appointment.Doctor);
+            dto.Patient = ApplicationPatientMapper.EntityToEntityDTO(appointment.Patient);
+            dto.Doctor = ApplicationDoctorMapper.EntityToEntityDTO(appointment.Doctor);
             dto.Room = RoomMapper.EntityToEntityDto(appointment.Room);
+            dto.Deleted = appointment.Deleted;
 
             return dto;
         }
@@ -26,6 +28,7 @@
         public static List<AppointmentDto> EntityListToEntityDtoList(List<Appointment> appointments)
         {
             List<AppointmentDto> appointmentDtos = new List<AppointmentDto>();
+            if (appointments == null) return appointmentDtos;
             appointments.ForEach(x => appointmentDtos.Add(EntityToEntityDto(x)));
             return appointmentDtos;
         }
