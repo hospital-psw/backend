@@ -16,7 +16,7 @@ namespace HospitalLibrary.Core.Model
         public List<RenovationRequest> Renovations { get; private set; }
 
 
-        private Room() { }
+        public Room() { }
 
         public void UpdatePurpose(string newPurpose)
         {

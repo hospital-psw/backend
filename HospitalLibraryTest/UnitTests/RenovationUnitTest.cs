@@ -38,84 +38,8 @@
             return unitOfWork;
         }
 
-        //[Fact]
-        //public void Merge_renovation() {
-        //    var unitOfWork = SetupUOW();
-
-        //    var room1 = new Room()
-        //    {
-        //        Id = 1,
-        //        Capacity = 1,
-        //    };
-
-        //    var room2 = new Room()
-        //    {
-        //        Id = 2,
-        //    };
-
-        //    var equipmentRoom1 = new Equipment()
-        //    {
-        //        Id = 1,
-        //        Room = room1,
-        //        EquipmentType = EquipmentType.BED,
-        //        Quantity = 10
-        //    };
-
-        //    var roomMap1 = new RoomMap()
-        //    {
-        //        X = 1,
-        //        Z = 1,
-        //        width = 1,
-        //        depth = 1
-        //    };
-
-        //    var roomMap2 = new RoomMap()
-        //    {
-        //        X = 2,
-        //        Z = 1,
-        //        width = 1,
-        //        depth = 1
-        //    };
-
-        //    var newRoom = new Room() {
-        //        Id = 3,
-        //    };
-
-
-        //    var queue = new Queue<RoomMap>();
-        //    queue.Enqueue(roomMap1);
-        //    queue.Enqueue(roomMap2);
-        //    queue.Enqueue(roomMap1);
-        //    queue.Enqueue(roomMap2);
-
-        //    RoomMap roomMap = null;
-        //    Room newRm = null;
-        //    unitOfWork.Setup(u => u.MapRepository.GetRoomMapById(It.IsAny<int>())).Returns(queue.Dequeue);
-
-        //    unitOfWork.Setup(u => u.MapRepository.Create(It.IsAny<RoomMap>())).Callback((RoomMap map) =>
-        //    {
-        //        roomMap = map;
-        //    });
-
-        //    unitOfWork.Setup(unitOfWork => unitOfWork.RoomRepository.Create(It.IsAny<Room>())).Callback((Room room) =>
-        //    {
-        //        newRm = room;
-        //    });
-
-
-
-
-        //    Assert.NotNull(newRm);
-        //    Assert.NotNull(roomMap);
-
-        //}
-
-        [Fact]
-        public void Test_x_coordinate_when_merge_bigger_rooms()
+        private void SetUpRooms(Room room1, Room room2)
         {
-
-            var unitOfWork = SetupUOW();
-
             Floor floor = new Floor()
             {
                 Building = new Building()
@@ -132,13 +56,17 @@
                 Start = new DateTime(),
                 End = new DateTime(1, 1, 1, 23, 0, 0)
             };
-            var room1 = Room.Create("001", floor, "ordinacija", wh);
+            room1 = Room.Create("001", floor, "ordinacija", wh);
             room1.SetId(1);
             room1.SetCapacity(1);
 
-            var room2 = Room.Create("001", floor, "ordinacija", wh);
+            room2 = Room.Create("001", floor, "ordinacija", wh);
             room2.SetId(2);
 
+        }
+        private RenovationService SetUpRoomMaps(double x, double z, double width, double depth)
+        {
+            var unitOfWork = SetupUOW();
             var roomMap1 = new RoomMap()
             {
                 X = 1,
@@ -149,10 +77,10 @@
 
             var roomMap2 = new RoomMap()
             {
-                X = 2.5,
-                Z = 1,
-                width = 2,
-                depth = 1
+                X = x,
+                Z = z,
+                width = width,
+                depth = depth
             };
 
             var queue = new Queue<RoomMap>();
@@ -161,6 +89,17 @@
 
             unitOfWork.Setup(u => u.MapRepository.GetRoomMapById(It.IsAny<int>())).Returns(queue.Dequeue);
             var renovationService = new RenovationService(unitOfWork.Object);
+            return renovationService;
+        }
+
+        [Fact]
+        public void Test_x_coordinate_when_merge_bigger_rooms()
+        {
+
+            Room room1 = new Room();
+            Room room2 = new Room();
+            SetUpRooms(room1, room2);
+            RenovationService renovationService = SetUpRoomMaps(2.5,1,2,1);
 
             //Act
             double res = renovationService.GetNewRoomX(room1, room2);
@@ -172,53 +111,10 @@
         public void Test_x_coordinate_when_merge_smaller_rooms()
         {
 
-            var unitOfWork = SetupUOW();
-
-            Floor floor = new Floor()
-            {
-                Building = new Building()
-                {
-                    Address = "Jovana Piperovica 14",
-                    Name = "Radosno detinjstvo"
-                },
-                Number = FloorNumber.Create(69),
-                Purpose = "Krematorijum"
-            };
-
-            WorkingHours wh = new WorkingHours()
-            {
-                Start = new DateTime(),
-                End = new DateTime(1, 1, 1, 23, 0, 0)
-            };
-            var room1 = Room.Create("001", floor, "ordinacija", wh);
-            room1.SetId(1);
-            room1.SetCapacity(1);
-
-            var room2 = Room.Create("001", floor, "ordinacija", wh);
-            room2.SetId(2);
-
-            var roomMap1 = new RoomMap()
-            {
-                X = 1,
-                Z = 1,
-                width = 1,
-                depth = 1
-            };
-
-            var roomMap2 = new RoomMap()
-            {
-                X = 1,
-                Z = 1,
-                width = 1,
-                depth = 1
-            };
-
-            var queue = new Queue<RoomMap>();
-            queue.Enqueue(roomMap1);
-            queue.Enqueue(roomMap2);
-
-            unitOfWork.Setup(u => u.MapRepository.GetRoomMapById(It.IsAny<int>())).Returns(queue.Dequeue);
-            var renovationService = new RenovationService(unitOfWork.Object);
+            Room room1 = new Room();
+            Room room2 = new Room();
+            SetUpRooms(room1, room2);
+            RenovationService renovationService = SetUpRoomMaps(1, 1, 1, 1);
 
             //Act
             double res = renovationService.GetNewRoomX(room1, room2);

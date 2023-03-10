@@ -227,17 +227,20 @@
 
             EnsureMatSelectsAreAssigned();
 
-            MatSelects = Dialogue.FindElements(By.TagName("mat-select"));
+            //MatSelects = Dialogue.FindElements(By.TagName("mat-select"));
 
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
 
 
-            EnsureMatSelectsFirstIsAssigned();
+            //EnsureMatSelectsFirstIsAssigned();
 
-            MatSelects.First().Click();
-            driver.ExecuteJavaScript("arguments[0].click();", MatSelects.First());
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            IWebElement element = wait.Until(e => Dialogue.FindElements(By.TagName("mat-select")).First());
+            
+            element.Click();
+            driver.ExecuteJavaScript("arguments[0].click();", element);
 
         }
 

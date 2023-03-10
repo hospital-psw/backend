@@ -1,5 +1,13 @@
-# hospital-be
+# Hospital Backend
+![example workflow](https://github.com/hospital-psw/backend/actions/workflows/main.yml/badge.svg)
 
-1. Instalirati Postgres
-2. Ako je potrebno, u appsettings.json (HospitalAPI) promeniti username i password da odgovara bazi
-3. U terminalu se pozicionirati u HospitalAPI i izvršiti komandu __dotnet ef database update__ kako bi se kreirala baza
+## Requirements
+- Visual Studio 2022(Community or Enterprise)
+- Some sort of database(We recommend that you use LocalDB since it is likely already bundled with Visual Studio)
+
+## Running the app
+- Replace the connection strings in IntegationAPI and HospitalAPI `appsettings.json` file
+- Start the app
+
+Yay your app is now running!
+
