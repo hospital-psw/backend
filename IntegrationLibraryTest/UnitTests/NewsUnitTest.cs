@@ -17,16 +17,9 @@
         [Fact]
         public void Extract_PNG_extension()
         {
-            var news = new News
-            {
-                Title = "Title",
-                Text = "Body",
-                Image = "png;IMAGE_DATA",
-                Status = NewsStatus.PENDING
-            };
-            var logger = new Mock<ILogger<News>>();
-            var unitOfWork = new Mock<IUnitOfWork>();
-            var service = new NewsService(logger.Object, unitOfWork.Object);
+            
+            News news = InstantiateNews();
+            NewsService service = PrepareService();
 
             var result = service.GetImageExtension(news);
 
@@ -36,20 +29,30 @@
         [Fact]
         public void Extract_image_data()
         {
-            var news = new News
+            News news = InstantiateNews();
+            NewsService service = PrepareService();
+
+            var result = service.GetImageData(news);
+            result.ShouldBe("IMAGE_DATA");
+        }
+
+        private News InstantiateNews()
+        {
+            return  new News
             {
                 Title = "Title",
                 Text = "Body",
                 Image = "png;IMAGE_DATA",
                 Status = NewsStatus.PENDING
             };
+        }
+
+        private NewsService PrepareService()
+        {
             var logger = new Mock<ILogger<News>>();
             var unitOfWork = new Mock<IUnitOfWork>();
             var service = new NewsService(logger.Object, unitOfWork.Object);
-
-            var result = service.GetImageData(news);
-
-            result.ShouldBe("IMAGE_DATA");
+            return service;
         }
     }
 }
