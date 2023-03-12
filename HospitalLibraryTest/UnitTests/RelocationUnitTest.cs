@@ -95,29 +95,10 @@
             toRoom.SetId(2);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
-            /*var equipment = new Equipment()
-            {
-                Id = 1,
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Deleted = false,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 10,
-                Room = room
-            };*/
+           
 
             var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
-            /*var equipment2 = new Equipment()
-            {
-                Id = 1,
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Deleted = false,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 15,
-                Room = room
-            };*/
-
+          
 
             RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
@@ -184,37 +165,12 @@
             toRoom.SetId(2);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
-            /*var equipment = new Equipment()
-            {
-                Id = 1,
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Deleted = false,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 10,
-                Room = room
-            };*/
+         
             var createdEquipment = Equipment.Create(EquipmentType.BED, 2, toRoom);
-            /*var createdEquipment = new Equipment()
-            {
-                Id = 3,
-                Deleted = false,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 2,
-                Room = toRoom
-            };*/
+           
 
             var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
-            /*var equipment2 = new Equipment()
-            {
-                Id = 1,
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Deleted = false,
-                EquipmentType = EquipmentType.BED,
-                Quantity = 15,
-                Room = room
-            };*/
+           
 
             RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
 
@@ -243,5 +199,48 @@
             Assert.Equal(2, createdEquipment.Quantity);
             Assert.Equal(13, reqUpdate.Equipment.Quantity);
         }
+
+        private RelocationRequest CreateRelocationRequest()
+        {
+            Room room = new Room();
+            Room fromRoom = new Room();
+            Room toRoom = new Room();
+            CreateRooms(room,fromRoom,toRoom);
+            Equipment equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
+            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
+            return request;
+        }
+
+        private void CreateRooms(Room room, Room fromRoom, Room toRoom) 
+        {
+            Floor floor = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 14",
+                    Name = "Radosno detinjstvo"
+                },
+                Number = FloorNumber.Create(69),
+                Purpose = "Krematorijum"
+            };
+
+            WorkingHours wh = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+            room = Room.Create("001", floor, "ordinacija", wh);
+            room.SetId(1);
+            room.SetCapacity(1);
+
+            fromRoom = Room.Create("002", floor, "ordinacija", wh);
+            fromRoom.SetId(5);
+
+            toRoom = Room.Create("003", floor, "ordinacija", wh);
+            toRoom.SetId(2);
+            
+
+        }
+
     }
 }

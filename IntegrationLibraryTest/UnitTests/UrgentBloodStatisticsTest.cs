@@ -48,17 +48,29 @@
         {
             var service = SetupService();
 
-            var result = service.GetAmountByBloodBankByBloodGroup(new DateTime(2022, 11, 1), new DateTime(2022, 11, 30));
-
-            result.Count.ShouldBe(2);
+            
             var expectedResult_BloodBank1 = new Dictionary<string, double>();
             var expectedResult_BloodBank2 = new Dictionary<string, double>();
             expectedResult_BloodBank1.Add("Abplus", 5);
             expectedResult_BloodBank1.Add("Bplus", 10);
             expectedResult_BloodBank2.Add("Oplus", 3);
             expectedResult_BloodBank2.Add("Ominus", 7);
+
+            var result = service.GetAmountByBloodBankByBloodGroup(new DateTime(2022, 11, 1), new DateTime(2022, 11, 30));
+
+
             result["Blood bank 1"].ShouldBe(expectedResult_BloodBank1);
             result["Blood bank 2"].ShouldBe(expectedResult_BloodBank2);
+        }
+
+        [Fact]
+        public void Get_amount_by_blood_group_for_specific_date_range()
+        {
+            var service = SetupService();
+
+            var result = service.GetAmountByBloodBankByBloodGroup(new DateTime(2022, 11, 1), new DateTime(2022, 11, 30));
+
+            result.Count.ShouldBe(2);
         }
 
         [Fact]
