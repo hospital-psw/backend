@@ -1,5 +1,6 @@
 ﻿namespace HospitalAPITest.IntegrationTests
 {
+    using CSharpFunctionalExtensions;
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto;
     using HospitalAPI.Dto.Consilium;
@@ -48,29 +49,13 @@
         [Fact]
         public void Schedule_consilium_by_selected_doctors()
         {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            List<int> selectedDoctors = new List<int>();
-            selectedDoctors.Add(4);
-            selectedDoctors.Add(6);
-
-            ScheduleConsiliumDto dto = new ScheduleConsiliumDto
-            {
-                DateRange = new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)),
-                Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
-                Duration = 30,
-                DoctorId = 4,
-                SelectedDoctors = selectedDoctors,
-                SelectedSpecializations = null,
-                RoomId = 1
-            };
-
-            var result = ((OkObjectResult)controller.Schedule(dto)).Value as ConsiliumDto;
+            ScheduleConsiliumDto dto = SetPossibleConsiliumDates(new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)));
+            
+            var result = ((OkObjectResult)TryToSchedule(dto)).Value as ConsiliumDto;
 
             Assert.NotNull(result);
             Assert.Equal("Hitan sastanak oko pacijenta Petra Petrovica.", result.Topic);
-            Assert.Equal(new DateTime(2022, 12, 21, 7, 30, 0), result.DateTime);
+            Assert.Equal(new DateTime(2022, 12, 21, 7, 0, 0), result.DateTime);
         }
 
         [Fact]
@@ -83,22 +68,45 @@
             selectedDoctors.Add(4);
             selectedDoctors.Add(6);
 
-            ScheduleConsiliumDto dto = new ScheduleConsiliumDto
-            {
-                DateRange = new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 19)),
-                Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
-                Duration = 30,
-                DoctorId = 4,
-                SelectedDoctors = selectedDoctors,
-                SelectedSpecializations = null,
-                RoomId = 1
-            };
+            ScheduleConsiliumDto dto = SetPossibleConsiliumDates(new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)));
 
-            var result = ((BadRequestObjectResult)controller.Schedule(dto)).Value;
+            var result = ((BadRequestObjectResult)TryToSchedule(dto));
 
             Assert.NotNull(result);
             Assert.Equal("One or more selected doctors are not able to attend the consilium in the given period.", result.ToString());
         }
+
+        private IActionResult TryToSchedule(ScheduleConsiliumDto dto)
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            return controller.Schedule(dto);
+
+        }
+
+        private ScheduleConsiliumDto SetPossibleConsiliumDates(DateRange dateRange) {
+
+            ScheduleConsiliumDto dto = new ScheduleConsiliumDto
+            {
+                DateRange = dateRange,
+                Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
+                Duration = 30,
+                DoctorId = 4,
+                SelectedDoctors = GetSelectedDoctors(),
+                SelectedSpecializations = null,
+                RoomId = 1
+            };
+            return dto;
+        }
+
+        private List<int> GetSelectedDoctors() 
+        {
+            List<int> selectedDoctors = new List<int>();
+            selectedDoctors.Add(4);
+            selectedDoctors.Add(6);
+            return selectedDoctors;
+        }
+
 
         [Fact]
         public void Test_get_consiliums_for_room()
