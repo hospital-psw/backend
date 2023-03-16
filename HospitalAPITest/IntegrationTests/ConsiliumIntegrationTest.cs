@@ -61,13 +61,6 @@
         [Fact]
         public void Schedule_consilium_by_selected_doctors_fail()
         {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            List<int> selectedDoctors = new List<int>();
-            selectedDoctors.Add(4);
-            selectedDoctors.Add(6);
-
             ScheduleConsiliumDto dto = SetPossibleConsiliumDates(new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)));
 
             var result = ((BadRequestObjectResult)TryToSchedule(dto));
