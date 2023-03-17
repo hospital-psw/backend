@@ -43,13 +43,10 @@
         {
             var unitOfWork = SetupUOW();
             var vacationRequestsService = SetupService();
-            AppointmentService appointmentService = new AppointmentService(null, new InMemoryUnitOfWork());
-            IEnumerable<Appointment> appointments = appointmentService.GetAppointmentsForDoctor(4);
-            DateOnly expected = DateOnly.FromDateTime(appointments.Last().Date).AddDays(1);
             
             DateOnly result = vacationRequestsService.GetFirstAvailableDateForVacationForDoctor(4);
             
-            Assert.Equal(expected, result);
+            Assert.Equal(result,new DateOnly(2022,11,23));
 
         }
 
