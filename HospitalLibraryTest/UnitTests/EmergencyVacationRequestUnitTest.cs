@@ -4,6 +4,8 @@
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.VacationRequests;
+    using HospitalLibrary.Core.Repository;
+    using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
     using HospitalLibraryTest.InMemoryRepositories;
     using Microsoft.Extensions.Logging;
@@ -21,6 +23,34 @@
         {
             var logger = new Mock<ILogger<VacationRequest>>();
             return new VacationRequestsService(logger.Object, new InMemoryUnitOfWork());
+        }
+
+        public Mock<IUnitOfWork> SetupUOW()
+        {
+            var vacationRequestRepository = new Mock<IVacationRequestsRepository>();
+            var appointmentRepository = new Mock<IAppointmentRepository>();
+
+            var unitOfWork = new Mock<IUnitOfWork>();
+
+            unitOfWork.Setup(u => u.VacationRequestsRepository).Returns(vacationRequestRepository.Object);
+            unitOfWork.Setup(u => u.AppointmentRepository).Returns(appointmentRepository.Object);
+
+            return unitOfWork;
+        }
+
+        [Fact]
+        public void Get_first_available_date_for_vacation()
+        {
+            var unitOfWork = SetupUOW();
+            var vacationRequestsService = SetupService();
+            AppointmentService appointmentService = new AppointmentService(null, new InMemoryUnitOfWork());
+            IEnumerable<Appointment> appointments = appointmentService.GetAppointmentsForDoctor(4);
+            DateOnly expected = DateOnly.FromDateTime(appointments.Last().Date).AddDays(1);
+            
+            DateOnly result = vacationRequestsService.GetFirstAvailableDateForVacationForDoctor(4);
+            
+            Assert.Equal(expected, result);
+
         }
 
         [Theory]

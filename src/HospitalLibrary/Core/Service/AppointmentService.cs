@@ -154,5 +154,18 @@
             }
             return futureAppointments;
         }
+
+        public IEnumerable<Appointment> GetAppointmentsForDoctor(int id)
+        {
+            try
+            {
+                IEnumerable<Appointment> appointments = _unitOfWork.AppointmentRepository.GetAppointmentsForDoctor(id);
+                return appointments;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

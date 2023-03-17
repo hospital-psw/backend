@@ -187,6 +187,23 @@
             }
             catch (Exception) { }
         }
+
+        public DateOnly GetFirstAvailableDateForVacationForDoctor(int id)
+        {
+            try
+            {
+
+                IEnumerable<Appointment> doctorAppointments = _unitOfWork.AppointmentRepository.GetAppointmentsForDoctor(id);
+                DateOnly firstAvailableDate = DateOnly.FromDateTime(doctorAppointments.Last().Date).AddDays(1);
+                return firstAvailableDate;
+
+            }
+            catch (Exception) 
+            {
+                return default(DateOnly);
+            }
+
+        }
     }
 
 }
