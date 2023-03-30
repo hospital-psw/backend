@@ -44,7 +44,7 @@
         }
 
         [Fact]
-        public void GetAmountByBloodBankByBloodGroup_ShouldReturn_TwoBloodBanks()
+        public void Get_amount_by_blood_bank_by_blood_group()
         {
             var service = SetupService();
 
@@ -74,7 +74,7 @@
         }
 
         [Fact]
-        public void GetAmountByBloodBankByBloodGroup_ShouldReturn_EmptyDictionary()
+        public void Get_amount_by_blood_bank_by_blood_group_for_invalid_date_range()
         {
             var service = SetupService();
 
