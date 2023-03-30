@@ -49,7 +49,7 @@
         [Fact]
         public void Schedule_consilium_by_selected_doctors()
         {
-            ScheduleConsiliumDto dto = SetPossibleConsiliumDates(new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)));
+            ScheduleConsiliumDto dto = SetUpPossibleConsiliumDates(new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)));
             
             var result = ((OkObjectResult)TryToSchedule(dto)).Value as ConsiliumDto;
 
@@ -61,7 +61,7 @@
         [Fact]
         public void Schedule_consilium_by_selected_doctors_fail()
         {
-            ScheduleConsiliumDto dto = SetPossibleConsiliumDates(new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)));
+            ScheduleConsiliumDto dto = SetUpPossibleConsiliumDates(new DateRange(new DateTime(2022, 12, 17), new DateTime(2022, 12, 22)));
 
             var result = ((BadRequestObjectResult)TryToSchedule(dto));
 
@@ -77,7 +77,7 @@
 
         }
 
-        private ScheduleConsiliumDto SetPossibleConsiliumDates(DateRange dateRange) {
+        private ScheduleConsiliumDto SetUpPossibleConsiliumDates(DateRange dateRange) {
 
             ScheduleConsiliumDto dto = new ScheduleConsiliumDto
             {
@@ -85,14 +85,14 @@
                 Topic = "Hitan sastanak oko pacijenta Petra Petrovica.",
                 Duration = 30,
                 DoctorId = 4,
-                SelectedDoctors = GetSelectedDoctors(),
+                SelectedDoctors = SetUpSelectedDoctors(),
                 SelectedSpecializations = null,
                 RoomId = 1
             };
             return dto;
         }
 
-        private List<int> GetSelectedDoctors() 
+        private List<int> SetUpSelectedDoctors() 
         {
             List<int> selectedDoctors = new List<int>();
             selectedDoctors.Add(4);
