@@ -18,8 +18,8 @@
         public void Extract_PNG_extension()
         {
             
-            News news = InstantiateNews();
-            NewsService service = PrepareService();
+            News news = SetUpNews();
+            NewsService service = SetUpService();
 
             var result = service.GetImageExtension(news);
 
@@ -29,14 +29,15 @@
         [Fact]
         public void Extract_image_data()
         {
-            News news = InstantiateNews();
-            NewsService service = PrepareService();
+            News news = SetUpNews();
+            NewsService service = SetUpService();
 
             var result = service.GetImageData(news);
+
             result.ShouldBe("IMAGE_DATA");
         }
 
-        private News InstantiateNews()
+        private News SetUpNews()
         {
             return  new News
             {
@@ -47,7 +48,7 @@
             };
         }
 
-        private NewsService PrepareService()
+        private NewsService SetUpService()
         {
             var logger = new Mock<ILogger<News>>();
             var unitOfWork = new Mock<IUnitOfWork>();
