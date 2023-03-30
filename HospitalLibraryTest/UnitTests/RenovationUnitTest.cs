@@ -38,9 +38,19 @@
             return unitOfWork;
         }
 
-        private void SetUpRooms(Room room1, Room room2)
-        {
-            Floor floor = new Floor()
+        private Room SetUpRoom(int id, int capacity) {
+
+            Floor floor = SetUpFloor();
+            WorkingHours workingHours = SetUpWorkingHours();
+            Room room = Room.Create("001", floor, "ordinacija", workingHours);
+            room.SetId(id);
+            room.SetCapacity(capacity);
+            return room;
+        }
+
+        private Floor SetUpFloor() { 
+            
+            return new Floor()
             {
                 Building = new Building()
                 {
@@ -50,19 +60,15 @@
                 Number = FloorNumber.Create(69),
                 Purpose = "Krematorijum"
             };
+        }
 
-            WorkingHours wh = new WorkingHours()
+        private WorkingHours SetUpWorkingHours()
+        { 
+            return new WorkingHours()
             {
                 Start = new DateTime(),
                 End = new DateTime(1, 1, 1, 23, 0, 0)
             };
-            room1 = Room.Create("001", floor, "ordinacija", wh);
-            room1.SetId(1);
-            room1.SetCapacity(1);
-
-            room2 = Room.Create("001", floor, "ordinacija", wh);
-            room2.SetId(2);
-
         }
         private RenovationService SetUpRoomMaps(double x, double z, double width, double depth)
         {
@@ -96,9 +102,8 @@
         public void Test_x_coordinate_when_merge_bigger_rooms()
         {
 
-            Room room1 = new Room();
-            Room room2 = new Room();
-            SetUpRooms(room1, room2);
+            Room room1 = SetUpRoom(1,1);
+            Room room2 = SetUpRoom(2,2);
             RenovationService renovationService = SetUpRoomMaps(2.5,1,2,1);
 
             //Act
@@ -111,9 +116,8 @@
         public void Test_x_coordinate_when_merge_smaller_rooms()
         {
 
-            Room room1 = new Room();
-            Room room2 = new Room();
-            SetUpRooms(room1, room2);
+            Room room1 = SetUpRoom(1, 1);
+            Room room2 = SetUpRoom(2, 2);
             RenovationService renovationService = SetUpRoomMaps(1, 1, 1, 1);
 
             //Act
