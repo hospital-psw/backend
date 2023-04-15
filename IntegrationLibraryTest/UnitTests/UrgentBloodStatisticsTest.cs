@@ -85,7 +85,7 @@
         }
 
         [Fact]
-        public void Get_Amount_by_blood_bank_by_blood_group_for_invalid_date_range()
+        public void Get_amount_by_blood_bank_by_blood_group_for_invalid_date_range()
         {
             var service = SetupService();
 
