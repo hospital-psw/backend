@@ -64,7 +64,7 @@
         }
 
         [Fact]
-        public void Get_amount_by_blood_group_for_specific_date_range()
+        public void Get_amount_by_blood_group()
         {
             var service = SetupService();
 
