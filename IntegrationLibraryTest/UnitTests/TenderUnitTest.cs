@@ -19,7 +19,7 @@
         }
 
         [Fact]
-        public void Make_an_Offer_for_extra_amount()
+        public void Make_an_offer_for_extra_amount()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.ValidOfferForTender1ExtraBloodAmount;
@@ -31,7 +31,7 @@
         }
 
         [Fact]
-        public void Make_an_Offer_for_extra_blood_type()
+        public void Make_an_offer_for_extra_blood_type()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.ValidOfferForTender1ExtraBloodTypes;
@@ -43,7 +43,7 @@
         }
 
         [Fact]
-        public void Make_an_Offer_with_missing_item()
+        public void Make_an_offer_with_missing_item()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.InvalidOfferForTender1MissingItem;
