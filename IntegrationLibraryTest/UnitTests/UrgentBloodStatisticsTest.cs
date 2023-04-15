@@ -74,7 +74,7 @@
         }
 
         [Fact]
-        public void Get_amount_by_blood_bank_by_blood_group_for_invalid_date_range()
+        public void Get_amount_by_blood_bank_by_blood_group_for_unavailable_date_range()
         {
             var service = SetupService();
 
@@ -85,7 +85,7 @@
         }
 
         [Fact]
-        public void GetAmountByBloodBankByBloodGroup_InvalidDateRange_ShouldReturn_EmptyDictionary()
+        public void Get_Amount_by_blood_bank_by_blood_group_for_invalid_date_range()
         {
             var service = SetupService();
 
@@ -96,7 +96,7 @@
         }
 
         [Fact]
-        public void GetAmountByBloodUnit_ShouldReturn_FourBloodUnits()
+        public void Get_amount_by_blood_unit()
         {
             var service = SetupService();
 
@@ -110,7 +110,7 @@
         }
 
         [Fact]
-        public void GetAmountByBloodUnit_ShouldReturn_EmptyDictionary()
+        public void Get_amount_by_blood_unit_for_unavailable_date_range()
         {
             var service = SetupService();
 
@@ -121,7 +121,7 @@
         }
 
         [Fact]
-        public void GetAmountByBloodUnit_InvalidDateRange_ShouldReturn_EmptyDictionary()
+        public void Get_Amount_by_blood_unit_for_invalid_date_range()
         {
             var service = SetupService();
 
@@ -132,7 +132,7 @@
         }
 
         [Fact]
-        public void GetBloodBankShare_ShouldReturn_TwoBloodBanks()
+        public void Get_blood_bank_share()
         {
             var service = SetupService();
 
@@ -144,7 +144,7 @@
         }
 
         [Fact]
-        public void GetBloodBankShare_ShouldReturn_EmptyDictionary()
+        public void Get_blood_bank_share_for_unavailable_date_range()
         {
             var service = SetupService();
 
@@ -155,7 +155,7 @@
         }
 
         [Fact]
-        public void GetBloodBankShare_InvalidDateRange_ShouldReturn_EmptyDictionary()
+        public void Get_blood_bank_share_for_invalid_date_range()
         {
             var service = SetupService();
 
