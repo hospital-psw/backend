@@ -1,6 +1,7 @@
 ﻿namespace IntegrationAPITest.IntegrationTests
 {
     using AutoMapper;
+    using Grpc.Core;
     using IntegrationAPI.Controllers;
     using IntegrationAPI.DTO.News;
     using IntegrationAPITest.MockData;
@@ -35,49 +36,24 @@
             return context;
         }
 
-        [Fact]
-        public void Get_1_ShouldReturnPending()
+
+        [Theory]
+        [ClassData(typeof(ManagerNewsData))]
+        public void Get_news(int newsId, string expectedTitle,NewsStatus expectedStatus)
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             SetupContext(scope);
 
-            var result = ((OkObjectResult)controller.Get(1)).Value as ManagerNewsDTO;
+            var result = ((OkObjectResult)controller.Get(newsId)).Value as ManagerNewsDTO;
 
             result.ShouldNotBeNull();
-            result.Title.ShouldBe("Akcija prikupljanja krvi na stadionu Karadjordje!");
-            result.Status.ShouldBe(NewsStatus.PENDING);
+            result.Title.ShouldBe(expectedTitle);
+            result.Status.ShouldBe(expectedStatus);
         }
 
         [Fact]
-        public void Get_2_ShouldReturnArchived()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            var result = ((OkObjectResult)controller.Get(2)).Value as ManagerNewsDTO;
-
-            result.ShouldNotBeNull();
-            result.Title.ShouldBe("Akcija prikupljanja krvi na stadionu Rajko Mitic!");
-            result.Status.ShouldBe(NewsStatus.ARCHIVED);
-        }
-
-        [Fact]
-        public void Get_3_ShouldReturnPublished()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-            SetupContext(scope);
-
-            var result = ((OkObjectResult)controller.Get(3)).Value as ManagerNewsDTO;
-
-            result.ShouldNotBeNull();
-            result.Title.ShouldBe("Akcija prikupljanja krvi na stadionu JNA!");
-            result.Status.ShouldBe(NewsStatus.PUBLISHED);
-        }
-
-        [Fact]
-        public void GetAll_ShouldReturnCount3()
+        public void Get_all_news()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -90,7 +66,7 @@
         }
 
         [Fact]
-        public void Get_10_ShouldReturnNotFound()
+        public void Get_news_for_invalid_id()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -102,7 +78,7 @@
         }
 
         [Fact]
-        public void GetArchived_ShouldReturnOne()
+        public void Get_archived()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -116,7 +92,7 @@
         }
 
         [Fact]
-        public void GetPublished_ShouldReturnOne()
+        public void Get_published()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -129,7 +105,7 @@
         }
 
         [Fact]
-        public void GetPending_ShouldReturnOne()
+        public void Get_pending()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -141,44 +117,22 @@
             result.Count.ShouldBe(1);
         }
 
-        [Fact]
-        public void Publish_1_ShouldReturnOk()
-        {
-            using var scope = Factory.Services.CreateScope();
-            SetupContext(scope);
-            var controller = SetupController(scope);
 
-            var result = ((StatusCodeResult)controller.Publish(1));
-
-            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
-        }
-
-        [Fact]
-        public void Publish_2_ShouldReturnOk()
+        [Theory]
+        [ClassData(typeof(PublishNewsData))]
+        public void Publish_news(int newsId, int expectedStatusCode)
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             SetupContext(scope);
 
-            var result = ((StatusCodeResult)controller.Publish(2));
+            var result = ((StatusCodeResult)controller.Publish(newsId));
 
-            result.StatusCode.ShouldBe(StatusCodes.Status200OK);
+            result.StatusCode.ShouldBe(expectedStatusCode);
         }
 
         [Fact]
-        public void Publish_3_ShouldReturnBadRequest()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-            SetupContext(scope);
-
-            var result = ((StatusCodeResult)controller.Publish(3));
-
-            result.StatusCode.ShouldBe(StatusCodes.Status400BadRequest);
-        }
-
-        [Fact]
-        public void Archive_3_ShouldReturnOk()
+        public void Archive_news()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
@@ -204,6 +158,26 @@
             var result = (StatusCodeResult)controller.Create(news);
 
             result.StatusCode.ShouldBe(StatusCodes.Status200OK);
+        }
+
+        class ManagerNewsData : TheoryData<int, string,NewsStatus>
+        {
+            public ManagerNewsData()
+            {
+                Add(1, "Akcija prikupljanja krvi na stadionu Karadjordje!",NewsStatus.PENDING);
+                Add(2, "Akcija prikupljanja krvi na stadionu Rajko Mitic!",NewsStatus.ARCHIVED);
+                Add(3, "Akcija prikupljanja krvi na stadionu JNA!",NewsStatus.PUBLISHED);
+            }
+        }
+
+        class PublishNewsData : TheoryData<int, int>
+        {
+            public PublishNewsData()
+            {
+                Add(1, StatusCodes.Status200OK);
+                Add(2, StatusCodes.Status200OK);
+                Add(3, StatusCodes.Status400BadRequest);
+            }
         }
     }
 }
