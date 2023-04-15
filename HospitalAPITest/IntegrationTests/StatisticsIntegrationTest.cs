@@ -1,4 +1,4 @@
-﻿namespace HospitalAPITest.IntegrationTests
+﻿ namespace HospitalAPITest.IntegrationTests
 {
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto;

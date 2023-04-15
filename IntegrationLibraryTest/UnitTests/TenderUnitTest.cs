@@ -7,7 +7,7 @@
     public class TenderUnitTest
     {
         [Fact]
-        public void MakeAnOffer_ValidOffer_ShouldReturnValidOffer()
+        public void Make_an_offer()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.ValidOfferForTender1;
@@ -19,7 +19,7 @@
         }
 
         [Fact]
-        public void MakeAnOffer_ValidOfferExtraAmount_ShouldReturnValidOffer()
+        public void Make_an_Offer_for_extra_amount()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.ValidOfferForTender1ExtraBloodAmount;
@@ -31,7 +31,7 @@
         }
 
         [Fact]
-        public void MakeAnOffer_ValidOfferExtraBloodType_ShouldReturnValidOffer()
+        public void Make_an_Offer_for_extra_blood_type()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.ValidOfferForTender1ExtraBloodTypes;
@@ -43,7 +43,7 @@
         }
 
         [Fact]
-        public void MakeAnOffer_MissingItemInOffer_ShouldReturnNull()
+        public void Make_an_Offer_with_missing_item()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.InvalidOfferForTender1MissingItem;
@@ -54,7 +54,7 @@
         }
 
         [Fact]
-        public void MakeAnOffer_InsufficientAmount_ShouldReturnNull()
+        public void Make_an_offer_with_insufficient_amount()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.InvalidOfferForTender1InsufficientAmount;
@@ -65,7 +65,7 @@
         }
 
         [Fact]
-        public void MakeAnOffer_WrongBloodType_ShouldReturnNull()
+        public void Make_an_offer_with_wrong_blood_type()
         {
             Tender tender = TenderMockData.Tender1;
             TenderOffer offer = TenderMockData.InvalidOfferForTender1WrongBloodType;
