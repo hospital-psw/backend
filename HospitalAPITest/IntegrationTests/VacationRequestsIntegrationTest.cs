@@ -3,6 +3,7 @@
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto;
     using HospitalAPITest.Setup;
+    using HospitalLibrary.Core.DTO.BloodManagment;
     using HospitalLibrary.Core.DTO.VacationRequest;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Service.Core;
@@ -175,40 +176,26 @@
             Assert.NotEmpty(result);
         }
 
-        [Fact]
-        public void Test_delete_vacation_request()
+        [Theory]
+        [ClassData(typeof(VacationRequestData))]
+        public void Delete_request(int doctorId, int expectedResultCode)
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            int vacationRequestId = 1;
-            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
+            
+            var result = controller.Delete(doctorId) as StatusCodeResult;
 
-            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+            Assert.Equal(expectedResultCode, result.StatusCode);
         }
-
-        [Fact]
-        public void Doctor_tries_to_delete_nonexistent_request()
+        class VacationRequestData : TheoryData<int, int>
         {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            int vacationRequestId = 100;
-            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
-
-            Assert.Equal(StatusCodes.Status404NotFound, result.StatusCode);
-        }
-
-        [Fact]
-        public void Doctor_tries_to_delete_nonwaiting_request()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            int vacationRequestId = 6;
-            var result = controller.Delete(vacationRequestId) as StatusCodeResult;
-
-            Assert.Equal(StatusCodes.Status400BadRequest, result.StatusCode);
+            public VacationRequestData()
+            {
+                Add(1, StatusCodes.Status200OK);
+                Add(6, StatusCodes.Status400BadRequest);
+                Add(100, StatusCodes.Status404NotFound);
+            }
         }
     }
 }
