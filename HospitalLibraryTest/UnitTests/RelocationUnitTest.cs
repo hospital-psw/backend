@@ -90,9 +90,11 @@
 
             var fromRoom = Room.Create("002", floor, "ordinacija", wh);
             fromRoom.SetId(5);
+            fromRoom.SetCapacity(1);
 
             var toRoom = Room.Create("003", floor, "ordinacija", wh);
             toRoom.SetId(2);
+            toRoom.SetCapacity(1);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
            
@@ -160,9 +162,11 @@
 
             var fromRoom = Room.Create("002", floor, "ordinacija", wh);
             fromRoom.SetId(5);
+            fromRoom.SetCapacity(1);
 
             var toRoom = Room.Create("003", floor, "ordinacija", wh);
             toRoom.SetId(2);
+            toRoom.SetCapacity(1);
 
             var equipment = Equipment.Create(EquipmentType.BED, 10, room);
          
@@ -180,6 +184,7 @@
             unitOfWork.Setup(u => u.EquipmentRepository.GetEquipment(It.IsAny<EquipmentType>(), It.IsAny<Room>())).Returns(retEq);
             unitOfWork.Setup(u => u.EquipmentRepository.Create(It.IsAny<Equipment>())).Returns(createdEquipment);
 
+            unitOfWork.Setup(u => u.EquipmentRepository.Save()).Returns(1);
             unitOfWork.Setup(u => u.RelocationRepository.Update(It.IsAny<RelocationRequest>())).Callback((RelocationRequest req) =>
             {
                 reqUpdate = req;
@@ -199,48 +204,5 @@
             Assert.Equal(2, createdEquipment.Quantity);
             Assert.Equal(13, reqUpdate.Equipment.Quantity);
         }
-
-        private RelocationRequest CreateRelocationRequest()
-        {
-            Room room = new Room();
-            Room fromRoom = new Room();
-            Room toRoom = new Room();
-            CreateRooms(room,fromRoom,toRoom);
-            Equipment equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
-            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
-            return request;
-        }
-
-        private void CreateRooms(Room room, Room fromRoom, Room toRoom) 
-        {
-            Floor floor = new Floor()
-            {
-                Building = new Building()
-                {
-                    Address = "Jovana Piperovica 14",
-                    Name = "Radosno detinjstvo"
-                },
-                Number = FloorNumber.Create(69),
-                Purpose = "Krematorijum"
-            };
-
-            WorkingHours wh = new WorkingHours()
-            {
-                Start = new DateTime(),
-                End = new DateTime(1, 1, 1, 23, 0, 0)
-            };
-            room = Room.Create("001", floor, "ordinacija", wh);
-            room.SetId(1);
-            room.SetCapacity(1);
-
-            fromRoom = Room.Create("002", floor, "ordinacija", wh);
-            fromRoom.SetId(5);
-
-            toRoom = Room.Create("003", floor, "ordinacija", wh);
-            toRoom.SetId(2);
-            
-
-        }
-
     }
 }
