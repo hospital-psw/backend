@@ -3,6 +3,7 @@
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Model.ValueObjects;
+    using HospitalLibrary.Core.Repository;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
     using HospitalLibraryTest.InMemoryRepositories;
@@ -13,6 +14,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
     public class RelocationUnitTest
     {
@@ -67,71 +69,21 @@
         {
             //Arrange
             var unitOfWork = SetupUOW();
-
-            Floor floor = new Floor()
-            {
-                Building = new Building()
-                {
-                    Address = "Jovana Piperovica 14",
-                    Name = "Radosno detinjstvo"
-                },
-                Number = FloorNumber.Create(69),
-                Purpose = "Krematorijum"
-            };
-
-            WorkingHours wh = new WorkingHours()
-            {
-                Start = new DateTime(),
-                End = new DateTime(1, 1, 1, 23, 0, 0)
-            };
-            var room = Room.Create("001", floor, "ordinacija", wh);
-            room.SetId(1);
-            room.SetCapacity(1);
-
-            var fromRoom = Room.Create("002", floor, "ordinacija", wh);
-            fromRoom.SetId(5);
-            fromRoom.SetCapacity(1);
-
-            var toRoom = Room.Create("003", floor, "ordinacija", wh);
-            toRoom.SetId(2);
-            toRoom.SetCapacity(1);
-
-            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
-           
-
-            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
-          
-
-            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
-
+            var equipment = SetUpEquipment(10, 1);
+            RelocationRequest request = SetUpRelocationRequest();
             Equipment eqUpdate = null;
-            RelocationRequest reqUpdate = null;
-
             unitOfWork.Setup(u => u.EquipmentRepository.GetEquipment(It.IsAny<EquipmentType>(), It.IsAny<Room>())).Returns(equipment);
             unitOfWork.Setup(u => u.EquipmentRepository.Update(It.IsAny<Equipment>())).Callback((Equipment eq) =>
             {
                 eqUpdate = eq;
             });
-            unitOfWork.Setup(u => u.EquipmentRepository.Save()).Returns(1);
-            unitOfWork.Setup(u => u.RelocationRepository.Update(It.IsAny<RelocationRequest>())).Callback((RelocationRequest req) =>
-            {
-                reqUpdate = req;
-            });
-
-            unitOfWork.Setup(u => u.RelocationRepository.Save()).Returns(1);
-
-            var relocationService = new RelocationService(unitOfWork.Object);
 
             //Act
-            relocationService.RelocateEquipment(request);
-
+            RelocationRequest reqUpdate = Relocate(unitOfWork, request);
 
             //Assert
-            Assert.NotNull(eqUpdate);
-            Assert.NotNull(reqUpdate);
-            Assert.True(reqUpdate.Deleted);
-            Assert.Equal(12, eqUpdate.Quantity);
-            Assert.Equal(13, reqUpdate.Equipment.Quantity);
+            Assert.True(IsEquipmentCorrect(eqUpdate,12));
+            Assert.True(IsRequestCorrect(reqUpdate,13));
         }
 
         [Fact]
@@ -139,8 +91,30 @@
         {
             //Arrange
             var unitOfWork = SetupUOW();
+            var equipment = SetUpEquipment(2, 2);
+            RelocationRequest request = SetUpRelocationRequest();
+            unitOfWork.Setup(u => u.EquipmentRepository.Create(It.IsAny<Equipment>())).Returns(equipment);
+            
+            //Act
+            RelocationRequest reqUpdate = Relocate(unitOfWork,request);
 
-            Floor floor = new Floor()
+            //Assert
+            Assert.True(IsEquipmentCorrect(equipment, 2));
+            Assert.True(IsRequestCorrect(reqUpdate, 13));
+        }
+
+        private WorkingHours SetUpWorkingHours() 
+        { 
+            return new WorkingHours()
+                {
+                    Start = new DateTime(),
+                    End = new DateTime(1, 1, 1, 23, 0, 0)
+                };
+        }
+
+        private Floor SetUpFloor()
+        { 
+            return  new Floor()
             {
                 Building = new Building()
                 {
@@ -150,40 +124,35 @@
                 Number = FloorNumber.Create(69),
                 Purpose = "Krematorijum"
             };
+        }
 
-            WorkingHours wh = new WorkingHours()
-            {
-                Start = new DateTime(),
-                End = new DateTime(1, 1, 1, 23, 0, 0)
-            };
-            var room = Room.Create("001", floor, "ordinacija", wh);
-            room.SetId(1);
+        private Room SetUpRoom(int id)
+        {   
+            WorkingHours workingHours = SetUpWorkingHours();
+            Floor floor = SetUpFloor();
+            var room = Room.Create("001", floor, "ordinacija", workingHours);
+            room.SetId(id);
             room.SetCapacity(1);
+            return room;
+        }
 
-            var fromRoom = Room.Create("002", floor, "ordinacija", wh);
-            fromRoom.SetId(5);
-            fromRoom.SetCapacity(1);
+        private Equipment SetUpEquipment(int quantity, int roomId)
+        {
+            Room room = SetUpRoom(roomId);
+            return Equipment.Create(EquipmentType.BED, quantity, room);
+        }
 
-            var toRoom = Room.Create("003", floor, "ordinacija", wh);
-            toRoom.SetId(2);
-            toRoom.SetCapacity(1);
+        private RelocationRequest SetUpRelocationRequest()
+        {
+            Room fromRoom = SetUpRoom(5);
+            Room toRoom = SetUpRoom(2);
+            Equipment equipment = SetUpEquipment(15, 1);
+            return  RelocationRequest.Create(fromRoom, toRoom, equipment, 2, DateTime.Now, 2);
+        }
 
-            var equipment = Equipment.Create(EquipmentType.BED, 10, room);
-         
-            var createdEquipment = Equipment.Create(EquipmentType.BED, 2, toRoom);
-           
-
-            var equipment2 = Equipment.Create(EquipmentType.BED, 15, room);
-           
-
-            RelocationRequest request = RelocationRequest.Create(fromRoom, toRoom, equipment2, 2, DateTime.Now, 2);
-
-            Equipment retEq = null;
+        private RelocationRequest Relocate(Mock<IUnitOfWork> unitOfWork,RelocationRequest request)
+        {
             RelocationRequest reqUpdate = null;
-
-            unitOfWork.Setup(u => u.EquipmentRepository.GetEquipment(It.IsAny<EquipmentType>(), It.IsAny<Room>())).Returns(retEq);
-            unitOfWork.Setup(u => u.EquipmentRepository.Create(It.IsAny<Equipment>())).Returns(createdEquipment);
-
             unitOfWork.Setup(u => u.EquipmentRepository.Save()).Returns(1);
             unitOfWork.Setup(u => u.RelocationRepository.Update(It.IsAny<RelocationRequest>())).Callback((RelocationRequest req) =>
             {
@@ -191,18 +160,30 @@
             });
 
             unitOfWork.Setup(u => u.RelocationRepository.Save()).Returns(1);
-
+            
             var relocationService = new RelocationService(unitOfWork.Object);
-
-            //Act
             relocationService.RelocateEquipment(request);
 
-            //Assert
-            Assert.NotNull(createdEquipment);
-            Assert.NotNull(reqUpdate);
-            Assert.True(reqUpdate.Deleted);
-            Assert.Equal(2, createdEquipment.Quantity);
-            Assert.Equal(13, reqUpdate.Equipment.Quantity);
+
+            return reqUpdate;
+        }
+
+        private bool IsEquipmentCorrect(Equipment equipment,int quantity)
+        { 
+            if(equipment == null || equipment.Quantity != quantity)
+            { 
+                return false; 
+            }
+            return true;
+        }
+
+        private bool IsRequestCorrect(RelocationRequest request, int quantity)
+        {
+            if (request != null && request.Deleted == true && request.Equipment.Quantity == quantity)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
