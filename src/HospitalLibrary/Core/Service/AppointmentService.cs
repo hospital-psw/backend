@@ -6,10 +6,12 @@
     using HospitalLibrary.Core.Model.ValueObjects;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.Core;
+    using IdentityServer4.Extensions;
     using Microsoft.Extensions.Logging;
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-
+    using System.Linq;
 
     public class AppointmentService : BaseService<Appointment>, IAppointmentService
     {
@@ -166,6 +168,20 @@
             {
                 return null;
             }
+        }
+
+        public IEnumerable<ApplicationDoctor> GetAvailableDoctorsForEmergencyAppointment(DateTime emergencyStartDate) {
+            
+            List<ApplicationDoctor> availableDoctors = new List<ApplicationDoctor>();
+
+            foreach(ApplicationDoctor doctor in _unitOfWork.ApplicationDoctorRepository.GetAll())
+            {
+                if(GetAppointmentsInDateRangeDoctor(doctor.Id,emergencyStartDate,emergencyStartDate.AddMinutes(30)).IsNullOrEmpty())
+                {
+                    availableDoctors.Add(doctor);
+                }
+            }
+            return availableDoctors;
         }
     }
 }

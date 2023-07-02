@@ -4,8 +4,10 @@
     using HospitalAPI.Controllers;
     using HospitalAPI.Dto;
     using HospitalAPI.EmailServices;
+    using HospitalAPI.Static;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.DTO.Appointments;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Service.AppUsers.Core;
     using HospitalLibrary.Core.Service.Core;
     using Microsoft.AspNetCore.Mvc;
@@ -72,6 +74,22 @@
 
             Assert.NotNull(result);
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public void Get_available_doctors_for_emergency_appointment()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            DateTimeServer.Init(() => new DateTime(2023,1,1));
+
+
+            var result = ((OkObjectResult)controller.GetAvailableDoctorsForEmergencyAppointments(DateTimeServer.Now)).Value as IEnumerable<ApplicationDoctor>;
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Equal(result.Count(),3);
         }
 
     }

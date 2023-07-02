@@ -21,12 +21,12 @@
         public ScheduleAppointmentTest()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArguments("start-maximized");            // open Browser in maximized mode
-            options.AddArguments("disable-infobars");           // disabling infobars
-            options.AddArguments("--disable-extensions");       // disabling extensions
-            options.AddArguments("--disable-gpu");              // applicable to windows os only
-            options.AddArguments("--disable-dev-shm-usage");    // overcome limited resource problems
-            options.AddArguments("--no-sandbox");               // Bypass OS security model
+            options.AddArguments("start-maximized");            
+            options.AddArguments("disable-infobars");           
+            options.AddArguments("--disable-extensions");       
+            options.AddArguments("--disable-gpu");             
+            options.AddArguments("--disable-dev-shm-usage");    
+            options.AddArguments("--no-sandbox");               
             options.AddArguments("--disable-notifications");
 
 

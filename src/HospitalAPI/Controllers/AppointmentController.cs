@@ -165,6 +165,12 @@
             return Ok(AppointmentMapper.EntityListToEntityDtoList(appointments));
         }
 
+        [HttpPost("doctor/emergency")]
+        public IActionResult GetAvailableDoctorsForEmergencyAppointments(DateTime emergencyStart)
+        {
+            return Ok(_appointmentService.GetAvailableDoctorsForEmergencyAppointment(emergencyStart));
+        }
+
 
     }
 }
