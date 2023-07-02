@@ -20,6 +20,8 @@
 
     public class AppointmentIntegrationTest : BaseIntegrationTest
     {
+
+       
         public AppointmentIntegrationTest(TestDatabaseFactory factory) : base(factory)
         {
         }
@@ -29,7 +31,8 @@
             return new AppointmentController(serviceScope.ServiceProvider.GetRequiredService<IAppointmentService>(),
                                              serviceScope.ServiceProvider.GetRequiredService<IEmailService>(),
                                              serviceScope.ServiceProvider.GetRequiredService<IDoctorScheduleService>(),
-                                             serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>());
+                                             serviceScope.ServiceProvider.GetRequiredService<IApplicationPatientService>(),
+                                             serviceScope.ServiceProvider.GetRequiredService<DateTimeServer>());
         }
 
         [Fact]
@@ -82,10 +85,8 @@
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            DateTimeServer.Init(() => new DateTime(2023,1,1));
 
-
-            var result = ((OkObjectResult)controller.GetAvailableDoctorsForEmergencyAppointments(DateTimeServer.Now)).Value as IEnumerable<ApplicationDoctor>;
+            var result = ((OkObjectResult)controller.GetAvailableDoctorsForEmergencyAppointments()).Value as IEnumerable<ApplicationDoctor>;
 
             Assert.NotNull(result);
             Assert.NotEmpty(result);

@@ -4,6 +4,7 @@ using HospitalAPI.Controllers.TenderStatistics;
 using HospitalAPI.Dto.AppUsers;
 using HospitalAPI.EmailServices;
 using HospitalAPI.Mappers;
+using HospitalAPI.Static;
 using HospitalAPI.TokenServices;
 using HospitalLibrary.Core.Model.ApplicationUser;
 using HospitalLibrary.Core.Repository;
@@ -140,6 +141,7 @@ namespace HospitalAPI
             services.AddScoped<IBloodAdditionService, BloodAdditionService>();
             services.AddScoped<IAppointmentSchedulingService, AppointmentSchedulingService>();
             services.AddScoped<IExaminationStatisticsService, ExaminationStatisticsService>();
+            services.AddScoped<DateTimeServer>();
 
             services.AddScoped<IConnections, Connections>();
 

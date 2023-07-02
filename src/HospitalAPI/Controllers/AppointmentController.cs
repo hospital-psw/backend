@@ -5,6 +5,7 @@
     using HospitalAPI.Dto.AppUsers;
     using HospitalAPI.EmailServices;
     using HospitalAPI.Mappers;
+    using HospitalAPI.Static;
     using HospitalLibrary.Core.DTO.Appointments;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Service.AppUsers.Core;
@@ -23,16 +24,20 @@
         private readonly IEmailService _emailService;
         private readonly IDoctorScheduleService _doctorScheduleService;
         private readonly IApplicationPatientService _patientService;
+        private readonly DateTimeServer _dateTimeServer;
+
 
         public AppointmentController(IAppointmentService appointmentService,
             IEmailService emailService,
             IDoctorScheduleService doctorScheduleService,
-            IApplicationPatientService patientService)
+            IApplicationPatientService patientService,
+            DateTimeServer dateTimeServer)
         {
             _appointmentService = appointmentService;
             _emailService = emailService;
             _doctorScheduleService = doctorScheduleService;
             _patientService = patientService;
+            _dateTimeServer = dateTimeServer;
         }
 
         [HttpGet("{id}")]
@@ -166,9 +171,9 @@
         }
 
         [HttpPost("doctor/emergency")]
-        public IActionResult GetAvailableDoctorsForEmergencyAppointments(DateTime emergencyStart)
+        public IActionResult GetAvailableDoctorsForEmergencyAppointments()
         {
-            return Ok(_appointmentService.GetAvailableDoctorsForEmergencyAppointment(emergencyStart));
+            return Ok(_appointmentService.GetAvailableDoctorsForEmergencyAppointment(_dateTimeServer.Now));
         }
 
 
