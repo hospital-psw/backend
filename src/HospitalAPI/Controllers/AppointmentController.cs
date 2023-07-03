@@ -37,7 +37,6 @@
             _emailService = emailService;
             _doctorScheduleService = doctorScheduleService;
             _patientService = patientService;
-            _dateTimeServer = dateTimeServer;
         }
 
         [HttpGet("{id}")]
