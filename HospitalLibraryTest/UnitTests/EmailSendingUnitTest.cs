@@ -1,6 +1,7 @@
 ﻿namespace HospitalLibraryTest.UnitTests
 {
     using HospitalLibrary.Core.Emailing;
+    using HospitalLibraryTest.Mocks.Mailing;
     using MimeKit;
     using System;
     using System.Collections.Generic;
@@ -10,12 +11,17 @@
 
     public class EmailSendingUnitTest
     {
-        private bool isTestEnvironment = true;
+
+        public FakeLoyaltyMailService SetUpService() 
+        {
+            LoyaltyMailService loyaltyMailService = new LoyaltyMailService();
+            return new FakeLoyaltyMailService(loyaltyMailService);
+        }
 
         [Fact]
         public void Send_loyalty_confirmation_mail()
         {
-            LoyaltyMailService service = new LoyaltyMailService(isTestEnvironment);
+            FakeLoyaltyMailService service = SetUpService();
             string email = "user@gmail.com";
 
             MimeMessage result = service.SendEmail(email);

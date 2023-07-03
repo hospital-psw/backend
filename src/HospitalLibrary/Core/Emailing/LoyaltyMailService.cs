@@ -4,13 +4,12 @@
     using MailKit.Net.Smtp;
 
 
-    public class LoyaltyMailService
+    public class LoyaltyMailService :ILoyalityMailService
     {
-        private bool IsTesEnvironment { get; set; }
 
-        public LoyaltyMailService(bool isTesEnvironment)
+        public LoyaltyMailService()
         {
-            IsTesEnvironment = isTesEnvironment;
+
         }
 
         public MimeMessage SendEmail(string email)
@@ -18,17 +17,8 @@
             var mail = new MimeMessage();
 
             mail.From.Add(new MailboxAddress("Hospital PSW Team", "ikiakus@gmail.com"));
-
-            if (IsTesEnvironment)
-            {
-                mail.To.Add(new MailboxAddress("ilija.galin00@gmail.com", "ilija.galin00@gmail.com"));
-            }
-            else
-            {
-                mail.To.Add(new MailboxAddress(email, email));
-            }
-
-
+            mail.To.Add(new MailboxAddress(email, email));
+     
             mail.Subject = "Loyality Program";
             mail.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
