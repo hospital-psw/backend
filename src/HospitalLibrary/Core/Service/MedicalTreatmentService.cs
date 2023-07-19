@@ -156,7 +156,7 @@
             therapy.End = therapy.End > DateTime.Now ? DateTime.Now : therapy.End;
         }
 
-        private void SetTreatmentFinished(MedicalTreatment treatment, string description)
+        public void SetTreatmentFinished(MedicalTreatment treatment, string description)
         {
             treatment.Report = description;
             treatment.Active = false;

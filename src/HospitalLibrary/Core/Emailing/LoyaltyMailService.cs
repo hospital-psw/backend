@@ -1,4 +1,4 @@
-﻿namespace HospitalLibrary.Core.Emailing
+﻿ namespace HospitalLibrary.Core.Emailing
 {
     using MimeKit;
     using MailKit.Net.Smtp;
