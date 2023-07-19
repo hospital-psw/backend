@@ -20,6 +20,5 @@
         IEnumerable<MedicalTreatment> GetDoctorsActiveTreatments(int doctorId);
         IEnumerable<MedicalTreatment> GetDoctorsInactiveTreatments(int doctorId);
         void GeneratePdf(int id);
-        void SetTreatmentFinished(MedicalTreatment treatment, string description);
     }
 }

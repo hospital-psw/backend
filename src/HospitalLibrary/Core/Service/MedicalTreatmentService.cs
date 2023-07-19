@@ -135,7 +135,7 @@
                 SetPatientToNonHospitalized(medicalTreatment);
                 SetTreatmentFinished(medicalTreatment, description);
 
-                _unitOfWork.Save();
+                //_unitOfWork.Save();
                 return medicalTreatment;
             }
             catch (Exception e)
@@ -156,7 +156,7 @@
             therapy.End = therapy.End > DateTime.Now ? DateTime.Now : therapy.End;
         }
 
-        public void SetTreatmentFinished(MedicalTreatment treatment, string description)
+        private void SetTreatmentFinished(MedicalTreatment treatment, string description)
         {
             treatment.Report = description;
             treatment.Active = false;

@@ -61,7 +61,7 @@
 
         public bool Update(Room room)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

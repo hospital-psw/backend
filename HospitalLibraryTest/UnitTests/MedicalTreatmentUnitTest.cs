@@ -1,9 +1,13 @@
 ﻿namespace HospitalLibraryTest.UnitTests
 {
     using HospitalLibrary.Core.Model;
+    using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.MedicalTreatment;
     using HospitalLibrary.Core.Model.Therapy;
     using HospitalLibrary.Core.Model.VacationRequests;
+    using HospitalLibrary.Core.Model.ValueObjects;
+    using HospitalLibrary.Core.Repository.AppUsers;
+    using HospitalLibrary.Core.Repository.AppUsers.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service;
     using HospitalLibraryTest.InMemoryRepositories;
@@ -27,18 +31,62 @@
         public Mock<IUnitOfWork> SetupUOW()
         {
             var medicalTreatmentRepository = new Mock<IMedicalTreatmentRepository>();
+            var userRepository = new Mock<IUserRepository>();
+            var roomRepository = new Mock<IRoomRepository>();
+            var patientRepository = new Mock<IApplicationPatientRepository>();
             var unitOfWork = new Mock<IUnitOfWork>();
             unitOfWork.Setup(u => u.MedicalTreatmentRepository).Returns(medicalTreatmentRepository.Object);
+            unitOfWork.Setup(u => u.UserRepository).Returns(userRepository.Object);
+            unitOfWork.Setup(u => u.RoomRepository).Returns(roomRepository.Object);
+            unitOfWork.Setup(u => u.ApplicationPatientRepository).Returns(patientRepository.Object);
             return unitOfWork;
+        }
+
+        private Room SetUpRoom()
+        {
+            Floor floor1 = new Floor()
+            {
+                Building = new Building()
+                {
+                    Address = "Jovana Piperovica 28",
+                    Name = "Bolnica"
+                },
+                Number = FloorNumber.Create(1),
+                Purpose = "Bolnica"
+            };
+
+            WorkingHours wh1 = new WorkingHours()
+            {
+                Start = new DateTime(),
+                End = new DateTime(1, 1, 1, 23, 0, 0)
+            };
+            return Room.Create("60", floor1, "Soba za decu", wh1);
+        }
+
+        private ApplicationPatient SetUpPatient()
+        {
+            return new ApplicationPatient()
+            {
+                FirstName = "Mika",
+                LastName = "Mikic",
+                Email = "mika@com",
+                Hospitalized = true,
+                Blocked = true,
+                Strikes = 3,
+            };
         }
 
         private MedicalTreatment SetUpMedicalTreatment()
         {
+            Room room = SetUpRoom();
+
+            ApplicationPatient patient = SetUpPatient();
+
             return new MedicalTreatment
             {
-                Room = null,
+                Room = room,
                 Doctor = null,
-                Patient = null,
+                Patient = patient,
                 MedicamentTherapies = new List<MedicamentTherapy>(),
                 BloodUnitTherapies = new List<BloodUnitTherapy>(),
                 Active = true,
@@ -55,10 +103,10 @@
             var medicalTreatmentService = SetupService();
             MedicalTreatment medicalTreatment = SetUpMedicalTreatment();
 
-            medicalTreatmentService.SetTreatmentFinished(medicalTreatment,"Zavrseno!");
+            MedicalTreatment result = medicalTreatmentService.ReleasePatient(medicalTreatment,"Zavrseno!");
 
-            Assert.Equal(medicalTreatment.Report,"Zavrseno!");
-            Assert.Equal(medicalTreatment.Active, false);
+            Assert.Equal(result.Report,"Zavrseno!");
+            Assert.Equal(result.Active, false);
             Assert.NotEqual(medicalTreatment.End, default(DateTime));
         }
     }
