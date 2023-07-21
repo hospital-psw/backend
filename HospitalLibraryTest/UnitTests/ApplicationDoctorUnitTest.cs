@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibraryTest.UnitTests
 {
+    using HospitalLibrary.Core.Emailing;
     using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.MedicalTreatment;
@@ -9,12 +10,14 @@
     using HospitalLibrary.Core.Service.AppUsers;
     using HospitalLibraryTest.InMemoryRepositories;
     using Microsoft.Extensions.Logging;
+    using MimeKit;
     using Moq;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using static IdentityServer4.Models.IdentityResources;
 
     public class ApplicationDoctorUnitTest
     {
@@ -34,18 +37,17 @@
         }
 
         [Fact]
-        public void Change_doctor_working_hours()
+        public void Send_penalty_email ()
         {
-            var unitOfWork = SetupUOW();
-            var doctorService = SetupService();
+            PenaltyMailService service = new PenaltyMailService();
 
-            WorkingHours wh = new WorkingHours(new DateTime(2023,7,1), new DateTime(2023,9,5));
+            var result = service.SendEmail("ilija.galin00@gmail.com");
 
-            bool result = doctorService.ChangeDoctorsShift(wh,1);
-
-            Assert.Equal(result, true);
-
-        }
+            Assert.NotNull(result);
+            Assert.Equal(result.To.First(), new MailboxAddress("ilija.galin00@gmail.com", "ilija.galin00@gmail.com"));
+            Assert.Equal(result.From.First(), new MailboxAddress("Hospital PSW Team", "ikiakus@gmail.com"));
+            Assert.Equal(result.Subject, "New Working Hours");
+        }   
 
 
     }
