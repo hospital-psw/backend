@@ -20,7 +20,10 @@
 
         public ApplicationDoctor Get(int id)
         {
-            throw new NotImplementedException();
+            WorkingHours workingHours = new WorkingHours(5, new DateTime(), new DateTime(), false, new DateTime(2022, 11, 10, 10, 0, 0), new DateTime(2022, 11, 10, 16, 0, 0));
+            ApplicationDoctor doc1 = new ApplicationDoctor("Milos", "Gravara", "gravara@gmail.com", Specialization.GENERAL, workingHours, null);
+            doc1.Id = 1;
+            return doc1;
         }
 
         public IEnumerable<ApplicationDoctor> GetAll()
@@ -79,7 +82,7 @@
 
         public void Update(ApplicationDoctor entity)
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

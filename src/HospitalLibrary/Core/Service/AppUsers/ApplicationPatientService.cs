@@ -5,8 +5,10 @@
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.AppUsers.Core;
+    using MailKit.Net.Smtp;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Logging;
+    using MimeKit;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -149,5 +151,7 @@
                 return null;
             }
         }
+
+ 
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace HospitalLibrary.Core.Service.AppUsers.Core
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using System;
@@ -16,5 +17,6 @@
         IEnumerable<ApplicationDoctor> RecommendDoctors();
         IEnumerable<ApplicationDoctor> GetDoctorsWhoWorksInSameShift(int workHourId);
         IEnumerable<Specialization> GetSpecializationsOfDoctorsWhoWorksInSameShift(int workHourId);
+        bool ChangeDoctorsShift(WorkingHours newWorkingHours, int id);
     }
 }

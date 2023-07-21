@@ -1,10 +1,13 @@
 ﻿namespace HospitalLibrary.Core.Service.AppUsers
 {
+    using HospitalLibrary.Core.Model;
     using HospitalLibrary.Core.Model.ApplicationUser;
     using HospitalLibrary.Core.Model.Enums;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Service.AppUsers.Core;
+    using MailKit.Net.Smtp;
     using Microsoft.Extensions.Logging;
+    using MimeKit;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -120,5 +123,48 @@
                 return null;
             }
         }
+
+        public bool ChangeDoctorsShift(WorkingHours newWorkingHours, int id)
+        {
+            ApplicationDoctor doctor = _unitOfWork.ApplicationDoctorRepository.Get(id);
+            if (doctor == null) { return false; }
+            SetNewWorkingHours(doctor,newWorkingHours);
+            SendEmailToDoctor(doctor.Email);
+            return true;
+        }
+
+        private void SetNewWorkingHours(ApplicationDoctor doctor, WorkingHours workingHours)
+        {
+            doctor.WorkHours = workingHours;
+            _unitOfWork.ApplicationDoctorRepository.Update(doctor);
+        }
+
+        private void SendEmailToDoctor(string email)
+        {
+            var mail = new MimeMessage();
+
+            mail.From.Add(new MailboxAddress("Hospital PSW Team", "ikiakus@gmail.com"));
+            mail.To.Add(new MailboxAddress(email, email));
+
+            mail.Subject = "New Working Hours";
+            mail.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = "<b>We would lik to inform you that your working hours have chanhged </b>" +
+                       "<b> log in to your profile to find out more! </b>"
+            };
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("smtp.gmail.com", 587, false);
+
+                smtp.Authenticate("ikiakus@gmail.com", "owql csvn yibq gkex");
+
+                smtp.Send(mail);
+                smtp.Disconnect(true);
+
+            }
+        }
+
+
     }
 }
