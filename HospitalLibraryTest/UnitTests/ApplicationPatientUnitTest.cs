@@ -21,19 +21,29 @@
                 Hospitalized = true,
                 Blocked = true,
                 Strikes = 3,
-                LoyalityPrivelege = HospitalLibrary.Core.Model.Enums.LoyalityPrivilege.UNPRIVILEGED,
             };
 
         }
 
         [Fact]
-        public void Promote_Patient()
-        {
+        public void Check_rewards_for_new_patient()
+        { 
             var patient = SetUpPatient();
 
+            string result = patient.GetRewards();
+
+            Assert.Equal(result, "Nista");
+        }
+
+        [Fact]
+        public void Promote_patient()
+        {
+            var patient = SetUpPatient();
             patient.Promote();
 
-            Assert.Equal(patient.LoyalityPrivelege, LoyalityPrivilege.PRIVILEGED);
+            string result = patient.GetRewards();
+
+            Assert.Equal(result, "Majica i privezak");
         }
     }
 }

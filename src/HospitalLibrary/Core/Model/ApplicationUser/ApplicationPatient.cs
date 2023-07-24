@@ -18,7 +18,7 @@
         public bool Blocked { get; set; }
         public int Strikes { get; set; }
 
-        public LoyalityPrivilege LoyalityPrivelege;
+        private LoyalityPrivilege LoyalityPrivelege = LoyalityPrivilege.UNPRIVILEGED;
 
 
         public ApplicationPatient() : base() { }
