@@ -18,6 +18,9 @@
         public bool Blocked { get; set; }
         public int Strikes { get; set; }
 
+        public LoyalityPrivilege LoyalityPrivelege;
+
+
         public ApplicationPatient() : base() { }
         public ApplicationPatient(string firstName, string lastName, DateTime dateOfBirth, Gender gender, bool hospitalized, BloodType type)
             : base(firstName, lastName, dateOfBirth, gender)
@@ -40,6 +43,31 @@
         public ApplicationPatient(string firstName, string lastName, string email, bool blocked) : base(firstName, lastName, email)
         {
             Blocked = blocked;
+        }
+
+        public ApplicationPatient(string firstName, string lastName, string email, bool hospitalized, bool blocked, List<Allergies> allergens,LoyalityPrivilege privilege) : base(firstName, lastName, email)
+        {
+            Hospitalized = hospitalized;
+            Allergies = allergens;
+            Blocked = blocked;
+            LoyalityPrivelege = privilege;
+        }
+
+        public void Promote()
+        {
+            LoyalityPrivelege = LoyalityPrivilege.PRIVILEGED;
+        }
+
+        public string GetRewards()
+        {
+            if (LoyalityPrivelege == LoyalityPrivilege.PRIVILEGED)
+            {
+                return "Majica i privezak";
+            }
+            else
+            {
+                return "Nista";
+            }
         }
     }
 }
