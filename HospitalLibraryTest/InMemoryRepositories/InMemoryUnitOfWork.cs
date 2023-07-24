@@ -5,6 +5,7 @@
     using HospitalLibrary.Core.Repository.Blood.Core;
     using HospitalLibrary.Core.Repository.Core;
     using HospitalLibrary.Core.Repository.Examinations.Core;
+    using HospitalLibrary.Core.Service.MedicalRecordSynchronization;
     using HospitalLibrary.Settings;
     using System;
     using System.Collections.Generic;
@@ -27,6 +28,7 @@
             ApplicationPatientRepository = new InMemoryApplicationPatientReposiotry();
             VacationRequestsRepository = new InMemoryVacationRequestsRepository();
             MedicalTreatmentRepository = new InMemoryMeidcalTreatmentRepository();
+            MedicalRecordSynchronizationService = new InMemoryMedicalRecordService();
         }
 
         public IUserRepository UserRepository { get; set; }
@@ -77,6 +79,8 @@
         public IAppointmentSchedulingRootRepository AppointmentSchedulingRootRepository => throw new NotImplementedException();
 
         public IBloodAdditionRepository BloodAdditionRepository { get; set; }
+
+        public IMedicalRecordSynchronizationService MedicalRecordSynchronizationService { get; set; }
 
 
         public IBaseRepository<TEntity> GetRepository<TEntity>() where TEntity : class

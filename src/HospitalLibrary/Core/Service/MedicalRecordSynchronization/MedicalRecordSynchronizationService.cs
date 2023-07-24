@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class MedicalRecordSynchronizationService
+    public class MedicalRecordSynchronizationService :IMedicalRecordSynchronizationService
     {
 
         private readonly HttpClient _httpClient;
@@ -18,7 +18,7 @@
         }
 
 
-        public virtual async Task<string> GetPreviousMedicalRecord(int patientId)
+        public async Task<string> GetPreviousMedicalRecord(int patientId)
         {
 
             string url = $"https://ZdravoBolnica/record/{patientId}";

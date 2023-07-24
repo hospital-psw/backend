@@ -9,11 +9,13 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    [ApiController]
+    [Route("medical=record")]
     public class MedicalRecordSynchronizationController : BaseController<MedicalTreatment>
     {
-        private readonly MedicalRecordSynchronizationService _mediicalRecordSynchronizationService;
+        private readonly  IMedicalRecordSynchronizationService _mediicalRecordSynchronizationService;
 
-        public MedicalRecordSynchronizationController(MedicalRecordSynchronizationService mediicalRecordSynchronizationService)
+        public MedicalRecordSynchronizationController(IMedicalRecordSynchronizationService mediicalRecordSynchronizationService)
         {
             _mediicalRecordSynchronizationService = mediicalRecordSynchronizationService;
         }

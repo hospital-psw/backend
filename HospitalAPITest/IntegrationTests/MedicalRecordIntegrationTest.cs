@@ -3,6 +3,7 @@
     using HospitalAPI.Controllers.MedicalRecordSynchronization;
     using HospitalAPITest.Setup;
     using HospitalLibrary.Core.Service.MedicalRecordSynchronization;
+    using HospitalLibraryTest.InMemoryRepositories;
     using Moq;
     using System;
     using System.Collections.Generic;
@@ -16,11 +17,12 @@
 
         private MedicalRecordSynchronizationController SetUpController()
         {
-            var stub = new Mock<MedicalRecordSynchronizationService> { CallBase = true };
-            stub.Setup(x => x.GetPreviousMedicalRecord(1))
-                .Returns(Task.FromResult("testni rekord"));
-            return new MedicalRecordSynchronizationController(stub.Object);
+            var unitOfWork = new InMemoryUnitOfWork();
+            var medicalRecordSynchronizationService = unitOfWork.MedicalRecordSynchronizationService;
+            return new MedicalRecordSynchronizationController(medicalRecordSynchronizationService);
         }
+
+        
 
         [Fact]
         public void Get_previous_record()
@@ -30,7 +32,7 @@
             var result = controller.GetPreviousMedicalRecord(1);
 
             Assert.NotNull(result);
-            Assert.Equal(result.Result, "testni rekord");
+            Assert.Equal(result.Result, "mokovani testni rekord");
         }
     }
 }
